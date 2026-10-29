@@ -1,0 +1,1268 @@
+{
+ "probed_at": "2026-10-29",
+ "method": "공식 페이지 HTML 파싱, 다운로드 엔드포인트 응답 헤더 확인(본문 미저장), 서울 OpenAPI 샘플키(sample) 응답의 list_total_count",
+ "semas_store_15083033": {
+  "page": "https://www.data.go.kr/data/15083033/fileData.do",
+  "next_release_planned": "2026-10-31",
+  "releases_2024_2026": [
+   {
+    "portal_name": "소상공인시장진흥공단_상가(상권)정보_20260630",
+    "publicDataDetailPk": "uddi:b3094bc9-8756-4ecc-9141-9144b98a531e",
+    "atchFileId": "FILE_000000003695831",
+    "fileDetailSn": "1",
+    "content_length_bytes": 352699739,
+    "server_filename": "소상공인시장진흥공단_상가(상권)정보_20260630.zip",
+    "portal_registered": "2026-08-05"
+   },
+   {
+    "portal_name": "소상공인시장진흥공단_상가(상권)정보_20260331",
+    "publicDataDetailPk": "uddi:6a450671-390c-4b6d-979c-fa056a627084",
+    "atchFileId": "FILE_000000003676619",
+    "fileDetailSn": "1",
+    "content_length_bytes": 341856617,
+    "server_filename": "소상공인시장진흥공단_상가(상권)정보_20260331.zip",
+    "portal_registered": "2026-04-27"
+   },
+   {
+    "portal_name": "소상공인시장진흥공단_상가(상권)정보_20251231",
+    "publicDataDetailPk": "uddi:3e70fffc-390a-4bc7-8b4a-ab5cf0f846bf",
+    "atchFileId": "FILE_000000003676618",
+    "fileDetailSn": "1",
+    "content_length_bytes": 339048114,
+    "server_filename": "소상공인시장진흥공단_상가(상권)정보_20251231.zip",
+    "portal_registered": "2026-01-29"
+   },
+   {
+    "portal_name": "소상공인시장진흥공단_상가(상권)정보_20251030",
+    "publicDataDetailPk": "uddi:9a136460-5faf-4ab7-a887-8c2b425274e4",
+    "atchFileId": "FILE_000000003676585",
+    "fileDetailSn": "1",
+    "content_length_bytes": 340975347,
+    "server_filename": "소상공인시장진흥공단_상가(상권)정보_20251031.zip",
+    "portal_registered": "2025-11-03"
+   },
+   {
+    "portal_name": "소상공인시장진흥공단_상가(상권)정보_20250630",
+    "publicDataDetailPk": "uddi:05123ff0-e436-40f2-9814-ad1ac0ae4be4",
+    "atchFileId": "FILE_000000003676584",
+    "fileDetailSn": "1",
+    "content_length_bytes": 337211052,
+    "server_filename": "소상공인시장진흥공단_상가(상권)정보_20250630.zip",
+    "portal_registered": "2025-07-25"
+   },
+   {
+    "portal_name": "소상공인시장진흥공단_상가(상권)정보_20250331",
+    "publicDataDetailPk": "uddi:e61bf1be-7a4c-400a-99a7-f91543ca64ca",
+    "atchFileId": "FILE_000000003676583",
+    "fileDetailSn": "1",
+    "content_length_bytes": 334864830,
+    "server_filename": "소상공인시장진흥공단_상가(상권)정보_20250331.zip",
+    "portal_registered": "2025-04-23"
+   },
+   {
+    "portal_name": "소상공인시장진흥공단_상가(상권)정보_20241231",
+    "publicDataDetailPk": "uddi:86a02b73-c0ce-447f-a492-f99490392056",
+    "atchFileId": "FILE_000000003676580",
+    "fileDetailSn": "1",
+    "content_length_bytes": 331029189,
+    "server_filename": "소상공인시장진흥공단_상가(상권)정보_20241231.zip",
+    "portal_registered": "2025-01-24"
+   },
+   {
+    "portal_name": "소상공인시장진흥공단_상가(상권)정보_20240930",
+    "publicDataDetailPk": "uddi:9cefeea7-4b0a-4817-ae7c-9f79ca2c7cfd",
+    "atchFileId": "FILE_000000003510335",
+    "fileDetailSn": "1",
+    "content_length_bytes": 290230709,
+    "server_filename": "소상공인시장진흥공단_상가(상권)정보_20240930.zip",
+    "portal_registered": "2024-10-25"
+   },
+   {
+    "portal_name": "소상공인시장진흥공단_상가(상권)정보_20240630",
+    "publicDataDetailPk": "uddi:b5774885-a961-41a0-9e17-ac43087a3767",
+    "atchFileId": "FILE_000000003510273",
+    "fileDetailSn": "1",
+    "content_length_bytes": 295094119,
+    "server_filename": "소상공인시장진흥공단_상가(상권)정보_20240630.zip",
+    "portal_registered": "2024-07-26"
+   },
+   {
+    "portal_name": "소상공인시장진흥공단_상가(상권)정보_20240331",
+    "publicDataDetailPk": "uddi:4e95c557-240a-45cd-ab99-e631763a9f1c",
+    "atchFileId": "FILE_000000003510261",
+    "fileDetailSn": "1",
+    "content_length_bytes": 299164662,
+    "server_filename": "소상공인시장진흥공단_상가(상권)정보_20240331.zip",
+    "portal_registered": "2024-04-24"
+   }
+  ]
+ },
+ "semas_industry_code_15067631": {
+  "page": "https://www.data.go.kr/data/15067631/fileData.do",
+  "portal_name": "소상공인시장진흥공단_상가(상권)정보 업종코드_20230228",
+  "publicDataDetailPk": "uddi:25e5510c-001c-41e5-9f93-80ad8faba582",
+  "atchFileId": "FILE_000000002719340",
+  "fileDetailSn": "1",
+  "content_length_bytes": 17747,
+  "server_filename": "소상공인시장진흥공단_상가(상권)정보_업종코드(230228).csv"
+ },
+ "seoul": {
+  "OA-15572": {
+   "dataset_name": "서울시 상권분석서비스(추정매출-상권)",
+   "description": "서울시 상권 영역 내의 점포들의 추정 매출 정보를 제공합니다.\r\n※ 단위 : 원\r\n\r\n※ 제공 기준 변경 안내 (2026. 7. 3. 적용)\r\n\r\n2024년부터 서울시 상권분석서비스의 공간 단위가 표준단위구역으로 변경되었습니다. 표준단위구역 기준 매출액 데이터는 카드사에서 2021년부터 제공하고 있어 데이터의 일관성 및 정확성 확보를 위해 2026년 7월 3일부터 2021년 이후 자료만 제공합니다.",
+   "portal_meta": {
+    "공개일자": "2019.05.29.",
+    "데이터 갱신일": "2026.09.11.",
+    "갱신주기": "분기별",
+    "제공기관": "서울신용보증재단",
+    "제공부서": "데이터분석팀"
+   },
+   "file_tab_files": [],
+   "openapi_service": "VwsmTrdarSelngQq",
+   "openapi_optional_params": [
+    [
+     "STDR_YYQU_CD",
+     "기준_년분기_코드"
+    ]
+   ],
+   "openapi_columns": [
+    {
+     "no": 1,
+     "field": "STDR_YYQU_CD",
+     "label_ko": "기준_년분기_코드"
+    },
+    {
+     "no": 2,
+     "field": "TRDAR_SE_CD",
+     "label_ko": "상권_구분_코드"
+    },
+    {
+     "no": 3,
+     "field": "TRDAR_SE_CD_NM",
+     "label_ko": "상권_구분_코드_명"
+    },
+    {
+     "no": 4,
+     "field": "TRDAR_CD",
+     "label_ko": "상권_코드"
+    },
+    {
+     "no": 5,
+     "field": "TRDAR_CD_NM",
+     "label_ko": "상권_코드_명"
+    },
+    {
+     "no": 6,
+     "field": "SVC_INDUTY_CD",
+     "label_ko": "서비스_업종_코드"
+    },
+    {
+     "no": 7,
+     "field": "SVC_INDUTY_CD_NM",
+     "label_ko": "서비스_업종_코드_명"
+    },
+    {
+     "no": 8,
+     "field": "THSMON_SELNG_AMT",
+     "label_ko": "당월_매출_금액"
+    },
+    {
+     "no": 9,
+     "field": "THSMON_SELNG_CO",
+     "label_ko": "당월_매출_건수"
+    },
+    {
+     "no": 10,
+     "field": "MDWK_SELNG_AMT",
+     "label_ko": "주중_매출_금액"
+    },
+    {
+     "no": 11,
+     "field": "WKEND_SELNG_AMT",
+     "label_ko": "주말_매출_금액"
+    },
+    {
+     "no": 12,
+     "field": "MON_SELNG_AMT",
+     "label_ko": "월요일_매출_금액"
+    },
+    {
+     "no": 13,
+     "field": "TUES_SELNG_AMT",
+     "label_ko": "화요일_매출_금액"
+    },
+    {
+     "no": 14,
+     "field": "WED_SELNG_AMT",
+     "label_ko": "수요일_매출_금액"
+    },
+    {
+     "no": 15,
+     "field": "THUR_SELNG_AMT",
+     "label_ko": "목요일_매출_금액"
+    },
+    {
+     "no": 16,
+     "field": "FRI_SELNG_AMT",
+     "label_ko": "금요일_매출_금액"
+    },
+    {
+     "no": 17,
+     "field": "SAT_SELNG_AMT",
+     "label_ko": "토요일_매출_금액"
+    },
+    {
+     "no": 18,
+     "field": "SUN_SELNG_AMT",
+     "label_ko": "일요일_매출_금액"
+    },
+    {
+     "no": 19,
+     "field": "TMZON_00_06_SELNG_AMT",
+     "label_ko": "시간대_00~06_매출_금액"
+    },
+    {
+     "no": 20,
+     "field": "TMZON_06_11_SELNG_AMT",
+     "label_ko": "시간대_06~11_매출_금액"
+    },
+    {
+     "no": 21,
+     "field": "TMZON_11_14_SELNG_AMT",
+     "label_ko": "시간대_11~14_매출_금액"
+    },
+    {
+     "no": 22,
+     "field": "TMZON_14_17_SELNG_AMT",
+     "label_ko": "시간대_14~17_매출_금액"
+    },
+    {
+     "no": 23,
+     "field": "TMZON_17_21_SELNG_AMT",
+     "label_ko": "시간대_17~21_매출_금액"
+    },
+    {
+     "no": 24,
+     "field": "TMZON_21_24_SELNG_AMT",
+     "label_ko": "시간대_21~24_매출_금액"
+    },
+    {
+     "no": 25,
+     "field": "ML_SELNG_AMT",
+     "label_ko": "남성_매출_금액"
+    },
+    {
+     "no": 26,
+     "field": "FML_SELNG_AMT",
+     "label_ko": "여성_매출_금액"
+    },
+    {
+     "no": 27,
+     "field": "AGRDE_10_SELNG_AMT",
+     "label_ko": "연령대_10_매출_금액"
+    },
+    {
+     "no": 28,
+     "field": "AGRDE_20_SELNG_AMT",
+     "label_ko": "연령대_20_매출_금액"
+    },
+    {
+     "no": 29,
+     "field": "AGRDE_30_SELNG_AMT",
+     "label_ko": "연령대_30_매출_금액"
+    },
+    {
+     "no": 30,
+     "field": "AGRDE_40_SELNG_AMT",
+     "label_ko": "연령대_40_매출_금액"
+    },
+    {
+     "no": 31,
+     "field": "AGRDE_50_SELNG_AMT",
+     "label_ko": "연령대_50_매출_금액"
+    },
+    {
+     "no": 32,
+     "field": "AGRDE_60_ABOVE_SELNG_AMT",
+     "label_ko": "연령대_60_이상_매출_금액"
+    },
+    {
+     "no": 33,
+     "field": "MDWK_SELNG_CO",
+     "label_ko": "주중_매출_건수"
+    },
+    {
+     "no": 34,
+     "field": "WKEND_SELNG_CO",
+     "label_ko": "주말_매출_건수"
+    },
+    {
+     "no": 35,
+     "field": "MON_SELNG_CO",
+     "label_ko": "월요일_매출_건수"
+    },
+    {
+     "no": 36,
+     "field": "TUES_SELNG_CO",
+     "label_ko": "화요일_매출_건수"
+    },
+    {
+     "no": 37,
+     "field": "WED_SELNG_CO",
+     "label_ko": "수요일_매출_건수"
+    },
+    {
+     "no": 38,
+     "field": "THUR_SELNG_CO",
+     "label_ko": "목요일_매출_건수"
+    },
+    {
+     "no": 39,
+     "field": "FRI_SELNG_CO",
+     "label_ko": "금요일_매출_건수"
+    },
+    {
+     "no": 40,
+     "field": "SAT_SELNG_CO",
+     "label_ko": "토요일_매출_건수"
+    },
+    {
+     "no": 41,
+     "field": "SUN_SELNG_CO",
+     "label_ko": "일요일_매출_건수"
+    },
+    {
+     "no": 42,
+     "field": "TMZON_00_06_SELNG_CO",
+     "label_ko": "시간대_건수~06_매출_건수"
+    },
+    {
+     "no": 43,
+     "field": "TMZON_06_11_SELNG_CO",
+     "label_ko": "시간대_건수~11_매출_건수"
+    },
+    {
+     "no": 44,
+     "field": "TMZON_11_14_SELNG_CO",
+     "label_ko": "시간대_건수~14_매출_건수"
+    },
+    {
+     "no": 45,
+     "field": "TMZON_14_17_SELNG_CO",
+     "label_ko": "시간대_건수~17_매출_건수"
+    },
+    {
+     "no": 46,
+     "field": "TMZON_17_21_SELNG_CO",
+     "label_ko": "시간대_건수~21_매출_건수"
+    },
+    {
+     "no": 47,
+     "field": "TMZON_21_24_SELNG_CO",
+     "label_ko": "시간대_건수~24_매출_건수"
+    },
+    {
+     "no": 48,
+     "field": "ML_SELNG_CO",
+     "label_ko": "남성_매출_건수"
+    },
+    {
+     "no": 49,
+     "field": "FML_SELNG_CO",
+     "label_ko": "여성_매출_건수"
+    },
+    {
+     "no": 50,
+     "field": "AGRDE_10_SELNG_CO",
+     "label_ko": "연령대_10_매출_건수"
+    },
+    {
+     "no": 51,
+     "field": "AGRDE_20_SELNG_CO",
+     "label_ko": "연령대_20_매출_건수"
+    },
+    {
+     "no": 52,
+     "field": "AGRDE_30_SELNG_CO",
+     "label_ko": "연령대_30_매출_건수"
+    },
+    {
+     "no": 53,
+     "field": "AGRDE_40_SELNG_CO",
+     "label_ko": "연령대_40_매출_건수"
+    },
+    {
+     "no": 54,
+     "field": "AGRDE_50_SELNG_CO",
+     "label_ko": "연령대_50_매출_건수"
+    },
+    {
+     "no": 55,
+     "field": "AGRDE_60_ABOVE_SELNG_CO",
+     "label_ko": "연령대_60_이상_매출_건수"
+    }
+   ],
+   "openapi_total_rows_at_probe": 481462,
+   "openapi_rows_per_quarter": {
+    "20211": 22239,
+    "20212": 22325,
+    "20213": 22232,
+    "20214": 22354,
+    "20221": 22255,
+    "20222": 22250,
+    "20223": 22113,
+    "20224": 22216,
+    "20231": 22106,
+    "20232": 22083,
+    "20233": 22017,
+    "20234": 22040,
+    "20241": 21910,
+    "20242": 21887,
+    "20243": 21718,
+    "20244": 21664,
+    "20251": 21427,
+    "20252": 21452,
+    "20253": 21520,
+    "20254": 21333,
+    "20261": 21188,
+    "20262": 21133
+   }
+  },
+  "OA-15577": {
+   "dataset_name": "서울시 상권분석서비스(점포-상권)",
+   "description": "서울시 상권 영역 내의 점포 정보 및 개/폐업, 프랜차이즈 정보를 제공합니다.\r\n※ 전체_점포_수 = 일반_점포_수 + 프랜차이즈_점포_수\r\n\r\n※ 제공 기준 변경 안내 (2026. 7. 3. 적용)\r\n\r\n2024년부터 서울시 상권분석서비스의 공간 단위가 표준단위구역으로 변경되었습니다. 표준단위구역 기준 매출액 데이터는 카드사에서 2021년부터 제공하고 있어 데이터의 일관성 및 정확성 확보를 위해 2026년 7월 3일부터 2021년 이후 자료만 제공합니다.",
+   "portal_meta": {
+    "공개일자": "2019.06.04.",
+    "데이터 갱신일": "2026.09.11.",
+    "갱신주기": "년간",
+    "제공기관": "서울신용보증재단",
+    "제공부서": "데이터분석팀"
+   },
+   "file_tab_files": [],
+   "openapi_service": "VwsmTrdarStorQq",
+   "openapi_optional_params": [
+    [
+     "STDR_YYQU_CD",
+     "기준_년분기_코드"
+    ],
+    [
+     "TRDAR_CD",
+     "상권_코드"
+    ]
+   ],
+   "openapi_columns": [
+    {
+     "no": 1,
+     "field": "STDR_YYQU_CD",
+     "label_ko": "기준_년분기_코드"
+    },
+    {
+     "no": 2,
+     "field": "TRDAR_SE_CD",
+     "label_ko": "상권_구분_코드"
+    },
+    {
+     "no": 3,
+     "field": "TRDAR_SE_CD_NM",
+     "label_ko": "상권_구분_코드_명"
+    },
+    {
+     "no": 4,
+     "field": "TRDAR_CD",
+     "label_ko": "상권_코드"
+    },
+    {
+     "no": 5,
+     "field": "TRDAR_CD_NM",
+     "label_ko": "상권_코드_명"
+    },
+    {
+     "no": 6,
+     "field": "SVC_INDUTY_CD",
+     "label_ko": "서비스_업종_코드"
+    },
+    {
+     "no": 7,
+     "field": "SVC_INDUTY_CD_NM",
+     "label_ko": "서비스_업종_코드_명"
+    },
+    {
+     "no": 8,
+     "field": "SIMILR_INDUTY_STOR_CO",
+     "label_ko": "전체_점포_수"
+    },
+    {
+     "no": 9,
+     "field": "STOR_CO",
+     "label_ko": "일반_점포_수"
+    },
+    {
+     "no": 10,
+     "field": "FRC_STOR_CO",
+     "label_ko": "프랜차이즈_점포_수"
+    },
+    {
+     "no": 11,
+     "field": "OPBIZ_RT",
+     "label_ko": "개업_율"
+    },
+    {
+     "no": 12,
+     "field": "OPBIZ_STOR_CO",
+     "label_ko": "개업_점포_수"
+    },
+    {
+     "no": 13,
+     "field": "CLSBIZ_RT",
+     "label_ko": "폐업_률"
+    },
+    {
+     "no": 14,
+     "field": "CLSBIZ_STOR_CO",
+     "label_ko": "폐업_점포_수"
+    }
+   ],
+   "openapi_total_rows_at_probe": 1680756,
+   "openapi_rows_per_quarter": {
+    "20211": 75891,
+    "20212": 75896,
+    "20213": 75917,
+    "20214": 76176,
+    "20221": 76212,
+    "20222": 76283,
+    "20223": 76493,
+    "20224": 76599,
+    "20231": 76826,
+    "20232": 76871,
+    "20233": 76988,
+    "20234": 77056,
+    "20241": 77025,
+    "20242": 76824,
+    "20243": 76595,
+    "20244": 76445,
+    "20251": 76383,
+    "20252": 76238,
+    "20253": 76169,
+    "20254": 75985,
+    "20261": 75972,
+    "20262": 75912
+   }
+  },
+  "OA-15560": {
+   "dataset_name": "서울시 상권분석서비스(영역-상권)",
+   "description": "서울시 상권분석 서비스에서 사용중인 상권영역 정보입니다.\n※ 행정동 코드는 행정안전부에서 고시한 \"주민등록 행정기관코드\"를 사용하고 있습니다.\n※ 좌표계 EPSG: 5181",
+   "portal_meta": {
+    "공개일자": "2019.04.25.",
+    "데이터 갱신일": "2026.09.11.",
+    "갱신주기": "비정기",
+    "제공기관": "서울신용보증재단",
+    "제공부서": "데이터분석팀"
+   },
+   "file_tab_files": [],
+   "openapi_service": "TbgisTrdarRelm",
+   "openapi_optional_params": [],
+   "openapi_columns": [
+    {
+     "no": 1,
+     "field": "TRDAR_SE_CD",
+     "label_ko": "상권_구분_코드"
+    },
+    {
+     "no": 2,
+     "field": "TRDAR_SE_CD_NM",
+     "label_ko": "상권_구분_코드_명"
+    },
+    {
+     "no": 3,
+     "field": "TRDAR_CD",
+     "label_ko": "상권_코드"
+    },
+    {
+     "no": 4,
+     "field": "TRDAR_CD_NM",
+     "label_ko": "상권_코드_명"
+    },
+    {
+     "no": 5,
+     "field": "XCNTS_VALUE",
+     "label_ko": "엑스좌표_값"
+    },
+    {
+     "no": 6,
+     "field": "YDNTS_VALUE",
+     "label_ko": "와이좌표_값"
+    },
+    {
+     "no": 7,
+     "field": "SIGNGU_CD",
+     "label_ko": "자치구_코드"
+    },
+    {
+     "no": 8,
+     "field": "SIGNGU_CD_NM",
+     "label_ko": "자치구_코드_명"
+    },
+    {
+     "no": 9,
+     "field": "ADSTRD_CD",
+     "label_ko": "행정동_코드"
+    },
+    {
+     "no": 10,
+     "field": "ADSTRD_CD_NM",
+     "label_ko": "행정동_코드_명"
+    },
+    {
+     "no": 11,
+     "field": "RELM_AR",
+     "label_ko": "영역_면적"
+    }
+   ],
+   "openapi_total_rows_at_probe": 1650,
+   "openapi_rows_per_quarter": null
+  },
+  "OA-15568": {
+   "dataset_name": "서울시 상권분석서비스(길단위인구-상권)",
+   "description": "서울시 상권 영역 내의 생활인구 정보를 제공합니다.\r\n\r\n※ 제공 기준 변경 안내 (2026. 7. 3. 적용)\r\n2024년부터 서울시 상권분석서비스의 공간 단위가 표준단위구역으로 변경되었습니다. 표준단위구역 기준 매출액 데이터는 카드사에서 2021년부터 제공하고 있어 데이터의 일관성 및 정확성 확보를 위해 2026년 7월 3일부터 2021년 이후 자료만 제공합니다.",
+   "portal_meta": {
+    "공개일자": "2019.05.27.",
+    "데이터 갱신일": "2026.09.11.",
+    "갱신주기": "월간",
+    "제공기관": "서울신용보증재단",
+    "제공부서": "데이터분석팀"
+   },
+   "file_tab_files": [],
+   "openapi_service": "VwsmTrdarFlpopQq",
+   "openapi_optional_params": [
+    [
+     "STDR_YYQU_CD",
+     "기준_년분기_코드"
+    ]
+   ],
+   "openapi_columns": [
+    {
+     "no": 1,
+     "field": "STDR_YYQU_CD",
+     "label_ko": "기준_년분기_코드"
+    },
+    {
+     "no": 2,
+     "field": "TRDAR_SE_CD",
+     "label_ko": "상권_구분_코드"
+    },
+    {
+     "no": 3,
+     "field": "TRDAR_SE_CD_NM",
+     "label_ko": "상권_구분_코드_명"
+    },
+    {
+     "no": 4,
+     "field": "TRDAR_CD",
+     "label_ko": "상권_코드"
+    },
+    {
+     "no": 5,
+     "field": "TRDAR_CD_NM",
+     "label_ko": "상권_코드_명"
+    },
+    {
+     "no": 6,
+     "field": "TOT_FLPOP_CO",
+     "label_ko": "총_유동인구_수"
+    },
+    {
+     "no": 7,
+     "field": "ML_FLPOP_CO",
+     "label_ko": "남성_유동인구_수"
+    },
+    {
+     "no": 8,
+     "field": "FML_FLPOP_CO",
+     "label_ko": "여성_유동인구_수"
+    },
+    {
+     "no": 9,
+     "field": "AGRDE_10_FLPOP_CO",
+     "label_ko": "연령대_10_유동인구_수"
+    },
+    {
+     "no": 10,
+     "field": "AGRDE_20_FLPOP_CO",
+     "label_ko": "연령대_20_유동인구_수"
+    },
+    {
+     "no": 11,
+     "field": "AGRDE_30_FLPOP_CO",
+     "label_ko": "연령대_30_유동인구_수"
+    },
+    {
+     "no": 12,
+     "field": "AGRDE_40_FLPOP_CO",
+     "label_ko": "연령대_40_유동인구_수"
+    },
+    {
+     "no": 13,
+     "field": "AGRDE_50_FLPOP_CO",
+     "label_ko": "연령대_50_유동인구_수"
+    },
+    {
+     "no": 14,
+     "field": "AGRDE_60_ABOVE_FLPOP_CO",
+     "label_ko": "연령대_60_이상_유동인구_수"
+    },
+    {
+     "no": 15,
+     "field": "TMZON_00_06_FLPOP_CO",
+     "label_ko": "시간대_00_06_유동인구_수"
+    },
+    {
+     "no": 16,
+     "field": "TMZON_06_11_FLPOP_CO",
+     "label_ko": "시간대_06_11_유동인구_수"
+    },
+    {
+     "no": 17,
+     "field": "TMZON_11_14_FLPOP_CO",
+     "label_ko": "시간대_11_14_유동인구_수"
+    },
+    {
+     "no": 18,
+     "field": "TMZON_14_17_FLPOP_CO",
+     "label_ko": "시간대_14_17_유동인구_수"
+    },
+    {
+     "no": 19,
+     "field": "TMZON_17_21_FLPOP_CO",
+     "label_ko": "시간대_17_21_유동인구_수"
+    },
+    {
+     "no": 20,
+     "field": "TMZON_21_24_FLPOP_CO",
+     "label_ko": "시간대_21_24_유동인구_수"
+    },
+    {
+     "no": 21,
+     "field": "MON_FLPOP_CO",
+     "label_ko": "월요일_유동인구_수"
+    },
+    {
+     "no": 22,
+     "field": "TUES_FLPOP_CO",
+     "label_ko": "화요일_유동인구_수"
+    },
+    {
+     "no": 23,
+     "field": "WED_FLPOP_CO",
+     "label_ko": "수요일_유동인구_수"
+    },
+    {
+     "no": 24,
+     "field": "THUR_FLPOP_CO",
+     "label_ko": "목요일_유동인구_수"
+    },
+    {
+     "no": 25,
+     "field": "FRI_FLPOP_CO",
+     "label_ko": "금요일_유동인구_수"
+    },
+    {
+     "no": 26,
+     "field": "SAT_FLPOP_CO",
+     "label_ko": "토요일_유동인구_수"
+    },
+    {
+     "no": 27,
+     "field": "SUN_FLPOP_CO",
+     "label_ko": "일요일_유동인구_수"
+    }
+   ],
+   "openapi_total_rows_at_probe": 36281,
+   "openapi_rows_per_quarter": {
+    "20211": 1650,
+    "20212": 1650,
+    "20213": 1650,
+    "20214": 1650,
+    "20221": 1650,
+    "20222": 1650,
+    "20223": 1650,
+    "20224": 1649,
+    "20231": 1649,
+    "20232": 1649,
+    "20233": 1649,
+    "20234": 1648,
+    "20241": 1649,
+    "20242": 1649,
+    "20243": 1648,
+    "20244": 1649,
+    "20251": 1650,
+    "20252": 1649,
+    "20253": 1648,
+    "20254": 1648,
+    "20261": 1649,
+    "20262": 1648
+   }
+  },
+  "OA-15580": {
+   "dataset_name": "서울시 상권분석서비스(집객시설-상권)",
+   "description": "서울시 상권 영역 내 집객시설 정보를 제공합니다.\r\n1년중 4분기에 한번 데이터를 업데이트 하여 다음 해 1, 2, 3 분기의 값이 동일합니다.\r\n\r\n※ 제공 기준 변경 안내 (2026. 7. 3. 적용)\r\n\r\n2024년부터 서울시 상권분석서비스의 공간 단위가 표준단위구역으로 변경되었습니다. 표준단위구역 기준 매출액 데이터는 카드사에서 2021년부터 제공하고 있어 데이터의 일관성 및 정확성 확보를 위해 2026년 7월 3일부터 2021년 이후 자료만 제공합니다.",
+   "portal_meta": {
+    "공개일자": "2019.06.07.",
+    "데이터 갱신일": "2026.09.11.",
+    "갱신주기": "년간",
+    "제공기관": "서울신용보증재단",
+    "제공부서": "데이터분석팀"
+   },
+   "file_tab_files": [],
+   "openapi_service": "VwsmTrdarFcltyQq",
+   "openapi_optional_params": [],
+   "openapi_columns": [
+    {
+     "no": 1,
+     "field": "STDR_YYQU_CD",
+     "label_ko": "기준_년분기_코드"
+    },
+    {
+     "no": 2,
+     "field": "TRDAR_SE_CD",
+     "label_ko": "상권_구분_코드"
+    },
+    {
+     "no": 3,
+     "field": "TRDAR_SE_CD_NM",
+     "label_ko": "상권_구분_코드_명"
+    },
+    {
+     "no": 4,
+     "field": "TRDAR_CD",
+     "label_ko": "상권_코드"
+    },
+    {
+     "no": 5,
+     "field": "TRDAR_CD_NM",
+     "label_ko": "상권_코드_명"
+    },
+    {
+     "no": 6,
+     "field": "VIATR_FCLTY_CO",
+     "label_ko": "집객시설_수"
+    },
+    {
+     "no": 7,
+     "field": "PBLOFC_CO",
+     "label_ko": "관공서_수"
+    },
+    {
+     "no": 8,
+     "field": "BANK_CO",
+     "label_ko": "은행_수"
+    },
+    {
+     "no": 9,
+     "field": "GEHSPT_CO",
+     "label_ko": "종합병원_수"
+    },
+    {
+     "no": 10,
+     "field": "GNRL_HSPTL_CO",
+     "label_ko": "일반_병원_수"
+    },
+    {
+     "no": 11,
+     "field": "PARMACY_CO",
+     "label_ko": "약국_수"
+    },
+    {
+     "no": 12,
+     "field": "KNDRGR_CO",
+     "label_ko": "유치원_수"
+    },
+    {
+     "no": 13,
+     "field": "ELESCH_CO",
+     "label_ko": "초등학교_수"
+    },
+    {
+     "no": 14,
+     "field": "MSKUL_CO",
+     "label_ko": "중학교_수"
+    },
+    {
+     "no": 15,
+     "field": "HGSCHL_CO",
+     "label_ko": "고등학교_수"
+    },
+    {
+     "no": 16,
+     "field": "UNIV_CO",
+     "label_ko": "대학교_수"
+    },
+    {
+     "no": 17,
+     "field": "DRTS_CO",
+     "label_ko": "백화점_수"
+    },
+    {
+     "no": 18,
+     "field": "SUPMK_CO",
+     "label_ko": "슈퍼마켓_수"
+    },
+    {
+     "no": 19,
+     "field": "THEAT_CO",
+     "label_ko": "극장_수"
+    },
+    {
+     "no": 20,
+     "field": "STAYNG_FCLTY_CO",
+     "label_ko": "숙박_시설_수"
+    },
+    {
+     "no": 21,
+     "field": "ARPRT_CO",
+     "label_ko": "공항_수"
+    },
+    {
+     "no": 22,
+     "field": "RLROAD_STATN_CO",
+     "label_ko": "철도_역_수"
+    },
+    {
+     "no": 23,
+     "field": "BUS_TRMINL_CO",
+     "label_ko": "버스_터미널_수"
+    },
+    {
+     "no": 24,
+     "field": "SUBWAY_STATN_CO",
+     "label_ko": "지하철_역_수"
+    },
+    {
+     "no": 25,
+     "field": "BUS_STTN_CO",
+     "label_ko": "버스_정거장_수"
+    }
+   ],
+   "openapi_total_rows_at_probe": 34716,
+   "openapi_rows_per_quarter": null
+  },
+  "OA-15569": {
+   "dataset_name": "서울시 상권분석서비스(직장인구-상권)",
+   "description": "서울시 상권 영역 내 직장이 위치한 인구 정보를 제공합니다.\r\n1년중 4분기에 한번 데이터를 업데이트 하여 다음 해 1, 2, 3 분기의 값이 동일합니다.\r\n\r\n※ 제공 기준 변경 안내 (2026. 7. 3. 적용)\r\n\r\n2024년부터 서울시 상권분석서비스의 공간 단위가 표준단위구역으로 변경되었습니다. 표준단위구역 기준 매출액 데이터는 카드사에서 2021년부터 제공하고 있어 데이터의 일관성 및 정확성 확보를 위해 2026년 7월 3일부터 2021년 이후 자료만 제공합니다.",
+   "portal_meta": {
+    "공개일자": "2019.05.28.",
+    "데이터 갱신일": "2026.09.11.",
+    "갱신주기": "반기",
+    "제공기관": "서울신용보증재단",
+    "제공부서": "데이터분석팀"
+   },
+   "file_tab_files": [],
+   "openapi_service": "VwsmTrdarWrcPopltnQq",
+   "openapi_optional_params": [],
+   "openapi_columns": [
+    {
+     "no": 1,
+     "field": "STDR_YYQU_CD",
+     "label_ko": "기준_년분기_코드"
+    },
+    {
+     "no": 2,
+     "field": "TRDAR_SE_CD",
+     "label_ko": "상권_구분_코드"
+    },
+    {
+     "no": 3,
+     "field": "TRDAR_SE_CD_NM",
+     "label_ko": "상권_구분_코드_명"
+    },
+    {
+     "no": 4,
+     "field": "TRDAR_CD",
+     "label_ko": "상권_코드"
+    },
+    {
+     "no": 5,
+     "field": "TRDAR_CD_NM",
+     "label_ko": "상권_코드_명"
+    },
+    {
+     "no": 6,
+     "field": "TOT_WRC_POPLTN_CO",
+     "label_ko": "총_직장_인구_수"
+    },
+    {
+     "no": 7,
+     "field": "ML_WRC_POPLTN_CO",
+     "label_ko": "남성_직장_인구_수"
+    },
+    {
+     "no": 8,
+     "field": "FML_WRC_POPLTN_CO",
+     "label_ko": "여성_직장_인구_수"
+    },
+    {
+     "no": 9,
+     "field": "AGRDE_10_WRC_POPLTN_CO",
+     "label_ko": "연령대_10_직장_인구_수"
+    },
+    {
+     "no": 10,
+     "field": "AGRDE_20_WRC_POPLTN_CO",
+     "label_ko": "연령대_20_직장_인구_수"
+    },
+    {
+     "no": 11,
+     "field": "AGRDE_30_WRC_POPLTN_CO",
+     "label_ko": "연령대_30_직장_인구_수"
+    },
+    {
+     "no": 12,
+     "field": "AGRDE_40_WRC_POPLTN_CO",
+     "label_ko": "연령대_40_직장_인구_수"
+    },
+    {
+     "no": 13,
+     "field": "AGRDE_50_WRC_POPLTN_CO",
+     "label_ko": "연령대_50_직장_인구_수"
+    },
+    {
+     "no": 14,
+     "field": "AGRDE_60_ABOVE_WRC_POPLTN_CO",
+     "label_ko": "연령대_60_이상_직장_인구_수"
+    },
+    {
+     "no": 15,
+     "field": "MAG_10_WRC_POPLTN_CO",
+     "label_ko": "남성연령대_10_직장_인구_수"
+    },
+    {
+     "no": 16,
+     "field": "MAG_20_WRC_POPLTN_CO",
+     "label_ko": "남성연령대_20_직장_인구_수"
+    },
+    {
+     "no": 17,
+     "field": "MAG_30_WRC_POPLTN_CO",
+     "label_ko": "남성연령대_30_직장_인구_수"
+    },
+    {
+     "no": 18,
+     "field": "MAG_40_WRC_POPLTN_CO",
+     "label_ko": "남성연령대_40_직장_인구_수"
+    },
+    {
+     "no": 19,
+     "field": "MAG_50_WRC_POPLTN_CO",
+     "label_ko": "남성연령대_50_직장_인구_수"
+    },
+    {
+     "no": 20,
+     "field": "MAG_60_ABOVE_WRC_POPLTN_CO",
+     "label_ko": "남성연령대_60_이상_직장_인구_수"
+    },
+    {
+     "no": 21,
+     "field": "FAG_10_WRC_POPLTN_CO",
+     "label_ko": "여성연령대_10_직장_인구_수"
+    },
+    {
+     "no": 22,
+     "field": "FAG_20_WRC_POPLTN_CO",
+     "label_ko": "여성연령대_20_직장_인구_수"
+    },
+    {
+     "no": 23,
+     "field": "FAG_30_WRC_POPLTN_CO",
+     "label_ko": "여성연령대_30_직장_인구_수"
+    },
+    {
+     "no": 24,
+     "field": "FAG_40_WRC_POPLTN_CO",
+     "label_ko": "여성연령대_40_직장_인구_수"
+    },
+    {
+     "no": 25,
+     "field": "FAG_50_WRC_POPLTN_CO",
+     "label_ko": "여성연령대_50_직장_인구_수"
+    },
+    {
+     "no": 26,
+     "field": "FAG_60_ABOVE_WRC_POPLTN_CO",
+     "label_ko": "여성연령대_60_이상_직장_인구_수"
+    }
+   ],
+   "openapi_total_rows_at_probe": 36027,
+   "openapi_rows_per_quarter": null
+  },
+  "OA-15584": {
+   "dataset_name": "서울시 상권분석서비스(상주인구-상권)",
+   "description": "서울시 상권 영역 내 상주인구 정보를 제공합니다.\r\n1년중 4분기에 한번 데이터를 업데이트 하여 다음 해 1, 2, 3 분기의 값이 동일합니다.\r\n\r\n※ 제공 기준 변경 안내 (2026. 7. 3. 적용)\r\n2024년부터 서울시 상권분석서비스의 공간 단위가 표준단위구역으로 변경되었습니다. 표준단위구역 기준 매출액 데이터는 카드사에서 2021년부터 제공하고 있어 데이터의 일관성 및 정확성 확보를 위해 2026년 7월 3일부터 2021년 이후 자료만 제공합니다.",
+   "portal_meta": {
+    "공개일자": "2019.06.07.",
+    "데이터 갱신일": "2026.09.11.",
+    "갱신주기": "반기",
+    "제공기관": "서울신용보증재단",
+    "제공부서": "데이터분석팀"
+   },
+   "file_tab_files": [],
+   "openapi_service": "VwsmTrdarRepopQq",
+   "openapi_optional_params": [],
+   "openapi_columns": [
+    {
+     "no": 1,
+     "field": "STDR_YYQU_CD",
+     "label_ko": "기준_년분기_코드"
+    },
+    {
+     "no": 2,
+     "field": "TRDAR_SE_CD",
+     "label_ko": "상권_구분_코드"
+    },
+    {
+     "no": 3,
+     "field": "TRDAR_SE_CD_NM",
+     "label_ko": "상권_구분_코드_명"
+    },
+    {
+     "no": 4,
+     "field": "TRDAR_CD",
+     "label_ko": "상권_코드"
+    },
+    {
+     "no": 5,
+     "field": "TRDAR_CD_NM",
+     "label_ko": "상권_코드_명"
+    },
+    {
+     "no": 6,
+     "field": "TOT_REPOP_CO",
+     "label_ko": "총_상주인구_수"
+    },
+    {
+     "no": 7,
+     "field": "ML_REPOP_CO",
+     "label_ko": "남성_상주인구_수"
+    },
+    {
+     "no": 8,
+     "field": "FML_REPOP_CO",
+     "label_ko": "여성_상주인구_수"
+    },
+    {
+     "no": 9,
+     "field": "AGRDE_10_REPOP_CO",
+     "label_ko": "연령대_10_상주인구_수"
+    },
+    {
+     "no": 10,
+     "field": "AGRDE_20_REPOP_CO",
+     "label_ko": "연령대_20_상주인구_수"
+    },
+    {
+     "no": 11,
+     "field": "AGRDE_30_REPOP_CO",
+     "label_ko": "연령대_30_상주인구_수"
+    },
+    {
+     "no": 12,
+     "field": "AGRDE_40_REPOP_CO",
+     "label_ko": "연령대_40_상주인구_수"
+    },
+    {
+     "no": 13,
+     "field": "AGRDE_50_REPOP_CO",
+     "label_ko": "연령대_50_상주인구_수"
+    },
+    {
+     "no": 14,
+     "field": "AGRDE_60_ABOVE_REPOP_CO",
+     "label_ko": "연령대_60_이상_상주인구_수"
+    },
+    {
+     "no": 15,
+     "field": "MAG_10_REPOP_CO",
+     "label_ko": "남성연령대_10_상주인구_수"
+    },
+    {
+     "no": 16,
+     "field": "MAG_20_REPOP_CO",
+     "label_ko": "남성연령대_20_상주인구_수"
+    },
+    {
+     "no": 17,
+     "field": "MAG_30_REPOP_CO",
+     "label_ko": "남성연령대_30_상주인구_수"
+    },
+    {
+     "no": 18,
+     "field": "MAG_40_REPOP_CO",
+     "label_ko": "남성연령대_40_상주인구_수"
+    },
+    {
+     "no": 19,
+     "field": "MAG_50_REPOP_CO",
+     "label_ko": "남성연령대_50_상주인구_수"
+    },
+    {
+     "no": 20,
+     "field": "MAG_60_ABOVE_REPOP_CO",
+     "label_ko": "남성연령대_60_이상_상주인구_수"
+    },
+    {
+     "no": 21,
+     "field": "FAG_10_REPOP_CO",
+     "label_ko": "여성연령대_10_상주인구_수"
+    },
+    {
+     "no": 22,
+     "field": "FAG_20_REPOP_CO",
+     "label_ko": "여성연령대_20_상주인구_수"
+    },
+    {
+     "no": 23,
+     "field": "FAG_30_REPOP_CO",
+     "label_ko": "여성연령대_30_상주인구_수"
+    },
+    {
+     "no": 24,
+     "field": "FAG_40_REPOP_CO",
+     "label_ko": "여성연령대_40_상주인구_수"
+    },
+    {
+     "no": 25,
+     "field": "FAG_50_REPOP_CO",
+     "label_ko": "여성연령대_50_상주인구_수"
+    },
+    {
+     "no": 26,
+     "field": "FAG_60_ABOVE_REPOP_CO",
+     "label_ko": "여성연령대_60_이상_상주인구_수"
+    },
+    {
+     "no": 27,
+     "field": "TOT_HSHLD_CO",
+     "label_ko": "총_가구_수"
+    },
+    {
+     "no": 28,
+     "field": "APT_HSHLD_CO",
+     "label_ko": "아파트_가구_수"
+    },
+    {
+     "no": 29,
+     "field": "NON_APT_HSHLD_CO",
+     "label_ko": "비_아파트_가구_수"
+    }
+   ],
+   "openapi_total_rows_at_probe": 35908,
+   "openapi_rows_per_quarter": null
+  }
+ },
+ "endpoints": {
+  "datagokr_meta": "POST https://www.data.go.kr/tcs/dss/selectFileDataDownload.do",
+  "datagokr_file": "GET https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId={id}&fileDetailSn={sn}",
+  "datagokr_limit_check": "POST https://www.data.go.kr/cmm/cmm/check-limit.json (needCaptcha=false at probe)",
+  "seoul_file": "POST https://datafile.seoul.go.kr/bigfile/iot/inf/nio_download.do?&useCache=false  form: infId, seqNo(empty), seq, infSeq=3",
+  "seoul_sheet_csv": "POST https://datafile.seoul.go.kr/bigfile/iot/sheet/csv/download.do  form: srvType=S, infId, serviceKind=1, pageNo=1, ssUserId=SAMPLE_VIEW, strWhere, strOrderby, filterCol, txtFilter",
+  "seoul_openapi": "http://openapi.seoul.go.kr:8088/{KEY}/json/{SERVICE}/{START}/{END}/[STDR_YYQU_CD]  (max 1000 rows/call, sample key max 5 rows)"
+ }
+}

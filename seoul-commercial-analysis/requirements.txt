@@ -1,0 +1,4 @@
+# scripts/download_data.py 는 표준 라이브러리만 사용합니다.
+# scripts/inspect_raw_data.py 가 아래 패키지를 사용합니다 (pandas 3.0.5 / numpy 2.5.1 / Python 3.13 에서 검증).
+pandas>=2.2
+numpy>=1.26

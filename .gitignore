@@ -1,0 +1,17 @@
+# OS·에디터 파일
+.DS_Store
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# 인증키·비밀정보
+.env
+.env.*
+!.env.example
+
+# 원본 데이터는 각 하위 프로젝트의 .gitignore에서 제외합니다 (예: seoul-commercial-analysis/data/raw/)

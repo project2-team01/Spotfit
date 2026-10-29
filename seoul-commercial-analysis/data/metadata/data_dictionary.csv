@@ -1,0 +1,233 @@
+﻿dataset_id,local_file_path,column_order,column_name,source_type,inferred_type,max_length,meaning,unit,meaning_basis,missing_count,missing_rate,has_missing,distinct_count,example_value
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,1,상가업소번호,text (CSV에는 선언된 타입 없음),string,20,해당 상가업소에 부여된 일련번호,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,534978,MA010120220804265295
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,2,상호명,text (CSV에는 선언된 타입 없음),string,53,해당 상가업소의 상호명,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,425063,60계치킨암사
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,3,지점명,text (CSV에는 선언된 타입 없음),string,9,해당 상가업소가 지점인 경우 지점명,,공식 명세(Open API 15012005 필드 설명),487042,0.9104,Y,858,선사점
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,4,상권업종대분류코드,text (CSV에는 선언된 타입 없음),string,2,상권업종대분류코드(2자리),,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,10,I2
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,5,상권업종대분류명,text (CSV에는 선언된 타입 없음),string,7,상권업종대분류명,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,10,음식
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,6,상권업종중분류코드,text (CSV에는 선언된 타입 없음),string,4,상권업종중분류코드(4자리),,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,75,I210
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,7,상권업종중분류명,text (CSV에는 선언된 타입 없음),string,11,상권업종중분류명,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,75,기타 간이
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,8,상권업종소분류코드,text (CSV에는 선언된 타입 없음),string,6,상권업종소분류코드(6자리),,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,247,I21006
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,9,상권업종소분류명,text (CSV에는 선언된 타입 없음),string,21,상권업종소분류명,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,247,치킨
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,10,표준산업분류코드,text (CSV에는 선언된 타입 없음),string,6,표준산업분류코드(6자리). 포털 안내 기준 10차,,공식 명세(Open API 15012005 필드 설명),199,0.0004,Y,369,I56193
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,11,표준산업분류명,text (CSV에는 선언된 타입 없음),string,29,표준산업분류코드에 대한 명칭,,공식 명세(Open API 15012005 필드 설명),199,0.0004,Y,369,치킨 전문점
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,12,시도코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),2,시도 코드,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,1,11
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,13,시도명,text (CSV에는 선언된 타입 없음),string,5,시도 명칭,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,1,서울특별시
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,14,시군구코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),5,시군구 코드,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,25,11740
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,15,시군구명,text (CSV에는 선언된 타입 없음),string,4,시군구 명칭,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,25,강동구
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,16,행정동코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),8,행정동 코드,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,428,11740580
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,17,행정동명,text (CSV에는 선언된 타입 없음),string,11,행정동 명칭,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,427,암사2동
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,18,법정동코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),10,법정동 코드,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,466,1174010700
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,19,법정동명,text (CSV에는 선언된 타입 없음),string,6,법정동 명칭,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,464,암사동
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,20,지번코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),19,지번주소에 해당하는 PNU코드,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,157054,1174010700105020004
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,21,대지구분코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),1,"지번주소의 대지구분 코드(1:대지, 2:산)",,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,2,1
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,22,대지구분명,text (CSV에는 선언된 타입 없음),string,2,"지번주소의 대지구분 코드명(대지, 산)",,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,2,대지
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,23,지번본번지,text (CSV에는 선언된 타입 없음),integer,4,지번주소의 본번지,,공식 명세(Open API 15012005 필드 설명),25,0.0000,Y,2133,502
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,24,지번부번지,text (CSV에는 선언된 타입 없음),integer,4,지번주소의 부번지,,공식 명세(Open API 15012005 필드 설명),94362,0.1764,Y,1275,4
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,25,지번주소,text (CSV에는 선언된 타입 없음),string,24,지번기준 전체주소,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,157054,서울특별시 강동구 암사동 502-4
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,26,도로명코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),12,도로명주소 도로명코드,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,12707,117404172130
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,27,도로명,text (CSV에는 선언된 타입 없음),string,21,도로명코드에 대한 명칭,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,12708,서울특별시 강동구 상암로3길
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,28,건물본번지,text (CSV에는 선언된 타입 없음),integer,4,도로명주소 기준 건물 본번지,,공식 명세(Open API 15012005 필드 설명),2,0.0000,Y,2016,8
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,29,건물부번지,text (CSV에는 선언된 타입 없음),integer,3,도로명주소 기준 건물 부번지,,공식 명세(Open API 15012005 필드 설명),465474,0.8701,Y,107,4
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,30,건물관리번호,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),25,도로명주소 기준 건물관리번호,,공식 명세(Open API 15012005 필드 설명),2342,0.0044,Y,156074,1174010700105020004015779
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,31,건물명,text (CSV에는 선언된 타입 없음),string,22,도로명주소 기준 건물명,,공식 명세(Open API 15012005 필드 설명),278767,0.5211,Y,40652,암사동정웅빌딩
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,32,도로명주소,text (CSV에는 선언된 타입 없음),string,26,도로명 주소기준 전체주소,,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,156448,서울특별시 강동구 상암로3길 8
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,33,구우편번호,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),6,구우편번호(개편전 우편번호),,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,4973,134877
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,34,신우편번호,text (CSV에는 선언된 타입 없음),"code (숫자 문자열, 선행 0 있음 → 문자열 유지 필수)",5,신우편번호(개편후 우편번호),,공식 명세(Open API 15012005 필드 설명),0,0.0000,N,5575,05241
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,35,동정보,text (CSV에는 선언된 타입 없음),empty,0,상가업소가 소재한 동정보,,공식 명세(Open API 15012005 필드 설명),534978,1.0000,Y,0,
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,36,층정보,text (CSV에는 선언된 타입 없음),string,4,상가업소가 소재한 층정보,,공식 명세(Open API 15012005 필드 설명),187990,0.3514,Y,201,1
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,37,호정보,text (CSV에는 선언된 타입 없음),empty,0,상가업소가 소재한 호정보,,공식 명세(Open API 15012005 필드 설명),534978,1.0000,Y,0,
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,38,경도,text (CSV에는 선언된 타입 없음),float,16,WGS84기준 경도 좌표값,"도(degree), WGS84",공식 명세(Open API 15012005 필드 설명),0,0.0000,N,162018,127.12685944831
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,39,위도,text (CSV에는 선언된 타입 없음),float,16,WGS84기준 위도 좌표값,"도(degree), WGS84",공식 명세(Open API 15012005 필드 설명),0,0.0000,N,161996,37.5508103363035
+S02,data/raw/semas/semas_industry_code_20230228.csv,1,대분류코드,text (CSV에는 선언된 타입 없음),string,2,상권업종대분류코드(2자리),,명칭 기반(S01 업종 컬럼과 대응),0,0.0000,N,10,G2
+S02,data/raw/semas/semas_industry_code_20230228.csv,2,대분류명,text (CSV에는 선언된 타입 없음),string,24,상권업종대분류명,,명칭 기반(S01 업종 컬럼과 대응),0,0.0000,N,10,소매업
+S02,data/raw/semas/semas_industry_code_20230228.csv,3,중분류코드,text (CSV에는 선언된 타입 없음),string,4,상권업종중분류코드(4자리),,명칭 기반(S01 업종 컬럼과 대응),0,0.0000,N,75,G202
+S02,data/raw/semas/semas_industry_code_20230228.csv,4,중분류명,text (CSV에는 선언된 타입 없음),string,27,상권업종중분류명,,명칭 기반(S01 업종 컬럼과 대응),0,0.0000,N,75,자동차 부품 및 내장품 소매업
+S02,data/raw/semas/semas_industry_code_20230228.csv,5,소분류코드,text (CSV에는 선언된 타입 없음),string,6,상권업종소분류코드(6자리),,명칭 기반(S01 업종 컬럼과 대응),0,0.0000,N,247,G20201
+S02,data/raw/semas/semas_industry_code_20230228.csv,6,소분류명,text (CSV에는 선언된 타입 없음),string,21,상권업종소분류명,,명칭 기반(S01 업종 컬럼과 대응),0,0.0000,N,247,타이어 소매업
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,1,기준_년분기_코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),5,기준 연도·분기 코드. YYYYQ 형식(예: 20251 = 2025년 1분기),,명칭·값 기반 추정,0,0.0000,N,4,20251
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,2,상권_구분_코드,text (CSV에는 선언된 타입 없음),string,1,상권 유형 코드,,공식 명세,0,0.0000,N,4,U
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,3,상권_구분_코드_명,text (CSV에는 선언된 타입 없음),string,4,상권 유형 이름,,공식 명세,0,0.0000,N,4,관광특구
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,4,상권_코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),7,서울시 상권분석서비스 상권 식별 코드,,공식 명세,0,0.0000,N,1577,3001491
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,5,상권_코드_명,text (CSV에는 선언된 타입 없음),string,32,상권 이름,,공식 명세,0,0.0000,N,1577,이태원 관광특구
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,6,서비스_업종_코드,text (CSV에는 선언된 타입 없음),string,8,서울시 상권분석서비스 서비스업종(생활밀접업종) 코드,,공식 명세,0,0.0000,N,62,CS300015
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,7,서비스_업종_코드_명,text (CSV에는 선언된 타입 없음),string,12,서비스업종 이름,,공식 명세,0,0.0000,N,62,가방
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,8,당월_매출_금액,text (CSV에는 선언된 타입 없음),integer,13,추정 매출 금액. 컬럼명은 '당월'이지만 포털 FAQ는 분기당 매출 금액(개인+법인 합산)으로 설명,원,공식 명세,0,0.0000,N,83412,1569075360
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,9,당월_매출_건수,text (CSV에는 선언된 타입 없음),integer,8,추정 매출 건수. 컬럼명은 '당월'이지만 행 단위는 분기,건,명칭 기반 추정,0,0.0000,N,35128,7398
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,10,주중_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,주중 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,84781,1271375387
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,11,주말_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,주말 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,78424,297699973
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,12,월요일_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,월요일 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,79979,140164804
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,13,화요일_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,화요일 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,80220,390941489
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,14,수요일_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,수요일 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,80468,274737910
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,15,목요일_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,목요일 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,80404,175673280
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,16,금요일_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,금요일 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,80688,289857904
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,17,토요일_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,토요일 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,77264,133795294
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,18,일요일_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,일요일 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,63192,163904679
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,19,시간대_00~06_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,시간대 00~06 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,30452,0
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,20,시간대_06~11_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,시간대 06~11 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,66286,5309005
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,21,시간대_11~14_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,시간대 11~14 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,77830,588276586
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,22,시간대_14~17_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,시간대 14~17 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,81201,551915838
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,23,시간대_17~21_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,시간대 17~21 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,81520,422865364
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,24,시간대_21~24_매출_금액,text (CSV에는 선언된 타입 없음),integer,11,시간대 21~24 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,54623,708567
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,25,남성_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,남성 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,82773,136237576
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,26,여성_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,여성 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,83500,1425289321
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,27,연령대_10_매출_금액,text (CSV에는 선언된 타입 없음),integer,10,연령대 10 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,44712,0
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,28,연령대_20_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,연령대 20 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,70294,19253187
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,29,연령대_30_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,연령대 30 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,77385,174456920
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,30,연령대_40_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,연령대 40 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,80067,492062556
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,31,연령대_50_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,연령대 50 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,80619,645208896
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,32,연령대_60_이상_매출_금액,text (CSV에는 선언된 타입 없음),integer,12,연령대 60 이상 매출 금액 (추정매출),원,공식 명세(단위: 원),0,0.0000,N,78470,230545339
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,33,주중_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,주중 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,31911,5482
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,34,주말_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,주말 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,20805,1916
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,35,월요일_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,월요일 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,16989,1315
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,36,화요일_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,화요일 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,16795,1086
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,37,수요일_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,수요일 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,16953,1229
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,38,목요일_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,목요일 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,16947,765
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,39,금요일_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,금요일 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,17507,1087
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,40,토요일_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,토요일 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,16568,963
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,41,일요일_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,일요일 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,14076,953
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,42,시간대_건수~06_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,시간대 00~06 매출 건수. 원본 컬럼명 표기 오류(시작 시각 자리에 '건수'). Open API 필드 TMZON_00_06_SELNG_CO와 순서 대조,건,Open API 필드명 대조,0,0.0000,N,7561,0
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,43,시간대_건수~11_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,시간대 06~11 매출 건수. 원본 컬럼명 표기 오류(시작 시각 자리에 '건수'). Open API 필드 TMZON_06_11_SELNG_CO와 순서 대조,건,Open API 필드명 대조,0,0.0000,N,15440,324
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,44,시간대_건수~14_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,시간대 11~14 매출 건수. 원본 컬럼명 표기 오류(시작 시각 자리에 '건수'). Open API 필드 TMZON_11_14_SELNG_CO와 순서 대조,건,Open API 필드명 대조,0,0.0000,N,21381,1978
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,45,시간대_건수~17_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,시간대 14~17 매출 건수. 원본 컬럼명 표기 오류(시작 시각 자리에 '건수'). Open API 필드 TMZON_14_17_SELNG_CO와 순서 대조,건,Open API 필드명 대조,0,0.0000,N,19519,3325
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,46,시간대_건수~21_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,시간대 17~21 매출 건수. 원본 컬럼명 표기 오류(시작 시각 자리에 '건수'). Open API 필드 TMZON_17_21_SELNG_CO와 순서 대조,건,Open API 필드명 대조,0,0.0000,N,21623,1736
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,47,시간대_건수~24_매출_건수,text (CSV에는 선언된 타입 없음),integer,6,시간대 21~24 매출 건수. 원본 컬럼명 표기 오류(시작 시각 자리에 '건수'). Open API 필드 TMZON_21_24_SELNG_CO와 순서 대조,건,Open API 필드명 대조,0,0.0000,N,12104,35
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,48,남성_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,남성 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,27419,2010
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,49,여성_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,여성 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,26623,5330
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,50,연령대_10_매출_건수,text (CSV에는 선언된 타입 없음),integer,6,연령대 10 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,4517,0
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,51,연령대_20_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,연령대 20 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,15577,539
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,52,연령대_30_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,연령대 30 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,19283,752
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,53,연령대_40_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,연령대 40 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,18555,990
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,54,연령대_50_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,연령대 50 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,19087,1393
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,55,연령대_60_이상_매출_건수,text (CSV에는 선언된 타입 없음),integer,7,연령대 60 이상 매출 건수 (추정매출),건,명칭 기반 추정,0,0.0000,N,18711,3666
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,1,stdr_yyqu_cd,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),5,기준 연도·분기 코드. YYYYQ 형식(예: 20251 = 2025년 1분기) [원본 헤더 'stdr_yyqu_cd' = Open API 필드 STDR_YYQU_CD = 한글 라벨 '기준_년분기_코드'],,명칭·값 기반 추정 + 필드명 대조,0,0.0000,N,4,20251
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,2,trdar_se_cd,text (CSV에는 선언된 타입 없음),string,1,상권 유형 코드 [원본 헤더 'trdar_se_cd' = Open API 필드 TRDAR_SE_CD = 한글 라벨 '상권_구분_코드'],,공식 명세 + 필드명 대조,0,0.0000,N,4,A
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,3,trdar_se_cd_nm,text (CSV에는 선언된 타입 없음),string,4,상권 유형 이름 [원본 헤더 'trdar_se_cd_nm' = Open API 필드 TRDAR_SE_CD_NM = 한글 라벨 '상권_구분_코드_명'],,공식 명세 + 필드명 대조,0,0.0000,N,4,골목상권
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,4,trdar_cd,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),7,서울시 상권분석서비스 상권 식별 코드 [원본 헤더 'trdar_cd' = Open API 필드 TRDAR_CD = 한글 라벨 '상권_코드'],,공식 명세 + 필드명 대조,0,0.0000,N,1650,3110001
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,5,trdar_cd_nm,text (CSV에는 선언된 타입 없음),string,32,상권 이름 [원본 헤더 'trdar_cd_nm' = Open API 필드 TRDAR_CD_NM = 한글 라벨 '상권_코드_명'],,공식 명세 + 필드명 대조,0,0.0000,N,1650,이북5도청사
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,6,svc_induty_cd,text (CSV에는 선언된 타입 없음),string,8,서울시 상권분석서비스 서비스업종(생활밀접업종) 코드 [원본 헤더 'svc_induty_cd' = Open API 필드 SVC_INDUTY_CD = 한글 라벨 '서비스_업종_코드'],,공식 명세 + 필드명 대조,0,0.0000,N,100,CS100001
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,7,svc_induty_cd_nm,text (CSV에는 선언된 타입 없음),string,12,서비스업종 이름 [원본 헤더 'svc_induty_cd_nm' = Open API 필드 SVC_INDUTY_CD_NM = 한글 라벨 '서비스_업종_코드_명'],,공식 명세 + 필드명 대조,0,0.0000,N,100,한식음식점
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,8,stor_co,text (CSV에는 선언된 타입 없음),integer,5,일반 점포 수 [원본 헤더 'stor_co' = Open API 필드 STOR_CO = 한글 라벨 '일반_점포_수'],개,명칭 기반 추정 + 필드명 대조,0,0.0000,N,515,12
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,9,similr_induty_stor_co,text (CSV에는 선언된 타입 없음),integer,5,전체 점포 수. 포털 설명: 전체_점포_수 = 일반_점포_수 + 프랜차이즈_점포_수 [원본 헤더 'similr_induty_stor_co' = Open API 필드 SIMILR_INDUTY_STOR_CO = 한글 라벨 '전체_점포_수'] 필드명 자체는 '유사업종 점포 수'를 뜻함,개,공식 명세(관계식) + 필드명 대조,0,0.0000,N,530,13
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,10,opbiz_rt,text (CSV에는 선언된 타입 없음),integer,3,개업 율 [원본 헤더 'opbiz_rt' = Open API 필드 OPBIZ_RT = 한글 라벨 '개업_율'],%로 추정(확인 필요),명칭 기반 추정 + 필드명 대조,0,0.0000,N,52,0
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,11,opbiz_stor_co,text (CSV에는 선언된 타입 없음),integer,2,개업 점포 수 [원본 헤더 'opbiz_stor_co' = Open API 필드 OPBIZ_STOR_CO = 한글 라벨 '개업_점포_수'],개,명칭 기반 추정 + 필드명 대조,0,0.0000,N,28,0
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,12,clsbiz_rt,text (CSV에는 선언된 타입 없음),integer,3,폐업 률 [원본 헤더 'clsbiz_rt' = Open API 필드 CLSBIZ_RT = 한글 라벨 '폐업_률'],%로 추정(확인 필요),명칭 기반 추정 + 필드명 대조,0,0.0000,N,60,8
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,13,clsbiz_stor_co,text (CSV에는 선언된 타입 없음),integer,3,폐업 점포 수 [원본 헤더 'clsbiz_stor_co' = Open API 필드 CLSBIZ_STOR_CO = 한글 라벨 '폐업_점포_수'],개,명칭 기반 추정 + 필드명 대조,0,0.0000,N,55,1
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,14,frc_stor_co,text (CSV에는 선언된 타입 없음),integer,3,프랜차이즈 점포 수 [원본 헤더 'frc_stor_co' = Open API 필드 FRC_STOR_CO = 한글 라벨 '프랜차이즈_점포_수'],개,명칭 기반 추정 + 필드명 대조,0,0.0000,N,92,1
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,1,TRDAR_SE_C,"DBF C(1,0)",string,1,상권 유형 코드 [원본 헤더 'TRDAR_SE_C' = Open API 필드 TRDAR_SE_CD = 한글 라벨 '상권_구분_코드'] (DBF 필드명 잘림. 값으로 대응 확인),,공식 명세 + 필드명 대조,0,0.0000,N,4,A
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,2,TRDAR_SE_1,"DBF C(12,0)",string,4,상권 유형 이름 [원본 헤더 'TRDAR_SE_1' = Open API 필드 TRDAR_SE_CD_NM = 한글 라벨 '상권_구분_코드_명'] (DBF 필드명 잘림. 값으로 대응 확인),,공식 명세 + 필드명 대조,0,0.0000,N,4,골목상권
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,3,TRDAR_CD,"DBF C(10,0)",string,7,서울시 상권분석서비스 상권 식별 코드 [원본 헤더 'TRDAR_CD' = Open API 필드 TRDAR_CD = 한글 라벨 '상권_코드'],,공식 명세 + 필드명 대조,0,0.0000,N,1650,3110008
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,4,TRDAR_CD_N,"DBF C(254,0)",string,32,상권 이름 [원본 헤더 'TRDAR_CD_N' = Open API 필드 TRDAR_CD_NM = 한글 라벨 '상권_코드_명'],,공식 명세 + 필드명 대조,0,0.0000,N,1650,배화여자대학교(박노수미술관)
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,5,XCNTS_VALU,"DBF N(38,0)",numeric,6,상권 대표점 X 좌표 [원본 헤더 'XCNTS_VALU' = Open API 필드 XCNTS_VALUE = 한글 라벨 '엑스좌표_값'],"m, EPSG:5181",공식 명세(좌표계) + 필드명 대조,0,0.0000,N,1606,197093
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,6,YDNTS_VALU,"DBF N(38,0)",numeric,6,상권 대표점 Y 좌표 [원본 헤더 'YDNTS_VALU' = Open API 필드 YDNTS_VALUE = 한글 라벨 '와이좌표_값'],"m, EPSG:5181",공식 명세(좌표계) + 필드명 대조,0,0.0000,N,1581,453418
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,7,SIGNGU_CD,"DBF C(5,0)",string,5,자치구 코드 [원본 헤더 'SIGNGU_CD' = Open API 필드 SIGNGU_CD = 한글 라벨 '자치구_코드'],,공식 명세 + 필드명 대조,0,0.0000,N,25,11110
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,8,SIGNGU_CD_,"DBF C(40,0)",string,4,자치구 이름 [원본 헤더 'SIGNGU_CD_' = Open API 필드 SIGNGU_CD_NM = 한글 라벨 '자치구_코드_명'],,공식 명세 + 필드명 대조,0,0.0000,N,25,종로구
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,9,ADSTRD_CD,"DBF C(8,0)",string,8,행정동 코드. 행정안전부 '주민등록 행정기관코드' [원본 헤더 'ADSTRD_CD' = Open API 필드 ADSTRD_CD = 한글 라벨 '행정동_코드'],,공식 명세 + 필드명 대조,0,0.0000,N,399,11110515
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,10,ADSTRD_CD_,"DBF C(40,0)",string,11,행정동 이름 [원본 헤더 'ADSTRD_CD_' = Open API 필드 ADSTRD_CD_NM = 한글 라벨 '행정동_코드_명'],,공식 명세 + 필드명 대조,0,0.0000,N,398,청운효자동
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,11,RELM_AR,"DBF N(38,0)",numeric,7,상권 영역 면적 [원본 헤더 'RELM_AR' = Open API 필드 RELM_AR = 한글 라벨 '영역_면적'],㎡로 추정(확인 필요),명칭 기반 추정 + 필드명 대조,0,0.0000,N,1638,149264
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,1,기준_년분기_코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),5,기준 연도·분기 코드. YYYYQ 형식(예: 20251 = 2025년 1분기),,명칭·값 기반 추정,0,0.0000,N,4,20254
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,2,상권_구분_코드,text (CSV에는 선언된 타입 없음),string,1,상권 유형 코드,,공식 명세,0,0.0000,N,4,A
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,3,상권_구분_코드_명,text (CSV에는 선언된 타입 없음),string,4,상권 유형 이름,,공식 명세,0,0.0000,N,4,골목상권
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,4,상권_코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),7,서울시 상권분석서비스 상권 식별 코드,,공식 명세,0,0.0000,N,1650,3110583
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,5,상권_코드_명,text (CSV에는 선언된 타입 없음),string,32,상권 이름,,공식 명세,0,0.0000,N,1650,공덕래미안3차아파트
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,6,총_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,총 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6577,355178
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,7,남성_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,남성 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6563,162000
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,8,여성_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,여성 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6550,193178
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,9,연령대_10_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,연령대 10 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6468,50928
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,10,연령대_20_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,연령대 20 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6477,43264
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,11,연령대_30_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,연령대 30 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6492,75360
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,12,연령대_40_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,연령대 40 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6505,73210
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,13,연령대_50_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,연령대 50 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6480,54273
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,14,연령대_60_이상_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,연령대 60 이상 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6513,58144
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,15,시간대_00_06_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,시간대 00 06 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6526,48819
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,16,시간대_06_11_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,시간대 06 11 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6537,76631
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,17,시간대_11_14_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,시간대 11 14 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6485,64269
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,18,시간대_14_17_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,시간대 14 17 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6471,66490
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,19,시간대_17_21_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,시간대 17 21 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6497,70294
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,20,시간대_21_24_유동인구_수,text (CSV에는 선언된 타입 없음),integer,6,시간대 21 24 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6462,28676
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,21,월요일_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,월요일 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6492,56179
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,22,화요일_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,화요일 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6502,57225
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,23,수요일_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,수요일 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6495,57880
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,24,목요일_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,목요일 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6494,56434
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,25,금요일_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,금요일 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6500,55871
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,26,토요일_유동인구_수,text (CSV에는 선언된 타입 없음),integer,7,토요일 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6461,37885
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,27,일요일_유동인구_수,text (CSV에는 선언된 타입 없음),integer,6,일요일 유동인구 수,명,명칭 기반 추정,0,0.0000,N,6491,33705
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,1,기준_년분기_코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),5,기준 연도·분기 코드. YYYYQ 형식(예: 20251 = 2025년 1분기),,명칭·값 기반 추정,0,0.0000,N,22,20262
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,2,상권_구분_코드,text (CSV에는 선언된 타입 없음),string,1,상권 유형 코드,,공식 명세,0,0.0000,N,4,U
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,3,상권_구분_코드_명,text (CSV에는 선언된 타입 없음),string,4,상권 유형 이름,,공식 명세,0,0.0000,N,4,관광특구
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,4,상권_코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),7,서울시 상권분석서비스 상권 식별 코드,,공식 명세,0,0.0000,N,1578,3001496
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,5,상권_코드_명,text (CSV에는 선언된 타입 없음),string,32,상권 이름,,공식 명세,0,0.0000,N,1580,강남 마이스 관광특구
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,6,집객시설_수,text (CSV에는 선언된 타입 없음),integer,3,집객시설 수,개,명칭 기반 추정,0,0.0000,N,126,35
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,7,관공서_수,text (CSV에는 선언된 타입 없음),integer,2,관공서 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,20856,0.6008,Y,10,1
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,8,은행_수,text (CSV에는 선언된 타입 없음),integer,2,은행 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,24002,0.6914,Y,24,8
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,9,종합병원_수,text (CSV에는 선언된 타입 없음),integer,1,종합병원 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,34210,0.9854,Y,2,1
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,10,일반_병원_수,text (CSV에는 선언된 타입 없음),integer,1,일반 병원 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,31812,0.9163,Y,4,1
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,11,약국_수,text (CSV에는 선언된 타입 없음),integer,2,약국 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,12518,0.3606,Y,32,3
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,12,유치원_수,text (CSV에는 선언된 타입 없음),integer,1,유치원 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,31394,0.9043,Y,5,1
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,13,초등학교_수,text (CSV에는 선언된 타입 없음),integer,1,초등학교 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,34430,0.9918,Y,1,1
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,14,중학교_수,text (CSV에는 선언된 타입 없음),integer,1,중학교 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,34628,0.9975,Y,1,1
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,15,고등학교_수,text (CSV에는 선언된 타입 없음),integer,1,고등학교 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,34474,0.9930,Y,2,3
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,16,대학교_수,text (CSV에는 선언된 타입 없음),integer,1,대학교 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,32868,0.9468,Y,7,1
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,17,백화점_수,text (CSV에는 선언된 타입 없음),integer,1,백화점 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,34474,0.9930,Y,2,1
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,18,슈퍼마켓_수,text (CSV에는 선언된 타입 없음),integer,1,슈퍼마켓 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,32406,0.9335,Y,8,5
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,19,극장_수,text (CSV에는 선언된 타입 없음),integer,1,극장 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,32868,0.9468,Y,5,1
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,20,숙박_시설_수,text (CSV에는 선언된 타입 없음),integer,2,숙박 시설 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,31526,0.9081,Y,12,15
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,21,공항_수,text (CSV에는 선언된 타입 없음),integer,1,공항 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,34694,0.9994,Y,1,4
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,22,철도_역_수,text (CSV에는 선언된 타입 없음),empty,0,철도 역 수,개,명칭 기반 추정,34716,1.0000,Y,0,
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,23,버스_터미널_수,text (CSV에는 선언된 타입 없음),integer,1,버스 터미널 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,34672,0.9987,Y,1,1
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,24,지하철_역_수,text (CSV에는 선언된 타입 없음),integer,1,지하철 역 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,30426,0.8764,Y,5,3
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,25,버스_정거장_수,text (CSV에는 선언된 타입 없음),integer,2,버스 정거장 수 (주의: 0 대신 공백으로 표기된 것으로 보임),개,명칭 기반 추정,6776,0.1952,Y,31,8
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,1,기준_년분기_코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),5,기준 연도·분기 코드. YYYYQ 형식(예: 20251 = 2025년 1분기),,명칭·값 기반 추정,0,0.0000,N,22,20262
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,2,상권_구분_코드,text (CSV에는 선언된 타입 없음),string,1,상권 유형 코드,,공식 명세,0,0.0000,N,4,U
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,3,상권_구분_코드_명,text (CSV에는 선언된 타입 없음),string,4,상권 유형 이름,,공식 명세,0,0.0000,N,4,관광특구
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,4,상권_코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),7,서울시 상권분석서비스 상권 식별 코드,,공식 명세,0,0.0000,N,1643,3001496
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,5,상권_코드_명,text (CSV에는 선언된 타입 없음),string,32,상권 이름,,공식 명세,0,0.0000,N,1645,강남 마이스 관광특구
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,6,총_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,6,총 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,2933,102032
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,7,남성_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,6,남성 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,2353,68834
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,8,여성_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,여성 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1979,33198
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,9,연령대_10_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,3,연령대 10 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,204,260
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,10,연령대_20_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,연령대 20 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1408,20558
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,11,연령대_30_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,연령대 30 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1661,30594
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,12,연령대_40_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,연령대 40 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1652,27320
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,13,연령대_50_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,연령대 50 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1531,18116
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,14,연령대_60_이상_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,연령대 60 이상 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1093,5184
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,15,남성연령대_10_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,3,남성연령대 10 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,128,128
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,16,남성연령대_20_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,남성연령대 20 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,994,11046
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,17,남성연령대_30_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,남성연령대 30 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1362,20220
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,18,남성연령대_40_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,남성연령대 40 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1357,20142
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,19,남성연령대_50_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,남성연령대 50 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1243,14200
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,20,남성연령대_60_이상_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,4,남성연령대 60 이상 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,914,3098
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,21,여성연령대_10_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,3,여성연령대 10 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,153,132
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,22,여성연령대_20_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,여성연령대 20 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1080,9512
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,23,여성연령대_30_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,여성연령대 30 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1146,10374
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,24,여성연령대_40_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,여성연령대 40 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,1054,7178
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,25,여성연령대_50_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,5,여성연령대 50 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,911,3916
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,26,여성연령대_60_이상_직장_인구_수,text (CSV에는 선언된 타입 없음),integer,4,여성연령대 60 이상 직장 인구 수,명,명칭 기반 추정,0,0.0000,N,592,2086
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,1,기준_년분기_코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),5,기준 연도·분기 코드. YYYYQ 형식(예: 20251 = 2025년 1분기),,명칭·값 기반 추정,0,0.0000,N,22,20262
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,2,상권_구분_코드,text (CSV에는 선언된 타입 없음),string,1,상권 유형 코드,,공식 명세,0,0.0000,N,4,U
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,3,상권_구분_코드_명,text (CSV에는 선언된 타입 없음),string,4,상권 유형 이름,,공식 명세,0,0.0000,N,4,관광특구
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,4,상권_코드,text (CSV에는 선언된 타입 없음),code (숫자 문자열 → 문자열 유지 권장),7,서울시 상권분석서비스 상권 식별 코드,,공식 명세,0,0.0000,N,1637,3001496
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,5,상권_코드_명,text (CSV에는 선언된 타입 없음),string,32,상권 이름,,공식 명세,0,0.0000,N,1639,강남 마이스 관광특구
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,6,총_상주인구_수,text (CSV에는 선언된 타입 없음),integer,5,총 상주인구 수,명,명칭 기반 추정,0,0.0000,N,3138,34
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,7,남성_상주인구_수,text (CSV에는 선언된 타입 없음),integer,5,남성 상주인구 수,명,명칭 기반 추정,0,0.0000,N,2342,24
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,8,여성_상주인구_수,text (CSV에는 선언된 타입 없음),integer,5,여성 상주인구 수,명,명칭 기반 추정,0,0.0000,N,2370,10
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,9,연령대_10_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,연령대 10 상주인구 수,명,명칭 기반 추정,0,0.0000,N,861,1
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,10,연령대_20_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,연령대 20 상주인구 수,명,명칭 기반 추정,0,0.0000,N,1184,1
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,11,연령대_30_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,연령대 30 상주인구 수,명,명칭 기반 추정,0,0.0000,N,1278,3
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,12,연령대_40_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,연령대 40 상주인구 수,명,명칭 기반 추정,0,0.0000,N,1142,4
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,13,연령대_50_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,연령대 50 상주인구 수,명,명칭 기반 추정,0,0.0000,N,1173,10
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,14,연령대_60_이상_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,연령대 60 이상 상주인구 수,명,명칭 기반 추정,0,0.0000,N,1656,15
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,15,남성연령대_10_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,남성연령대 10 상주인구 수,명,명칭 기반 추정,0,0.0000,N,540,1
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,16,남성연령대_20_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,남성연령대 20 상주인구 수,명,명칭 기반 추정,0,0.0000,N,708,1
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,17,남성연령대_30_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,남성연령대 30 상주인구 수,명,명칭 기반 추정,0,0.0000,N,797,2
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,18,남성연령대_40_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,남성연령대 40 상주인구 수,명,명칭 기반 추정,0,0.0000,N,711,2
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,19,남성연령대_50_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,남성연령대 50 상주인구 수,명,명칭 기반 추정,0,0.0000,N,696,8
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,20,남성연령대_60_이상_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,남성연령대 60 이상 상주인구 수,명,명칭 기반 추정,0,0.0000,N,991,10
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,21,여성연령대_10_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,여성연령대 10 상주인구 수,명,명칭 기반 추정,0,0.0000,N,512,0
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,22,여성연령대_20_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,여성연령대 20 상주인구 수,명,명칭 기반 추정,0,0.0000,N,785,0
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,23,여성연령대_30_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,여성연령대 30 상주인구 수,명,명칭 기반 추정,0,0.0000,N,787,1
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,24,여성연령대_40_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,여성연령대 40 상주인구 수,명,명칭 기반 추정,0,0.0000,N,684,2
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,25,여성연령대_50_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,여성연령대 50 상주인구 수,명,명칭 기반 추정,0,0.0000,N,716,2
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,26,여성연령대_60_이상_상주인구_수,text (CSV에는 선언된 타입 없음),integer,4,여성연령대 60 이상 상주인구 수,명,명칭 기반 추정,0,0.0000,N,1139,5
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,27,총_가구_수,text (CSV에는 선언된 타입 없음),integer,4,총 가구 수,가구,명칭 기반 추정,0,0.0000,N,1960,25
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,28,아파트_가구_수,text (CSV에는 선언된 타입 없음),integer,1,아파트 가구 수,가구,명칭 기반 추정,0,0.0000,N,1,0
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,29,비_아파트_가구_수,text (CSV에는 선언된 타입 없음),integer,4,비 아파트 가구 수,가구,명칭 기반 추정,0,0.0000,N,1960,25

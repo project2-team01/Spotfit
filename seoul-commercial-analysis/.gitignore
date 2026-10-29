@@ -1,0 +1,20 @@
+# 원본 데이터는 용량 문제로 Git에 올리지 않습니다 (공유 드라이브로 공유, docs/DATA_HANDOFF.md 참고)
+data/raw/
+*.part
+
+# 향후 가공 데이터도 기본은 제외
+data/interim/
+data/processed/
+
+# 인증키·비밀정보
+.env
+.env.*
+!.env.example
+*.key
+
+# 기타
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+.venv/

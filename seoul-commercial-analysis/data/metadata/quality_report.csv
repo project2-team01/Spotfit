@@ -1,0 +1,115 @@
+﻿dataset_id,local_file_path,check,result,value,detail
+S01,data/raw/semas/semas_store_20251231.zip,sha256_vs_download_manifest,pass,aac060ecc2866f6c7c12d11abb7c71bbf7058bb22663ed38bd68782b9882e2a1,다운로드 시점 해시와 일치
+S01,data/raw/semas/semas_store_20251231.zip,zip_integrity,pass,,CRC 검사 이상 없음
+S01,data/raw/semas/semas_store_20251231.zip,zip_members,info,18,"[필독]파일열람방법.txt (1,011 B); 소상공인시장진흥공단_상가(상권)정보_강원_202512.csv (61,016,188 B); 소상공인시장진흥공단_상가(상권)정보_경기_202512.csv (354,121,177 B); 소상공인시장진흥공단_상가(상권)정보_경남_202512.csv (92,156,461 B); 소상공인시장진흥공단_상가(상권)정보_경북_202512.csv (75,878,061 B); 소상공인시장진흥공단_상가(상권)정보_광주_202512.csv (39,877,331 B); 소상공인시장진흥공단_상가(상권)정보_대구_202512.csv (61,626,650 B); 소상공인시장진흥공단_상가(상권)정보_대전_202512.csv (41,693,023 B); 소상공인시장진흥공단_상가(상권)정보_부산_202512.csv (84,147,775 B); 소상공인시장진흥공단_상가(상권)정보_서울_202512.csv (291,391,584 B); 소상공인시장진흥공단_상가(상권)정보_세종_202512.csv (9,556,574 B); 소상공인시장진흥공단_상가(상권)정보_울산_202512.csv (28,185,247 B); 소상공인시장진흥공단_상가(상권)정보_인천_202512.csv (72,470,077 B); 소상공인시장진흥공단_상가(상권)정보_전남_202512.csv (52,948,025 B); 소상공인시장진흥공단_상가(상권)정보_전북_202512.csv (55,893,169 B); 소상공인시장진흥공단_상가(상권)정보_제주_202512.csv (32,714,331 B); 소상공인시장진흥공단_상가(상권)정보_충남_202512.csv (66,479,414 B); 소상공인시장진흥공단_상가(상권)정보_충북_202512.csv (50,533,815 B)"
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,read,pass,,"encoding=utf-8, sep=','"
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,row_count,info,534978,
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,column_count,info,39,
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,malformed_lines,pass,0,
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,missing_cells_total,warn,2586358,"지점명=487,042; 표준산업분류코드=199; 표준산업분류명=199; 지번본번지=25; 지번부번지=94,362; 건물본번지=2; 건물부번지=465,474; 건물관리번호=2,342; 건물명=278,767; 동정보=534,978; 층정보=187,990; 호정보=534,978"
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,duplicate_rows,pass,0,모든 컬럼 값이 같은 행 수(첫 등장 제외)
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,duplicate_key[상가업소번호],pass,0,
+S02,data/raw/semas/semas_industry_code_20230228.csv,sha256_vs_download_manifest,pass,3055e458f887b3c0b94a2059c3a2571a28053de8b17a4e2e566d6b189f6e1948,다운로드 시점 해시와 일치
+S02,data/raw/semas/semas_industry_code_20230228.csv,read,pass,,"encoding=cp949, sep=','"
+S02,data/raw/semas/semas_industry_code_20230228.csv,row_count,info,247,
+S02,data/raw/semas/semas_industry_code_20230228.csv,column_count,info,6,
+S02,data/raw/semas/semas_industry_code_20230228.csv,malformed_lines,pass,0,
+S02,data/raw/semas/semas_industry_code_20230228.csv,missing_cells_total,pass,0,
+S02,data/raw/semas/semas_industry_code_20230228.csv,duplicate_rows,pass,0,모든 컬럼 값이 같은 행 수(첫 등장 제외)
+S02,data/raw/semas/semas_industry_code_20230228.csv,duplicate_key[소분류코드],pass,0,
+K01,data/raw/seoul/seoul_sales_trdar_2025.zip,sha256_vs_download_manifest,pass,c907f3d386d62b89f45781e6e6172328ee91b1b8dd2c621e4171e437bee1c6b2,다운로드 시점 해시와 일치
+K01,data/raw/seoul/seoul_sales_trdar_2025.zip,zip_integrity,pass,,CRC 검사 이상 없음
+K01,data/raw/seoul/seoul_sales_trdar_2025.zip,zip_members,info,1,"서울시 상권분석서비스(추정매출-상권)_2025년.csv (39,698,674 B)"
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,read,pass,,"encoding=cp949, sep=','"
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,row_count,info,85732,
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,column_count,info,55,
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,malformed_lines,pass,0,
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,missing_cells_total,pass,0,
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,duplicate_rows,pass,0,모든 컬럼 값이 같은 행 수(첫 등장 제외)
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,duplicate_key[기준_년분기_코드+상권_코드+서비스_업종_코드],pass,0,
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,quarter_coverage,info,4,"{""20251"": 21427, ""20252"": 21452, ""20253"": 21520, ""20254"": 21333}"
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,relation[당월_매출_금액 = 주중_매출_금액 + 주말_매출_금액],pass,"불일치 0 / 비교 85,732",최대 차이 0; 결측으로 비교 제외 0행
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,relation[당월_매출_건수 = 주중_매출_건수 + 주말_매출_건수],pass,"불일치 0 / 비교 85,732",최대 차이 0; 결측으로 비교 제외 0행
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,relation[당월_매출_금액 = 남성_매출_금액 + 여성_매출_금액],info,"불일치 50,230 / 비교 85,732","최대 차이 238,192,629,824; 결측으로 비교 제외 0행; 포털 FAQ: 분기 매출은 개인+법인 합산이라 성별·연령별 합과 다를 수 있음 (예상된 차이)"
+K02,data/raw/seoul/seoul_store_trdar_2025.zip,sha256_vs_download_manifest,pass,133bfc6ce79e13ee5b289490e4667dfba46a0af5d0d71df360a0d324e030a4e6,다운로드 시점 해시와 일치
+K02,data/raw/seoul/seoul_store_trdar_2025.zip,zip_integrity,pass,,CRC 검사 이상 없음
+K02,data/raw/seoul/seoul_store_trdar_2025.zip,zip_members,info,1,"서울시 상권분석서비스(점포-상권)_2025년.csv (31,051,537 B)"
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,read,pass,,"encoding=cp949, sep=','"
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,row_count,info,304775,
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,column_count,info,14,
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,malformed_lines,pass,0,
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,missing_cells_total,pass,0,
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,duplicate_rows,pass,0,모든 컬럼 값이 같은 행 수(첫 등장 제외)
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,duplicate_key[stdr_yyqu_cd+trdar_cd+svc_induty_cd],pass,0,
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,quarter_coverage,info,4,"{""20251"": 76383, ""20252"": 76238, ""20253"": 76169, ""20254"": 75985}"
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,relation[similr_induty_stor_co = stor_co + frc_stor_co],pass,"불일치 0 / 비교 304,775",최대 차이 0; 결측으로 비교 제외 0행; 포털 설명 '전체 = 일반 + 프랜차이즈'의 검증
+K03,data/raw/seoul/seoul_area_trdar.zip,sha256_vs_download_manifest,pass,38bb8fab4e45a1171af4989cd7fa1275f68e5d644aa770f5431ce7ccc38384dd,다운로드 시점 해시와 일치
+K03,data/raw/seoul/seoul_area_trdar.zip,zip_integrity,pass,,CRC 검사 이상 없음
+K03,data/raw/seoul/seoul_area_trdar.zip,zip_members,info,5,"서울시 상권분석서비스(영역-상권).cpg (5 B); 서울시 상권분석서비스(영역-상권).dbf (800,636 B); 서울시 상권분석서비스(영역-상권).prj (417 B); 서울시 상권분석서비스(영역-상권).shp (3,642,228 B); 서울시 상권분석서비스(영역-상권).shx (13,300 B)"
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,shp_header,pass,Polygon,"bbox=182079.0,437149.7,215472.7,466040.2"
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,crs_prj,info,EPSG:5181 해당,"PROJCS[""Korea_2000_Korea_Central_Belt"",GEOGCS[""GCS_Korea_2000"",DATUM[""D_Korea_2000"",SPHEROID[""GRS_1980"",6378137.0,298.257222101]],PRIMEM[""Greenwich"",0.0],UNIT[""Degree"",0.0174532925199433]],PROJECTION[""Transverse_Mercator""],PARAMETER[""False_Easting"",200000.0],PARAMETER[""False_Northing"",500000.0],PARAMETER[""Central_Meridian"",127.0],PARAMETER[""Scale_Factor"",1.0],PARAMETER[""Latitude_Of_Origin"",38.0],UNIT[""Meter"",1.0]]"
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,shp_dbf_record_match,pass,"shx=1650, dbf=1650",
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,duplicate_key[TRDAR_CD],pass,0,
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,sha256_vs_download_manifest,pass,bae1efb7b6649494fd795511044910dd52bf310eb8ca275764d0a7b17383d2ed,다운로드 시점 해시와 일치
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,read,pass,,"encoding=cp949, sep=','"
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,row_count,info,6595,
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,column_count,info,27,
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,malformed_lines,pass,0,
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,missing_cells_total,pass,0,
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,duplicate_rows,pass,0,모든 컬럼 값이 같은 행 수(첫 등장 제외)
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,duplicate_key[기준_년분기_코드+상권_코드],pass,0,
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,quarter_coverage,info,4,"{""20251"": 1650, ""20252"": 1649, ""20253"": 1648, ""20254"": 1648}"
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,relation[총_유동인구_수 = 남성_유동인구_수 + 여성_유동인구_수],warn,"불일치 3,343 / 비교 6,595",최대 차이 3; 결측으로 비교 제외 0행; 차이가 작아 반올림 오차로 추정
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,sha256_vs_download_manifest,pass,632d4380d0d68c9f0184c34d7b3b5af452d706a58171c851ee452f4573939437,다운로드 시점 해시와 일치
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,read,pass,,"encoding=cp949, sep=','"
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,row_count,info,34716,
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,column_count,info,25,
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,malformed_lines,pass,0,
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,missing_cells_total,warn,563750,"관공서_수=20,856; 은행_수=24,002; 종합병원_수=34,210; 일반_병원_수=31,812; 약국_수=12,518; 유치원_수=31,394; 초등학교_수=34,430; 중학교_수=34,628; 고등학교_수=34,474; 대학교_수=32,868; 백화점_수=34,474; 슈퍼마켓_수=32,406; 극장_수=32,868; 숙박_시설_수=31,526; 공항_수=34,694; 철도_역_수=34,716; 버스_터미널_수=34,672; 지하철_역_수=30,426; 버스_정거장_수=6,776"
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,duplicate_rows,pass,0,모든 컬럼 값이 같은 행 수(첫 등장 제외)
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,duplicate_key[기준_년분기_코드+상권_코드],pass,0,
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,quarter_coverage,info,22,"{""20211"": 1578, ""20212"": 1578, ""20213"": 1578, ""20214"": 1578, ""20221"": 1578, ""20222"": 1578, ""20223"": 1578, ""20224"": 1578, ""20231"": 1578, ""20232"": 1578, ""20233"": 1578, ""20234"": 1578, ""20241"": 1578, ""20242"": 1578, ""20243"": 1578, ""20244"": 1578, ""20251"": 1578, ""20252"": 1578, ""20253"": 1578, ""20254"": 1578, ""20261"": 1578, ""20262"": 1578}"
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,relation[집객시설_수 = 하위 19개 컬럼 합],warn,"불일치 32,736 / 비교 34,716",최대 차이 415; 결측으로 비교 제외 0행; 비교용으로만 공백을 0으로 계산. 집객시설_수의 산정 기준은 명세에 없음
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,blank_without_zero,warn,18,"숫자 컬럼인데 0은 한 번도 없고 공백만 있음 → 공백이 0을 뜻할 가능성. 원본은 그대로 둠: 관공서_수, 은행_수, 종합병원_수, 일반_병원_수, 약국_수, 유치원_수, 초등학교_수, 중학교_수, 고등학교_수, 대학교_수, 백화점_수, 슈퍼마켓_수, 극장_수, 숙박_시설_수, 공항_수, 버스_터미널_수, 지하철_역_수, 버스_정거장_수"
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,sha256_vs_download_manifest,pass,9987bbbdaf9f1623713839bf4994aa2100e60574f00e83ff03def97f1abbb50d,다운로드 시점 해시와 일치
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,read,pass,,"encoding=cp949, sep=','"
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,row_count,info,36027,
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,column_count,info,26,
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,malformed_lines,pass,0,
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,missing_cells_total,pass,0,
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,duplicate_rows,pass,0,모든 컬럼 값이 같은 행 수(첫 등장 제외)
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,duplicate_key[기준_년분기_코드+상권_코드],pass,0,
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,quarter_coverage,info,22,"{""20211"": 1636, ""20212"": 1636, ""20213"": 1636, ""20214"": 1635, ""20221"": 1635, ""20222"": 1635, ""20223"": 1635, ""20224"": 1637, ""20231"": 1637, ""20232"": 1637, ""20233"": 1637, ""20234"": 1636, ""20241"": 1636, ""20242"": 1636, ""20243"": 1636, ""20244"": 1641, ""20251"": 1641, ""20252"": 1641, ""20253"": 1641, ""20254"": 1641, ""20261"": 1641, ""20262"": 1641}"
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,relation[총_직장_인구_수 = 남성_직장_인구_수 + 여성_직장_인구_수],pass,"불일치 0 / 비교 36,027",최대 차이 0; 결측으로 비교 제외 0행
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,sha256_vs_download_manifest,pass,d93c24929675302026308ba5f12b097636ec3bf5f97870e802e0b06e8f0e2bb4,다운로드 시점 해시와 일치
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,read,pass,,"encoding=cp949, sep=','"
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,row_count,info,35908,
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,column_count,info,29,
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,malformed_lines,pass,0,
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,missing_cells_total,pass,0,
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,duplicate_rows,pass,0,모든 컬럼 값이 같은 행 수(첫 등장 제외)
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,duplicate_key[기준_년분기_코드+상권_코드],pass,0,
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,quarter_coverage,info,22,"{""20211"": 1634, ""20212"": 1634, ""20213"": 1634, ""20214"": 1634, ""20221"": 1634, ""20222"": 1634, ""20223"": 1634, ""20224"": 1625, ""20231"": 1628, ""20232"": 1625, ""20233"": 1625, ""20234"": 1635, ""20241"": 1635, ""20242"": 1633, ""20243"": 1633, ""20244"": 1633, ""20251"": 1633, ""20252"": 1633, ""20253"": 1633, ""20254"": 1633, ""20261"": 1633, ""20262"": 1633}"
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,relation[총_상주인구_수 = 남성_상주인구_수 + 여성_상주인구_수],pass,"불일치 0 / 비교 35,908",최대 차이 0; 결측으로 비교 제외 0행
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,relation[총_가구_수 = 아파트_가구_수 + 비_아파트_가구_수],pass,"불일치 0 / 비교 35,908",최대 차이 0; 결측으로 비교 제외 0행
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,시도명_values,pass,서울특별시,서울 파일에 서울 외 시도가 섞였는지 확인
+S01,data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv,coordinate_range_wgs84,pass,"경도 126.76819~127.18265, 위도 37.43046~37.69260","숫자 변환 불가 0건. 기준: 서울 대략 범위 경도 126.7~127.3, 위도 37.4~37.75"
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,api_row_count[20251],pass,"file=21,427, api=21427",
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,api_row_count[20252],pass,"file=21,452, api=21452",
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,api_row_count[20253],pass,"file=21,520, api=21520",
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,api_row_count[20254],pass,"file=21,333, api=21333",
+K01,data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv,api_sample_values[20251],pass,"일치 5, 불일치 0, 파일에 없음 0 (API 샘플 5행)",
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,api_row_count[20251],pass,"file=76,383, api=76383",
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,api_row_count[20252],pass,"file=76,238, api=76238",
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,api_row_count[20253],pass,"file=76,169, api=76169",
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,api_row_count[20254],pass,"file=75,985, api=75985",
+K02,data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv,api_sample_values[20251],pass,"일치 5, 불일치 0, 파일에 없음 0 (API 샘플 5행)",
+K03,data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp,api_total_rows,pass,"file=1650, api=1650",
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,api_row_count[20251],pass,"file=1,650, api=1650",
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,api_row_count[20252],pass,"file=1,649, api=1649",
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,api_row_count[20253],pass,"file=1,648, api=1648",
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,api_row_count[20254],pass,"file=1,648, api=1648",
+K04,data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv,api_sample_values[20251],pass,"일치 5, 불일치 0, 파일에 없음 0 (API 샘플 5행)",
+K05,data/raw/seoul/seoul_facility_trdar_all_sheet.csv,api_total_rows,pass,"file=34,716, api=34716",필터 없는 전체 기간 비교
+K06,data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv,api_total_rows,pass,"file=36,027, api=36027",필터 없는 전체 기간 비교
+K07,data/raw/seoul/seoul_repop_trdar_all_sheet.csv,api_total_rows,pass,"file=35,908, api=35908",필터 없는 전체 기간 비교
