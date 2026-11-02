@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>SpotFit 2단계 결합검증 대시보드 (2025Q4)</title>
+  <style>
+    :root {
+      --primary: #1e3d59;
+      --secondary: #17b978;
+      --accent: #ff6e40;
+      --bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --text: #333333;
+      --border: #e0e0e0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Malgun Gothic', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 20px; }
+    header { background: var(--primary); color: white; padding: 25px 20px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    header h1 { font-size: 24px; margin-bottom: 8px; }
+    header p { font-size: 14px; opacity: 0.9; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 25px; }
+    .kpi-card { background: var(--card-bg); border-radius: 10px; padding: 18px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+    .kpi-title { font-size: 13px; color: #666; font-weight: 600; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 700; color: var(--primary); }
+    .kpi-sub { font-size: 12px; color: #888; margin-top: 4px; }
+    .tab-nav { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border); overflow-x: auto; padding-bottom: 4px; }
+    .tab-btn { padding: 10px 20px; font-size: 15px; font-weight: 600; border: none; background: none; cursor: pointer; color: #666; border-radius: 6px 6px 0 0; }
+    .tab-btn.active { color: var(--primary); border-bottom: 3px solid var(--primary); background: #ffffff; }
+    .tab-content { display: none; background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.04); margin-bottom: 30px; }
+    .tab-content.active { display: block; }
+    h2 { font-size: 18px; color: var(--primary); margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #edf2f7; }
+    .table-container { max-height: 480px; overflow-y: auto; overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 15px; }
+    .scroll-guide { font-size: 12px; color: #666; margin-bottom: 6px; font-weight: 500; }
+    table { width: 100.0%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    th { background: #f1f5f9; color: var(--primary); font-weight: 700; padding: 10px 12px; position: sticky; top: 0; z-index: 2; border-bottom: 2px solid var(--border); }
+    td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+    tr:hover { background: #f8fafc; }
+    .badge { display: inline-block; padding: 3px 8px; font-size: 11px; font-weight: 600; border-radius: 4px; }
+    .badge-success { background: #e6f4ea; color: #137333; }
+    .badge-warning { background: #fef7e0; color: #b06000; }
+    .badge-info { background: #e8f0fe; color: #1a73e8; }
+    .img-box { text-align: center; margin: 20px 0; }
+    .img-box img { max-width: 100.0%; height: auto; border-radius: 8px; border: 1px solid var(--border); }
+    @media (max-width: 768px) {
+      .container { padding: 10px; }
+      header { padding: 18px 15px; }
+      header h1 { font-size: 19px; }
+      .kpi-value { font-size: 18px; }
+      .tab-btn { padding: 8px 12px; font-size: 13px; }
+      .tab-content { padding: 15px; }
+      th, td { padding: 8px 8px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class='container'>
+    <header>
+      <h1>SpotFit 2단계: 데이터 전처리 및 결합검증 대시보드 (2025Q4)</h1>
+      <p>1,650개 상권 마스터 및 62개 업종 분기 마트 연계 정합성·결측치 자동 검증 결과</p>
+    </header>
+
+    <div class='kpi-grid'>
+      <div class='kpi-card'><div class='kpi-title'>상권 마스터</div><div class='kpi-value'>1,650개</div><div class='kpi-sub'>25개 자치구 / 399개 행정동</div></div>
+      <div class='kpi-card'><div class='kpi-title'>상권 분기 슬롯</div><div class='kpi-value'>6,600행</div><div class='kpi-sub'>1,650개 상권 × 4개 분기</div></div>
+      <div class='kpi-card'><div class='kpi-title'>상권 업종 분기 마트</div><div class='kpi-value'>246,197행</div><div class='kpi-sub'>62개 업종 결합 마트 (17개 컬럼)</div></div>
+      <div class='kpi-card'><div class='kpi-title'>연간 상권 매출 합계</div><div class='kpi-value'>92.66조 원</div><div class='kpi-sub'>원천 데이터와 오차 0원</div></div>
+      <div class='kpi-card'><div class='kpi-title'>2025Q4 점포 수</div><div class='kpi-value'>457,188개</div><div class='kpi-sub'>4개 분기 분기별 합산: 1,842,421개</div></div>
+    </div>
+
+    <div class='tab-nav'>
+      <button class='tab-btn active' onclick='switchTab(0)'>1. 조사 결과</button>
+      <button class='tab-btn' onclick='switchTab(1)'>2. 항목-파일 연결</button>
+      <button class='tab-btn' onclick='switchTab(2)'>3. 조인 전후 비교</button>
+      <button class='tab-btn' onclick='switchTab(3)'>4. 누락과 빈칸</button>
+    </div>
+
+    <!-- 탭 1: 조사 결과 -->
+    <div class='tab-content active' id='tab-0'>
+      <h2>1. 점포 위치 불일치(7,722건) 및 공간 경계 조사 결과</h2>
+      <div class='scroll-guide'>※ 전체 점포 534,978건 중 서울 내부 534,898건에 대한 공간 분석 결과 요약</div>
+      <div class='table-container'>
+        <table>
+          <thead><tr><th>검증 항목</th><th>수치</th><th>비율 (%)</th><th>분모</th><th>판정 및 데이터 확인 내용</th></tr></thead>
+          <tbody>
+            <tr><td>전체 점포 수</td><td>534,978건</td><td>100.0%</td><td>원천 데이터</td><td><span class='badge badge-success'>정상 수집</span></td></tr>
+            <tr><td>서울 경계 내부 점포</td><td>534,898건</td><td>99.985%</td><td>전체 점포</td><td><span class='badge badge-success'>정상 포함</span></td></tr>
+            <tr><td>서울 경계 외부 점포</td><td>80건</td><td>0.015%</td><td>전체 점포</td><td><span class='badge badge-warning'>경계 외부</span> 7개 구 80건</td></tr>
+            <tr><td>원천 행정동코드 불일치</td><td>7,722건</td><td>1.444%</td><td>서울 내부 점포</td><td><span class='badge badge-info'>원천 차이</span> 1단계 검수 일치</td></tr>
+            <tr><td>분동·통합(NEW_TO_OLD) 해소</td><td>52건</td><td>0.01%</td><td>서울 내부 점포</td><td><span class='badge badge-success'>매핑 해결</span> 용신동 분동 체계 일치</td></tr>
+            <tr><td>잔여 불일치 점포</td><td>7,670건</td><td>1.434%</td><td>서울 내부 점포</td><td><span class='badge badge-warning'>경계 근접</span> 중위거리 22.82m</td></tr>
+            <tr><td>- 동일 구 내 인접동 불일치</td><td>7,302건</td><td>95.2%</td><td>잔여 불일치</td><td>동일 자치구 관할 내 인접동</td></tr>
+            <tr><td>- 100m 이내 최근접 비율</td><td>6,920건</td><td>90.22%</td><td>잔여 불일치</td><td>대지 필지/도로 경계선 오차</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class='img-box'>
+        <img src='../images/stage2/01_점포_위치_이격거리_분포.png' alt='점포 위치 이격거리 분포'>
+      </div>
+      <h2>상권 중심점 ↔ 대표 행정동 불일치 조사 결과</h2>
+      <p style='margin-bottom: 12px; font-size: 14px;'>
+        - 중심점과 대표 행정동이 다른 상권 수: <b>31개</b> (변환 좌표계: <code>EPSG:5181 -> EPSG:4326</code>)<br>
+        - 중심점의 자치구까지 다른 상권 수: <b>3개</b> (홍지문, 충정로역 6번, 신사역)<br>
+        - 양재역 상권 코드 충돌: 자치구는 <b>서초구 (11650)</b> [유지], 대표 행정동은 <b>도곡1동 (11680655)</b> (강남구 관할)
+      </p>
+    </div>
+
+    <!-- 탭 2: 항목-파일 연결 -->
+    <div class='tab-content' id='tab-1'>
+      <h2>2. 9대 상권 특성 항목-파일 연결표 (승인 기준)</h2>
+      <div class='scroll-guide'>※ 가로 스크롤 가능 / 헤더 고정 테이블</div>
+      <div class='table-container'>
+        <table>
+          <thead><tr><th>항목명</th><th>대응 원천 파일</th><th>분석 단위</th><th>주요 수록 컬럼</th><th>계산 방법</th><th>데이터 한계</th></tr></thead>
+          <tbody>
+            <tr><td><b>고객 구성</b></td><td>OA-15568, OA-15584, OA-15569</td><td>상권×분기 / 고정</td><td>유동·상주·직장 인구수</td><td>유동 합계, 상주·직장 고정 분리</td><td>[가설] 상주·직장은 인구 센서스 기반 불변</td></tr>
+            <tr><td><b>객단가</b></td><td>OA-15572_추정매출_상권</td><td>상권×업종×분기</td><td>당월_매출_금액, 당월_매출_건수</td><td>매출금액 ÷ 매출건수</td><td>3단계 상권 특성표에서 계산</td></tr>
+            <tr><td><b>프랜차이즈 비율</b></td><td>OA-15577_점포_상권</td><td>상권×업종×분기</td><td>프랜차이즈_점포_수, 전체_점포_수</td><td>프랜차이즈합 ÷ 전체점포합 × 100</td><td>3단계 상권 특성표에서 계산</td></tr>
+            <tr><td><b>매출 변화</b></td><td>OA-15572_추정매출_상권</td><td>상권×업종×분기</td><td>당월_매출_금액, 기준_년분기_코드</td><td>분기별 증감률</td><td>1분기 전분기 증감률 결측</td></tr>
+            <tr><td><b>경쟁 (밀집도)</b></td><td>OA-15577, OA-15560</td><td>상권×업종×분기</td><td>전체_점포_수, 영역_면적</td><td>점포수 ÷ (영역면적 / 10,000)</td><td>상권 외곽 인접 점포 미포함</td></tr>
+            <tr><td><b>개폐업</b></td><td>OA-15577_점포_상권</td><td>상권×업종×분기</td><td>개업_점포_수, 폐업_점포_수</td><td>개업(폐업)합 ÷ 전체점포합 × 100</td><td>3단계 상권 특성표에서 계산</td></tr>
+            <tr><td><b>상권 변화 지표</b></td><td>OA-15576_상권변화지표</td><td>상권×분기</td><td>상권_변화_지표_명, 운영개월</td><td>정체/축소/다이나믹/확장 보존</td><td>평균 개월수만 제공</td></tr>
+            <tr><td><b>소비 수준</b></td><td>OA-22166_소비_행정동</td><td>행정동×분기</td><td>지출_총금액, 항목별 지출</td><td>대표 행정동코드 키 매핑</td><td>배후 동 소비. 이상치 8곳 플래그</td></tr>
+            <tr><td><b>집객시설</b></td><td>OA-15580_집객시설_상권</td><td>상권 고정</td><td>집객시설_수, 19종 세부 시설</td><td>원천 행 없는 상권 NaN 보존</td><td>4개 분기 수치 동일</td></tr>
+            <tr><td><b>임대료·보증금</b></td><td>데이터 없음</td><td>상권 단위</td><td>데이터 없음</td><td><b>데이터 없음</b> 표기</td><td>원천 미수집. 임의추정 금지</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class='img-box'>
+        <img src='../images/stage2/03_공통그룹별_점포수_분포.png' alt='공통그룹별 점포 수 분포'>
+      </div>
+    </div>
+
+    <!-- 탭 3: 조인 전후 비교 -->
+    <div class='tab-content' id='tab-2'>
+      <h2>3. 조인 단계별 전후 행 수 및 일치성 확인</h2>
+      <div class='scroll-guide'>※ 7단계 조인 과정 validate 지정 및 키 일치 관계 확인</div>
+      <div class='table-container'>
+        <table>
+          <thead><tr><th>단계</th><th>대상 마트</th><th>결합 내용</th><th>조인 키</th><th>validate</th><th>조인 전 행수</th><th>조인 후 행수</th><th>키 고유수</th><th>조인 전 매출합계</th><th>조인 후 매출합계</th><th>조인 전 점포합계</th><th>조인 후 점포합계</th><th>결측 건수</th><th>사유 및 처리</th></tr></thead>
+          <tbody>
+            <tr><td><b>조인 1</b></td><td>상권_마스터</td><td>영역_상권 + 상주인구_상권</td><td><code>상권_코드</code></td><td><span class='badge badge-info'>1:1</span></td><td>1,650</td><td>1,650</td><td>1,650</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>17</td><td>원천에 행 없는 상권 17개는 NaN으로 보존</td></tr>
+            <tr><td><b>조인 2</b></td><td>상권_마스터</td><td>상권_마스터 + 직장인구_상권</td><td><code>상권_코드</code></td><td><span class='badge badge-info'>1:1</span></td><td>1,650</td><td>1,650</td><td>1,650</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>9</td><td>원천에 행 없는 상권 9개는 NaN으로 보존</td></tr>
+            <tr><td><b>조인 3</b></td><td>상권_마스터</td><td>상권_마스터 + 집객시설_상권</td><td><code>상권_코드</code></td><td><span class='badge badge-info'>1:1</span></td><td>1,650</td><td>1,650</td><td>1,650</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>72</td><td>원천에 행 없는 72개 상권은 NaN 보존 및 이름표 부여</td></tr>
+            <tr><td><b>조인 4</b></td><td>상권_마스터</td><td>상권_마스터 + 배후 행정동 마스터</td><td><code>행정동_코드</code></td><td><span class='badge badge-info'>m:1</span></td><td>1,650</td><td>1,650</td><td>1,650</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>0</td><td>1,650개 상권의 대표 행정동 100.0% 결합 완료</td></tr>
+            <tr><td><b>조인 5</b></td><td>상권_분기_마트</td><td>상권_분기_슬롯 + 길단위유동인구_상권</td><td><code>상권_코드+기준_년분기_코드</code></td><td><span class='badge badge-info'>1:1</span></td><td>6,600</td><td>6,600</td><td>6,600</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>5</td><td>원천에 행 없는 5개 슬롯은 NaN으로 보존</td></tr>
+            <tr><td><b>조인 6</b></td><td>상권_분기_마트</td><td>상권_분기_마트 + 상권변화지표_상권</td><td><code>상권_코드+기준_년분기_코드</code></td><td><span class='badge badge-info'>1:1</span></td><td>6,600</td><td>6,600</td><td>6,600</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>해당 없음</td><td>0</td><td>6,600행 슬롯과 100.0% 완전 일치</td></tr>
+            <tr><td><b>조인 7</b></td><td>상권_분기_마트</td><td>상권_분기_마트 + 상권별 매출·점포 집계</td><td><code>상권_코드+기준_년분기_코드</code></td><td><span class='badge badge-info'>1:1</span></td><td>6,600</td><td>6,600</td><td>6,600</td><td>92,658,231,006,581원</td><td>92,658,231,006,581원</td><td>1,842,421개</td><td>1,842,421개</td><td>324</td><td>원천에 행 없는 324개 상권분기 슬롯은 NaN 보존</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class='img-box'>
+        <img src='../images/stage2/02_상권특성_데이터_준비도.png' alt='상권특성 데이터 준비도'>
+      </div>
+    </div>
+
+    <!-- 탭 4: 누락과 빈칸 -->
+    <div class='tab-content' id='tab-3'>
+      <h2>4. 원천 결측치 및 빈칸 목록 추적 (누락 기록 500행)</h2>
+      <div class='scroll-guide'>※ 전체 누락 기록 (500행) / 스크롤하여 확인 가능</div>
+      <div style='background: #eef2f6; border-left: 4px solid var(--primary); padding: 14px; border-radius: 6px; margin-bottom: 16px; font-size: 13px;'>
+        <b>누락 및 빈칸 현황 요약 (총 500개 행 기록)</b>:
+        <ul style='margin-left: 20px; margin-top: 6px;'>
+          <li><b>상주인구</b>: 17개 고유 상권 (17행) - 원천에 행 없음</li>
+          <li><b>직장인구</b>: 9개 고유 상권 (9행) - 원천에 행 없음</li>
+          <li><b>집객시설</b>: 72개 고유 상권 (72행) - 원천에 행 없음 (NaN 보존, 이름표 부여)</li>
+          <li><b>유동인구</b>: 2개 고유 상권 (5행: 20252 1건, 20253 2건, 20254 2건) - 원천에 슬롯 없음</li>
+          <li><b>추정매출</b>: 90개 고유 상권 (총 397행)</li>
+        </ul>
+        <div style='margin-top: 8px;'>
+          ※ <b>추정매출 누락 중복 구조 설명</b>: 추정매출 누락 397행은 4개 분기 모두 실적이 없는 상권 73개(분기 슬롯 292행 + 연간 전체 추적 73행 = 365행)와, 일부 분기(1~3개 분기)만 실적이 없는 상권 17개(분기 슬롯 32행)가 결합된 구조입니다. (총 분기 슬롯 누락 = 292 + 32 = 324행)
+        </div>
+      </div>
+      <div class='table-container'>
+        <table>
+          <thead><tr><th>상권 코드</th><th>상권 명칭</th><th>분기</th><th>지표 항목</th><th>원천 파일명</th><th>미집계 사유</th></tr></thead>
+          <tbody>
+            <tr><td><code>3110793</code></td><td>대림썬프라자</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111002</code></td><td>한국교통안전공단 강남자동차검사소</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3120025</code></td><td>롯데백화점(시청광장 지하쇼핑센터)</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3120099</code></td><td>월드컵경기장역(월드컵경기장)</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3120115</code></td><td>김포공항역(김포공항)</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3120137</code></td><td>문래역(문래로데오거리)</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3120231</code></td><td>가락시장</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130022</code></td><td>숭례문수입상가(남대문시장)</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130096</code></td><td>동부시장</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130142</code></td><td>강북북부시장</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130155</code></td><td>시영B상가(중계 그린아파트 B 상가)</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130174</code></td><td>연희사러가</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130184</code></td><td>마포농수산물시장</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130215</code></td><td>대원종합시장</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130239</code></td><td>양남시장</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130304</code></td><td>신사상가</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130308</code></td><td>청담삼익시장</td><td>고정</td><td><b>상주인구</b></td><td>OA-15584_상주인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110205</code></td><td>경희대삼거리</td><td>고정</td><td><b>직장인구</b></td><td>OA-15569_직장인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110235</code></td><td>세화어린이공원</td><td>고정</td><td><b>직장인구</b></td><td>OA-15569_직장인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110844</code></td><td>흑석2치안센터</td><td>고정</td><td><b>직장인구</b></td><td>OA-15569_직장인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3120099</code></td><td>월드컵경기장역(월드컵경기장)</td><td>고정</td><td><b>직장인구</b></td><td>OA-15569_직장인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130013</code></td><td>동대문상가A동</td><td>고정</td><td><b>직장인구</b></td><td>OA-15569_직장인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130016</code></td><td>동대문상가B동</td><td>고정</td><td><b>직장인구</b></td><td>OA-15569_직장인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130239</code></td><td>양남시장</td><td>고정</td><td><b>직장인구</b></td><td>OA-15569_직장인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130249</code></td><td>동남상가</td><td>고정</td><td><b>직장인구</b></td><td>OA-15569_직장인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130308</code></td><td>청담삼익시장</td><td>고정</td><td><b>직장인구</b></td><td>OA-15569_직장인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110013</code></td><td>체부동홍종문가옥</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110015</code></td><td>청와대사랑채</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110044</code></td><td>관성묘</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110046</code></td><td>버티고개</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110097</code></td><td>한남초등학교</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110145</code></td><td>장안초등학교</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110222</code></td><td>회기역 2번</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110223</code></td><td>군자초등학교</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110235</code></td><td>세화어린이공원</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110239</code></td><td>중랑역 2번</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110386</code></td><td>연산군묘</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110581</code></td><td>염리초등학교</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110610</code></td><td>계남근린공원</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110623</code></td><td>갈산공원</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110642</code></td><td>정곡초등학교</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110669</code></td><td>화곡보람2차아파트</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110685</code></td><td>금강수목원아파트</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110704</code></td><td>고척중학교</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110763</code></td><td>영등포구청역 2번</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110808</code></td><td>신길역 1번</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110914</code></td><td>내방역 6번</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110923</code></td><td>방배역 1번</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110928</code></td><td>서초우방유쉘아파트</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110937</code></td><td>방아다리근린공원(횃불트리니티신학대학원대학교)</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110938</code></td><td>바우뫼공원</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110941</code></td><td>언남고등학교</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110946</code></td><td>청계산원터골</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110950</code></td><td>논현역 7번</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110963</code></td><td>역삼월드메르디앙아파트</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110965</code></td><td>언주역 6번</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110977</code></td><td>논현로18길</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110985</code></td><td>청담근린공원</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110986</code></td><td>삼성중앙역 7번</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110987</code></td><td>영동대교남단</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110991</code></td><td>삼성중앙역 5번</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110993</code></td><td>개포지하차도 북측</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111048</code></td><td>천호역 1번(천호문구완구거리)</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111050</code></td><td>강동구청(강동구청역 2번)</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130013</code></td><td>동대문상가A동</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130016</code></td><td>동대문상가B동</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130033</code></td><td>대림상가(청계상가)</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130034</code></td><td>필동 골목형상점가</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130046</code></td><td>team204(팀204)</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130060</code></td><td>신흥시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130085</code></td><td>용두시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130093</code></td><td>동서시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130142</code></td><td>강북북부시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130164</code></td><td>역촌중앙시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130173</code></td><td>백련시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130178</code></td><td>이대 앞 스타트업 상점가</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130187</code></td><td>영진시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130188</code></td><td>합정시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130189</code></td><td>서교시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130201</code></td><td>월정로시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130211</code></td><td>신정2동 골목시장(오목교중앙시장)</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130215</code></td><td>대원종합시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130218</code></td><td>신월중앙시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130224</code></td><td>개봉프라자(고척근린시장)</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130228</code></td><td>구로시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130239</code></td><td>양남시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130243</code></td><td>도림시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130247</code></td><td>우리시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130249</code></td><td>동남상가</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130250</code></td><td>삼구시장(로타리상가)</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130254</code></td><td>남서울상가</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130269</code></td><td>강남시장(동작구 강남시장)</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130270</code></td><td>흑석시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130275</code></td><td>강남골목시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130291</code></td><td>봉천제일종합시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130292</code></td><td>봉천현대시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130302</code></td><td>강남시장(강남구 강남시장)</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130305</code></td><td>논현종합시장</td><td>고정</td><td><b>집객시설</b></td><td>OA-15580_집객시설_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111002</code></td><td>한국교통안전공단 강남자동차검사소</td><td>20253</td><td><b>유동인구</b></td><td>OA-15568_길단위인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111002</code></td><td>한국교통안전공단 강남자동차검사소</td><td>20254</td><td><b>유동인구</b></td><td>OA-15568_길단위인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110946</code></td><td>청계산원터골</td><td>20252</td><td><b>유동인구</b></td><td>OA-15568_길단위인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110946</code></td><td>청계산원터골</td><td>20253</td><td><b>유동인구</b></td><td>OA-15568_길단위인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110946</code></td><td>청계산원터골</td><td>20254</td><td><b>유동인구</b></td><td>OA-15568_길단위인구_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110011</code></td><td>청운초등학교</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110011</code></td><td>청운초등학교</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110011</code></td><td>청운초등학교</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110011</code></td><td>청운초등학교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110046</code></td><td>버티고개</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110046</code></td><td>버티고개</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110046</code></td><td>버티고개</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110046</code></td><td>버티고개</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110086</code></td><td>이태원역 북측</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110086</code></td><td>이태원역 북측</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110086</code></td><td>이태원역 북측</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110086</code></td><td>이태원역 북측</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110070</code></td><td>용산세무서</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110070</code></td><td>용산세무서</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110070</code></td><td>용산세무서</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110070</code></td><td>용산세무서</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110111</code></td><td>대현산장미원</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110111</code></td><td>대현산장미원</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110111</code></td><td>대현산장미원</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110111</code></td><td>대현산장미원</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110097</code></td><td>한남초등학교</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110097</code></td><td>한남초등학교</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110097</code></td><td>한남초등학교</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110097</code></td><td>한남초등학교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110100</code></td><td>옥수동우편취급국</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110100</code></td><td>옥수동우편취급국</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110100</code></td><td>옥수동우편취급국</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110100</code></td><td>옥수동우편취급국</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110101</code></td><td>옥정중학교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110119</code></td><td>마장지하차도</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110119</code></td><td>마장지하차도</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110119</code></td><td>마장지하차도</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110119</code></td><td>마장지하차도</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110196</code></td><td>홍릉근린공원</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110196</code></td><td>홍릉근린공원</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110196</code></td><td>홍릉근린공원</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110196</code></td><td>홍릉근린공원</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110231</code></td><td>장안교</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110231</code></td><td>장안교</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110231</code></td><td>장안교</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110231</code></td><td>장안교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110235</code></td><td>세화어린이공원</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110235</code></td><td>세화어린이공원</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110235</code></td><td>세화어린이공원</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110235</code></td><td>세화어린이공원</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110276</code></td><td>신내IC북측</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110276</code></td><td>신내IC북측</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110276</code></td><td>신내IC북측</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110276</code></td><td>신내IC북측</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110321</code></td><td>동덕여대</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110321</code></td><td>동덕여대</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110321</code></td><td>동덕여대</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110321</code></td><td>동덕여대</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110279</code></td><td>신내역 2번</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110279</code></td><td>신내역 2번</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110279</code></td><td>신내역 2번</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110279</code></td><td>신내역 2번</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110281</code></td><td>길상사</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110310</code></td><td>길음역 10번</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110310</code></td><td>길음역 10번</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110310</code></td><td>길음역 10번</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110310</code></td><td>길음역 10번</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110311</code></td><td>종암아이파크2차후문</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110311</code></td><td>종암아이파크2차후문</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110311</code></td><td>종암아이파크2차후문</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110311</code></td><td>종암아이파크2차후문</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110347</code></td><td>구세군강북종합사회복지관</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110347</code></td><td>구세군강북종합사회복지관</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110347</code></td><td>구세군강북종합사회복지관</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110347</code></td><td>구세군강북종합사회복지관</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110324</code></td><td>월곡역 4번</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110324</code></td><td>월곡역 4번</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110324</code></td><td>월곡역 4번</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110324</code></td><td>월곡역 4번</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110326</code></td><td>장위동성당</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110326</code></td><td>장위동성당</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110326</code></td><td>장위동성당</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110326</code></td><td>장위동성당</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110338</code></td><td>인수초등학교</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110338</code></td><td>인수초등학교</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110338</code></td><td>인수초등학교</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110338</code></td><td>인수초등학교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110379</code></td><td>KTNG 북부지사</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110379</code></td><td>KTNG 북부지사</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110384</code></td><td>문이교</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110384</code></td><td>문이교</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110384</code></td><td>문이교</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110384</code></td><td>문이교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110385</code></td><td>효문고등학교</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110385</code></td><td>효문고등학교</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110385</code></td><td>효문고등학교</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110385</code></td><td>효문고등학교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110386</code></td><td>연산군묘</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110518</code></td><td>서대문구청</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110518</code></td><td>서대문구청</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110518</code></td><td>서대문구청</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110518</code></td><td>서대문구청</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110581</code></td><td>염리초등학교</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110581</code></td><td>염리초등학교</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110581</code></td><td>염리초등학교</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110581</code></td><td>염리초등학교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110414</code></td><td>장석교회</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110414</code></td><td>장석교회</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110414</code></td><td>장석교회</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110414</code></td><td>장석교회</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110440</code></td><td>상계3동4동주민센터</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110574</code></td><td>서강대학교</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110574</code></td><td>서강대학교</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110574</code></td><td>서강대학교</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110574</code></td><td>서강대학교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111081</code></td><td>둔촌푸르지오아파트</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111081</code></td><td>둔촌푸르지오아파트</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111081</code></td><td>둔촌푸르지오아파트</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111081</code></td><td>둔촌푸르지오아파트</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110443</code></td><td>수색역 1번</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110443</code></td><td>수색역 1번</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110443</code></td><td>수색역 1번</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110443</code></td><td>수색역 1번</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110445</code></td><td>덕산중학교</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110445</code></td><td>덕산중학교</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110445</code></td><td>덕산중학교</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110445</code></td><td>덕산중학교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110427</code></td><td>노원 을지대학교병원</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110427</code></td><td>노원 을지대학교병원</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110427</code></td><td>노원 을지대학교병원</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110427</code></td><td>노원 을지대학교병원</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110504</code></td><td>명지전문대</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110504</code></td><td>명지전문대</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110504</code></td><td>명지전문대</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110504</code></td><td>명지전문대</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110531</code></td><td>홍지문</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110531</code></td><td>홍지문</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110531</code></td><td>홍지문</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110531</code></td><td>홍지문</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110682</code></td><td>온수역 8번</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110682</code></td><td>온수역 8번</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110682</code></td><td>온수역 8번</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110682</code></td><td>온수역 8번</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110705</code></td><td>고산초등학교</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110705</code></td><td>고산초등학교</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110705</code></td><td>고산초등학교</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110705</code></td><td>고산초등학교</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110806</code></td><td>서울시립영등포장애인복지관</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110806</code></td><td>서울시립영등포장애인복지관</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110806</code></td><td>서울시립영등포장애인복지관</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110806</code></td><td>서울시립영등포장애인복지관</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110808</code></td><td>신길역 1번</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110808</code></td><td>신길역 1번</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110761</code></td><td>문래동남성맨션</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110761</code></td><td>문래동남성맨션</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110761</code></td><td>문래동남성맨션</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110761</code></td><td>문래동남성맨션</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110796</code></td><td>한림대학교한강성심병원</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110796</code></td><td>한림대학교한강성심병원</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110629</code></td><td>송정역 4번</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110629</code></td><td>송정역 4번</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110629</code></td><td>송정역 4번</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110629</code></td><td>송정역 4번</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110801</code></td><td>신풍역 6번(신길6동공영주차장)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110801</code></td><td>신풍역 6번(신길6동공영주차장)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110801</code></td><td>신풍역 6번(신길6동공영주차장)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110801</code></td><td>신풍역 6번(신길6동공영주차장)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110944</code></td><td>서울나래학교(염곡어린이공원)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110944</code></td><td>서울나래학교(염곡어린이공원)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110944</code></td><td>서울나래학교(염곡어린이공원)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110944</code></td><td>서울나래학교(염곡어린이공원)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111018</code></td><td>풍납초등학교(풍납백제문화공원)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111018</code></td><td>풍납초등학교(풍납백제문화공원)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111018</code></td><td>풍납초등학교(풍납백제문화공원)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111018</code></td><td>풍납초등학교(풍납백제문화공원)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111041</code></td><td>거여역 8번</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111041</code></td><td>거여역 8번</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111041</code></td><td>거여역 8번</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111041</code></td><td>거여역 8번</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110987</code></td><td>영동대교남단</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110987</code></td><td>영동대교남단</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110987</code></td><td>영동대교남단</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110987</code></td><td>영동대교남단</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110834</code></td><td>동작구자원봉사센터</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110834</code></td><td>동작구자원봉사센터</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110911</code></td><td>방배배수지체육공원</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110911</code></td><td>방배배수지체육공원</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110911</code></td><td>방배배수지체육공원</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110911</code></td><td>방배배수지체육공원</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110928</code></td><td>서초우방유쉘아파트</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110928</code></td><td>서초우방유쉘아파트</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110928</code></td><td>서초우방유쉘아파트</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110928</code></td><td>서초우방유쉘아파트</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110945</code></td><td>본마을노인복지센터(서초구립내곡도서관)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110945</code></td><td>본마을노인복지센터(서초구립내곡도서관)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110914</code></td><td>내방역 6번</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110914</code></td><td>내방역 6번</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110914</code></td><td>내방역 6번</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110993</code></td><td>개포지하차도 북측</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110993</code></td><td>개포지하차도 북측</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110993</code></td><td>개포지하차도 북측</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110993</code></td><td>개포지하차도 북측</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110948</code></td><td>헌인가구단지</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110948</code></td><td>헌인가구단지</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110948</code></td><td>헌인가구단지</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110950</code></td><td>논현역 7번</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110950</code></td><td>논현역 7번</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110950</code></td><td>논현역 7번</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110950</code></td><td>논현역 7번</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110906</code></td><td>서문여고</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110920</code></td><td>방배역 2번(백석예술대학교)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110920</code></td><td>방배역 2번(백석예술대학교)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110920</code></td><td>방배역 2번(백석예술대학교)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110920</code></td><td>방배역 2번(백석예술대학교)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110844</code></td><td>흑석2치안센터</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110844</code></td><td>흑석2치안센터</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110844</code></td><td>흑석2치안센터</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110844</code></td><td>흑석2치안센터</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110964</code></td><td>싸리고개근린공원</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110964</code></td><td>싸리고개근린공원</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110964</code></td><td>싸리고개근린공원</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110964</code></td><td>싸리고개근린공원</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110841</code></td><td>중대부중</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110841</code></td><td>중대부중</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110841</code></td><td>중대부중</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110841</code></td><td>중대부중</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110894</code></td><td>관악동부센트레빌아파트(은천로35라길)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110894</code></td><td>관악동부센트레빌아파트(은천로35라길)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110894</code></td><td>관악동부센트레빌아파트(은천로35라길)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110894</code></td><td>관악동부센트레빌아파트(은천로35라길)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130309</code></td><td>은마종합상점가</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130309</code></td><td>은마종합상점가</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130309</code></td><td>은마종합상점가</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130309</code></td><td>은마종합상점가</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130280</code></td><td>신림종합시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130280</code></td><td>신림종합시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130062</code></td><td>보광시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130062</code></td><td>보광시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130062</code></td><td>보광시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130062</code></td><td>보광시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130234</code></td><td>푸른터시장(기능상실)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130234</code></td><td>푸른터시장(기능상실)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130234</code></td><td>푸른터시장(기능상실)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130234</code></td><td>푸른터시장(기능상실)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130237</code></td><td>박미시장(기능상실)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130237</code></td><td>박미시장(기능상실)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130237</code></td><td>박미시장(기능상실)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130237</code></td><td>박미시장(기능상실)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130239</code></td><td>양남시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130239</code></td><td>양남시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130239</code></td><td>양남시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130239</code></td><td>양남시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130142</code></td><td>강북북부시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130142</code></td><td>강북북부시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130077</code></td><td>조양시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130077</code></td><td>조양시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130080</code></td><td>자양종합시장(기능상실)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130080</code></td><td>자양종합시장(기능상실)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130080</code></td><td>자양종합시장(기능상실)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130080</code></td><td>자양종합시장(기능상실)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130155</code></td><td>시영B상가(중계 그린아파트 B 상가)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130155</code></td><td>시영B상가(중계 그린아파트 B 상가)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130155</code></td><td>시영B상가(중계 그린아파트 B 상가)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130155</code></td><td>시영B상가(중계 그린아파트 B 상가)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130156</code></td><td>시영2단지 무지개종합상가(중계 무지개2단지아파트상가)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130156</code></td><td>시영2단지 무지개종합상가(중계 무지개2단지아파트상가)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130156</code></td><td>시영2단지 무지개종합상가(중계 무지개2단지아파트상가)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130156</code></td><td>시영2단지 무지개종합상가(중계 무지개2단지아파트상가)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130158</code></td><td>상계역전종합상가</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130158</code></td><td>상계역전종합상가</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130158</code></td><td>상계역전종합상가</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130158</code></td><td>상계역전종합상가</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130085</code></td><td>용두시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130085</code></td><td>용두시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130085</code></td><td>용두시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130164</code></td><td>역촌중앙시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130164</code></td><td>역촌중앙시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130164</code></td><td>역촌중앙시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130164</code></td><td>역촌중앙시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130286</code></td><td>신신림시장(삼성동시장)</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130286</code></td><td>신신림시장(삼성동시장)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130286</code></td><td>신신림시장(삼성동시장)</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130286</code></td><td>신신림시장(삼성동시장)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130011</code></td><td>충신시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130011</code></td><td>충신시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130011</code></td><td>충신시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130011</code></td><td>충신시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130187</code></td><td>영진시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130187</code></td><td>영진시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130187</code></td><td>영진시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130187</code></td><td>영진시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130188</code></td><td>합정시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130188</code></td><td>합정시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130188</code></td><td>합정시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130188</code></td><td>합정시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130017</code></td><td>동대문상가C동</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130017</code></td><td>동대문상가C동</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130017</code></td><td>동대문상가C동</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130017</code></td><td>동대문상가C동</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130019</code></td><td>동대문상가D동</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130019</code></td><td>동대문상가D동</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130019</code></td><td>동대문상가D동</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130019</code></td><td>동대문상가D동</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130114</code></td><td>유영시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130114</code></td><td>유영시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130114</code></td><td>유영시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130114</code></td><td>유영시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130034</code></td><td>필동 골목형상점가</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130034</code></td><td>필동 골목형상점가</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130034</code></td><td>필동 골목형상점가</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130034</code></td><td>필동 골목형상점가</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130038</code></td><td>평화시장(통일상가, 동화상가)</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130038</code></td><td>평화시장(통일상가, 동화상가)</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130193</code></td><td>신수시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130193</code></td><td>신수시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130193</code></td><td>신수시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130193</code></td><td>신수시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130021</code></td><td>신설종합시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130021</code></td><td>신설종합시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130021</code></td><td>신설종합시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130021</code></td><td>신설종합시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130124</code></td><td>번동시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130124</code></td><td>번동시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130124</code></td><td>번동시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130124</code></td><td>번동시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130130</code></td><td>수유북부골목시장</td><td>20251</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130130</code></td><td>수유북부골목시장</td><td>20252</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130130</code></td><td>수유북부골목시장</td><td>20253</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130130</code></td><td>수유북부골목시장</td><td>20254</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110011</code></td><td>청운초등학교</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110046</code></td><td>버티고개</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110070</code></td><td>용산세무서</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110086</code></td><td>이태원역 북측</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110097</code></td><td>한남초등학교</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110100</code></td><td>옥수동우편취급국</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110111</code></td><td>대현산장미원</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110119</code></td><td>마장지하차도</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110196</code></td><td>홍릉근린공원</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110231</code></td><td>장안교</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110235</code></td><td>세화어린이공원</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110276</code></td><td>신내IC북측</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110279</code></td><td>신내역 2번</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110310</code></td><td>길음역 10번</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110311</code></td><td>종암아이파크2차후문</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110321</code></td><td>동덕여대</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110324</code></td><td>월곡역 4번</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110326</code></td><td>장위동성당</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110338</code></td><td>인수초등학교</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110347</code></td><td>구세군강북종합사회복지관</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110384</code></td><td>문이교</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110385</code></td><td>효문고등학교</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110414</code></td><td>장석교회</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110427</code></td><td>노원 을지대학교병원</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110443</code></td><td>수색역 1번</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110445</code></td><td>덕산중학교</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110504</code></td><td>명지전문대</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110518</code></td><td>서대문구청</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110531</code></td><td>홍지문</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110574</code></td><td>서강대학교</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110581</code></td><td>염리초등학교</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110629</code></td><td>송정역 4번</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110682</code></td><td>온수역 8번</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110705</code></td><td>고산초등학교</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110761</code></td><td>문래동남성맨션</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110801</code></td><td>신풍역 6번(신길6동공영주차장)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110806</code></td><td>서울시립영등포장애인복지관</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110841</code></td><td>중대부중</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110844</code></td><td>흑석2치안센터</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110894</code></td><td>관악동부센트레빌아파트(은천로35라길)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110911</code></td><td>방배배수지체육공원</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110920</code></td><td>방배역 2번(백석예술대학교)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110928</code></td><td>서초우방유쉘아파트</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110944</code></td><td>서울나래학교(염곡어린이공원)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110950</code></td><td>논현역 7번</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110964</code></td><td>싸리고개근린공원</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110987</code></td><td>영동대교남단</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3110993</code></td><td>개포지하차도 북측</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111018</code></td><td>풍납초등학교(풍납백제문화공원)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111041</code></td><td>거여역 8번</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3111081</code></td><td>둔촌푸르지오아파트</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130011</code></td><td>충신시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130017</code></td><td>동대문상가C동</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130019</code></td><td>동대문상가D동</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130021</code></td><td>신설종합시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130034</code></td><td>필동 골목형상점가</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130062</code></td><td>보광시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130080</code></td><td>자양종합시장(기능상실)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130114</code></td><td>유영시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130124</code></td><td>번동시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130130</code></td><td>수유북부골목시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130155</code></td><td>시영B상가(중계 그린아파트 B 상가)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130156</code></td><td>시영2단지 무지개종합상가(중계 무지개2단지아파트상가)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130158</code></td><td>상계역전종합상가</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130164</code></td><td>역촌중앙시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130187</code></td><td>영진시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130188</code></td><td>합정시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130193</code></td><td>신수시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130234</code></td><td>푸른터시장(기능상실)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130237</code></td><td>박미시장(기능상실)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130239</code></td><td>양남시장</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130286</code></td><td>신신림시장(삼성동시장)</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+            <tr><td><code>3130309</code></td><td>은마종합상점가</td><td>연간 전체</td><td><b>추정매출</b></td><td>OA-15572_추정매출_상권.csv</td><td>원천에 행 없음</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <footer style='text-align: center; color: #888; font-size: 12px; margin-top: 30px;'>
+      <p>SpotFit Analytics Platform | 본 대시보드는 <code>src/build_stage2_report.py</code>에 의해 자동 생성되었습니다.</p>
+    </footer>
+  </div>
+
+  <script>
+    function switchTab(idx) {
+      const btns = document.querySelectorAll('.tab-btn');
+      const contents = document.querySelectorAll('.tab-content');
+      btns.forEach((b, i) => b.classList.toggle('active', i === idx));
+      contents.forEach((c, i) => c.classList.toggle('active', i === idx));
+    }
+  </script>
+</body>
+</html>
