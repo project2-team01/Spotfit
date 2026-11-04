@@ -1,0 +1,4 @@
+marimo==0.25.2
+plotly==7.1.0
+pandas>=2.2,<4
+numpy>=1.26,<3

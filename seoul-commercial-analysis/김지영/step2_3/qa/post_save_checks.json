@@ -1,0 +1,12 @@
+{
+  "saved_file_checks_passed": true,
+  "runtime_check_rows": 268,
+  "fact_rows": 304775,
+  "context_rows": 6600,
+  "annual_rows": 77694,
+  "spatial_bridge_rows": 552374,
+  "semas_aggregates_rows": 109507,
+  "dictionary_calculated": 52,
+  "dictionary_deferred": 5,
+  "tourist_excluded_complete_annual_cells": 19863
+}

@@ -1,0 +1,95 @@
+{
+  "analysis_year": 2025,
+  "crs": "EPSG:5181",
+  "source": "서울특별시 상권분석서비스 / 소상공인시장진흥공단 상가(상권)정보",
+  "versions": {
+    "python": "3.13.5",
+    "pandas": "3.1.0",
+    "numpy": "2.5.4",
+    "geopandas": "1.2.0"
+  },
+  "assumptions": {
+    "small_store_threshold": 5,
+    "minimum_industry_peers": 30,
+    "semas_snapshot": "2025-12-31",
+    "facility_blank_imputation": false,
+    "semas_to_seoul_mapping_applied": false
+  },
+  "summary": {
+    "fact_rows": 304775,
+    "context_rows": 6600,
+    "annual_rows": 77694,
+    "derived_variable_definitions": 57,
+    "main_fact_rows": 302701,
+    "complete_sales_year_cells": 20098,
+    "invalid_polygons_repaired": 6,
+    "reported_to_geometry_area_ratio_min": 0.999826922686586,
+    "reported_to_geometry_area_ratio_max": 1.0001497627086489,
+    "semas_stores": 534978,
+    "semas_unassigned": 108931,
+    "semas_multi_core_stores": 0,
+    "semas_accepted_main_stores": 425536,
+    "nonzero_stock_flow_residual_rows": 2336
+  },
+  "freshness": [
+    {
+      "dataset": "K04",
+      "last_observed_value_change": "20254",
+      "changed_quarters": [
+        "20252",
+        "20253",
+        "20254"
+      ],
+      "actual_statistical_vintage_verified": false
+    },
+    {
+      "dataset": "K05",
+      "last_observed_value_change": null,
+      "changed_quarters": [],
+      "actual_statistical_vintage_verified": false
+    },
+    {
+      "dataset": "K06",
+      "last_observed_value_change": "20244",
+      "changed_quarters": [
+        "20214",
+        "20224",
+        "20234",
+        "20244"
+      ],
+      "actual_statistical_vintage_verified": false
+    },
+    {
+      "dataset": "K07",
+      "last_observed_value_change": "20234",
+      "changed_quarters": [
+        "20224",
+        "20234"
+      ],
+      "actual_statistical_vintage_verified": false
+    }
+  ],
+  "input_sha256": {
+    "data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv": "2e299cd3e78a98d9b46634af0cc768276d8d270eb4c38b5f1b1ce54f8dcd828f",
+    "data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv": "afe3c49336e4c64e3e4066db1bb61034ab7c238916ff473a37d7667fbb4e1d68",
+    "data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+    "data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).dbf": "7e2d03d69442418c142dbaa6b206888777fdd4207825df90c70af408f2c5f3ff",
+    "data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).prj": "680810e56b8fe15e448efdf2d278a9753369bc93a6fc0092b7952dfac4b872c9",
+    "data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shp": "4de3d04e79a8b77440655c4eb880184bbeec426ebeb3ac2d0e00b2e5a3c8016c",
+    "data/raw/seoul/extracted/seoul_area_trdar/서울시 상권분석서비스(영역-상권).shx": "b0859525d6ab1ca0eaa708279de17435eda2a36eef69e9effbbae38f39c6f764",
+    "data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv": "bae1efb7b6649494fd795511044910dd52bf310eb8ca275764d0a7b17383d2ed",
+    "data/raw/seoul/seoul_facility_trdar_all_sheet.csv": "632d4380d0d68c9f0184c34d7b3b5af452d706a58171c851ee452f4573939437",
+    "data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv": "9987bbbdaf9f1623713839bf4994aa2100e60574f00e83ff03def97f1abbb50d",
+    "data/raw/seoul/seoul_repop_trdar_all_sheet.csv": "d93c24929675302026308ba5f12b097636ec3bf5f97870e802e0b06e8f0e2bb4",
+    "data/raw/semas/extracted/semas_store_20251231/소상공인시장진흥공단_상가(상권)정보_서울_202512.csv": "7374e0edda19beb6f89c64918c7eb3e7a89007121bddbf2fc0f78aca310d2506",
+    "data/raw/semas/semas_industry_code_20230228.csv": "3055e458f887b3c0b94a2059c3a2571a28053de8b17a4e2e566d6b189f6e1948"
+  },
+  "output_sha256": {
+    "data/annual_features.csv.gz": "769c3c9ec4624d172ff0208c9dd9b91e889255c46b15c4cbc216ed2ea40add65",
+    "data/dim_trdar.csv.gz": "d54e6c03a8d08b8f6e1bf791abc46bbf5844958f0aa2f1ee838bf7c2280af7e9",
+    "data/fact_trdar_industry_quarter.csv.gz": "1aec8222e0e6600a6d89d8a922abdae1bad859f623c926885cc11e69c3e6b919",
+    "data/semas_q4_industry_counts.csv.gz": "ee3ba93c973b30ba29495706743ce393e30b348ebbc316ea91d7a66098a59310",
+    "data/semas_spatial_bridge.csv.gz": "658f329a95ba73ac21ff60d7a6c2e2e4c8bcc3e071d7b54cb260ba78c0a1570d",
+    "data/trdar_quarter_context.csv.gz": "b37c8473b457110f74da57a8a30c49db8e416132ce320b5bc7c76021b03eb4fd"
+  }
+}
