@@ -29,6 +29,8 @@ def table(df):
 
 
 def write(name, text):
+    if name == 'README.md' and (HERE / '분석내용_쉬운설명과_검토결과.md').exists():
+        text = text.replace('## 먼저 읽을 문서\n', '## 먼저 읽을 문서\n\n처음 보는 팀원은 [분석 내용의 쉬운 설명과 재검토 결과](분석내용_쉬운설명과_검토결과.md)부터 읽으세요. 무엇을 분석했는지, 어떤 계산을 확인했는지, 결과를 어디까지 해석할 수 있는지 정리했습니다.\n', 1)
     (HERE / name).write_text(text.strip() + '\n', encoding='utf-8')
 
 

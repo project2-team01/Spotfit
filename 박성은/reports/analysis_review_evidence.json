@@ -1,0 +1,351 @@
+{
+  "reviewed_at": "2026-11-04T22:09:32.043129+09:00",
+  "scope": "Same-author review of frozen raw files, stored output, 32 formulas and interpretation; not external expert certification",
+  "analysis_code_git_blobs": {
+    "build_step23.py": "1c7133c7c917f788e01ab0bbcd37860f7f43f01e",
+    "verify_step23.py": "b87a73de2fce31797699b77ad07769f3e2e301e1",
+    "config/industry_crosswalk.csv": "7a8531bc66522181609c1bc1567a03b4053eb0ad"
+  },
+  "structural_checks": [
+    {
+      "check": "original 18 file hashes still match",
+      "passed": true,
+      "detail": "18"
+    },
+    {
+      "check": "panel keys unique",
+      "passed": true,
+      "detail": "304775"
+    },
+    {
+      "check": "market quarter keys unique and complete",
+      "passed": true,
+      "detail": "6600"
+    },
+    {
+      "check": "all 85,732 raw sales keys retained",
+      "passed": true,
+      "detail": "85732"
+    },
+    {
+      "check": "all 304,775 raw store keys retained",
+      "passed": true,
+      "detail": "304775"
+    },
+    {
+      "check": "all raw sales amounts retained",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 85732,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "all raw stock counts retained",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 304775,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "sales absence preserved as null",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Q1-Q3 snapshot values not backfilled",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "native source-class counts reconcile with store assignments",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "all 32 dictionary variables covered",
+      "passed": true,
+      "detail": "32"
+    }
+  ],
+  "feature_formula_checks": [
+    {
+      "check": "sales_per_store",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 85732,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "sales_per_transaction",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 85732,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "sales_per_1000_flow",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 85711,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "same_industry_store_density_km2",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 304775,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "same_industry_stores_per_1000_flow",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 304713,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "franchise_share",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 302578,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "opening_per_current_store",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 302578,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "closure_per_current_store",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 302578,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "net_openings_per_current_store",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 302578,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "turnover_per_current_store",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 302578,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "weekend_sales_share",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 85732,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "lunch_sales_share",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 85732,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "evening_sales_share",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 85732,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "classified_gender_sales_share",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 85732,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "age20_30_sales_share_classified",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 85731,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "log1p_sales_amount",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 85732,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "sales_qoq_change",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 62679,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "stores_qoq_change",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 227014,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "industry_share_of_market_stores",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 304775,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "snapshot_mapped_spatial_ambiguity_share",
+      "passed": true,
+      "evaluated_rows": 304775,
+      "non_null_rows": 55389,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "snapshot_native_industry_share",
+      "passed": true,
+      "evaluated_rows": 109786,
+      "non_null_rows": 109786,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "worker_share_of_worker_resident",
+      "passed": true,
+      "evaluated_rows": 6600,
+      "non_null_rows": 6508,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "resident_share_of_worker_resident",
+      "passed": true,
+      "evaluated_rows": 6600,
+      "non_null_rows": 6508,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "flow_20_30_share",
+      "passed": true,
+      "evaluated_rows": 6600,
+      "non_null_rows": 6595,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "flow_peak_band_share",
+      "passed": true,
+      "evaluated_rows": 6600,
+      "non_null_rows": 6595,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "facility_density_km2",
+      "passed": true,
+      "evaluated_rows": 6600,
+      "non_null_rows": 6312,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "snapshot_distinct_industries",
+      "passed": true,
+      "evaluated_rows": 6600,
+      "non_null_rows": 1650,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "snapshot_industry_hhi",
+      "passed": true,
+      "evaluated_rows": 6600,
+      "non_null_rows": 1647,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "snapshot_industry_entropy",
+      "passed": true,
+      "evaluated_rows": 6600,
+      "non_null_rows": 1647,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "snapshot_spatial_ambiguity_share",
+      "passed": true,
+      "evaluated_rows": 6600,
+      "non_null_rows": 1647,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "snapshot_membership_store_density_km2",
+      "passed": true,
+      "evaluated_rows": 6600,
+      "non_null_rows": 1650,
+      "mismatched_rows": 0
+    },
+    {
+      "check": "sales_cv_four_quarters",
+      "passed": true,
+      "evaluated_rows": 77694,
+      "non_null_rows": 20098,
+      "mismatched_rows": 0
+    }
+  ],
+  "formula_checks_passed": 32,
+  "formula_checks_failed": 0,
+  "structure_checks_passed": 11,
+  "structure_checks_failed": 0,
+  "panel_rows": 304775,
+  "possible_quarter_market_industry_grid_rows": 660000,
+  "unrepresented_grid_keys": 355225,
+  "sales_rows": 85732,
+  "unobserved_sales_rows": 219043,
+  "observed_sales_share_of_panel": 0.28129603806086456,
+  "unsupported_sales_industry_rows": 58517,
+  "supported_industry_no_sales_rows": 160526,
+  "supported_industry_panel_rows": 246258,
+  "q4_panel_rows": 75985,
+  "q4_sales_rows": 21333,
+  "sales_rows_with_store_count_under5": 25685,
+  "all_rows_with_zero_store_count": 2197,
+  "four_quarter_complete_sales_groups": 20098,
+  "annual_market_industry_groups": 77694,
+  "feature_grain_counts": {
+    "분기×상권": 5,
+    "분기×상권×업종": 20,
+    "시점×상권": 5,
+    "시점×상권×소진공소분류": 1,
+    "연도×상권×업종": 1
+  },
+  "source_age_gender_sum_difference": {
+    "nonzero_rows": 33415,
+    "max_abs_won": 26567151.0,
+    "median_abs_won": 0.0
+  },
+  "example": {
+    "quarter_code": "20254",
+    "market_code": "3110127",
+    "market_name": "성수1가1동주민센터",
+    "industry_code": "CS100010",
+    "industry_name": "커피-음료",
+    "sales_amount": 184219542,
+    "total_store_count": 11,
+    "franchise_store_count": 3,
+    "sales_per_store": 16747231.090909092,
+    "franchise_share": 0.2727272727,
+    "same_industry_store_density_km2": 283.6922685738,
+    "floating_population": 148761,
+    "weekend_sales_share": 0.1800443516,
+    "sales_qoq_change": -0.2803488977
+  },
+  "largest_assignment_reduction_example": {
+    "market_code": "3001494",
+    "market_name": "종로·청계 관광특구",
+    "snapshot_store_count": 0,
+    "snapshot_all_membership_store_count": 3286.0,
+    "assignment_reduction": 1.0
+  },
+  "review_baseline_commit": "39e204fc0e41c100912d2e3685ea4acb486575ec"
+}
