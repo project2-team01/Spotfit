@@ -1,0 +1,58 @@
+﻿variable,level,formula,unit,source,purpose,interpretation,availability
+sales_per_store_quarter,상권×업종×분기,sales_amount / store_count,원/점포/분기,K01 당월_매출_금액; K02 similr_induty_stor_co,매출 규모 비교,전체 점포 분모를 쓴 근사값. 개별 점포의 실적 아님,산출
+sales_per_store_month,상권×업종×분기,sales_per_store_quarter / 3,원/점포/월 환산,K01;K02,월 단위 설명,평균적인 월로 환산. 월별 관측 자료가 아님,산출
+sales_per_transaction,상권×업종×분기,sales_amount / sales_count,원/추정 매출 1건,K01 당월_매출_금액·건수,결제 단가 비교,객단가 근사값. 고유 고객 수를 뜻하지 않음,산출
+franchise_share,상권×업종×분기,franchise_store_count / store_count,0~1,K02 frc_stor_co;similr_induty_stor_co,경쟁 구조,비중이 높다고 자동 감점하지 않음,산출
+store_density_km2,상권×업종×분기,store_count / area_km2,점포/km²,K02;K03 repaired geometry,점포 밀집도,상권 면적당 해당 업종 점포 수,산출
+open_count_ratio,상권×업종×분기,open_count / store_count,비율(100 초과 가능),K02 opbiz_stor_co;similr_induty_stor_co,개업 움직임,동일 시점 재고 대비 건수. 개업 확률 아님,산출
+close_count_ratio,상권×업종×분기,close_count / store_count,비율(100 초과 가능),K02 clsbiz_stor_co;similr_induty_stor_co,폐업 움직임,점포 0이면 결측. 0인 칸의 폐업 건수는 별도로 보존,산출
+net_open_count,상권×업종×분기,open_count - close_count,건,K02,개폐업 균형,실제 점포 수 증감과 다를 수 있음,산출
+weekend_sales_share,상권×업종×분기,weekend_sales / sales_amount,0~1,K01 주말_매출_금액;당월_매출_금액,주말형 수요,비중. 요일 수 차이를 보정하지 않음,산출
+weekend_daily_ratio,상권×업종×분기,(weekend_sales / 2) / (weekday_sales / 5),배,K01 주중·주말_매출_금액,주말 하루 비교,주중 5일·주말 2일의 단순 환산. 공휴일 미보정,산출
+female_sales_share_known,상권×업종×분기,female_sales / (male_sales + female_sales),0~1,K01 여성·남성_매출_금액,관측 고객 구성,성별이 알려진 매출 중 비중,산출
+gender_sales_coverage,상권×업종×분기,(male_sales + female_sales) / sales_amount,비율,K01,성별 정보 범위,알려진 성별 매출의 총매출 대비 비중,산출
+sales_age_10_share,상권×업종×분기,age_10_sales / known_age_sales_total,0~1,K01 연령대별 매출 금액,고객 연령 구성,연령이 알려진 매출 안의 비중. 방문 인구 비중 아님,산출
+sales_age_20_share,상권×업종×분기,age_20_sales / known_age_sales_total,0~1,K01 연령대별 매출 금액,고객 연령 구성,연령이 알려진 매출 안의 비중. 방문 인구 비중 아님,산출
+sales_age_30_share,상권×업종×분기,age_30_sales / known_age_sales_total,0~1,K01 연령대별 매출 금액,고객 연령 구성,연령이 알려진 매출 안의 비중. 방문 인구 비중 아님,산출
+sales_age_40_share,상권×업종×분기,age_40_sales / known_age_sales_total,0~1,K01 연령대별 매출 금액,고객 연령 구성,연령이 알려진 매출 안의 비중. 방문 인구 비중 아님,산출
+sales_age_50_share,상권×업종×분기,age_50_sales / known_age_sales_total,0~1,K01 연령대별 매출 금액,고객 연령 구성,연령이 알려진 매출 안의 비중. 방문 인구 비중 아님,산출
+sales_age_60_plus_share,상권×업종×분기,age_60_plus_sales / known_age_sales_total,0~1,K01 연령대별 매출 금액,고객 연령 구성,연령이 알려진 매출 안의 비중. 방문 인구 비중 아님,산출
+age_sales_coverage,상권×업종×분기,known_age_sales_total / sales_amount,비율,K01,연령 정보 범위,총매출과 연령별 매출 합은 다를 수 있음,산출
+time_00_06_sales_share,상권×업종×분기,time_00_06_sales / sales_amount,0~1,K01 시간대별 매출 금액,운영 시간 적합성,구간 길이가 다름. 시간당 효율로 단정하지 않음,산출
+time_06_11_sales_share,상권×업종×분기,time_06_11_sales / sales_amount,0~1,K01 시간대별 매출 금액,운영 시간 적합성,구간 길이가 다름. 시간당 효율로 단정하지 않음,산출
+time_11_14_sales_share,상권×업종×분기,time_11_14_sales / sales_amount,0~1,K01 시간대별 매출 금액,운영 시간 적합성,구간 길이가 다름. 시간당 효율로 단정하지 않음,산출
+time_14_17_sales_share,상권×업종×분기,time_14_17_sales / sales_amount,0~1,K01 시간대별 매출 금액,운영 시간 적합성,구간 길이가 다름. 시간당 효율로 단정하지 않음,산출
+time_17_21_sales_share,상권×업종×분기,time_17_21_sales / sales_amount,0~1,K01 시간대별 매출 금액,운영 시간 적합성,구간 길이가 다름. 시간당 효율로 단정하지 않음,산출
+time_21_24_sales_share,상권×업종×분기,time_21_24_sales / sales_amount,0~1,K01 시간대별 매출 금액,운영 시간 적합성,구간 길이가 다름. 시간당 효율로 단정하지 않음,산출
+night_sales_share,상권×업종×분기,(time_21_24_sales + time_00_06_sales) / sales_amount,0~1,K01,야간 수요,21~06시 구간의 관측 매출 비중,산출
+store_qoq_change,상권×업종×분기,"store_count / previous_quarter_store_count - 1, 연속분기만",증감률,K02,점포 변화,전분기 점포 0 또는 부재면 결측. 1분기 결측,산출
+sales_qoq_change,상권×업종×분기,"sales_amount / previous_quarter_sales_amount - 1, 연속분기만",증감률,K01,단기 매출 변화,전년 동기 성장률 아님. 계절성 포함,산출
+sales_vs_industry_median,상권×업종×분기,"sales_per_store_month / 동일 분기·동일 업종 적격칸 중앙값, 적격칸≥30",배,K01;K02,업종 보정 비교,점포≥5·비관광특구. 30·5는 운영 가정이며 검증된 임계값 아님,산출
+industry_spatial_hhi,업종×분기,"Σ상권 (해당업종 점포수 / 서울 해당업종 점포수)², 관광특구 제외",0~1,K02,공간 집중도,업종이 특정 상권에 모이는 정도. 상권 내 경쟁 강도와 다름,산출
+normalized_industry_entropy,상권×분기,"-Σ업종 p×ln(p) / ln(100), p=업종점포/상권전체점포",0~1,K02 전체 100개 업종,업종 다양성,점포 없는 업종은 0 기여. 관광특구는 결측,산출
+annual_sales_complete,상권×업종×연도,"네 분기 매출 합, 점포·매출 모두 4분기 관측",원/년,K01;K02,연간 비교,분기 결측이면 연간 매출로 표시하지 않음,산출
+annual_sales_cv,상권×업종×연도,4분기 매출 표준편차(ddof=0) / 평균,비율,K01;K02,연간 비교,계절성과 측정오차 포함. 안정성 확정 불가,산출
+annual_monthly_sales_per_store,상권×업종×연도,annual_sales_complete / mean_store_count_observed / 12,원/점포/월 환산,K01;K02,연간 비교,전체 점포 분모를 쓴 근사값,산출
+annual_close_count_ratio,상권×업종×연도,연간 폐업 건수 / 4분기 평균점포수,비율,K01;K02,연간 비교,점포 생존 확률이 아님,산출
+annual_open_count_ratio,상권×업종×연도,연간 개업 건수 / 4분기 평균점포수,비율,K01;K02,연간 비교,점포 4분기 완전 관측 필요,산출
+floating_population_per_km2,상권×분기,floating_population / area_km2,원자료 인구 수/km²,K04;K03,입지 수요,유일한 사람 수로 해석하지 않음,산출
+worker_population_per_km2,상권×분기,worker_population / area_km2,명/km²,K06;K03,입지 수요,실제 통계 시점 미확인,산출
+resident_population_per_km2,상권×분기,resident_population / area_km2,명/km²,K07;K03,입지 수요,실제 통계 시점 미확인,산출
+facility_count_per_km2,상권×분기,facility_count / area_km2,시설/km²,K05;K03,입지 수요,시설 총수 원본 정의 주의,산출
+stores_per_1000_floating_population,상권×분기,상권 전체 점포수 / floating_population ×1000,점포/원자료 인구 1000단위,K02;K04,입지 수요,수요 대비 공급의 보조치. 구매전환율 아님,산출
+floating_peak_time_share,상권×분기,max(시간대별 유동인구) / 총유동인구,비율,K04,입지 수요,시간대 길이 다름. 구성 집중도만 표시,산출
+floating_age_10_share,상권×분기,floating_age_10 / floating_population,비율,K04 연령대별 유동인구·총_유동인구_수,고객층과 입지 비교,총인구와 세부 합 사이 반올림 차이 가능,산출
+floating_age_20_share,상권×분기,floating_age_20 / floating_population,비율,K04 연령대별 유동인구·총_유동인구_수,고객층과 입지 비교,총인구와 세부 합 사이 반올림 차이 가능,산출
+floating_age_30_share,상권×분기,floating_age_30 / floating_population,비율,K04 연령대별 유동인구·총_유동인구_수,고객층과 입지 비교,총인구와 세부 합 사이 반올림 차이 가능,산출
+floating_age_40_share,상권×분기,floating_age_40 / floating_population,비율,K04 연령대별 유동인구·총_유동인구_수,고객층과 입지 비교,총인구와 세부 합 사이 반올림 차이 가능,산출
+floating_age_50_share,상권×분기,floating_age_50 / floating_population,비율,K04 연령대별 유동인구·총_유동인구_수,고객층과 입지 비교,총인구와 세부 합 사이 반올림 차이 가능,산출
+floating_age_60_plus_share,상권×분기,floating_age_60_plus / floating_population,비율,K04 연령대별 유동인구·총_유동인구_수,고객층과 입지 비교,총인구와 세부 합 사이 반올림 차이 가능,산출
+industry_entropy,상권×분기,-Σ업종 p×ln(p),0~ln(100),K02,상업시설 구성,업종 다양성 원지표,산출
+store_mix_hhi,상권×분기,Σ업종 p²,0~1,K02,상업시설 구성,상권 내 업종 편중. 단일 업종이면 1,산출
+positive_industry_count,상권×분기,점포 수가 양수인 업종 수,개,K02,상업시설 구성,상권 안에서 영업하는 업종의 종류,산출
+semas_store_count_q4,상권×소상공인업종×2025Q4,"관광특구 제외, 비관광 상권이 하나로 정해진 S01 점포 ID 고유 개수",점포,S01;S02;K03,공간 분포 보조,서울 서비스업종 수와 직접 합산 금지,산출
+sales_yoy_change,상권×업종×분기,계산하지 않음,해당 없음,K01 2024 동분기,향후 확장,2024 매출 없음,보류
+population_growth,상권×업종×분기,계산하지 않음,해당 없음,K04 과거연도 및 K06/K07 실제작성시점,향후 확장,현재 파일만으로 일관된 성장률 확정 불가,보류
+business_survival_probability,상권×업종×분기,계산하지 않음,해당 없음,점포별 시계열 개폐업 이력,향후 확장,분기 집계와 단일 스냅숏만 있음,보류
+budget_fit,상권×업종×분기,계산하지 않음,해당 없음,임대료·보증금·권리금·시설비,향후 확장,비용 자료 없음,보류
+mapped_semas_competitor_count,상권×업종×분기,계산하지 않음,해당 없음,S01;S02;승인된 기관 간 업종 매핑,향후 확장,공식 연계표 및 승인 매핑 없음,보류

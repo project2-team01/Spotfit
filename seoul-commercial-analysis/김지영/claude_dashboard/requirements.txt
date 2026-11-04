@@ -1,0 +1,7 @@
+marimo==0.25.2
+altair==6.3.0
+pandas>=2.2,<4
+numpy>=1.26,<3
+pyarrow>=15
+# build_data.py로 데이터를 다시 만들 때만 필요합니다
+geopandas>=1.0
