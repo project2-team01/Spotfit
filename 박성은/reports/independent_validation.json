@@ -1,0 +1,266 @@
+{
+  "passed": 52,
+  "failed": 0,
+  "checks": [
+    {
+      "check": "saved panel keys unique",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "step2 vs step3 identical keys",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved context complete grid",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved code types preserved",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CSV/Parquet row and key agreement",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "every saved sales value equals raw K01",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "every saved store value equals raw K02",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sales missing preserved after save",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "S01 not propagated backward",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "all sales/store formulas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "all stock denominator zero/missing yield null",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "qoq equals exact previous-quarter self-join",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Q1 qoq always null",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV requires 4 quarters",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "partial annual total not called complete",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110542/CS100002",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110778/CS300011",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110258/CS100001",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110510/CS300007",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3120160/CS100008",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110298/CS200001",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110691/CS200028",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3120040/CS100009",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110237/CS300033",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3111059/CS200003",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110216/CS300021",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110106/CS200001",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110462/CS100001",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3120120/CS100003",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3120095/CS200028",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110625/CS200030",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3110724/CS100008",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3120150/CS100010",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3130165/CS300011",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "CV independent sample 3130052/CS100001",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "snapshot ids remain unique",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "spatial categories partition original rows",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "native counts equal primary assigned stores",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "all membership counts equal candidate edges",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "candidate counts equal saved snapshot counts",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved polygons valid EPSG:5181",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "500 assigned stores intersect assigned polygons",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "primary assignment follows declared smallest-area rule",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "all-membership area count >= primary count",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "mapped membership counts >= primary >= unique",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "unobserved facility rows not imputed zero",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent context vs panel join values",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "context ratio in [0,1]: worker_share_of_worker_resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "context ratio in [0,1]: resident_share_of_worker_resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "context ratio in [0,1]: flow_20_30_share",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "context ratio in [0,1]: flow_peak_band_share",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "all defined features exist in saved outputs",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}

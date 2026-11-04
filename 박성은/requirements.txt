@@ -1,0 +1,7 @@
+-r ../seoul-commercial-analysis/requirements.txt
+geopandas>=1.0,<2
+shapely>=2.0,<3
+pyproj>=3.6,<4
+pyogrio>=0.9,<1
+pyarrow>=17
+tzdata>=2025.1

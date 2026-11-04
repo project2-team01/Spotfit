@@ -1,0 +1,199 @@
+﻿check,passed,detail
+input checksums match handoff,True,18 files
+K01: input file unique,True,[WindowsPath('seoul-commercial-analysis/data/raw/seoul/extracted/seoul_sales_trdar_2025/서울시 상권분석서비스(추정매출-상권)_2025년.csv')]
+K01: numeric 당월_매출_금액,True,nonempty=85732
+K01: numeric 당월_매출_건수,True,nonempty=85732
+K01: numeric 주중_매출_금액,True,nonempty=85732
+K01: numeric 주말_매출_금액,True,nonempty=85732
+K01: numeric 월요일_매출_금액,True,nonempty=85732
+K01: numeric 화요일_매출_금액,True,nonempty=85732
+K01: numeric 수요일_매출_금액,True,nonempty=85732
+K01: numeric 목요일_매출_금액,True,nonempty=85732
+K01: numeric 금요일_매출_금액,True,nonempty=85732
+K01: numeric 토요일_매출_금액,True,nonempty=85732
+K01: numeric 일요일_매출_금액,True,nonempty=85732
+K01: numeric 시간대_00~06_매출_금액,True,nonempty=85732
+K01: numeric 시간대_06~11_매출_금액,True,nonempty=85732
+K01: numeric 시간대_11~14_매출_금액,True,nonempty=85732
+K01: numeric 시간대_14~17_매출_금액,True,nonempty=85732
+K01: numeric 시간대_17~21_매출_금액,True,nonempty=85732
+K01: numeric 시간대_21~24_매출_금액,True,nonempty=85732
+K01: numeric 남성_매출_금액,True,nonempty=85732
+K01: numeric 여성_매출_금액,True,nonempty=85732
+K01: numeric 연령대_10_매출_금액,True,nonempty=85732
+K01: numeric 연령대_20_매출_금액,True,nonempty=85732
+K01: numeric 연령대_30_매출_금액,True,nonempty=85732
+K01: numeric 연령대_40_매출_금액,True,nonempty=85732
+K01: numeric 연령대_50_매출_금액,True,nonempty=85732
+K01: numeric 연령대_60_이상_매출_금액,True,nonempty=85732
+K01: numeric 주중_매출_건수,True,nonempty=85732
+K01: numeric 주말_매출_건수,True,nonempty=85732
+K01: numeric 월요일_매출_건수,True,nonempty=85732
+K01: numeric 화요일_매출_건수,True,nonempty=85732
+K01: numeric 수요일_매출_건수,True,nonempty=85732
+K01: numeric 목요일_매출_건수,True,nonempty=85732
+K01: numeric 금요일_매출_건수,True,nonempty=85732
+K01: numeric 토요일_매출_건수,True,nonempty=85732
+K01: numeric 일요일_매출_건수,True,nonempty=85732
+K01: numeric 시간대_건수~06_매출_건수,True,nonempty=85732
+K01: numeric 시간대_건수~11_매출_건수,True,nonempty=85732
+K01: numeric 시간대_건수~14_매출_건수,True,nonempty=85732
+K01: numeric 시간대_건수~17_매출_건수,True,nonempty=85732
+K01: numeric 시간대_건수~21_매출_건수,True,nonempty=85732
+K01: numeric 시간대_건수~24_매출_건수,True,nonempty=85732
+K01: numeric 남성_매출_건수,True,nonempty=85732
+K01: numeric 여성_매출_건수,True,nonempty=85732
+K01: numeric 연령대_10_매출_건수,True,nonempty=85732
+K01: numeric 연령대_20_매출_건수,True,nonempty=85732
+K01: numeric 연령대_30_매출_건수,True,nonempty=85732
+K01: numeric 연령대_40_매출_건수,True,nonempty=85732
+K01: numeric 연령대_50_매출_건수,True,nonempty=85732
+K01: numeric 연령대_60_이상_매출_건수,True,nonempty=85732
+K01: key unique,True,85732 rows
+K01: key nonnull,True,"['quarter_code', 'market_code', 'industry_code']"
+K01: six malformed time count columns,True,"['시간대_건수~06_매출_건수', '시간대_건수~11_매출_건수', '시간대_건수~14_매출_건수', '시간대_건수~17_매출_건수', '시간대_건수~21_매출_건수', '시간대_건수~24_매출_건수']"
+K02: input file unique,True,[WindowsPath('seoul-commercial-analysis/data/raw/seoul/extracted/seoul_store_trdar_2025/서울시 상권분석서비스(점포-상권)_2025년.csv')]
+K02: key unique,True,304775 rows
+K02: key nonnull,True,"['quarter_code', 'market_code', 'industry_code']"
+K02: ordinary + franchise = total,True,304775
+K04: input file unique,True,[WindowsPath('seoul-commercial-analysis/data/raw/seoul/seoul_flpop_trdar_2025_sheet.csv')]
+K04: numeric 총_유동인구_수,True,nonempty=6595
+K04: numeric 남성_유동인구_수,True,nonempty=6595
+K04: numeric 여성_유동인구_수,True,nonempty=6595
+K04: numeric 연령대_10_유동인구_수,True,nonempty=6595
+K04: numeric 연령대_20_유동인구_수,True,nonempty=6595
+K04: numeric 연령대_30_유동인구_수,True,nonempty=6595
+K04: numeric 연령대_40_유동인구_수,True,nonempty=6595
+K04: numeric 연령대_50_유동인구_수,True,nonempty=6595
+K04: numeric 연령대_60_이상_유동인구_수,True,nonempty=6595
+K04: numeric 시간대_00_06_유동인구_수,True,nonempty=6595
+K04: numeric 시간대_06_11_유동인구_수,True,nonempty=6595
+K04: numeric 시간대_11_14_유동인구_수,True,nonempty=6595
+K04: numeric 시간대_14_17_유동인구_수,True,nonempty=6595
+K04: numeric 시간대_17_21_유동인구_수,True,nonempty=6595
+K04: numeric 시간대_21_24_유동인구_수,True,nonempty=6595
+K04: numeric 월요일_유동인구_수,True,nonempty=6595
+K04: numeric 화요일_유동인구_수,True,nonempty=6595
+K04: numeric 수요일_유동인구_수,True,nonempty=6595
+K04: numeric 목요일_유동인구_수,True,nonempty=6595
+K04: numeric 금요일_유동인구_수,True,nonempty=6595
+K04: numeric 토요일_유동인구_수,True,nonempty=6595
+K04: numeric 일요일_유동인구_수,True,nonempty=6595
+K04: key unique,True,6595 rows
+K04: key nonnull,True,"['quarter_code', 'market_code']"
+K05: input file unique,True,[WindowsPath('seoul-commercial-analysis/data/raw/seoul/seoul_facility_trdar_all_sheet.csv')]
+K05: numeric 집객시설_수,True,nonempty=6312
+K05: numeric 관공서_수,True,nonempty=2520
+K05: numeric 은행_수,True,nonempty=1948
+K05: numeric 종합병원_수,True,nonempty=92
+K05: numeric 일반_병원_수,True,nonempty=528
+K05: numeric 약국_수,True,nonempty=4036
+K05: numeric 유치원_수,True,nonempty=604
+K05: numeric 초등학교_수,True,nonempty=52
+K05: numeric 중학교_수,True,nonempty=16
+K05: numeric 고등학교_수,True,nonempty=44
+K05: numeric 대학교_수,True,nonempty=336
+K05: numeric 백화점_수,True,nonempty=44
+K05: numeric 슈퍼마켓_수,True,nonempty=420
+K05: numeric 극장_수,True,nonempty=336
+K05: numeric 숙박_시설_수,True,nonempty=580
+K05: numeric 공항_수,True,nonempty=4
+K05: numeric 철도_역_수,True,nonempty=0
+K05: numeric 버스_터미널_수,True,nonempty=8
+K05: numeric 지하철_역_수,True,nonempty=780
+K05: numeric 버스_정거장_수,True,nonempty=5080
+K05: key unique,True,6312 rows
+K05: key nonnull,True,"['quarter_code', 'market_code']"
+K06: input file unique,True,[WindowsPath('seoul-commercial-analysis/data/raw/seoul/seoul_wrcpop_trdar_all_sheet.csv')]
+K06: numeric 총_직장_인구_수,True,nonempty=6564
+K06: numeric 남성_직장_인구_수,True,nonempty=6564
+K06: numeric 여성_직장_인구_수,True,nonempty=6564
+K06: numeric 연령대_10_직장_인구_수,True,nonempty=6564
+K06: numeric 연령대_20_직장_인구_수,True,nonempty=6564
+K06: numeric 연령대_30_직장_인구_수,True,nonempty=6564
+K06: numeric 연령대_40_직장_인구_수,True,nonempty=6564
+K06: numeric 연령대_50_직장_인구_수,True,nonempty=6564
+K06: numeric 연령대_60_이상_직장_인구_수,True,nonempty=6564
+K06: numeric 남성연령대_10_직장_인구_수,True,nonempty=6564
+K06: numeric 남성연령대_20_직장_인구_수,True,nonempty=6564
+K06: numeric 남성연령대_30_직장_인구_수,True,nonempty=6564
+K06: numeric 남성연령대_40_직장_인구_수,True,nonempty=6564
+K06: numeric 남성연령대_50_직장_인구_수,True,nonempty=6564
+K06: numeric 남성연령대_60_이상_직장_인구_수,True,nonempty=6564
+K06: numeric 여성연령대_10_직장_인구_수,True,nonempty=6564
+K06: numeric 여성연령대_20_직장_인구_수,True,nonempty=6564
+K06: numeric 여성연령대_30_직장_인구_수,True,nonempty=6564
+K06: numeric 여성연령대_40_직장_인구_수,True,nonempty=6564
+K06: numeric 여성연령대_50_직장_인구_수,True,nonempty=6564
+K06: numeric 여성연령대_60_이상_직장_인구_수,True,nonempty=6564
+K06: key unique,True,6564 rows
+K06: key nonnull,True,"['quarter_code', 'market_code']"
+K07: input file unique,True,[WindowsPath('seoul-commercial-analysis/data/raw/seoul/seoul_repop_trdar_all_sheet.csv')]
+K07: numeric 총_상주인구_수,True,nonempty=6532
+K07: numeric 남성_상주인구_수,True,nonempty=6532
+K07: numeric 여성_상주인구_수,True,nonempty=6532
+K07: numeric 연령대_10_상주인구_수,True,nonempty=6532
+K07: numeric 연령대_20_상주인구_수,True,nonempty=6532
+K07: numeric 연령대_30_상주인구_수,True,nonempty=6532
+K07: numeric 연령대_40_상주인구_수,True,nonempty=6532
+K07: numeric 연령대_50_상주인구_수,True,nonempty=6532
+K07: numeric 연령대_60_이상_상주인구_수,True,nonempty=6532
+K07: numeric 남성연령대_10_상주인구_수,True,nonempty=6532
+K07: numeric 남성연령대_20_상주인구_수,True,nonempty=6532
+K07: numeric 남성연령대_30_상주인구_수,True,nonempty=6532
+K07: numeric 남성연령대_40_상주인구_수,True,nonempty=6532
+K07: numeric 남성연령대_50_상주인구_수,True,nonempty=6532
+K07: numeric 남성연령대_60_이상_상주인구_수,True,nonempty=6532
+K07: numeric 여성연령대_10_상주인구_수,True,nonempty=6532
+K07: numeric 여성연령대_20_상주인구_수,True,nonempty=6532
+K07: numeric 여성연령대_30_상주인구_수,True,nonempty=6532
+K07: numeric 여성연령대_40_상주인구_수,True,nonempty=6532
+K07: numeric 여성연령대_50_상주인구_수,True,nonempty=6532
+K07: numeric 여성연령대_60_이상_상주인구_수,True,nonempty=6532
+K07: numeric 총_가구_수,True,nonempty=6532
+K07: numeric 아파트_가구_수,True,nonempty=6532
+K07: numeric 비_아파트_가구_수,True,nonempty=6532
+K07: key unique,True,6532 rows
+K07: key nonnull,True,"['quarter_code', 'market_code']"
+K05: component blanks filled with 0 within existing rows,,102500
+K05: published total differs from component sum,,5952
+K03: source CRS is EPSG:5181,True,EPSG:5181
+K03: unique market code,True,1650
+K03: valid nonempty geometries,True,6
+K03: positive areas,True,1853.992037663891
+K01: market domain in K03,True,1577
+K02: market domain in K03,True,1650
+K04: market domain in K03,True,1650
+K05: market domain in K03,True,1578
+K06: market domain in K03,True,1641
+K07: market domain in K03,True,1633
+S01: unique store ids,True,534978
+S02: unique small codes,True,247
+S01/S02: same industry domain,True,247 classes
+S01/S02: same code but different label,,2
+S01: invalid coordinates excluded from spatial match,,0
+crosswalk: unique source codes,True,247
+crosswalk: exhaustive source codes,True,all 247 source classes
+crosswalk: valid target codes,True,K02 100 classes
+S01: spatial join preserves row count,True,534978
+S01: assigned count reconciles,True,426047
+S01: all memberships reconcile with spatial edges,True,443443
+S01: native aggregation reconciles,True,426047
+K02: industry label mapping unique,True,100
+panel: union keys preserved,True,304775
+panel: sales total preserved,True,92658231006581
+panel: store total preserved,True,2069516
+panel: sales rows preserved,True,85732
+final panel: unique keys,True,304775
+snapshot: no backward leakage,True,Q1-Q3 snapshot columns null
+missing sales: never filled zero,True,219043
+features: no infinities,True,all numeric panel fields
+feature bounds: franchise_share,True,0.0..1.0
+feature bounds: weekend_sales_share,True,0.0..1.0
+feature bounds: industry_share_of_market_stores,True,0.0..1.0
+feature bounds: age20_30_sales_share_classified,True,0.0..1.0
+feature bounds: snapshot_mapped_spatial_ambiguity_share,True,0.0..1.0
+spot-check: sales/store from original cleaned rows,True,20254/3110700/CS200025
+K01: age sum vs gender sum mismatch rows,,33415
+input checksums match handoff,True,18 files
+original raw files unchanged by pipeline,True,18 files before/after

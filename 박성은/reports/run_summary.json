@@ -1,0 +1,124 @@
+{
+  "generated_at": "2026-11-02T22:26:44.574656+09:00",
+  "python": "3.12.14",
+  "pandas": "3.0.1",
+  "numpy": "2.3.5",
+  "geopandas": "1.2.0",
+  "panel_rows": 304775,
+  "q4_rows": 75985,
+  "context_rows": 6600,
+  "sales_rows": 85732,
+  "sales_unobserved_rows": 219043,
+  "sales_unsupported_industry_rows": 58517,
+  "zero_stores_with_sales_rows": 0,
+  "source_rate_over100_rows": 149,
+  "computed_feature_count": 32,
+  "validation_passed": 193,
+  "validation_failed": 0,
+  "spatial": {
+    "total_stores": 534978,
+    "unique_spatial_stores": 408651,
+    "multiple_spatial_stores": 17396,
+    "unmatched_spatial_stores": 108931,
+    "mapped_industry_stores_all": 391220,
+    "mapped_industry_stores_assigned": 307157,
+    "mapped_semas_classes": 131,
+    "unmapped_semas_classes": 116,
+    "mapped_seoul_classes": 89,
+    "all_spatial_memberships": 443443
+  },
+  "area_ratio_median": 0.9999998963476926,
+  "area_ratio_min": 0.999826922686586,
+  "area_ratio_max": 1.0001497627086489,
+  "invalid_geometries_before": 6,
+  "facility_component_blanks_imputed": 102500,
+  "facility_total_mismatch_rows_2025": 5952,
+  "opening_closure_denominator_audit": [
+    {
+      "rate": "opening",
+      "denominator": "total_store_count",
+      "comparable_rows": 302578,
+      "matched_within_0_011pp": 284871,
+      "matched_within_0_55pp": 302578,
+      "max_abs_error_pp": 0.5495495495495495,
+      "source_fractional_rows": 0,
+      "source_over100_rows": 5
+    },
+    {
+      "rate": "opening",
+      "denominator": "independent_store_count",
+      "comparable_rows": 294132,
+      "matched_within_0_011pp": 274587,
+      "matched_within_0_55pp": 285405,
+      "max_abs_error_pp": 250.0,
+      "source_fractional_rows": 0,
+      "source_over100_rows": 5
+    },
+    {
+      "rate": "closure",
+      "denominator": "total_store_count",
+      "comparable_rows": 302578,
+      "matched_within_0_011pp": 282228,
+      "matched_within_0_55pp": 302578,
+      "max_abs_error_pp": 0.5492957746478879,
+      "source_fractional_rows": 0,
+      "source_over100_rows": 144
+    },
+    {
+      "rate": "closure",
+      "denominator": "independent_store_count",
+      "comparable_rows": 294132,
+      "matched_within_0_011pp": 271777,
+      "matched_within_0_55pp": 284986,
+      "max_abs_error_pp": 367.0,
+      "source_fractional_rows": 0,
+      "source_over100_rows": 144
+    }
+  ],
+  "join_coverage": [
+    {
+      "quarter_code": "20251",
+      "markets": 1650,
+      "flow_observed": 1650,
+      "facility_observed": 1578,
+      "worker_observed": 1641,
+      "resident_observed": 1633,
+      "panel_rows": 76383,
+      "sales_rows": 21427,
+      "no_sales_rows": 54956
+    },
+    {
+      "quarter_code": "20252",
+      "markets": 1650,
+      "flow_observed": 1649,
+      "facility_observed": 1578,
+      "worker_observed": 1641,
+      "resident_observed": 1633,
+      "panel_rows": 76238,
+      "sales_rows": 21452,
+      "no_sales_rows": 54786
+    },
+    {
+      "quarter_code": "20253",
+      "markets": 1650,
+      "flow_observed": 1648,
+      "facility_observed": 1578,
+      "worker_observed": 1641,
+      "resident_observed": 1633,
+      "panel_rows": 76169,
+      "sales_rows": 21520,
+      "no_sales_rows": 54649
+    },
+    {
+      "quarter_code": "20254",
+      "markets": 1650,
+      "flow_observed": 1648,
+      "facility_observed": 1578,
+      "worker_observed": 1641,
+      "resident_observed": 1633,
+      "panel_rows": 75985,
+      "sales_rows": 21333,
+      "no_sales_rows": 54652
+    }
+  ]
+}

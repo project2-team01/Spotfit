@@ -1,0 +1,7 @@
+﻿variable,label,reason_unavailable
+sales_yoy_growth,전년 동기 대비 매출 성장률,2024 매출 미수집
+survival_probability,개별 점포 생존확률,개별 개·폐업 이력/정의 부족
+budget_feasibility,예산 적합성,임대료·보증금·권리금·시설비 없음
+profit_margin,영업이익률,매입/인건비/임대료 등 비용 없음
+consumer_conversion_rate,방문자 구매전환율,고유 방문자/구매자 매칭 없음
+long_term_growth_score,장기 성장·안정성 점수,1년 관측만 존재; STEP 4 별도 설계

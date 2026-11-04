@@ -1,0 +1,137 @@
+﻿table,column,dtype,null_count,label,formula,unit,aggregation_warning
+market_industry_features_2025,quarter_code,object,0,quarter_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,market_code,object,0,market_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,industry_code,string,0,industry_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,industry_name,string,0,industry_name,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,independent_store_count,Int64,0,independent_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,total_store_count,Int64,0,total_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,opening_rate_source_pct,Int64,0,opening_rate_source_pct,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,opening_store_count,Int64,0,opening_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,closure_rate_source_pct,Int64,0,closure_rate_source_pct,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,closure_store_count,Int64,0,closure_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,franchise_store_count,Int64,0,franchise_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,sales_amount,Int64,219043,sales_amount,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,sales_transactions,Int64,219043,sales_transactions,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,weekday_sales_amount,Int64,219043,weekday_sales_amount,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,weekend_sales_amount,Int64,219043,weekend_sales_amount,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,male_sales_amount,Int64,219043,male_sales_amount,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,female_sales_amount,Int64,219043,female_sales_amount,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,lunch_sales_amount,Int64,219043,lunch_sales_amount,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,evening_sales_amount,Int64,219043,evening_sales_amount,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,sales_store_join,category,0,sales_store_join,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,stores_observed,bool,0,stores_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,sales_observed,bool,0,sales_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,market_name,str,0,market_name,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,market_type,str,0,market_type,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,market_type_name,str,0,market_type_name,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,district_code,str,0,district_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,district_name,str,0,district_name,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,representative_admindong_code,str,0,representative_admindong_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,representative_admindong_name,str,0,representative_admindong_name,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,polygon_area_m2,float64,0,polygon_area_m2,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,floating_population,Int64,62,floating_population,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,flow_observed,bool,0,flow_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,facility_count_source,Int64,5467,facility_count_source,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,facility_components_sum,Float64,5467,facility_components_sum,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,facility_total_mismatch,boolean,5467,facility_total_mismatch,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,facility_observed,bool,0,facility_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,worker_population,Int64,781,worker_population,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,worker_observed,bool,0,worker_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,resident_population,Int64,1792,resident_population,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,household_count,Int64,1792,household_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,resident_observed,bool,0,resident_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,worker_share_of_worker_resident,Float64,2289,직장·상주인구 합 대비 직장인구 비중,직장인구/(직장인구+상주인구),비율(0~1),인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,resident_share_of_worker_resident,Float64,2289,직장·상주인구 합 대비 상주인구 비중,상주인구/(직장인구+상주인구),비율(0~1),인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,flow_20_30_share,Float64,62,20·30대 유동인구 비중,(20대+30대 유동인구)/총유동인구,비율(0~1),인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,flow_peak_band_share,Float64,62,최대 시간대 유동인구 집중도,max(6개 시간대 인구)/sum(6개 시간대 인구),비율(0~1),인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,facility_density_km2,Float64,5467,시설 종류별 개수 합의 면적당 밀도,하위 시설 19개 합/(폴리곤면적/1e6),시설개수합/km²,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,snapshot_store_count,Int64,228790,snapshot_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,snapshot_unique_spatial_count,float64,228790,snapshot_unique_spatial_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,snapshot_distinct_industries,float64,228790,소진공 소분류 업종 수,대표 배정 점포의 소분류 고유값 수,개,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,snapshot_industry_hhi,Float64,228882,소진공 업종 집중도 HHI,sum((소분류점포수/전체점포수)^2),지수/비율,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,snapshot_industry_entropy,Float64,228882,소진공 업종 다양성 엔트로피,-sum(p_i*ln(p_i)),지수/비율,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,snapshot_multiple_spatial_count,Float64,228790,snapshot_multiple_spatial_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,snapshot_spatial_ambiguity_share,Float64,228882,대표 배정 점포 중 다중 공간후보 비중,(대표배정수-유일매칭수)/대표배정수,지수/비율,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,snapshot_all_membership_store_count,float64,228790,snapshot_all_membership_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,snapshot_membership_store_density_km2,float64,228790,상권 내부 소진공 점포 밀도,상권과 교차하는 모든 점포수/(폴리곤면적/1e6),점포/km²,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_industry_features_2025,sales_missing_reason,str,0,sales_missing_reason,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,source_rate_over100,boolean,0,source_rate_over100,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,small_store_base_lt5,boolean,0,small_store_base_lt5,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,snapshot_mapping_source_class_count,int16,0,snapshot_mapping_source_class_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,snapshot_mapping_available,bool,0,snapshot_mapping_available,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,snapshot_mapped_store_count,Int64,233718,snapshot_mapped_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,snapshot_mapped_unique_spatial_count,float64,233718,snapshot_mapped_unique_spatial_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,snapshot_membership_mapped_store_count,float64,233718,snapshot_membership_mapped_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,sales_per_store,Float64,219043,점포당 분기 추정매출,분기추정매출/전체점포수,원/점포/분기,
+market_industry_features_2025,sales_per_transaction,Float64,219043,추정 매출 건당 금액,매출액/매출건수,원/건,
+market_industry_features_2025,sales_per_1000_flow,Float64,219064,유동인구 1천 단위당 추정매출,매출액*1000/총유동인구,원/유동인구 1000단위,
+market_industry_features_2025,same_industry_store_density_km2,Float64,0,동일업종 점포 밀도,전체점포수/(폴리곤면적/1e6),점포/km²,
+market_industry_features_2025,same_industry_stores_per_1000_flow,Float64,62,유동인구 1천 단위당 동일업종 점포,전체점포수*1000/총유동인구,점포/유동인구 1000단위,
+market_industry_features_2025,franchise_share,Float64,2197,프랜차이즈 비중,프랜차이즈점포/전체점포,비율(0~1),
+market_industry_features_2025,opening_per_current_store,Float64,2197,현 점포수 대비 개업 신고수,개업점포수/현재 전체점포수,비율,
+market_industry_features_2025,closure_per_current_store,Float64,2197,현 점포수 대비 폐업 신고수,폐업점포수/현재 전체점포수,비율,
+market_industry_features_2025,net_openings_per_current_store,Float64,2197,현 점포수 대비 순개업 신고수,(개업수-폐업수)/현재 전체점포수,비율,
+market_industry_features_2025,turnover_per_current_store,Float64,2197,현 점포수 대비 개·폐업 신고수,(개업수+폐업수)/현재 전체점포수,비율,
+market_industry_features_2025,weekend_sales_share,Float64,219043,주말 매출 비중,주말매출/(주중매출+주말매출),비율(0~1),
+market_industry_features_2025,lunch_sales_share,Float64,219043,11~14시 매출 비중,11~14시매출/총매출,비율(0~1),
+market_industry_features_2025,evening_sales_share,Float64,219043,17~21시 매출 비중,17~21시매출/총매출,비율(0~1),
+market_industry_features_2025,classified_gender_sales_share,Float64,219043,성별 분류 매출의 총매출 대비 비중,(남성매출+여성매출)/총매출,비율,
+market_industry_features_2025,age20_30_sales_share_classified,Float64,219044,연령 분류 매출 중 20·30대 비중,(20대+30대 매출)/6개 연령대 매출 합,비율(0~1),
+market_industry_features_2025,log1p_sales_amount,Float64,219043,추정매출 로그 변환,ln(1+매출액),로그(원),
+market_industry_features_2025,sales_qoq_change,Float64,242096,전분기 대비 추정매출 변화율,(당분기-직전분기)/직전분기; 분기 연속 조건,비율,
+market_industry_features_2025,stores_qoq_change,Float64,77761,전분기 대비 점포수 변화율,(당분기-직전분기)/직전분기; 분기 연속 조건,비율,
+market_industry_features_2025,market_store_count_100industries,Int64,0,market_store_count_100industries,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_industry_features_2025,industry_share_of_market_stores,Float64,0,상권 내 100개 업종 점포 중 해당업종 비중,업종점포수/상권 내 K02 100개 업종 점포수 합,비율(0~1),
+market_industry_features_2025,snapshot_mapped_spatial_ambiguity_share,Float64,249386,업종 대응 점포의 공간 중복후보 비중,(대표배정수-유일매칭수)/대표배정수,비율(0~1),
+market_quarter_context_2025,quarter_code,object,0,quarter_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_quarter_context_2025,market_code,object,0,market_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+market_quarter_context_2025,market_name,str,0,market_name,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,market_type,str,0,market_type,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,market_type_name,str,0,market_type_name,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,district_code,str,0,district_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,district_name,str,0,district_name,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,representative_admindong_code,str,0,representative_admindong_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,representative_admindong_name,str,0,representative_admindong_name,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,polygon_area_m2,float64,0,polygon_area_m2,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,floating_population,Int64,5,floating_population,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,flow_observed,bool,0,flow_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,facility_count_source,Int64,288,facility_count_source,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,facility_components_sum,Float64,288,facility_components_sum,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,facility_total_mismatch,boolean,288,facility_total_mismatch,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,facility_observed,bool,0,facility_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,worker_population,Int64,36,worker_population,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,worker_observed,bool,0,worker_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,resident_population,Int64,68,resident_population,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,household_count,Int64,68,household_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,resident_observed,bool,0,resident_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,시간대_00_06_유동인구_수,Int64,5,시간대_00_06_유동인구_수,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,시간대_06_11_유동인구_수,Int64,5,시간대_06_11_유동인구_수,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,시간대_11_14_유동인구_수,Int64,5,시간대_11_14_유동인구_수,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,시간대_14_17_유동인구_수,Int64,5,시간대_14_17_유동인구_수,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,시간대_17_21_유동인구_수,Int64,5,시간대_17_21_유동인구_수,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,시간대_21_24_유동인구_수,Int64,5,시간대_21_24_유동인구_수,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,연령대_20_유동인구_수,Int64,5,연령대_20_유동인구_수,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,연령대_30_유동인구_수,Int64,5,연령대_30_유동인구_수,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,worker_share_of_worker_resident,Float64,92,직장·상주인구 합 대비 직장인구 비중,직장인구/(직장인구+상주인구),비율(0~1),인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,resident_share_of_worker_resident,Float64,92,직장·상주인구 합 대비 상주인구 비중,상주인구/(직장인구+상주인구),비율(0~1),인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,flow_20_30_share,Float64,5,20·30대 유동인구 비중,(20대+30대 유동인구)/총유동인구,비율(0~1),인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,flow_peak_band_share,Float64,5,최대 시간대 유동인구 집중도,max(6개 시간대 인구)/sum(6개 시간대 인구),비율(0~1),인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,facility_density_km2,Float64,288,시설 종류별 개수 합의 면적당 밀도,하위 시설 19개 합/(폴리곤면적/1e6),시설개수합/km²,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,snapshot_store_count,Int64,4950,snapshot_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,snapshot_unique_spatial_count,float64,4950,snapshot_unique_spatial_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,snapshot_distinct_industries,float64,4950,소진공 소분류 업종 수,대표 배정 점포의 소분류 고유값 수,개,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,snapshot_industry_hhi,Float64,4953,소진공 업종 집중도 HHI,sum((소분류점포수/전체점포수)^2),지수/비율,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,snapshot_industry_entropy,Float64,4953,소진공 업종 다양성 엔트로피,-sum(p_i*ln(p_i)),지수/비율,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,snapshot_multiple_spatial_count,Float64,4950,snapshot_multiple_spatial_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,snapshot_spatial_ambiguity_share,Float64,4953,대표 배정 점포 중 다중 공간후보 비중,(대표배정수-유일매칭수)/대표배정수,지수/비율,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,snapshot_all_membership_store_count,float64,4950,snapshot_all_membership_store_count,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+market_quarter_context_2025,snapshot_membership_store_density_km2,float64,4950,상권 내부 소진공 점포 밀도,상권과 교차하는 모든 점포수/(폴리곤면적/1e6),점포/km²,인구/시설/면적/소진공 상권수치는 업종행에 반복됨. 업종간 합산 금지.
+annual_industry_variability_2025,market_code,str,0,market_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+annual_industry_variability_2025,industry_code,string,0,industry_code,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+annual_industry_variability_2025,sales_quarters_observed,Int64,0,sales_quarters_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+annual_industry_variability_2025,annual_sales_observed_sum,Int64,54947,annual_sales_observed_sum,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+annual_industry_variability_2025,sales_quarter_mean,Float64,54947,sales_quarter_mean,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+annual_industry_variability_2025,sales_quarter_std,Float64,54947,sales_quarter_std,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+annual_industry_variability_2025,all_four_quarters_observed,boolean,0,all_four_quarters_observed,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,
+annual_industry_variability_2025,sales_cv_four_quarters,Float64,57596,4개 분기 추정매출 변동계수,"std(2025 4분기 매출,ddof=0)/mean; 4개 관측 필요",비율,
+annual_industry_variability_2025,annual_sales_complete,Int64,57596,annual_sales_complete,원본/정제/상위 집계. STEP2 문서 및 column_renaming.csv 참조,,

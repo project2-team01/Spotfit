@@ -1,0 +1,16 @@
+﻿file,rows,columns
+data\interim\park_step23\k01_clean_2025.parquet,85732,55
+data\interim\park_step23\k02_clean_2025.parquet,304775,14
+data\interim\park_step23\k04_clean_2025.parquet,6595,27
+data\interim\park_step23\k05_clean_2025.parquet,6312,27
+data\interim\park_step23\k06_clean_2025.parquet,6564,26
+data\interim\park_step23\k07_clean_2025.parquet,6532,29
+data\interim\park_step23\semas_store_spatial_2025q4.parquet,534978,15
+data\interim\park_step23\semas_spatial_candidates.parquet,443443,3
+data\interim\park_step23\semas_unmatched_stores.parquet,108931,15
+data\processed\park_step23\semas_all_memberships_industry_2025q4.parquet,110570,5
+data\processed\park_step23\semas_native_industry_2025q4.parquet,109786,7
+data\processed\park_step23\market_quarter_context_2025.parquet,6600,43
+data\interim\park_step23\integrated_panel_step2_2025.parquet,304775,77
+data\processed\park_step23\annual_industry_variability_2025.parquet,77694,9
+data\processed\park_step23\market_industry_features_2025.parquet,304775,84

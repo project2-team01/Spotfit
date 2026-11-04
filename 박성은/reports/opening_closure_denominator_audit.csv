@@ -1,0 +1,5 @@
+﻿rate,denominator,comparable_rows,matched_within_0_011pp,matched_within_0_55pp,max_abs_error_pp,source_fractional_rows,source_over100_rows
+opening,total_store_count,302578,284871,302578,0.5495495495,0,5
+opening,independent_store_count,294132,274587,285405,250,0,5
+closure,total_store_count,302578,282228,302578,0.5492957746,0,144
+closure,independent_store_count,294132,271777,284986,367,0,144

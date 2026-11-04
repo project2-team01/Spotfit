@@ -1,0 +1,175 @@
+{
+  "status": "passed",
+  "audited_file_count": 33,
+  "audited_bytes": 700076,
+  "relative_links_checked": 26,
+  "errors": [],
+  "scope": "박성은/ only; raw data, full processed data and runtime packages excluded",
+  "files": [
+    {
+      "path": "박성은/.gitignore",
+      "bytes": 157,
+      "sha256": "3c6fc69f655b3b7652473cb92fa9185a7a53f6622369e6904620319bdd488112"
+    },
+    {
+      "path": "박성은/build_step23.py",
+      "bytes": 51713,
+      "sha256": "6945ba17bd120f9de5bab943b75a7eada290076bf96cf2a8d8affd7c7d06f28f"
+    },
+    {
+      "path": "박성은/config/industry_crosswalk.csv",
+      "bytes": 41614,
+      "sha256": "b3fbb95427895c2d965dbc4e65f175cc3467ca7f7624edcc888b07b7abcd87ae"
+    },
+    {
+      "path": "박성은/README.md",
+      "bytes": 5181,
+      "sha256": "a6218984bd197e7e1fc0d53e39e61462866b41ce10c523985216c23401c59353"
+    },
+    {
+      "path": "박성은/reports/column_renaming.csv",
+      "bytes": 1998,
+      "sha256": "138f1773a1612d3d546f59274c6d06760d6e7a85cb294d38a187c31ee57f59f2"
+    },
+    {
+      "path": "박성은/reports/deferred_features.csv",
+      "bytes": 561,
+      "sha256": "c7a28f986630950222f1aaa421d2b8f3b3d69c33097d24a1fdf7f770170619e9"
+    },
+    {
+      "path": "박성은/reports/feature_dictionary.csv",
+      "bytes": 12113,
+      "sha256": "5596a8b0fe72e467f054b664c25130027b54e8ab5a279b431b7cb89f2f940879"
+    },
+    {
+      "path": "박성은/reports/independent_validation.json",
+      "bytes": 6075,
+      "sha256": "93076e6f0702e9c73c46ec55195ab17f00d4c6203c41260d8fcfaa1cc4dd8138"
+    },
+    {
+      "path": "박성은/reports/industry_mapping_coverage.csv",
+      "bytes": 12777,
+      "sha256": "4f49dade61e653bd5da5c095affcf4cdc2cab06d6a32d54d3a3fcfeb85501ed0"
+    },
+    {
+      "path": "박성은/reports/input_checksums.csv",
+      "bytes": 3774,
+      "sha256": "5701db5fe8d8d6aa2b8567c89793a1b1f01caa52210804f153520b6239d5d1be"
+    },
+    {
+      "path": "박성은/reports/join_coverage_by_quarter.csv",
+      "bytes": 327,
+      "sha256": "1b1b37ee5232835035a351707a95a89d1bba38690741c5989a6723997ae93fcb"
+    },
+    {
+      "path": "박성은/reports/mapped_snapshot_keys_absent_from_panel.csv",
+      "bytes": 103713,
+      "sha256": "11d413cfcf7f5449953997bc9b38b84613f346d5e74817d09e39ce9270f15e00"
+    },
+    {
+      "path": "박성은/reports/market_geometry_audit.csv",
+      "bytes": 267049,
+      "sha256": "da7cf610f04c883e71ee11869210b588d368e503838cdfde6000ee6fa3002d31"
+    },
+    {
+      "path": "박성은/reports/opening_closure_denominator_audit.csv",
+      "bytes": 400,
+      "sha256": "4635402a9b49ff3f9097aeedb859251a338a8ea9b5c82b04ff1d79e34fc4f655"
+    },
+    {
+      "path": "박성은/reports/opening_closure_over100_rows.csv",
+      "bytes": 7249,
+      "sha256": "07e8fbcd1637e9b16fd3300dec2e5cac04fb09fc8b6fdd1245891c8ce6e78e4b"
+    },
+    {
+      "path": "박성은/reports/output_catalog.csv",
+      "bytes": 1027,
+      "sha256": "51ee2765e41f9c9376d07e2afa2148f3952c9e8da16489d45328b8fb32012489"
+    },
+    {
+      "path": "박성은/reports/output_column_dictionary.csv",
+      "bytes": 28886,
+      "sha256": "35e50f2049dc8dd7e765b72cb392c24a043a197caa4c375674f30aa83b2bad60"
+    },
+    {
+      "path": "박성은/reports/panel_attention_rows.csv",
+      "bytes": 11207,
+      "sha256": "6378eca81cac87f9a4527df1d1d805647f9c4f89adb8df9bb7289abb7c2f7814"
+    },
+    {
+      "path": "박성은/reports/population_facility_update_audit.csv",
+      "bytes": 101,
+      "sha256": "cd02b1d8024947ecb4dbe5454fdfcca33a47415459be8a70365152318ad2acd0"
+    },
+    {
+      "path": "박성은/reports/run_summary.json",
+      "bytes": 3612,
+      "sha256": "fdbe8877c40160c4744104857c2a88570823b4d3fe7aa94dd16412526a4389b6"
+    },
+    {
+      "path": "박성은/reports/semas_codebook_label_differences.csv",
+      "bytes": 265,
+      "sha256": "315c7dc16bece9188cd6c45bc962a58a328dba444135ebcacf7fd2f537867706"
+    },
+    {
+      "path": "박성은/reports/source_row_counts.csv",
+      "bytes": 853,
+      "sha256": "5b64edcb0096fd50150d5d3e42c01a607d444bb6c662ce8d95a3ff6c1c614b74"
+    },
+    {
+      "path": "박성은/reports/validation_checks.csv",
+      "bytes": 12031,
+      "sha256": "6b33ac6db2ebc78b4828d5c4d9f8e0a94504580f15750dcce7362e15dd288dc6"
+    },
+    {
+      "path": "박성은/requirements.txt",
+      "bytes": 148,
+      "sha256": "38283660b592520fd77ab93f35252c6339def7e485bc0442865782c45f65b468"
+    },
+    {
+      "path": "박성은/REVIEW_NOTES.md",
+      "bytes": 2297,
+      "sha256": "04c1d590f6ab0a0007c50c2f7393bc92d0476dabc1593f392a13a478c5555b42"
+    },
+    {
+      "path": "박성은/samples/feature_examples_2025q4.csv",
+      "bytes": 42033,
+      "sha256": "c43d7770eb4134fd27f8df6859426c613b4a1b3f9195c3cc94a5fe3669ec1020"
+    },
+    {
+      "path": "박성은/STEP2_전처리_결합_결과.md",
+      "bytes": 12740,
+      "sha256": "edcdea84ff5511ffc086ba4426b27670e7abb44771a9f0eaa6ff1f059fb3ddc5"
+    },
+    {
+      "path": "박성은/STEP3_파생변수_정의_결과.md",
+      "bytes": 15262,
+      "sha256": "549f3a5ea246b2f44521bf22f7ca6d76730a7e04a7fc8023c2bb9dd6c2348792"
+    },
+    {
+      "path": "박성은/summary/STEP2_STEP3_결과요약.xlsx",
+      "bytes": 12558,
+      "sha256": "911e5d7d851768888a86e22945a68f63e6d6d91d9972ae687958dbdff18ea655"
+    },
+    {
+      "path": "박성은/verify_step23.py",
+      "bytes": 8836,
+      "sha256": "1e7c675c1fffcb0272efe4838edd1d907a2654d6b071d5ff3b58467635be39ee"
+    },
+    {
+      "path": "박성은/verify_upload.py",
+      "bytes": 2960,
+      "sha256": "3f1751933dee5a1f180da971a8a1d206398a15c9efb37ecd8e7e0a268de027bc"
+    },
+    {
+      "path": "박성은/write_reports.py",
+      "bytes": 28171,
+      "sha256": "69b42bbcbaa41be03e271634e9d4924c7b878846f5c93c7a7955b554c9b84c0e"
+    },
+    {
+      "path": "박성은/팀공유_핵심결과.md",
+      "bytes": 2388,
+      "sha256": "9de177a4336abfb5fd192b8ff21e56441430bd58926e0113c52c4861173c91e1"
+    }
+  ]
+}

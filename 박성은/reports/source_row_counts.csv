@@ -1,0 +1,10 @@
+﻿source,input_rows,rows_2025,file
+K01,85732,85732,data\raw\seoul\extracted\seoul_sales_trdar_2025\서울시 상권분석서비스(추정매출-상권)_2025년.csv
+K02,304775,304775,data\raw\seoul\extracted\seoul_store_trdar_2025\서울시 상권분석서비스(점포-상권)_2025년.csv
+K04,6595,6595,data\raw\seoul\seoul_flpop_trdar_2025_sheet.csv
+K05,34716,6312,data\raw\seoul\seoul_facility_trdar_all_sheet.csv
+K06,36027,6564,data\raw\seoul\seoul_wrcpop_trdar_all_sheet.csv
+K07,35908,6532,data\raw\seoul\seoul_repop_trdar_all_sheet.csv
+K03,1650,1650,data\raw\seoul\extracted\seoul_area_trdar\서울시 상권분석서비스(영역-상권).shp
+S01,534978,534978,data\raw\semas\extracted\semas_store_20251231\소상공인시장진흥공단_상가(상권)정보_서울_202512.csv
+S02,247,247,data/raw/semas/semas_industry_code_20230228.csv

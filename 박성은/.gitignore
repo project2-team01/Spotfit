@@ -1,0 +1,7 @@
+# 실행 중에만 필요한 파일. summary/의 검토용 Excel은 공유합니다.
+outputs/
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+.analysis_deps/
