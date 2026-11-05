@@ -1,10 +1,10 @@
 {
   "status": "passed",
-  "audited_file_count": 33,
-  "audited_bytes": 700076,
-  "relative_links_checked": 26,
+  "audited_file_count": 44,
+  "audited_bytes": 45486385,
+  "relative_links_checked": 46,
   "errors": [],
-  "scope": "박성은/ only; raw data, full processed data and runtime packages excluded",
+  "scope": "박성은/ only, including the named final processed ZIP; raw data, interim data and runtime packages excluded",
   "files": [
     {
       "path": "박성은/.gitignore",
@@ -22,9 +22,44 @@
       "sha256": "b3fbb95427895c2d965dbc4e65f175cc3467ca7f7624edcc888b07b7abcd87ae"
     },
     {
+      "path": "박성은/data/checksums.sha256",
+      "bytes": 93,
+      "sha256": "6fcb6dfe0501f07313cff41e8a57abdf390e0e064a0806a4ae4f399fcf744ae1"
+    },
+    {
+      "path": "박성은/data/MANIFEST.csv",
+      "bytes": 1584,
+      "sha256": "cc6eaacd0d22d7ca602cee1d732b45e906209ed9b42283fd6dd564939e55d390"
+    },
+    {
+      "path": "박성은/data/MANIFEST.json",
+      "bytes": 21750,
+      "sha256": "20222c77e2680356dfcc37da81b5c990fce75a8004f8ab17ce197d843657ef88"
+    },
+    {
+      "path": "박성은/data/park_step23_2025_v0.1.zip",
+      "bytes": 44701903,
+      "sha256": "8e3be20bd5f0b341b45a0e47960f3d03bf91110151eee78cc77f972fe4e94506"
+    },
+    {
+      "path": "박성은/data/README.md",
+      "bytes": 4099,
+      "sha256": "83fd782bfce9e49ba9bd688d770ed378690a9019ec037a85f359a9f488b7b22d"
+    },
+    {
+      "path": "박성은/package_results.py",
+      "bytes": 9577,
+      "sha256": "b18648e7a4d917304ab38ec6bb1435fd901b17bf720d90ff7c8581832751dda7"
+    },
+    {
       "path": "박성은/README.md",
-      "bytes": 5181,
-      "sha256": "a6218984bd197e7e1fc0d53e39e61462866b41ce10c523985216c23401c59353"
+      "bytes": 6070,
+      "sha256": "ae67c2dd6d6bbfadb227c4522750476f88b147dc22c4422a821b9c94b92883ae"
+    },
+    {
+      "path": "박성은/reports/analysis_review_evidence.json",
+      "bytes": 9448,
+      "sha256": "5e08638b924aa220f468bfd4d1c673bb50c8f32799421a5daf285dfd21f7aca2"
     },
     {
       "path": "박성은/reports/column_renaming.csv",
@@ -112,6 +147,11 @@
       "sha256": "315c7dc16bece9188cd6c45bc962a58a328dba444135ebcacf7fd2f537867706"
     },
     {
+      "path": "박성은/reports/shared_results_validation.json",
+      "bytes": 212,
+      "sha256": "2a3c1bfb91fc6d964767d3d1dbf957fe5a5da875790517536f9e2a6f0f4d153f"
+    },
+    {
       "path": "박성은/reports/source_row_counts.csv",
       "bytes": 853,
       "sha256": "5b64edcb0096fd50150d5d3e42c01a607d444bb6c662ce8d95a3ff6c1c614b74"
@@ -125,6 +165,11 @@
       "path": "박성은/requirements.txt",
       "bytes": 148,
       "sha256": "38283660b592520fd77ab93f35252c6339def7e485bc0442865782c45f65b468"
+    },
+    {
+      "path": "박성은/review_analysis.py",
+      "bytes": 15102,
+      "sha256": "a02a2d2664d89f18e3e6a8bc72509637e03819ba549ac40d91cc4eb837a11fca"
     },
     {
       "path": "박성은/REVIEW_NOTES.md",
@@ -152,19 +197,29 @@
       "sha256": "911e5d7d851768888a86e22945a68f63e6d6d91d9972ae687958dbdff18ea655"
     },
     {
+      "path": "박성은/verify_shared_results.py",
+      "bytes": 2586,
+      "sha256": "92d201ea3ff773565409a2a102d722330f1edfec5c750f0e2413303b0dd62c83"
+    },
+    {
       "path": "박성은/verify_step23.py",
       "bytes": 8836,
       "sha256": "1e7c675c1fffcb0272efe4838edd1d907a2654d6b071d5ff3b58467635be39ee"
     },
     {
       "path": "박성은/verify_upload.py",
-      "bytes": 2960,
-      "sha256": "3f1751933dee5a1f180da971a8a1d206398a15c9efb37ecd8e7e0a268de027bc"
+      "bytes": 3264,
+      "sha256": "c560e844e3477608e0e4088b6acae9e50bee0f317ef8692c09bca94344f0c4fc"
     },
     {
       "path": "박성은/write_reports.py",
-      "bytes": 28171,
-      "sha256": "69b42bbcbaa41be03e271634e9d4924c7b878846f5c93c7a7955b554c9b84c0e"
+      "bytes": 29248,
+      "sha256": "f191b8cf8932d9f75496248212bed491d858ee3a9f9a40ad39f8c3053519fbbc"
+    },
+    {
+      "path": "박성은/분석내용_쉬운설명과_검토결과.md",
+      "bytes": 17685,
+      "sha256": "15a6fd71570174a255a2bcb6b4212f897a0a7ed31265582a2a8498c5c4e1f1c9"
     },
     {
       "path": "박성은/팀공유_핵심결과.md",

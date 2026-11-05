@@ -22,7 +22,9 @@
 
 ## 결과 파일
 
-아래 전체 가공 데이터 6종은 Git에 포함하지 않았습니다. 재실행하면 `seoul-commercial-analysis/data/processed/park_step23/`에 생성됩니다. 바로 볼 수 있는 [작은 예시 CSV](samples/feature_examples_2025q4.csv)와 [요약 Excel](summary/STEP2_STEP3_결과요약.xlsx)은 이 폴더에 포함했습니다.
+**2026-11-05: [전체 최종 가공본 ZIP 다운로드](https://github.com/project2-team01/Spotfit/raw/refs/heads/main/%EB%B0%95%EC%84%B1%EC%9D%80/data/park_step23_2025_v0.1.zip)** · [파일별 행 수·검증값](data/MANIFEST.csv) · [열기 및 사용 안내](data/README.md)
+
+전체 가공 데이터 6종을 CSV·Parquet로 공유했습니다. ZIP을 풀면 원본 다운로드나 분석 재실행 없이 전체 결과표를 열 수 있습니다. 특히 전체 2025년 패널 304,775행의 CSV도 추가했습니다. Python 재계산 결과는 기존처럼 `seoul-commercial-analysis/data/processed/park_step23/`에 생성됩니다. [작은 예시 CSV](samples/feature_examples_2025q4.csv)와 [요약 Excel](summary/STEP2_STEP3_결과요약.xlsx)도 볼 수 있습니다.
 
 | 파일 | 내용 |
 | --- | --- |
@@ -67,6 +69,6 @@ CSV를 읽을 때 `quarter_code`, `market_code`, `industry_code`는 문자열로
 
 지표가 높다고 창업 성공이나 수익을 보장하지 않습니다. 점수화·MBTI 가중치·추천순위는 이번 STEP 2/3에 포함하지 않았습니다. 원자료에 없는 임대료·이익률·전년 성장률도 만들지 않았습니다.
 
-대용량 원본과 가공본은 Git 제외 대상입니다. 코드·보고서·작은 정의표만 Git 공유 대상으로 두었습니다. 원본 폴더와 인수인계 메타데이터는 이번 작업에서 수정하지 않았습니다.
+원본·중간 처리 파일은 Git 제외 대상으로 유지합니다. 최종 가공본은 `박성은/data/`의 ZIP과 파일 목록으로 공유합니다. 공유 파일 보존 확인은 `python 박성은/verify_shared_results.py`로 실행할 수 있으며 추가 패키지나 원본은 필요하지 않습니다. 원본 폴더와 인수인계 메타데이터는 이번 작업에서 수정하지 않았습니다.
 
 저장된 결과를 원본과 다시 대조한 독립 검증: 52개 통과, 0개 실패. 모든 매출·점포 값 일치, 정확한 직전분기 조인, 분모 0·결측, 500개 공간 배정 샘플, 모든 공간 후보 및 집계 수 보존을 확인했습니다. [독립 검증 기록](reports/independent_validation.json).
