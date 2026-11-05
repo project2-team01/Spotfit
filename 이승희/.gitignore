@@ -1,0 +1,11 @@
+# 원본 데이터는 Git에 올리지 않습니다 (README 참고)
+data/raw/
+
+# 실행 환경·캐시
+.venv/
+__pycache__/
+__marimo__/
+
+# API 키
+config/
+.env

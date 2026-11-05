@@ -1,0 +1,64 @@
+{
+  "counts": {
+    "cells": 76591,
+    "industries": 100,
+    "sales_area_status": {
+      "4개 분기 매출 없음 (미공개)": 4039,
+      "4개 분기 매출 없음 (일부 분기)": 815,
+      "매출 미제공 업종": 1762,
+      "업종 매출 비교 상권 30곳 미만": 133,
+      "점수 있음": 13773
+    },
+    "sales_scored_cells": 13773,
+    "sales_scored_industries": 53,
+    "scored_industries": 77,
+    "status": {
+      "업종 비교 상권 30곳 미만": 245,
+      "점수 대상": 20522,
+      "평균 점포 5개 미만 (참고용)": 55824
+    },
+    "target_cells": 20522
+  },
+  "inputs": {
+    "김지영/claude_dashboard/data/areas.parquet": "7ab2e25102dbe3be574ecb54fc46ed71248eeee2c5e83c16ff1e9b5b726f4941",
+    "김지영/claude_dashboard/data/cells.parquet": "8f8f1bff9bdf8f8d8dfba0ac634a971e2a193dac7f4a73c04c5ef55cb923ebbe",
+    "김지영/claude_dashboard/data/industries.parquet": "091ec6365fd6e1d3a9398c9d6fc3e6fc2ecfc7cbb5eafc49d561593a86e50b7d",
+    "김지영/claude_dashboard/data/meta.json": "cea1cb2eee4a0389c28ad83e65fd46a90c1b29f6451418dc32c6deb0d8363327",
+    "김지영/claude_dashboard/data/quarters.parquet": "0c447a351fe6eca0a9cfb0032d117c78f7b96f150042450ea4aae830fbe29539",
+    "김지영/step2_3/data/dim_trdar.csv.gz": "d54e6c03a8d08b8f6e1bf791abc46bbf5844958f0aa2f1ee838bf7c2280af7e9"
+  },
+  "qoq_winsor": {
+    "n": 61951,
+    "p5": -48.3725,
+    "p95": 103.0136
+  },
+  "rules": {
+    "area_labels": {
+      "comp": "경쟁",
+      "dem": "수요",
+      "sales": "매출 잠재력",
+      "stab": "안정성"
+    },
+    "default_weights": {
+      "comp": 25,
+      "dem": 30,
+      "sales": 30,
+      "stab": 15
+    },
+    "demand_modes": {
+      "avg": "세 값 평균",
+      "floating": "유동인구 중심",
+      "resident": "주민 중심",
+      "worker": "직장인 중심"
+    },
+    "min_peers": 30,
+    "min_stores": 5
+  },
+  "spearman": {
+    "경쟁_수요(세 값 평균)": 0.47,
+    "매출_경쟁": -0.227,
+    "매출_수요(세 값 평균)": -0.053,
+    "매출_안정성": 0.038,
+    "직장인구_상주인구_밀도": -0.551
+  }
+}
