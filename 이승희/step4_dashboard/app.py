@@ -104,12 +104,12 @@ def _(PAGES, demand_mode, industry, mo, nav, scope, summary, v, weights):
     if summary["areas"] == 0:
         _notes.append(mo.callout("조건에 맞는 상권이 없습니다. 자치구나 상권 유형을 넓혀 보세요.", kind="warn"))
     elif not industry["점수_생성"]:
-        _notes.append(mo.callout(
+        _notes.append(mo.callout(mo.md(
             f"**{industry['업종명']}**은 점포 5개 이상인 상권이 서울 전체에 {industry['점포5개이상_상권_수']}곳뿐이라(기준 30곳) 점수를 만들지 않았습니다. "
-            "아래 표에서 원값만 참고용으로 볼 수 있습니다.", kind="info"))
+            "아래 표에서 원값만 참고용으로 볼 수 있습니다."), kind="info"))
     elif not industry["매출_점수_생성"]:
         _why = "서울시가 추정매출을 제공하지 않는 업종" if not industry["매출_제공_업종"] else f"4개 분기 매출이 있는 상권이 {industry['매출비교_상권_수']}곳뿐인 업종(기준 30곳)"
-        _notes.append(mo.callout(f"**{industry['업종명']}**은 {_why}이라 매출 잠재력 없이 3개 영역으로 계산합니다. 매출이 낮다는 뜻이 아닙니다.", kind="info"))
+        _notes.append(mo.callout(mo.md(f"**{industry['업종명']}**은 {_why}이라 매출 잠재력 없이 3개 영역으로 계산합니다. 매출이 낮다는 뜻이 아닙니다."), kind="info"))
     _tiles = mo.hstack([
         mo.stat(f"{summary['areas']:,}곳", label="조건 안 상권", caption="이 업종 점포가 있는 상권", bordered=True),
         mo.stat(f"{summary['scored']:,}곳", label="점수가 있는 상권", caption=f"매출 점수까지 있는 곳 {summary['with_sales']:,}곳", bordered=True),
@@ -118,20 +118,31 @@ def _(PAGES, demand_mode, industry, mo, nav, scope, summary, v, weights):
     ], widths="equal", gap=1)
     _chg = v.top_change(scope, weights, demand_mode)
     if _chg is not None:
-        _notes.append(mo.callout(
+        _notes.append(mo.callout(mo.md(
             f"**경쟁·수요 겹침 확인**: 경쟁 영역을 빼고 계산하면 지금 상위 {_chg['k']}곳 중 **{_chg['changed']}곳**이 바뀝니다 ({_chg['kept']}곳 유지). "
-            "경쟁과 수요는 둘 다 유동인구를 써서 일부 겹칩니다(상관 0.47). 바뀌는 곳이 적으면 겹침의 영향이 작다는 뜻입니다.", kind="neutral"))
+            "경쟁과 수요는 둘 다 유동인구를 써서 일부 겹칩니다(상관 0.47). 바뀌는 곳이 적으면 겹침의 영향이 작다는 뜻입니다."), kind="neutral"))
     mo.vstack([*_notes, _tiles], gap=0.8)
     return
 
 
 @app.cell(hide_code=True)
-def _(PAGES, bundle, mo, nav, pal, panel, scope, selected_code, v):
+def _(PAGES, bundle, gu_ui, industry_all, industry_ui, mo, nav, pal, panel, scope, selected_code, type_ui, v):
     mo.stop(nav.value != PAGES[0] or scope.empty)
-    _spec = v.map_chart(bundle, scope, selected_code, pal)
+    _spec = v.map_chart(bundle, scope, selected_code, pal, seoul=industry_all)
     map_ui = mo.ui.altair_chart(_spec, chart_selection=False, legend_selection=False) if _spec is not None else None
-    panel("상권 지도", "진한 파란색일수록 서울 같은 업종 안에서 종합 점수가 높습니다. 회색은 점수가 없는 상권(점포 5개 미만 등)이고 0점이 아닙니다. 상권을 클릭하면 상세가 바뀝니다.",
-          map_ui if map_ui is not None else "지도에 그릴 상권이 없습니다.")
+    _view = f"{industry_ui.value}|{sorted(gu_ui.value)}|{sorted(type_ui.value)}"
+    _fig = v.map_plotly(bundle, scope, selected_code, pal, seoul=industry_all, view_key=_view)
+    _common = (f"진한 파란색일수록 종합 점수가 높습니다. 검은 번호는 지금 보이는 범위의 상위 {v.TOP_N}곳, 주황 테두리는 지금 고른 상권입니다. "
+               "옅은 회색은 점수가 없는 상권(점포 5개 미만 등)이고 0점이 아닙니다.")
+    mo.vstack([
+        mo.md(f"**상권 지도**<br><small>{_common}</small>"),
+        mo.hstack([
+            panel("Plotly 지도: 확대·이동", "마우스 휠로 확대·축소, 끌어서 이동합니다. 오른쪽 위 도구로 처음 위치로 돌아갑니다. 배경 지도는 인터넷 연결이 필요합니다.",
+                  _fig if _fig is not None else "지도에 그릴 상권이 없습니다."),
+            panel("Altair 지도: 클릭해서 고르기", "상권을 클릭하면 상권 상세 탭과 아래 비교표 선택이 그 상권으로 바뀝니다. 확대·이동은 되지 않습니다.",
+                  map_ui if map_ui is not None else "지도에 그릴 상권이 없습니다."),
+        ], widths="equal", gap=1.5, align="start", wrap=True),
+    ], gap=0.6)
     return (map_ui,)
 
 
