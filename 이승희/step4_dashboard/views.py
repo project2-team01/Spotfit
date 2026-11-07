@@ -218,51 +218,139 @@ def vintage_text(jy_meta: dict, dataset: str) -> str:
 # ---------------------------------------------------------------- 차트
 
 
-def map_chart(bundle: Bundle, scope: pd.DataFrame, selected: str | None, pal: dict, height: int = 520, width: int = 640):
-    """상권 경계를 종합 점수로 칠한다. 점수가 없는 상권은 회색. 출처: 김지영/claude_dashboard/views.py map_chart를 고침."""
-    pts = bundle.points.set_index("trdar_code")
-    in_scope = scope.set_index("trdar_code")
+TOP_N = 10  # 지도에 번호를 붙이는 상위 상권 수
+
+
+def _short(v) -> str:
+    return "–" if pd.isna(v) else f"{v:.0f}"
+
+
+def map_rows(bundle: Bundle, scope: pd.DataFrame, seoul: pd.DataFrame | None = None) -> list[dict]:
+    """지도 두 종류가 함께 쓰는 상권별 값과 짧은 설명. 순위는 서울 전체 같은 업종 기준이다."""
+    seoul = scope if seoul is None else seoul
+    scored = seoul.loc[seoul["score_total"].notna()].sort_values(["score_total", "stores"], ascending=[False, False])
+    rank = {c: i + 1 for i, c in enumerate(scored["trdar_code"])}
+    n_scored = len(scored)
+    shown = scope.loc[scope["score_total"].notna()].sort_values(["score_total", "stores"], ascending=[False, False])
+    top = {c: i + 1 for i, c in enumerate(shown["trdar_code"].head(TOP_N))}
+    recs = {r["trdar_code"]: r for r in scope.to_dict("records")}
     rows = []
     for f in bundle.geometry:
-        code = f["trdar_code"]
-        if code not in in_scope.index:
+        r = recs.get(f["trdar_code"])
+        if r is None:
             continue
-        r = in_scope.loc[code]
         total = r["score_total"]
+        has = not pd.isna(total)
         rows.append({
-            "trdar_code": code, "geometry": f["geometry"], "name": r["trdar_name"], "gu": r["gu_name"], "kind": r["trdar_type"],
-            "value": None if pd.isna(total) else round(float(total), 1),
-            "label": "점수 없음 · " + r["score_status"] if pd.isna(total) else f"{total:.0f}점 ({int(r['n_areas'])}개 영역)",
-            "stores": f"{r['stores']:.1f}개",
+            "trdar_code": f["trdar_code"], "geometry": f["geometry"], "lon": f["lon"], "lat": f["lat"],
+            "value": round(float(total), 1) if has else None,
+            "title": f"{r['trdar_name']} · {r['gu_name']}",
+            "total": f"{total:.0f}점 · 서울 {n_scored:,}곳 중 {rank[f['trdar_code']]:,}위" if has else f"점수 없음 · {r['score_status']}",
+            "areas": (f"매출 {_short(r['score_sales'])} · 경쟁 {_short(r['score_comp'])} · 안정 {_short(r['score_stab'])} · 수요 {_short(r['score_dem'])}"
+                      if has else f"평균 점포 {r['stores']:.1f}개"),
+            "top": top.get(f["trdar_code"]),
         })
+    return rows
+
+
+def _bounds(rows: list[dict], pad: float = 0.012) -> tuple[float, float, float, float]:
+    lons = [r["lon"] for r in rows]
+    lats = [r["lat"] for r in rows]
+    return min(lons) - pad, max(lons) + pad, min(lats) - pad, max(lats) + pad
+
+
+def map_chart(bundle: Bundle, scope: pd.DataFrame, selected: str | None, pal: dict, height: int = 520, width: int = 540,
+              seoul: pd.DataFrame | None = None):
+    """Altair 지도. 상권 경계를 종합 점수로 칠하고, 클릭하면 상세 상권이 바뀐다.
+    출처: 김지영/claude_dashboard/views.py map_chart를 고침.
+    경계 데이터는 pandas 표로 넘긴다. alt.Data(values=...)로 넘기면 Altair가 1,500여 개 경계 좌표를 하나하나 검사하고 복사해 3초 가까이 걸리기 때문이다."""
+    rows = map_rows(bundle, scope, seoul)
     if not rows:
         return None
-    shown = pts.loc[pts.index.intersection(in_scope.index)]
-    lon_min, lon_max = float(shown["lon"].min()) - 0.012, float(shown["lon"].max()) + 0.012
-    lat_min, lat_max = float(shown["lat"].min()) - 0.012, float(shown["lat"].max()) + 0.012
+    lon_min, lon_max, lat_min, lat_max = _bounds(rows)
     back = bundle.backdrop
-    grid = back.loc[back["kind"].eq("grid") & back["lon"].between(lon_min, lon_max) & back["lat"].between(lat_min, lat_max), ["lon", "lat"]]
-    labels = back.loc[back["kind"].eq("label") & back["lon"].between(lon_min, lon_max) & back["lat"].between(lat_min, lat_max), ["lon", "lat", "gu_name"]]
+    inside = back["lon"].between(lon_min, lon_max) & back["lat"].between(lat_min, lat_max)
+    grid = back.loc[back["kind"].eq("grid") & inside, ["lon", "lat"]]
+    labels = back.loc[back["kind"].eq("label") & inside, ["lon", "lat", "gu_name"]]
     cell_px = width / max((lon_max - lon_min) / 0.0045, 1)
-    layers = [alt.Chart(grid).mark_square(size=float(np.clip(cell_px ** 2, 30, 900)), color=pal["neutral"], opacity=0.75)
+    layers = [alt.Chart(grid).mark_square(size=float(np.clip(cell_px ** 2, 30, 900)), color=pal["neutral"], opacity=0.35)
               .encode(longitude="lon:Q", latitude="lat:Q")]
     color = alt.Color("value:Q", scale=alt.Scale(domain=[0, 100], range=[pal["blues"][0], pal["blues"][4]], interpolate="lab"),
                       legend=alt.Legend(title="종합 점수 (진할수록 높음)", values=[0, 50, 100]))
     pick = alt.selection_point(name="pick", fields=["trdar_code"], on="click", toggle=False, empty=False)
+    tip = [alt.Tooltip("title:N", title="상권"), alt.Tooltip("total:N", title="종합"), alt.Tooltip("areas:N", title="영역 점수")]
     layers.append(
-        alt.Chart(alt.Data(values=rows)).mark_geoshape(stroke=pal["axis"], strokeWidth=0.4, cursor="pointer")
+        alt.Chart(pd.DataFrame(rows)).mark_geoshape(stroke=pal["surface"], strokeWidth=0.3, cursor="pointer")
         .encode(shape=alt.Shape(field="geometry", type="geojson"),
-                color=alt.condition("isValid(datum.value)", color, alt.value(pal["missing"])),
-                tooltip=[alt.Tooltip("name:N", title="상권"), alt.Tooltip("gu:N", title="자치구"), alt.Tooltip("kind:N", title="유형"),
-                         alt.Tooltip("label:N", title="종합 점수"), alt.Tooltip("stores:N", title="평균 점포 수")])
+                color=alt.condition("isValid(datum.value)", color, alt.value(pal["out"])), tooltip=tip)
         .add_params(pick))
+    if not labels.empty:
+        layers.append(alt.Chart(labels).mark_text(fontSize=10, color=pal["muted"]).encode(longitude="lon:Q", latitude="lat:Q", text="gu_name:N"))
+    chosen = [r for r in rows if r["trdar_code"] == selected]
+    if chosen:  # 고른 상권 테두리는 번호보다 아래에 그려 번호를 가리지 않게 한다
+        layers.append(alt.Chart(alt.Data(values=[{"geometry": chosen[0]["geometry"]}])).mark_geoshape(fill=None, stroke=pal["s2"], strokeWidth=2)
+                      .encode(shape=alt.Shape(field="geometry", type="geojson")))
+    tops = pd.DataFrame([{k: r[k] for k in ("lon", "lat", "top", "title", "total", "areas")} for r in rows if r["top"]])
+    if not tops.empty:
+        layers.append(alt.Chart(tops).mark_circle(size=190, color=pal["ink"], opacity=0.85).encode(longitude="lon:Q", latitude="lat:Q", tooltip=tip))
+        layers.append(alt.Chart(tops).mark_text(fontSize=10, fontWeight=600, color=pal["surface"])
+                      .encode(longitude="lon:Q", latitude="lat:Q", text="top:N", tooltip=tip))
+    return styled(alt.layer(*layers).project("mercator").properties(width=width, height=height), pal)
+
+
+def map_plotly(bundle: Bundle, scope: pd.DataFrame, selected: str | None, pal: dict, height: int = 520,
+               seoul: pd.DataFrame | None = None, view_key: str = ""):
+    """Plotly 지도. 실제 지도 위에 상권을 그리고, 마우스 휠로 확대·축소, 끌어서 이동할 수 있다.
+    배경 지도(CARTO)는 인터넷이 연결되어 있어야 보인다. view_key가 같으면 가중치를 바꿔도 보던 위치를 유지한다."""
+    import plotly.graph_objects as go
+
+    rows = map_rows(bundle, scope, seoul)
+    if not rows:
+        return None
+    dark = pal is DARK
+
+    def geo(part):  # 층마다 그 층의 경계만 넣는다. 전체를 넣으면 같은 좌표가 층 수만큼 중복돼 화면 한도(8MB)를 넘는다.
+        return {"type": "FeatureCollection",
+                "features": [{"type": "Feature", "id": r["trdar_code"], "properties": {}, "geometry": r["geometry"]} for r in part]}
+
+    tip = "<b>%{customdata[0]}</b><br>%{customdata[1]}<br>%{customdata[2]}<extra></extra>"
+    fig = go.Figure()
+    for has, part in ((False, [r for r in rows if r["value"] is None]), (True, [r for r in rows if r["value"] is not None])):
+        if not part:
+            continue
+        common = dict(geojson=geo(part), locations=[r["trdar_code"] for r in part], customdata=[[r["title"], r["total"], r["areas"]] for r in part],
+                      hovertemplate=tip, marker_line_width=0.3, marker_line_color=pal["surface"])
+        if has:
+            fig.add_trace(go.Choroplethmap(
+                **common, z=[r["value"] for r in part], zmin=0, zmax=100, marker_opacity=0.82, name="종합 점수",
+                colorscale=[[0, pal["blues"][0]], [0.5, pal["blues"][2]], [1, pal["blues"][4]]],
+                colorbar=dict(title=dict(text="종합 점수", font=dict(size=11)), tickvals=[0, 50, 100], thickness=10, len=0.45,
+                              x=0.99, xanchor="right", y=0.04, yanchor="bottom", tickfont=dict(size=10),
+                              bgcolor="rgba(255,255,255,0.75)" if not dark else "rgba(0,0,0,0.5)")))
+        else:
+            fig.add_trace(go.Choroplethmap(**common, z=[0] * len(part), colorscale=[[0, pal["missing"]], [1, pal["missing"]]],
+                                           showscale=False, marker_opacity=0.25, name="점수 없음"))
     chosen = [r for r in rows if r["trdar_code"] == selected]
     if chosen:
-        layers.append(alt.Chart(alt.Data(values=[{"geometry": chosen[0]["geometry"]}])).mark_geoshape(fill=None, stroke=pal["ink"], strokeWidth=1.8)
-                      .encode(shape=alt.Shape(field="geometry", type="geojson")))
-    if not labels.empty:
-        layers.append(alt.Chart(labels).mark_text(fontSize=10, color=pal["ink2"]).encode(longitude="lon:Q", latitude="lat:Q", text="gu_name:N"))
-    return styled(alt.layer(*layers).project("mercator").properties(width=width, height=height), pal)
+        fig.add_trace(go.Choroplethmap(geojson=geo(chosen), locations=[chosen[0]["trdar_code"]], z=[0], colorscale=[[0, "rgba(0,0,0,0)"], [1, "rgba(0,0,0,0)"]],
+                                       showscale=False, marker_line_width=2.5, marker_line_color=pal["s2"], hoverinfo="skip", name="고른 상권"))
+    tops = [r for r in rows if r["top"]]
+    if tops:
+        fig.add_trace(go.Scattermap(
+            lon=[r["lon"] for r in tops], lat=[r["lat"] for r in tops], mode="markers+text", text=[str(r["top"]) for r in tops],
+            marker=dict(size=17, color=pal["ink"], opacity=0.85), textfont=dict(size=10, color=pal["surface"]),
+            customdata=[[r["title"], r["total"], r["areas"]] for r in tops], hovertemplate=tip, name=f"상위 {TOP_N}곳"))
+    lon_min, lon_max, lat_min, lat_max = _bounds(rows, pad=0.005)
+    span = max(lon_max - lon_min, (lat_max - lat_min) * 1.25, 0.01)
+    zoom = float(np.clip(np.log2(560 * 360 / (span * 512)), 9, 15))
+    fig.update_layout(
+        map=dict(style="carto-darkmatter" if dark else "carto-positron", zoom=zoom,
+                 center=dict(lon=(lon_min + lon_max) / 2, lat=(lat_min + lat_max) / 2)),
+        height=height, margin=dict(l=0, r=0, t=0, b=0), showlegend=False, uirevision=view_key,
+        paper_bgcolor="rgba(0,0,0,0)", font=dict(family=FONT, color=pal["ink2"], size=11),
+        hoverlabel=dict(bgcolor=pal["surface"], bordercolor=pal["axis"], font=dict(family=FONT, color=pal["ink"], size=12)),
+    )
+    return fig
 
 
 def area_bars(row: pd.Series, pal: dict, width: int = 460):

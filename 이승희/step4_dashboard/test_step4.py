@@ -223,7 +223,12 @@ def main():
             v.top_change(s, w, mode)
             v.score_table(s)
             sel = v.choose_code(None, s)
-            spec = v.map_chart(bundle, s, sel, pal)
+            spec = v.map_chart(bundle, s, sel, pal, seoul=v.filter_scope(bundle, code, None, None, w, mode))
+            fig = v.map_plotly(bundle, s, sel, pal, seoul=v.filter_scope(bundle, code, None, None, w, mode))
+            if fig is not None:
+                fig.to_json()
+                n_geo = sum(len(t.locations) for t in fig.data if t.type == "choroplethmap" and t.name != "고른 상권")
+                ok13 &= n_geo == len(s)  # 조건 안 상권이 지도에 빠짐없이 그려지는지
             if spec is not None:
                 spec.to_dict()
             if sel is not None:
