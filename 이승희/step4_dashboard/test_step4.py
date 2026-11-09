@@ -231,6 +231,17 @@ def main():
                 ok13 &= n_geo == len(s)  # 조건 안 상권이 지도에 빠짐없이 그려지는지
             if spec is not None:
                 spec.to_dict()
+            cmp_rows = s.loc[s["score_total"].notna()].head(v.COMPARE_MAX)  # 후보 상권 비교 (레이더·상권별 막대)
+            rad = v.radar_chart(cmp_rows, pal)
+            cb = v.compare_bars(cmp_rows, pal)
+            if cmp_rows.empty:
+                ok13 &= rad is None and cb is None
+            else:
+                rad.to_json()
+                cb.to_dict()
+                long = v.compare_long(cmp_rows)
+                ok13 &= len(rad.data) == len(cmp_rows) + 1 and len(long) == 4 * len(cmp_rows)
+                ok13 &= int(long["점수"].isna().sum()) == int(cmp_rows[list(v.AREA_SHORT)].isna().sum().sum())  # 자료 없음은 0으로 채우지 않음
             if sel is not None:
                 row = s.loc[s["trdar_code"].eq(sel)].iloc[0]
                 v.raw_compare(row, v.filter_scope(bundle, code))
@@ -258,6 +269,26 @@ def main():
         except Exception as e:  # noqa: BLE001
             ok13 = False
             out.append(f"{name}: 오류 {type(e).__name__}: {e}")
+    # 지도 저장(캐시): 임시 폴더에 저장 → 같은 조합은 메모리·저장 파일에서 불러오고, 내용은 새로 만든 것과 같아야 함
+    import tempfile
+    real_dir = v.MAP_CACHE
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            v.MAP_CACHE = Path(tmp)
+            v._MAP_MEM.clear()
+            args = (bundle, "CS100010", ["강남구"], None, bs.DEFAULT_WEIGHTS, "avg", None, "light")
+            c1, h1, s1 = v.map_views(*args)
+            c2, h2, s2 = v.map_views(*args)
+            v._MAP_MEM.clear()
+            c3, h3, s3 = v.map_views(*args)
+            other = v.map_views(bundle, "CS100010", ["강남구"], None, dict(bs.DEFAULT_WEIGHTS, comp=0), "avg", None, "light")[2]
+            same = h1 == h3 and c1.to_dict() == c3.to_dict()
+            ok_cache = (s1, s2, s3, other) == ("새로 계산", "메모리", "저장 파일", "새로 계산") and same
+            ok13 &= ok_cache
+            out.append(f"지도 저장: 처음 {s1} → 다시 {s2} → 재시작 후 {s3} · 내용 동일 {same} · 가중치 바꾸면 {other}")
+    finally:
+        v.MAP_CACHE = real_dir
+        v._MAP_MEM.clear()
     record(13, "화면 함수 경계 상황 (오류 없음·기대 결과)", ok13, " | ".join(out))
 
     fails = [r for r in RESULTS if not r[2]]

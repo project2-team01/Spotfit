@@ -6,7 +6,10 @@
 """
 from __future__ import annotations
 
+import gzip
+import hashlib
 import json
+import pickle
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -372,6 +375,79 @@ def area_bars(row: pd.Series, pal: dict, width: int = 460):
     return styled(alt.layer(bars, text, mid).properties(width=width, height=170), pal)
 
 
+AREA_SHORT = {"score_sales": "매출 잠재력", "score_comp": "경쟁", "score_stab": "안정성", "score_dem": "수요"}
+COMPARE_MAX = 4  # 한 번에 비교할 수 있는 상권 수 (넘으면 레이더가 겹쳐 읽기 어렵다)
+
+
+def compare_long(rows: pd.DataFrame) -> pd.DataFrame:
+    """비교할 상권들의 4개 영역 점수를 세로로 길게 편다. 자료 없는 영역은 점수를 비워 둔다."""
+    out = []
+    for _, r in rows.iterrows():
+        name = f"{r['trdar_name']} · {r['gu_name']}"
+        for col, label in AREA_SHORT.items():
+            v = r[col]
+            out.append({"trdar_code": r["trdar_code"], "상권": name, "영역": label, "점수": None if pd.isna(v) else round(float(v), 1),
+                        "표시": "자료 없음" if pd.isna(v) else f"{v:.0f}"})
+    return pd.DataFrame(out)
+
+
+def radar_chart(rows: pd.DataFrame, pal: dict, height: int = 380):
+    """상권별 4개 영역 점수 레이더(Plotly). 상권마다 다른 색 선, 점선 원은 50점(서울 같은 업종의 가운데).
+    자료 없는 영역은 0으로 그리지 않고 비워 둔다(선이 끊긴다)."""
+    import plotly.graph_objects as go
+
+    if rows.empty:
+        return None
+    d = compare_long(rows)
+    labels = list(AREA_SHORT.values())
+    colors = [pal["s1"], pal["s2"], pal["s3"], pal["blues"][4] if pal is LIGHT else pal["blues"][3]]
+    fig = go.Figure()
+    fig.add_trace(go.Scatterpolar(r=[50] * 5, theta=labels + labels[:1], mode="lines", line=dict(color=pal["muted"], dash="dot", width=1),
+                                  hoverinfo="skip", name="50점 (가운데)"))
+    for i, (name, g) in enumerate(d.groupby("상권", sort=False)):
+        g = g.set_index("영역").loc[labels]
+        r = list(g["점수"]) + [g["점수"].iloc[0]]
+        fig.add_trace(go.Scatterpolar(
+            r=r, theta=labels + labels[:1], mode="lines+markers", name=name, connectgaps=False,
+            line=dict(color=colors[i % len(colors)], width=2), marker=dict(size=6),
+            fill="toself" if len(rows) == 1 else "none",  # 상권 하나일 때만 면을 칠한다 (여럿이면 겹쳐서 가려짐)
+            customdata=list(g["표시"]) + [g["표시"].iloc[0]],
+            hovertemplate=f"<b>{name}</b><br>%{{theta}}: %{{customdata}}점<extra></extra>"))
+    fig.update_layout(
+        height=height, margin=dict(l=50, r=50, t=20, b=40), paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(family=FONT, color=pal["ink2"], size=11),
+        polar=dict(bgcolor="rgba(0,0,0,0)",
+                   radialaxis=dict(range=[0, 100], tickvals=[0, 25, 50, 75, 100], gridcolor=pal["grid"], linecolor=pal["axis"], tickfont=dict(size=9)),
+                   angularaxis=dict(gridcolor=pal["grid"], linecolor=pal["axis"], tickfont=dict(size=12, color=pal["ink"]))),
+        legend=dict(orientation="h", y=-0.18, x=0.5, xanchor="center", font=dict(size=11)),
+        hoverlabel=dict(bgcolor=pal["surface"], bordercolor=pal["axis"], font=dict(family=FONT, color=pal["ink"], size=12)),
+    )
+    return fig
+
+
+def compare_bars(rows: pd.DataFrame, pal: dict, panel_width: int = 185):
+    """상권별 작은 막대그래프(서브플롯). 칸 = 상권, x = 영역, y = 점수, 색 = 영역. 점선은 50점."""
+    if rows.empty:
+        return None
+    d = compare_long(rows)
+    d["막대"] = d["점수"].fillna(0)
+    d["상태"] = np.where(d["점수"].isna(), "자료 없음", d["영역"])
+    order = list(AREA_SHORT.values())
+    colors = [pal["s1"], pal["s2"], pal["s3"], pal["blues"][3]]
+    x = alt.X("영역:N", sort=order, title=None, axis=alt.Axis(labelAngle=0, labelFontSize=10))
+    base = alt.Chart().encode(x=x)
+    bars = base.mark_bar(size=22).encode(
+        y=alt.Y("막대:Q", scale=alt.Scale(domain=[0, 100]), title="업종 안 점수 (0~100)"),
+        color=alt.Color("상태:N", scale=alt.Scale(domain=order + ["자료 없음"], range=colors + [pal["missing"]]), legend=None),
+        tooltip=[alt.Tooltip("상권:N"), alt.Tooltip("영역:N"), alt.Tooltip("표시:N", title="점수")])
+    text = base.mark_text(dy=-6, fontSize=10, color=pal["ink2"]).encode(y="막대:Q", text="표시:N")
+    mid = alt.Chart().mark_rule(color=pal["ink2"], strokeDash=[4, 3]).encode(y=alt.datum(50))
+    names = list(dict.fromkeys(d["상권"]))
+    chart = (alt.layer(bars, text, mid, data=d).properties(width=panel_width, height=200)
+             .facet(column=alt.Column("상권:N", sort=names, title=None, header=alt.Header(labelFontSize=11, labelFontWeight=600, labelColor=pal["ink"]))))
+    return styled(chart, pal)
+
+
 def month_trend_chart(quarters: pd.DataFrame, pal: dict, width: int = 460):
     d = quarters.loc[quarters["sales_month"].notna(), ["분기", "sales_month"]].assign(월매출=lambda x: x["sales_month"] / 1e4)
     if d.empty:
@@ -439,3 +515,70 @@ def gu_chart(scope: pd.DataFrame, pal: dict, width: int = 520):
         tooltip=[alt.Tooltip("gu_name:N", title="자치구"), alt.Tooltip("표시:N", title="중앙값 (상권 수)")])
     text = alt.Chart(d).mark_text(align="left", dx=4, color=pal["ink2"], fontSize=10).encode(y=y, x="중앙값:Q", text="표시:N")
     return styled(alt.layer(bars, text).properties(width=width, height=max(180, 18 * len(d))), pal)
+
+
+# ---------------------------------------------------------------- 지도 저장(캐시)
+# 지도는 만들 때마다 약 1초가 걸린다. 그래서 한 번 만든 지도는 저장해 두고 다음부터 불러온다.
+#   1) 미리 계산: precompute_maps.py 가 업종별 기본 화면 지도를 미리 만들어 저장한다.
+#   2) 새 조합: 처음 보는 조합(가중치·필터·고른 상권 등)은 처음 계산할 때 저장하고, 다음부터 불러온다.
+# 저장 위치 data/map_cache/ 는 Git에 올리지 않는다(.gitignore). 지우면 필요할 때 다시 만들어진다.
+# 점수표·경계 데이터나 이 파일(views.py)이 바뀌면 열쇠가 달라져 예전 저장본은 쓰지 않는다.
+
+MAP_CACHE = STAGE4 / "map_cache"
+MEM_LIMIT = 40  # 메모리에 들고 있을 지도 수
+_MAP_MEM: dict[str, tuple] = {}
+_SIGNATURE: list[str] = []
+
+
+def _signature() -> str:
+    """점수표·경계·배경 데이터와 지도 코드의 지문. 하나라도 바뀌면 저장본을 새로 만든다."""
+    if not _SIGNATURE:
+        h = hashlib.sha256()
+        for p in (STAGE4 / "상권_업종_비교점수_2025.parquet", JY_DATA / "areas.geojson.json", JY_DATA / "backdrop.parquet", Path(__file__)):
+            h.update(p.read_bytes())
+        _SIGNATURE.append(h.hexdigest()[:16])
+    return _SIGNATURE[0]
+
+
+def map_cache_key(industry_code: str, gus, types, weights, demand_mode: str, selected: str | None, theme: str | None) -> str:
+    key = {
+        "industry": industry_code, "gus": sorted(gus or []), "types": sorted(types or []),
+        "weights": normalize_weights(weights or DEFAULT_WEIGHTS), "demand": demand_mode, "selected": selected,
+        "theme": "dark" if theme == "dark" else "light", "data": _signature(),
+    }
+    return hashlib.sha256(json.dumps(key, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()[:24]
+
+
+def map_views(bundle: Bundle, industry_code: str, gus, types, weights, demand_mode: str, selected: str | None, theme: str | None,
+              scope: pd.DataFrame | None = None, seoul: pd.DataFrame | None = None) -> tuple:
+    """(Altair 지도, Plotly 지도 HTML, 출처)를 돌려준다. 출처는 '메모리'·'저장 파일'·'새로 계산' 중 하나."""
+    name = map_cache_key(industry_code, gus, types, weights, demand_mode, selected, theme)
+    if name in _MAP_MEM:
+        return (*_MAP_MEM[name], "메모리")
+    path = MAP_CACHE / f"{name}.pkl.gz"
+    value, source = None, "저장 파일"
+    if path.exists():
+        try:
+            value = pickle.loads(gzip.decompress(path.read_bytes()))
+        except Exception:  # noqa: BLE001  저장본이 깨졌으면 새로 만든다
+            value = None
+    if value is None:
+        source = "새로 계산"
+        import marimo as mo  # Plotly 지도를 화면용 HTML로 바꿀 때만 쓴다
+
+        if scope is None:
+            scope = filter_scope(bundle, industry_code, gus, types, weights, demand_mode)
+        if seoul is None:
+            seoul = filter_scope(bundle, industry_code, None, None, weights, demand_mode)
+        pal = palette(theme)
+        chart = map_chart(bundle, scope, selected, pal, seoul=seoul)
+        fig = map_plotly(bundle, scope, selected, pal, seoul=seoul)
+        value = (chart, mo.as_html(fig).text if fig is not None else None)
+        MAP_CACHE.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_suffix(".tmp")
+        tmp.write_bytes(gzip.compress(pickle.dumps(value), compresslevel=5))
+        tmp.replace(path)  # 다 쓴 뒤에 이름을 바꿔, 쓰다 만 파일을 읽지 않게 한다
+    if len(_MAP_MEM) >= MEM_LIMIT:
+        _MAP_MEM.pop(next(iter(_MAP_MEM)))
+    _MAP_MEM[name] = value
+    return (*value, source)
