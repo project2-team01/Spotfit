@@ -126,16 +126,22 @@ def _(PAGES, demand_mode, industry, mo, nav, scope, summary, v, weights):
 
 
 @app.cell(hide_code=True)
-def _(PAGES, bundle, gu_ui, industry_all, industry_ui, mo, nav, pal, panel, scope, selected_code, type_ui, v):
+def _(PAGES, bundle, demand_mode, gu_ui, industry_all, industry_ui, mo, nav, panel, scope, selected_code, type_ui, v, weights):
     mo.stop(nav.value != PAGES[0] or scope.empty)
-    _spec = v.map_chart(bundle, scope, selected_code, pal, seoul=industry_all)
+    import time as _time
+    _t0 = _time.perf_counter()
+    # 한 번 만든 지도는 저장해 두고 다음부터 불러온다 (views.map_views 설명 참고)
+    _spec, _html, _source = v.map_views(bundle, industry_ui.value, gu_ui.value, type_ui.value, weights, demand_mode,
+                                        selected_code, mo.app_meta().theme, scope=scope, seoul=industry_all)
     map_ui = mo.ui.altair_chart(_spec, chart_selection=False, legend_selection=False) if _spec is not None else None
-    _view = f"{industry_ui.value}|{sorted(gu_ui.value)}|{sorted(type_ui.value)}"
-    _fig = v.map_plotly(bundle, scope, selected_code, pal, seoul=industry_all, view_key=_view)
+    _fig = mo.Html(_html) if _html else None
+    _sec = _time.perf_counter() - _t0
+    _how = {"메모리": "이번 실행 중 저장해 둔 지도를 불러왔습니다", "저장 파일": "저장된 지도 파일을 불러왔습니다",
+            "새로 계산": "처음 보는 조합이라 새로 그리고 저장했습니다. 다음부터는 바로 불러옵니다"}[_source]
     _common = (f"진한 파란색일수록 종합 점수가 높습니다. 검은 번호는 지금 보이는 범위의 상위 {v.TOP_N}곳, 주황 테두리는 지금 고른 상권입니다. "
                "옅은 회색은 점수가 없는 상권(점포 5개 미만 등)이고 0점이 아닙니다.")
     mo.vstack([
-        mo.md(f"**상권 지도**<br><small>{_common}</small>"),
+        mo.md(f"**상권 지도**<br><small>{_common}<br>지도 준비: {_how} ({_sec:.2f}초).</small>"),
         mo.hstack([
             panel("Plotly 지도: 확대·이동", "마우스 휠로 확대·축소, 끌어서 이동합니다. 오른쪽 위 도구로 처음 위치로 돌아갑니다. 배경 지도는 인터넷 연결이 필요합니다.",
                   _fig if _fig is not None else "지도에 그릴 상권이 없습니다."),
@@ -189,7 +195,20 @@ def _(PAGES, mo, nav, scope, selected_code, set_code):
 
 
 @app.cell(hide_code=True)
-def _(PAGES, bundle, chart, industry_all, mo, nav, pal, panel, pd, scope, selected_code, v):
+def _(mo, scope, selected_code, v):
+    # 비교할 상권 고르기: 점수가 있는 상권만. 기본값은 지금 고른 상권 + 종합 점수 상위 상권으로 3곳
+    _scored = scope.loc[scope["score_total"].notna()]
+    _opts = {f"{r.trdar_name} · {r.gu_name} ({r.score_total:.0f}점)": r.trdar_code for r in _scored.itertuples()}
+    _by_code = {c: k for k, c in _opts.items()}
+    _default = [c for c in [selected_code, *_scored["trdar_code"]] if c in _by_code]
+    _default = list(dict.fromkeys(_default))[:3]
+    compare_ui = mo.ui.multiselect(_opts, value=[_by_code[c] for c in _default], max_selections=v.COMPARE_MAX,
+                                   label=f"비교할 상권 (최대 {v.COMPARE_MAX}곳, 점수가 있는 상권만)")
+    return (compare_ui,)
+
+
+@app.cell(hide_code=True)
+def _(PAGES, bundle, chart, compare_ui, industry_all, mo, nav, pal, panel, pd, scope, selected_code, v):
     mo.stop(nav.value != PAGES[1])
     mo.stop(scope.empty or selected_code is None, mo.callout("조건에 맞는 상권이 없습니다.", kind="warn"))
     _row = scope.loc[scope["trdar_code"].eq(selected_code)].iloc[0]
@@ -211,6 +230,22 @@ def _(PAGES, bundle, chart, industry_all, mo, nav, pal, panel, pd, scope, select
     _no = "이 칸은 분기 매출 자료가 없습니다."
     _vint = f"직장인구: {v.vintage_text(bundle.jy_meta, 'K06')} · 상주인구: {v.vintage_text(bundle.jy_meta, 'K07')} · 집객시설: {v.vintage_text(bundle.jy_meta, 'K05')}"
     _trend = chart(v.month_trend_chart(_q, pal))
+    _cmp_rows = scope.set_index("trdar_code").loc[list(compare_ui.value)].reset_index() if compare_ui.value else scope.iloc[0:0]
+    _radar = v.radar_chart(_cmp_rows, pal)
+    _cbars = chart(v.compare_bars(_cmp_rows, pal))
+    _cmp_none = "비교할 상권을 위에서 하나 이상 골라 주세요."
+    _compare = mo.vstack([
+        mo.md("#### 후보 상권 비교\n<small>같은 4개 영역 점수를 두 가지 그래프로 봅니다. "
+              "<b>레이더 차트</b>는 상권별 모양(강점과 약점의 균형)을, <b>상권별 막대</b>는 정확한 점수를 비교하기 좋습니다. "
+              "점선은 50점(서울 같은 업종의 가운데)입니다. 자료가 없는 영역은 레이더에서 선이 끊기고, 막대에서는 회색 '자료 없음'으로 보입니다.</small>"),
+        compare_ui,
+        mo.hstack([
+            panel("레이더 차트: 강점·약점 모양", "바깥쪽으로 넓게 퍼질수록 점수가 높습니다. 범례를 누르면 그 상권을 숨기거나 다시 보입니다.",
+                  _radar if _radar is not None else _cmp_none),
+            panel("상권별 막대 (서브플롯)", "칸 하나가 상권 하나입니다. 가로축은 영역, 세로축은 점수, 색은 영역입니다.",
+                  _cbars if _cbars is not None else _cmp_none),
+        ], gap=1.5, align="start", wrap=True),
+    ], gap=0.6)
     mo.vstack([
         mo.md(f"### {_row['trdar_name']} · {_row['industry_name']}\n{_row['gu_name']} · {_row['trdar_type']}"),
         _tiles,
@@ -219,6 +254,7 @@ def _(PAGES, bundle, chart, industry_all, mo, nav, pal, panel, pd, scope, select
             panel("원값과 서울 같은 업종 중앙값", "점수 대상 상권들의 중앙값과 비교합니다.",
                   mo.ui.table(v.raw_compare(_row, industry_all), selection=None, pagination=False, show_column_summaries=False, show_data_types=False, show_download=False, show_search=False)),
         ], gap=1.5, align="start", wrap=True),
+        _compare,
         mo.hstack([
             panel("분기별 점포당 월매출", "1년치 네 점이라 계절 변화와 추세를 구분할 수 없습니다.", _trend if _trend is not None else _no),
             panel("분기별 개업·폐업", "점포가 적은 칸은 한두 건에도 크게 흔들립니다.", chart(v.flow_chart(_q, pal))),
