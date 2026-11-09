@@ -1,0 +1,47 @@
+{
+  "measurement": "Python 처리와 차트 직렬화. 브라우저 렌더링·네트워크 시간 제외. 동일 환경에서 5회 측정.",
+  "cold_load_ms": 162.117,
+  "first_query_ms": 11.037,
+  "areas": 1522,
+  "cached_query": {
+    "median_ms": 0.176,
+    "samples_ms": [
+      0.428,
+      0.23,
+      0.176,
+      0.155,
+      0.154
+    ]
+  },
+  "uncached_query": {
+    "median_ms": 7.697,
+    "samples_ms": [
+      7.697,
+      7.459,
+      8.025,
+      7.5,
+      8.0
+    ]
+  },
+  "altair_build_serialize": {
+    "median_ms": 254.062,
+    "samples_ms": [
+      294.256,
+      226.543,
+      266.357,
+      241.679,
+      254.062
+    ]
+  },
+  "plotly_build_serialize": {
+    "median_ms": 281.92,
+    "samples_ms": [
+      422.706,
+      280.282,
+      281.92,
+      281.648,
+      286.441
+    ]
+  },
+  "geometry_bytes": 786544
+}

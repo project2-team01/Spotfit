@@ -1,0 +1,133 @@
+[
+  {
+    "case": "04_상권비교점수_대시보드_2025",
+    "args": [],
+    "passed": true,
+    "returncode": 0,
+    "error_markers": [],
+    "bytes": 1929698,
+    "seconds": 7.555,
+    "stderr": ""
+  },
+  {
+    "case": "tab2_detail",
+    "args": [
+      "--tab",
+      "1"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "error_markers": [],
+    "bytes": 425692,
+    "seconds": 8.293,
+    "stderr": ""
+  },
+  {
+    "case": "tab3_distribution",
+    "args": [
+      "--tab",
+      "2"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "error_markers": [],
+    "bytes": 210534,
+    "seconds": 7.652,
+    "stderr": ""
+  },
+  {
+    "case": "tab4_limits",
+    "args": [
+      "--tab",
+      "3"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "error_markers": [],
+    "bytes": 77744,
+    "seconds": 7.436,
+    "stderr": ""
+  },
+  {
+    "case": "map_plotly",
+    "args": [
+      "--map",
+      "plotly"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "error_markers": [],
+    "bytes": 1628826,
+    "seconds": 8.288,
+    "stderr": ""
+  },
+  {
+    "case": "case_no_sales",
+    "args": [
+      "--industry",
+      "CS200010"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "error_markers": [],
+    "bytes": 662703,
+    "seconds": 7.688,
+    "stderr": ""
+  },
+  {
+    "case": "case_no_score",
+    "args": [
+      "--industry",
+      "CS200004"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "error_markers": [],
+    "bytes": 126682,
+    "seconds": 8.017,
+    "stderr": ""
+  },
+  {
+    "case": "case_empty",
+    "args": [
+      "--industry",
+      "CS100002",
+      "--gu",
+      "서초구",
+      "--type",
+      "전통시장"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "error_markers": [],
+    "bytes": 58234,
+    "seconds": 10.434,
+    "stderr": ""
+  },
+  {
+    "case": "case_zero_weights",
+    "args": [
+      "--zero",
+      "true"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "error_markers": [],
+    "bytes": 1879965,
+    "seconds": 9.426,
+    "stderr": ""
+  },
+  {
+    "case": "case_high_overlap",
+    "args": [
+      "--industry",
+      "CS300023"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "error_markers": [],
+    "bytes": 925584,
+    "seconds": 9.288,
+    "stderr": ""
+  }
+]
