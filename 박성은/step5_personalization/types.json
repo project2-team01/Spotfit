@@ -1,0 +1,20 @@
+{
+  "status": "사용자 제시 유형을 정리한 분석용 가정. 팀 최종 확정 아님",
+  "axes": {
+    "LV": {"L": "생활형", "V": "방문형"},
+    "EP": {"E": "실속형", "P": "프리미엄형"},
+    "SD": {"S": "안정형", "D": "역동형"}
+  },
+  "types": [
+    {"code":"LES","legacy_code":"LES","name":"동네 단골형","original_name":"동네 단골형","items":"반찬가게, 세탁소, 가성비 식당"},
+    {"code":"LED","legacy_code":"LEG","name":"생활 역동형","original_name":"생활 성장형","items":"베이커리, 생활용품점, 테이크아웃 카페"},
+    {"code":"LPS","legacy_code":"LPS","name":"동네 취향형","original_name":"동네 취향형","items":"스페셜티 카페, 프리미엄 식료품점"},
+    {"code":"LPD","legacy_code":"LPG","name":"취향 역동형","original_name":"취향 확장형","items":"브런치 카페, 디저트 전문점, 편집숍"},
+    {"code":"VES","legacy_code":"VES","name":"실속 유동형","original_name":"실속 유동형","items":"분식, 도시락, 저가 커피"},
+    {"code":"VED","legacy_code":"VEG","name":"유동 역동형","original_name":"유동 성장형","items":"간편식, 테이크아웃 음료, 소형 음식점"},
+    {"code":"VPS","legacy_code":"VPS","name":"목적 방문형","original_name":"목적 방문형","items":"전문 음식점, 와인바, 전문 소매점"},
+    {"code":"VPD","legacy_code":"VPG","name":"방문 역동형","original_name":"트렌드 성장형","items":"콘셉트 카페, 팝업스토어, 체험형 매장"}
+  ],
+  "normalization": "S/D 기준과 충돌하는 G를 D로 통일. 성장이라는 표현을 역동으로 바꾼 이름은 분석용 제안이며 확정 명칭 아님.",
+  "items_status": "사용자가 제시한 설명용 예시. 데이터로 검증한 추천 아이템이 아니며 서울 업종에 자동 대응하지 않음."
+}

@@ -1,0 +1,46 @@
+{
+  "areas": 1644,
+  "cells": 76591,
+  "classification": {
+    "EP_known": 12273,
+    "LV_known": 19024,
+    "SD_known": 11159,
+    "full_type_candidates": 9267,
+    "supported_industries_with_candidates": 53,
+    "target_cells": 20522,
+    "target_held": 11255
+  },
+  "context_rows": 6600,
+  "dim_rows": 1650,
+  "fact_rows": 304775,
+  "input_sha256": {
+    "seoul-commercial-analysis/docs/ANALYSIS_PLAN.md": "857213a608c66cfde87331f9daa55d10d69b855e7525832dc444cbe7f9e62edb",
+    "김지영/claude_dashboard/data/areas.parquet": "7ab2e25102dbe3be574ecb54fc46ed71248eeee2c5e83c16ff1e9b5b726f4941",
+    "김지영/claude_dashboard/data/cells.parquet": "8f8f1bff9bdf8f8d8dfba0ac634a971e2a193dac7f4a73c04c5ef55cb923ebbe",
+    "김지영/claude_dashboard/data/meta.json": "9b0488572f2e35b8d3a53703daae408de0eb2a308e161a1e1699837da7d73fbe",
+    "김지영/step2_3/data/dim_trdar.csv.gz": "d54e6c03a8d08b8f6e1bf791abc46bbf5844958f0aa2f1ee838bf7c2280af7e9",
+    "김지영/step2_3/data/fact_trdar_industry_quarter.csv.gz": "1aec8222e0e6600a6d89d8a922abdae1bad859f623c926885cc11e69c3e6b919",
+    "김지영/step2_3/data/trdar_quarter_context.csv.gz": "b37c8473b457110f74da57a8a30c49db8e416132ce320b5bc7c76021b03eb4fd",
+    "김지영/step2_3/feature_dictionary.csv": "37d5b48e92f713024af9c5137a4907f8e28b78abeda676af9f645838f63490f7",
+    "박성은/step4_dashboard/data/상권_업종_비교점수_2025.parquet": "1f5420477dd156e620b86f21fcb29eec9380e10a37224db6d15d36a59b2a12af",
+    "박성은/step4_dashboard/data/업종별_점수_가능여부.csv": "f6b41d05953f3a913a7c8e7085ccca0440a1d97ea2bd9a40bb2f7f4800af656c",
+    "박성은/step5_personalization/types.json": "80221c73defff1f64d2486d4382124ffde58968381c72c391f4776141a58fb46"
+  },
+  "params": {
+    "ep_center": 50.0,
+    "lv_band": 0.05,
+    "lv_center": 0.5,
+    "rank_band": 5.0,
+    "sd_center": 50.0
+  },
+  "quarters": [
+    "20251",
+    "20252",
+    "20253",
+    "20254"
+  ],
+  "scope": "상권×업종의 분석용 대리분류. 실제 고객 성향·금융 성향·성장성·창업 성과를 입증하지 않음.",
+  "ticket_max_absolute_difference": 0.0,
+  "ticket_recomputed_cells": 22494,
+  "tourist_cells": 0
+}

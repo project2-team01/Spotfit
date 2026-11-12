@@ -1,0 +1,87 @@
+[
+  {
+    "name": "분류 불변 규칙",
+    "passed": true,
+    "evidence": "위반 [], 전체 76,591행"
+  },
+  {
+    "name": "입력·작업 범위 보존",
+    "passed": true,
+    "evidence": "입력 SHA-256 11개 실행 전후 동일"
+  },
+  {
+    "name": "작업 폴더 밖 변경 없음",
+    "passed": true,
+    "evidence": "작업 폴더 밖 변경 0건"
+  },
+  {
+    "name": "두 번 실행 바이트 동일",
+    "passed": true,
+    "evidence": "출력 10개 SHA-256 비교"
+  },
+  {
+    "name": "매출 미제공 업종 보류",
+    "passed": true,
+    "evidence": "38개 업종 14,716행: 결측 유지, E/P·S/D·완전 유형 없음"
+  },
+  {
+    "name": "소표본 분류 보류",
+    "passed": true,
+    "evidence": "평균 점포 5개 미만 55,824행 유형 미부여"
+  },
+  {
+    "name": "축별 보류 사유 제공",
+    "passed": true,
+    "evidence": "점수 대상 중 유형 보류 11,255행 사유 있음"
+  },
+  {
+    "name": "경계·결측 규칙",
+    "passed": true,
+    "evidence": "LV ['V', '?', '?', '?', 'L', '?']; EP ['E', '?', '?', '?', 'P', '?']"
+  },
+  {
+    "name": "동점 처리",
+    "passed": true,
+    "evidence": "동일 원값 30개 → 동일 백분위 51.666667, 모두 경계 보류"
+  },
+  {
+    "name": "변동계수 정의",
+    "passed": true,
+    "evidence": "모표준편차/평균 손계산 일치, 평균 0·결측 보류"
+  },
+  {
+    "name": "실제 원값·백분위 손계산",
+    "passed": true,
+    "evidence": "삼각지역: ticket 9815.856, 매출CV 0.063681, 유동CV 0.020616, EP백분위 76.491, SD지수 21.814 → VPS / 남부터미널역: ticket 5948.037, 매출CV 0.068972, 유동CV 0.022062, EP백분위 25.803, SD지수 25.431 → VES"
+  },
+  {
+    "name": "STEP4 점수 재현",
+    "passed": true,
+    "evidence": "최대 절대 오차 2.84e-14"
+  },
+  {
+    "name": "유형·업종 필터와 점수 연결",
+    "passed": true,
+    "evidence": "8개 유형의 커피 탐색: 정확 일치만, 부분 일치로 자동 대체하지 않음, 점수 손계산 일치"
+  },
+  {
+    "name": "빈 결과·부분 일치 구분",
+    "passed": true,
+    "evidence": "비교 부족 업종 정확 0건, 매출 미제공 정확 0건, 명시적 부분 허용 3건"
+  },
+  {
+    "name": "G→D와 잘못된 코드 처리",
+    "passed": true,
+    "evidence": "기존 G 코드 변환, 출력은 S/D 코드만"
+  },
+  {
+    "name": "유효하지 않은 입력 거부",
+    "passed": true,
+    "evidence": "없는 업종과 유형 모두 ValueError"
+  },
+  {
+    "name": "변조 탐지",
+    "passed": true,
+    "evidence": "관광특구 발견, 소표본 발견, 코드 발견, 매출0 발견, 방향 발견"
+  }
+]

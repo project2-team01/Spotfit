@@ -1,0 +1,12 @@
+[project]
+name = "spotfit-step5-personalization"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "altair==6.3.0",
+    "marimo==0.25.2",
+    "numpy>=1.26,<3",
+    "pandas>=2.2,<4",
+    "plotly==7.1.0",
+    "pyarrow>=15",
+]

@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-12",
+  "target_cells": 20522,
+  "full_candidates": 9267,
+  "held": 11255,
+  "D_axis_rows": 5611,
+  "D_sales_h2_lower_than_h1": 2343,
+  "D_both_sales_and_floating_lower": 1396,
+  "validation_passed": 17,
+  "validation_total": 17,
+  "types": {
+    "LES": 1431,
+    "LED": 1740,
+    "LPS": 1031,
+    "LPD": 1415,
+    "VES": 813,
+    "VED": 622,
+    "VPS": 1235,
+    "VPD": 980
+  }
+}
