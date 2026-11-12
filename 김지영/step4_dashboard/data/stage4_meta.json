@@ -1,0 +1,183 @@
+{
+ "title": "STEP 4 상권×업종 업종 내 비교 점수 (2025년)",
+ "rules": {
+  "min_stores": 5,
+  "min_peers": 30,
+  "sales_min_peers": 30,
+  "percentile": "같은 업종의 점수 대상 칸 안에서 rank(method='average', pct=True) × 100"
+ },
+ "default_weights": {
+  "sales": 30,
+  "competition": 25,
+  "stability": 15,
+  "demand": 30
+ },
+ "alpha": 13.189248896401722,
+ "winsor": {
+  "low_pct": 5.0,
+  "high_pct": 95.0,
+  "low": -0.4837247857322642,
+  "high": 1.0301363674292323,
+  "observed": 61951
+ },
+ "input_rows": {
+  "fact": 304775,
+  "annual": 77694,
+  "context": 6600,
+  "dim": 1650
+ },
+ "input_sha256": {
+  "김지영/step2_3/data/fact_trdar_industry_quarter.csv.gz": "1aec8222e0e6600a6d89d8a922abdae1bad859f623c926885cc11e69c3e6b919",
+  "김지영/step2_3/data/annual_features.csv.gz": "769c3c9ec4624d172ff0208c9dd9b91e889255c46b15c4cbc216ed2ea40add65",
+  "김지영/step2_3/data/trdar_quarter_context.csv.gz": "b37c8473b457110f74da57a8a30c49db8e416132ce320b5bc7c76021b03eb4fd",
+  "김지영/step2_3/data/dim_trdar.csv.gz": "d54e6c03a8d08b8f6e1bf791abc46bbf5844958f0aa2f1ee838bf7c2280af7e9"
+ },
+ "checks_before_use": {
+  "stores_definition": "store_count 4개 분기 합 ÷ 4 (점포 행이 없는 분기는 0개)",
+  "stores_vs_observed_mean_diff_cells": 2448,
+  "stores_vs_observed_mean_diff_cells_ge5": 0,
+  "changing_areas_within_2025": {
+   "worker_population": 0,
+   "resident_population": 0,
+   "facility_count": 0,
+   "area_km2": 0
+  },
+  "floating_quarters": {
+   "1": 1,
+   "2": 1,
+   "4": 1642
+  },
+  "missing_areas": {
+   "floating": 0,
+   "worker": 9,
+   "resident": 17,
+   "facility": 72
+  }
+ },
+ "counts": {
+  "annual_rows": 77694,
+  "by_status": {
+   "관광특구 (점수표에서 뺌)": 521,
+   "평균 점포 0개": 582,
+   "점포 5개 미만 (참고용)": 55824,
+   "업종 비교 상권 30곳 미만": 245,
+   "점수 대상": 20522
+  },
+  "areas": 1644,
+  "industries": {
+   "total": 100,
+   "scored": 77,
+   "not_scored": 23,
+   "sales_supported": 62,
+   "sales_scored": 53,
+   "scored_without_sales_supply": 18,
+   "scored_sales_peer_short": 6
+  },
+  "area_scores": {
+   "sales": 13773,
+   "competition": 20522,
+   "stability": 20522,
+   "demand": 20396
+  },
+  "areas_used_default": {
+   "2": 57,
+   "3": 6761,
+   "4": 13704
+  },
+  "sales_missing_reason": {
+   "4개 분기 매출이 모두 있지는 않음": 4854,
+   "매출 미제공 업종": 1762,
+   "업종 안 매출 비교 상권 30곳 미만": 133
+  },
+  "demand_missing": 126
+ },
+ "diagnostics": {
+  "spearman_overall": {
+   "score_sales": {
+    "score_sales": 1.0,
+    "score_competition": -0.2267,
+    "score_stability": 0.0375,
+    "score_demand": -0.0511,
+    "pct_floating": -0.0746,
+    "pct_worker": 0.2547,
+    "pct_resident": -0.249
+   },
+   "score_competition": {
+    "score_sales": -0.2267,
+    "score_competition": 1.0,
+    "score_stability": -0.0957,
+    "score_demand": 0.4687,
+    "pct_floating": 0.5738,
+    "pct_worker": -0.2922,
+    "pct_resident": 0.3987
+   },
+   "score_stability": {
+    "score_sales": 0.0375,
+    "score_competition": -0.0957,
+    "score_stability": 1.0,
+    "score_demand": -0.0392,
+    "pct_floating": -0.0496,
+    "pct_worker": 0.053,
+    "pct_resident": -0.0614
+   },
+   "score_demand": {
+    "score_sales": -0.0511,
+    "score_competition": 0.4687,
+    "score_stability": -0.0392,
+    "score_demand": 1.0,
+    "pct_floating": 0.7836,
+    "pct_worker": 0.0985,
+    "pct_resident": 0.555
+   },
+   "pct_floating": {
+    "score_sales": -0.0746,
+    "score_competition": 0.5738,
+    "score_stability": -0.0496,
+    "score_demand": 0.7836,
+    "pct_floating": 1.0,
+    "pct_worker": -0.2353,
+    "pct_resident": 0.3716
+   },
+   "pct_worker": {
+    "score_sales": 0.2547,
+    "score_competition": -0.2922,
+    "score_stability": 0.053,
+    "score_demand": 0.0985,
+    "pct_floating": -0.2353,
+    "pct_worker": 1.0,
+    "pct_resident": -0.5506
+   },
+   "pct_resident": {
+    "score_sales": -0.249,
+    "score_competition": 0.3987,
+    "score_stability": -0.0614,
+    "score_demand": 0.555,
+    "pct_floating": 0.3716,
+    "pct_worker": -0.5506,
+    "pct_resident": 1.0
+   }
+  },
+  "competition_demand": {
+   "overall": 0.4687,
+   "industry_median": 0.4921,
+   "industry_max": 0.8167,
+   "industries_ge_0_8": 1,
+   "top3": [
+    {
+     "업종": "미용재료",
+     "상관": 0.8167
+    },
+    {
+     "업종": "미곡판매",
+     "상관": 0.7074
+    },
+    {
+     "업종": "예술품",
+     "상관": 0.6998
+    }
+   ]
+  }
+ },
+ "tourist_areas": 6,
+ "comparison_areas": 1644
+}
