@@ -1,0 +1,11 @@
+[project]
+name = "spotfit-step4-dashboard"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "altair>=6.3.0",
+    "marimo>=0.25.2",
+    "numpy>=2.5.4",
+    "pandas>=3.1.1",
+    "pyarrow>=26.0.1",
+]
