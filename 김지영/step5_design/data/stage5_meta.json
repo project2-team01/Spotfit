@@ -1,0 +1,173 @@
+{
+ "title": "STEP 5 금융 MBTI 상권 유형 (2025년)",
+ "axes": [
+  {
+   "기준": "주요 고객",
+   "왼쪽": "L",
+   "왼쪽 이름": "생활형",
+   "오른쪽": "V",
+   "오른쪽 이름": "방문형",
+   "의미": "주민 중심인가, 직장인·관광객·외부 방문객 중심인가"
+  },
+  {
+   "기준": "소비 성향",
+   "왼쪽": "E",
+   "왼쪽 이름": "실속형",
+   "오른쪽": "P",
+   "오른쪽 이름": "프리미엄형",
+   "의미": "가격·편의 중심인가, 높은 객단가·차별화 중심인가"
+  },
+  {
+   "기준": "상권 변화",
+   "왼쪽": "S",
+   "왼쪽 이름": "안정형",
+   "오른쪽": "G",
+   "오른쪽 이름": "성장형",
+   "의미": "수요가 꾸준한가, 최근 소비와 방문이 증가하는가"
+  }
+ ],
+ "rules": {
+  "lv": "직장인구÷상주인구, 유동인구÷상주인구의 서울 안 백분위 평균 > 서울 중앙값 → V, 아니면 L",
+  "ep": "상권×업종 객단가(4개 분기 매출 있는 칸)의 같은 업종 안 백분위를 매출 건수로 가중 평균 > 서울 중앙값 → P, 아니면 E",
+  "sg": "상권 쪽은 판정하지 않음 (팀 결정: 2025년 자료만 있어 성장성 미산출). 창업자 S/G는 영역 가중치로만 씀",
+  "survey": "기준마다 5문항 중 3개 이상 고른 쪽이 그 글자. 5:0·4:1 뚜렷, 3:2 경계",
+  "boundary": "경계 글자를 반대로 바꾼 상권 유형도 '경계 유형'으로 함께 보여 줌. 두 글자가 모두 경계이면 한 글자씩만 바꾼다 [가정]",
+  "consumption_potential": "만들지 않음 (계산 방식 문서 EDA_raw_2025.md 8장이 저장소에 없음)",
+  "budget": "판단하지 않음 (보증금·월세 자료 없음)",
+  "near_median_points": 5
+ },
+ "medians": {
+  "lv_score": 47.40900678593461,
+  "ep_score": 48.47978163202785
+ },
+ "counts": {
+  "areas": 1644,
+  "tourist_excluded": 6,
+  "lv": {
+   "L": 811,
+   "V": 810,
+   "판정 불가": 23
+  },
+  "lv_notes": {
+   "상주·직장인구 자료 없음": 3,
+   "상주인구 자료 없음": 14,
+   "직장인구 자료 없음": 6
+  },
+  "ep": {
+   "E": 776,
+   "P": 776,
+   "판정 불가": 92
+  },
+  "type2": {
+   "LE": 401,
+   "LP": 361,
+   "VE": 368,
+   "VP": 404,
+   "판정 불가": 110
+  },
+  "type2_by_trdar_type": {
+   "골목상권": {
+    "LE": 327,
+    "LP": 326,
+    "VE": 175,
+    "VP": 194
+   },
+   "발달상권": {
+    "LE": 14,
+    "LP": 7,
+    "VE": 98,
+    "VP": 125
+   },
+   "전통시장": {
+    "LE": 60,
+    "LP": 28,
+    "VE": 95,
+    "VP": 85
+   }
+  },
+  "ep_cells": 19863,
+  "ep_industries": 62,
+  "ep_industries_lt30_cells": 3,
+  "floating_quarters": {
+   "1": 1,
+   "2": 1,
+   "4": 1642
+  }
+ },
+ "diagnostics": {
+  "spearman_lv_ep": 0.0878,
+  "spearman_worker_floating_ratio": 0.4224,
+  "spearman_area_open_close_rate": 0.3951,
+  "lv_worker_ratio_only_agree": 0.8137,
+  "lv_floating_ratio_only_agree": 0.8297,
+  "ep_stores_ge5_areas": 1421,
+  "ep_stores_ge5_agree": 0.8656,
+  "ep_stores_ge5_common": 1421,
+  "lv_near_median_5": 219,
+  "ep_near_median_5": 296
+ },
+ "sg_weights": [
+  {
+   "구분": "S",
+   "이름": "S 안정형",
+   "매출 잠재력": 20,
+   "경쟁": 30,
+   "안정성": 30,
+   "수요": 20,
+   "근거": "팀 계획서 STEP 5 예시: 안정형은 상권 안정성·경쟁 위험을 중요하게 본다"
+  },
+  {
+   "구분": "G",
+   "이름": "G 성장형",
+   "매출 잠재력": 35,
+   "경쟁": 15,
+   "안정성": 10,
+   "수요": 40,
+   "근거": "팀 계획서 STEP 5 예시: 성장형은 매출 성장성·수요 증가 가능성을 본다. 성장성 점수가 없어 매출 잠재력·수요에 무게를 둔다 (성장성 점수가 아님)"
+  },
+  {
+   "구분": "경계",
+   "이름": "S/G 경계 (STEP 4 기본값)",
+   "매출 잠재력": 30,
+   "경쟁": 25,
+   "안정성": 15,
+   "수요": 30,
+   "근거": "S/G가 3:2로 갈리면 어느 쪽에도 치우치지 않게 STEP 4 기본값을 쓴다"
+  }
+ ],
+ "display_order": [
+  7,
+  13,
+  12,
+  10,
+  14,
+  5,
+  4,
+  6,
+  1,
+  15,
+  3,
+  8,
+  11,
+  2,
+  9
+ ],
+ "mbti_doc": {
+  "path": "seoul-commercial-analysis/data/raw/금융_MBTI.md",
+  "present": true,
+  "sha256": "3d26ae82ca0a0d4f34bff63ab3c90f99b6b6b2591ee8f6af772f8ec90c8b87ae",
+  "questions_match": true,
+  "types_match": true
+ },
+ "input_rows": {
+  "fact": 304775,
+  "context": 6600,
+  "dim": 1650
+ },
+ "input_sha256": {
+  "김지영/step2_3/data/fact_trdar_industry_quarter.csv.gz": "1aec8222e0e6600a6d89d8a922abdae1bad859f623c926885cc11e69c3e6b919",
+  "김지영/step2_3/data/trdar_quarter_context.csv.gz": "b37c8473b457110f74da57a8a30c49db8e416132ce320b5bc7c76021b03eb4fd",
+  "김지영/step2_3/data/dim_trdar.csv.gz": "d54e6c03a8d08b8f6e1bf791abc46bbf5844958f0aa2f1ee838bf7c2280af7e9",
+  "seoul-commercial-analysis/data/raw/금융_MBTI.md": "3d26ae82ca0a0d4f34bff63ab3c90f99b6b6b2591ee8f6af772f8ec90c8b87ae"
+ }
+}

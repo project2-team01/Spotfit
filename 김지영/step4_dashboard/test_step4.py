@@ -1,6 +1,6 @@
 """STEP 4 검증 13개 (지시서 6장). 각 검사의 숫자 근거를 출력하고, 하나라도 실패하면 종료 코드 1.
 
-실행 (저장소 루트에서, 약 3~4분)
+실행 (저장소 루트에서, 약 4~5분)
   uv run --project "김지영/step4_dashboard" python "김지영/step4_dashboard/test_step4.py"
   ... test_step4.py --skip-app    # 11~13 (marimo 확인·내보내기) 건너뛰기
 
@@ -29,6 +29,10 @@ SHARED_FILES = sorted(p for p in v.SHARED.iterdir() if p.is_file())
 SCORE_COLS = ["score_sales", "score_competition", "score_stability", "score_demand", "pct_floating", "pct_worker", "pct_resident", "score_total"]
 AREA_COLS = ["score_sales", "score_competition", "score_stability", "score_demand"]
 EPS = 1e-9
+TABS = 5  # app.py PAGES: 금융 MBTI 검사 · 상권 찾기 · 상권 상세 · 지표 분포와 자치구 비교 · 점수 기준과 한계
+START_TAB = 2  # 처음 열리는 탭 (상권 찾기)
+# STEP 5에서 이 폴더와 함께 고치는 폴더 (금융 MBTI 상권 유형). 이 두 폴더 밖은 바뀌면 안 된다.
+WORK_DIRS = [HERE, HERE.parent / "step5_design"]
 RESULTS: list[tuple[int, str, bool, str]] = []
 
 
@@ -289,9 +293,9 @@ def empty_filter(bundle: v.Bundle) -> tuple[str, str, str]:
 # ---------------------------------------------------------------- 실행
 
 
-def git_outside_changes() -> list[str]:
+def git_outside_changes(work_dirs: list[Path] = WORK_DIRS) -> list[str]:
     p = subprocess.run(["git", "-c", "core.quotepath=false", "status", "--porcelain", "--untracked-files=all"], cwd=ROOT, capture_output=True, text=True, check=True)
-    mine = HERE.relative_to(ROOT).as_posix() + "/"
+    mine = tuple(d.relative_to(ROOT).as_posix() + "/" for d in work_dirs)
     return [line for line in p.stdout.splitlines() if line and not line[3:].strip('"').startswith(mine)]
 
 
@@ -437,12 +441,12 @@ def main(skip_app: bool) -> int:
             # 12
             REPORT.parent.mkdir(exist_ok=True)
             code, msg = export_html(REPORT, [])
-            info = inspect_export(REPORT, 1)
+            info = inspect_export(REPORT, START_TAB)
             p = ([f"종료 코드 {code}: {msg[-300:]}"] if code else []) + info["errors"]
             if info["tab_rendered"] < info["tab_cells"]:
-                p.append(f"첫 탭 셀 {info['tab_cells']}개 중 {info['tab_rendered']}개만 내용이 있음")
+                p.append(f"시작 탭 셀 {info['tab_cells']}개 중 {info['tab_rendered']}개만 내용이 있음")
             record(12, "정적 HTML 내보내기", p, f"{REPORT.name} {REPORT.stat().st_size / 1e6:.1f} MB, 셀 {info['cells']}개, 오류 {len(info['errors'])}건, "
-                   f"첫 탭 셀 {info['tab_rendered']}/{info['tab_cells']}개 출력, ancestor-stopped {info['ancestor_stopped']}건")
+                   f"시작 탭(상권 찾기) 셀 {info['tab_rendered']}/{info['tab_cells']}개 출력, ancestor-stopped {info['ancestor_stopped']}건")
 
             # 13
             no_sales = availability.loc[availability["점수 생성"].eq("예") & availability["매출 제공"].eq("아니오"), "업종명"].sort_values().iloc[0]
@@ -460,7 +464,7 @@ def main(skip_app: bool) -> int:
             p, lines = [], []
             for si, (label, args) in enumerate(scenarios.items()):
                 res = []
-                for tab in range(1, 5):
+                for tab in range(1, TABS + 1):
                     out = CHECK / f"s{si}_tab{tab}.html"
                     code, msg = export_html(out, [*args, "--tab", str(tab)])
                     info = inspect_export(out, tab)
@@ -472,7 +476,7 @@ def main(skip_app: bool) -> int:
                     res.append(f"탭{tab} {info['tab_rendered']}/{info['tab_cells']}")
                 lines.append(f"{label}: " + " ".join(res))
                 print("    ", lines[-1], flush=True)
-            record(13, "화면 경계 상황 6가지 × 4개 탭 내보내기", p, f"{len(scenarios) * 4}회 내보내기, 셀 오류 {len(p)}건 (ancestor-stopped 제외). 탭별 '출력 있는 셀/탭 셀': " + " | ".join(lines))
+            record(13, f"화면 경계 상황 6가지 × {TABS}개 탭 내보내기", p, f"{len(scenarios) * TABS}회 내보내기, 셀 오류 {len(p)}건 (ancestor-stopped 제외). 탭별 '출력 있는 셀/탭 셀': " + " | ".join(lines))
 
         # 1 (마지막에: 위 실행 전후 지문 비교)
         after = shared_fingerprints()
@@ -481,7 +485,7 @@ def main(skip_app: bool) -> int:
         outside = git_outside_changes()
         p += [f"작업 폴더 밖 변경: {x}" for x in outside]
         record(1, "입력 지문 · 작업 폴더 밖 변경 없음", p, f"입력 {len(before)}개 파일 sha256 실행 전후 동일 (build 기록 {len(bundle.meta['input_sha256'])}개와도 동일), "
-               f"git status 작업 폴더 밖 변경 {len(outside)}건")
+               f"git status 작업 폴더({', '.join(d.name for d in WORK_DIRS)}) 밖 변경 {len(outside)}건")
     finally:
         shutil.rmtree(CHECK, ignore_errors=True)
 
