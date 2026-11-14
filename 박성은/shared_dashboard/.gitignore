@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+dist/data/
+dist/assets/
+step5-fixtures.json
+.venv/
+.uv-cache/

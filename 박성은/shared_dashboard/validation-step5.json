@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "rows": 76591,
+  "target": 20522,
+  "fullCandidates": 9267,
+  "held": 11255,
+  "typeCounts": {
+    "LES": 1431,
+    "LED": 1740,
+    "LPS": 1031,
+    "LPD": 1415,
+    "VES": 813,
+    "VED": 622,
+    "VPS": 1235,
+    "VPD": 980
+  },
+  "pythonCases": 160,
+  "comparedRows": 1280,
+  "emptyCases": 32,
+  "maxDifference": 7.958078640513122e-13,
+  "checks": [
+    "전체 100업종 STEP4와 STEP5 키 완전 일치",
+    "기존 Python 탐색기와 순서·점수·수요 연결·부분 일치 일치",
+    "미판정 보존 및 미제공 업종 분류 차단",
+    "기본 후보 수·보류 수·8유형별 수 일치",
+    "구 G 코드의 D 정규화",
+    "후보 없는 업종의 빈 결과 보존"
+  ]
+}

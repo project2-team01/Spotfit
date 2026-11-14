@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-14",
+  "public_url": "https://spotfit-park-2025.park24401859.chatgpt.site/#step5",
+  "published_page_verified": true,
+  "public_type_cards": 8,
+  "public_full_candidates": 9267,
+  "public_held": 11255,
+  "public_coffee_LES_candidates": 95,
+  "local_coffee_LED_partial_included": 283,
+  "local_coffee_LED_full_candidates": 124,
+  "checks": ["업종·자치구 필터", "유형 선택", "부분 일치 포함", "수요 연결 해제", "상권별 보류 사유 조회", "CSV 다운로드", "후보 없는 업종의 빈 결과 및 다운로드 비활성", "기존 STEP4 상세 화면", "모바일 화면"],
+  "console_errors": [],
+  "screenshot": "공유화면.jpg"
+}
