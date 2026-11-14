@@ -34,7 +34,8 @@ def record(no, name, ok, detail):
 
 
 def sha(p):
-    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+    """줄바꿈(CRLF/LF)을 맞춘 지문. 윈도우 Git이 받을 때 바꾼 줄바꿈은 데이터 변화가 아니다."""
+    return bt.sha256(p)
 
 
 def outside_changes():
@@ -253,9 +254,15 @@ def main():
     empty_tbl = r.result_table(r.recommend(b, noep.iloc[0], {"EP": "E"}))
     zero = r.result_table(r.recommend(b, "CS100010", {"LV": "L"}, None, {"sales": 0, "comp": 0, "stab": 0, "dem": 0}))
     zero_ok = bool(zero["서울 순위"].eq("점수 없음").all()) and zero["종합 점수"].isna().all()
-    record(17, "화면 극단 상황 (빈 결과·가중치 0·옛 입력)", errs == 0 and empty_tbl.empty and list(empty_tbl.columns) == list(zero.columns) and zero_ok and b.stale == (),
+    with tempfile.TemporaryDirectory() as tmp:  # 줄바꿈만 다른 글자 파일은 같은 지문, 내용이 다르면 다른 지문
+        src = (bt.OUT / "유형_정의.csv").read_bytes().replace(b"\r\n", b"\n")
+        lf, crlf, other = (Path(tmp) / n for n in ("lf.csv", "crlf.csv", "other.csv"))
+        lf.write_bytes(src); crlf.write_bytes(src.replace(b"\n", b"\r\n")); other.write_bytes(src + b"x\n")
+        eol_ok = sha(lf) == sha(crlf) != sha(other)
+    record(17, "화면 극단 상황 (빈 결과·가중치 0·옛 입력·줄바꿈)",
+           errs == 0 and empty_tbl.empty and list(empty_tbl.columns) == list(zero.columns) and zero_ok and b.stale == () and eol_ok,
            f"77개 업종 × 9가지 선택 표 오류 {errs}건, 빈 표 열 유지 {list(empty_tbl.columns) == list(zero.columns)}, "
-           f"가중치 0 → '점수 없음' {zero_ok}, 옛 입력 {list(b.stale)}")
+           f"가중치 0 → '점수 없음' {zero_ok}, 옛 입력 {list(b.stale)}, CRLF·LF 같은 지문·내용 변경은 다른 지문 {eol_ok}")
 
     # 18. 화면 파일 검사, 19. 입력과 다른 폴더 보존
     chk = subprocess.run([sys.executable, "-m", "marimo", "check", str(HERE / "app.py")], capture_output=True, text=True, encoding="utf-8")

@@ -54,7 +54,7 @@
   "inputs": {
     "김지영/claude_dashboard/data/areas.parquet": "7ab2e25102dbe3be574ecb54fc46ed71248eeee2c5e83c16ff1e9b5b726f4941",
     "김지영/claude_dashboard/data/cells.parquet": "8f8f1bff9bdf8f8d8dfba0ac634a971e2a193dac7f4a73c04c5ef55cb923ebbe",
-    "이승희/data/processed/stage2/상권_분기_마트.csv": "ff6c76770a55441a9f25b09356784380c8211e4227a9fb342659837213e02679",
+    "이승희/data/processed/stage2/상권_분기_마트.csv": "cefa1d7ac5945a07554c6905477ea723a247d1f068e9e22de80442996602c7d9",
     "이승희/step4_dashboard/data/상권_업종_비교점수_2025.parquet": "1f5420477dd156e620b86f21fcb29eec9380e10a37224db6d15d36a59b2a12af"
   },
   "rules": {
