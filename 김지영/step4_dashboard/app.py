@@ -9,24 +9,27 @@ def _():
     # 화면 구성은 김지영/claude_dashboard/app.py 의 '희망 업종 → 상권 찾기 → 근거와 한계' 흐름을 따른다.
     import marimo as mo
 
+    import mbti
     import views as v
 
-    PAGES = ["상권 찾기", "상권 상세", "지표 분포와 자치구 비교", "점수 기준과 한계"]
-    return PAGES, mo, v
+    PAGES = ["금융 MBTI 검사", "상권 찾기", "상권 상세", "지표 분포와 자치구 비교", "점수 기준과 한계"]
+    return PAGES, mbti, mo, v
 
 
 @app.cell(hide_code=True)
 def _(PAGES, mo):
-    # 시험·내보내기용 시작 조건. 예: marimo export html app.py -o out.html -- --tab 2 --industry 고시원 --weights 0,0,0,0
+    # 시험·내보내기용 시작 조건. 예: marimo export html app.py -o out.html -- --tab 3 --industry 고시원 --weights 0,0,0,0
+    #   --mbti VPG (유형 직접 고르기) · --answers ABBAA... (문항 번호 순서 15글자, 답하지 않은 문항은 -) · --match 0 (유형이 맞는 상권만 보기 끄기)
     _args = mo.cli_args()
 
     def _arg(name):
         value = _args.get(name)
         return None if value is None or str(value) == "" else str(value)
 
-    _tab = _arg("tab") or "1"
-    start_page = PAGES[int(_tab) - 1] if _tab.isdigit() and 1 <= int(_tab) <= len(PAGES) else (_tab if _tab in PAGES else PAGES[0])
-    start = {"industry": _arg("industry") or "커피-음료", "gu": _arg("gu"), "type": _arg("type"), "weights": _arg("weights"), "code": _arg("code")}
+    _tab = _arg("tab") or "2"  # 처음 열리는 탭은 '상권 찾기'
+    start_page = PAGES[int(_tab) - 1] if _tab.isdigit() and 1 <= int(_tab) <= len(PAGES) else (_tab if _tab in PAGES else PAGES[1])
+    start = {"industry": _arg("industry") or "커피-음료", "gu": _arg("gu"), "type": _arg("type"), "weights": _arg("weights"), "code": _arg("code"),
+             "mbti": _arg("mbti"), "answers": _arg("answers"), "match": _arg("match")}
     return start, start_page
 
 
@@ -65,6 +68,7 @@ def _(bundle, mo):
     희망 업종 하나를 고르면 **서울의 같은 업종 상권끼리** 비교한 **업종 내 비교 점수**(0~100)를 보여 줍니다.
     점수가 높은 상권은 같은 업종의 다른 상권보다 4개 영역(매출 잠재력 · 경쟁 · 안정성 · 수요) 지표가 상대적으로 나은 곳이라는 뜻입니다.
     관광특구 {bundle.meta['tourist_areas']}곳을 뺀 {bundle.meta['comparison_areas']:,}개 상권, 100개 업종 중 {_c['industries']['scored']}개 업종에서 점수를 만들었습니다.
+    왼쪽에서 **금융 MBTI**를 적용하면 유형이 맞는 상권만 보고, 가중치 기본값이 S/G 글자에 따라 바뀝니다 [가정].
     """),
         mo.callout(mo.md(
             "**2025년 자료만 있어 성장성은 산출하지 않습니다.** &nbsp;·&nbsp; "
@@ -82,62 +86,198 @@ def _(PAGES, mo, start_page):
 
 
 @app.cell(hide_code=True)
-def _(bundle, mo, start, v):
+def _(bundle, mbti, mo, start, v):
     _options = v.industry_options(bundle.availability)
     _label = v.industry_label(bundle.availability, start["industry"]) or v.industry_label(bundle.availability, "커피-음료")
     industry_ui = mo.ui.dropdown(_options, value=_label, searchable=True, label="희망 업종")
     _gus = sorted(bundle.areas["gu_name"].unique())
     gu_ui = mo.ui.multiselect(_gus, value=[g for g in (start["gu"] or "").split(",") if g in _gus], label="자치구 (비우면 전체)")
     type_ui = mo.ui.multiselect(v.TYPES, value=[t for t in (start["type"] or "").split(",") if t in v.TYPES], label="상권 유형 (비우면 전체)")
-    _w = v.parse_weights(start["weights"])
-    weight_ui = mo.ui.dictionary({k: mo.ui.slider(0, 100, step=5, value=int(_w[k]), show_value=True, debounce=True, full_width=True) for k in v.AREA_KEYS})
+    # 금융 MBTI (STEP 5): 적용 방식, 직접 고르기, 유형이 맞는 상권만 보기, 검사 15문항
+    _picks = {f"{r['유형']} {r['이모지']} {r['이름']}": r["유형"] for r in bundle.type_table.to_dict("records")}
+    _start_pick = next((k for k, c in _picks.items() if c == (start["mbti"] or "").upper()), None)
+    _mode = mbti.MODE_SURVEY if start["answers"] else (mbti.MODE_DIRECT if _start_pick else mbti.MODE_OFF)
+    mbti_mode_ui = mo.ui.radio(mbti.MODES, value=_mode, label="금융 MBTI 적용")
+    mbti_pick_ui = mo.ui.dropdown(_picks, value=_start_pick or next(iter(_picks)), label="유형 직접 고르기")
+    match_only_ui = mo.ui.checkbox(value=start["match"] != "0", label="유형이 맞는 상권만 보기")
+    _answers = mbti.parse_answers(start["answers"], bundle.questions)
+    answer_ui = mo.ui.dictionary({
+        str(r["번호"]): mo.ui.radio({r["A"]: "A", r["B"]: "B"}, value=r[_answers[int(r["번호"])]] if int(r["번호"]) in _answers else None)
+        for r in mbti.ordered_questions(bundle.questions).to_dict("records")})
+    view_type_ui = mo.ui.dropdown(["LE", "LP", "VE", "VP"], value="LE", label="지도에서 볼 상권 MBTI 유형")
     get_code, set_code = mo.state(start["code"])
-    return get_code, gu_ui, industry_ui, set_code, type_ui, weight_ui
+    return answer_ui, get_code, gu_ui, industry_ui, match_only_ui, mbti_mode_ui, mbti_pick_ui, set_code, type_ui, view_type_ui
 
 
 @app.cell(hide_code=True)
-def _(gu_ui, industry_ui, mo, type_ui, v, weight_ui):
+def _(answer_ui, bundle, mbti, mbti_mode_ui, mbti_pick_ui):
+    _answers = {int(k): x for k, x in answer_ui.value.items() if x in ("A", "B")}
+    survey = mbti.score_answers(_answers, bundle.questions, bundle.meta5["axes"])
+    profile = mbti.make_profile(mbti_mode_ui.value, survey, mbti_pick_ui.value, bundle.meta5["axes"], bundle.type_table, bundle.sg_weights)
+    return profile, survey
+
+
+@app.cell(hide_code=True)
+def _(mo, profile, start, v):
+    # 금융 MBTI를 적용하면 S/G 글자의 기본 가중치로 슬라이더를 다시 만든다 (유형이나 검사 답을 바꾸면 유형 기본값으로 돌아간다)
+    _w = v.parse_weights(start["weights"]) if start["weights"] else (profile["weights"] if profile else dict(v.DEFAULT_WEIGHTS))
+    weight_ui = mo.ui.dictionary({k: mo.ui.slider(0, 100, step=5, value=int(_w[k]), show_value=True, debounce=True, full_width=True) for k in v.AREA_KEYS})
+    return (weight_ui,)
+
+
+@app.cell(hide_code=True)
+def _(gu_ui, industry_ui, match_only_ui, mbti, mbti_mode_ui, mbti_pick_ui, mo, profile, survey, type_ui, v, weight_ui):
     _sliders = []
     for _key in v.AREA_KEYS:
         _sliders += [mo.md(f"<small>{v.AREA_NAMES[_key]}</small>"), weight_ui[_key]]
+    _mbti = [mo.md("### 금융 MBTI"), mbti_mode_ui]
+    if mbti_mode_ui.value == mbti.MODE_DIRECT:
+        _mbti.append(mbti_pick_ui)
+    if profile:
+        _mbti += [mo.md(f"<small>**{profile['emoji']} {profile['type']} {profile['name']}** · {profile['text']}<br>"
+                        f"맞춰 볼 상권 MBTI 유형: {mbti.matched_text(profile['matched'])}</small>"), match_only_ui]
+        _w = " · ".join(f"{v.AREA_NAMES[k].split(' ')[0]} {profile['weights'][k]:.0f}" for k in v.AREA_KEYS)
+        _note = f"[가정, 팀 확인 필요] 금융 MBTI **{profile['weight_label']}** 기본값을 넣었습니다: {_w}. 유형이나 검사 답을 바꾸면 이 기본값으로 돌아갑니다."
+    else:
+        if mbti_mode_ui.value == mbti.MODE_SURVEY:
+            _mbti.append(mo.md(f"<small>'금융 MBTI 검사' 탭에서 15문항 중 {survey['answered']}개 답했습니다. 끝까지 답하면 적용됩니다.</small>"))
+        _note = "[가정, 팀 미확정] 기본값: 매출 잠재력 30 · 경쟁 25 · 안정성 15 · 수요 30. 금융 MBTI를 적용하면 S/G 글자에 따라 기본값이 바뀝니다."
     mo.sidebar(mo.vstack([
+        *_mbti,
         mo.md("### 조건"),
         industry_ui,
         gu_ui,
         type_ui,
-        mo.md("### 영역별 가중치\n<small>[가정, 팀 미확정] 기본값: 매출 잠재력 30 · 경쟁 25 · 안정성 15 · 수요 30. "
-              "자료가 없는 영역은 빼고 나머지 영역끼리 비율을 다시 나눕니다.</small>"),
-        # 사이드바는 마지막 요소를 바닥 쪽으로 밀어서, 안내 문구를 슬라이더 바로 위에 둔다
-        mo.callout(mo.md("<small>유형표가 확정되면 유형별 기본 가중치를 연결합니다.</small>"), kind="neutral"),
-        mo.vstack(_sliders, gap=0.1),
+        # 사이드바는 마지막 요소를 바닥 쪽으로 밀어서, 제목·안내·슬라이더를 한 묶음으로 둔다
+        mo.vstack([mo.md(f"### 영역별 가중치\n<small>{_note} 자료가 없는 영역은 빼고 나머지 영역끼리 비율을 다시 나눕니다.</small>"),
+                   mo.vstack(_sliders, gap=0.1)], gap=0.5),
     ], gap=0.7), width="330px")
     return
 
 
 @app.cell(hide_code=True)
-def _(bundle, get_code, gu_ui, industry_ui, type_ui, v, weight_ui):
+def _(bundle, get_code, gu_ui, industry_ui, match_only_ui, profile, type_ui, v, weight_ui):
     weights = {k: float(x) for k, x in weight_ui.value.items()}
     weights_zero = sum(weights.values()) <= 0
     industry = bundle.availability.set_index("업종코드").loc[industry_ui.value]
     industry_scored = industry["점수 생성"] == "예"
-    all_rows = v.industry_rows(bundle, industry_ui.value, weights)  # 서울 전체 (점수 기준)
-    shown = v.visible_areas(bundle.areas, gu_ui.value, type_ui.value)
-    rows = v.filter_rows(all_rows, gu_ui.value, type_ui.value)  # 현재 필터 안
+    matched = profile["matched"] if profile else None
+    mbti_filter = list(matched) if profile and match_only_ui.value else None  # 유형이 맞는 상권만 보기
+    all_rows = v.with_match(v.industry_rows(bundle, industry_ui.value, weights), matched)  # 서울 전체 (점수 기준)
+    shown = v.visible_areas(bundle.areas, gu_ui.value, type_ui.value, mbti_filter)
+    rows = v.filter_rows(all_rows, gu_ui.value, type_ui.value, mbti_filter)  # 현재 필터 안
     summary = v.summary(rows, shown)
     medians = v.industry_medians(all_rows)
     selected_code = v.choose_code(get_code(), rows)
-    return all_rows, industry, industry_scored, medians, rows, selected_code, shown, summary, weights, weights_zero
+    return all_rows, industry, industry_scored, mbti_filter, medians, rows, selected_code, shown, summary, weights, weights_zero
 
 
 @app.cell(hide_code=True)
-def _(PAGES, industry, industry_scored, mo, nav, summary, v, weights, weights_zero):
+def _(PAGES, answer_ui, bundle, mbti, mbti_mode_ui, mo, nav, panel, survey):
     mo.stop(nav.value != PAGES[0])
+    _items = [mo.vstack([mo.md(f"**{_i}. {_r['질문']}**"), answer_ui[str(_r["번호"])]], gap=0.25)
+              for _i, _r in enumerate(mbti.ordered_questions(bundle.questions).to_dict("records"), start=1)]
+    _questions = panel("검사 15문항", "둘 중 더 가까운 쪽을 고릅니다. 세 가지 기준마다 5문항이고, 문항 순서는 섞여 있습니다.", mo.vstack(_items, gap=1.0))
+    if survey["complete"]:
+        _t = bundle.type_table.set_index("유형").loc[survey["type"]]
+        _matched = mbti.matched_types(survey)
+        _w, _label = mbti.sg_weights(survey, bundle.sg_weights)
+        _wtext = " · ".join(f"{k} {_w[key]:.0f}" for k, key in mbti.WEIGHT_KEYS.items())
+        if mbti_mode_ui.value == mbti.MODE_SURVEY:
+            _apply = mo.md("<small>'상권 찾기' · '상권 상세' 탭에 이 유형을 적용하고 있습니다.</small>")
+        else:
+            _apply = mo.callout("왼쪽 '금융 MBTI 적용'에서 '검사 결과'를 고르면 '상권 찾기' · '상권 상세' 탭에 이 유형이 적용됩니다.", kind="neutral")
+        _result = mo.vstack([
+            mo.md(f"## {_t['이모지']} {survey['type']} {_t['이름']}\n**{mbti.axis_text(survey)}**"),
+            mo.md(f"- **상권 특징 (팀 유형표):** {_t['상권 특징']}\n"
+                  f"- **창업 아이템 예시 (팀 유형표의 예시, 데이터로 검증하지 않음):** {_t['창업 아이템 예시']}\n"
+                  f"- **맞춰 볼 상권 MBTI 유형:** {mbti.matched_text(_matched)}"
+                  + ("" if len(_matched) == 1 else " (3:2 경계인 글자는 반대 글자의 상권도 함께 봅니다)") + "\n"
+                  f"- **가중치 기본값:** {_label}: {_wtext} [가정]"),
+            _apply,
+        ], gap=0.6)
+    else:
+        _result = mo.callout(f"15문항 중 {survey['answered']}개 답했습니다. 모두 답하면 유형이 나옵니다. 지금까지: {mbti.axis_text(survey)}", kind="neutral")
+    _how = mo.md("""
+    **채점 (팀 유형표 5장)**
+
+    - 기준마다 5문항 중 **3개 이상 고른 쪽**이 그 글자입니다. 5:0 · 4:1은 뚜렷, 3:2는 경계입니다.
+    - 글자 순서는 주요 고객(L 생활형 / V 방문형) → 소비 성향(E 실속형 / P 프리미엄형) → 상권 변화(S 안정형 / G 성장형)입니다.
+    - **상권과는 앞의 두 글자만 맞춥니다.** 상권의 S/G는 2025년 자료만 있어 판정하지 않습니다.
+    - **S/G 글자는 영역 가중치로 씁니다.** 11~15번 금융 문항이 위험 감수 성향이라, 위험 성향을 따로 묻지 않습니다(두 번 반영하지 않기 위해).
+    """)
+    mo.vstack([
+        mo.callout(mo.md("검사 결과는 **상권을 고르는 조건**으로만 씁니다. 창업 결과를 예측하지 않고, 예산 적합성도 판단하지 않습니다."), kind="info"),
+        mo.hstack([_questions, mo.vstack([panel("검사 결과", "15문항에 모두 답하면 나옵니다.", _result), _how], gap=1.2)],
+                  widths=[1, 1], gap=2, align="start", wrap=True),
+    ], gap=1.2)
+    return
+
+
+@app.cell(hide_code=True)
+def _(PAGES, bundle, chart, mbti, mo, nav, pal, panel, profile, survey, table, v, view_type_ui):
+    mo.stop(nav.value != PAGES[0])
+    if profile:
+        _matched, _whose = profile["matched"], f"적용 중인 {profile['type']}"
+    elif survey["complete"]:
+        _matched, _whose = mbti.matched_types(survey), f"검사 결과 {survey['type']}"
+    else:
+        _matched, _whose = {view_type_ui.value: mbti.MATCH}, None
+    _c, _m, _d = bundle.meta5["counts"], bundle.meta5["medians"], bundle.meta5["diagnostics"]
+    _title = f"{_whose} 기준: 상권 MBTI 유형 {mbti.matched_text(_matched)}" if _whose else f"상권 MBTI 유형 {view_type_ui.value}"
+    _maps = mo.hstack([
+        panel(f"서울 상권 지도 · {_title}",
+              "파란색은 같은 유형(일치), 주황색은 경계 글자를 바꾼 유형(경계 유형), 옅은 회색은 다른 유형, 진한 회색은 판정 불가입니다. 상권을 가리키면 유형과 점수가 보입니다.",
+              chart(v.mbti_map_chart(bundle, _matched, pal))),
+        panel("상권 유형을 나눈 방법",
+              f"점 하나가 상권 하나입니다. 세로 점선은 L/V 점수, 가로 점선은 E/P 점수의 서울 중앙값({_m['lv_score']:.1f}점 · {_m['ep_score']:.1f}점)이고, 네 칸이 LE · LP · VE · VP입니다.",
+              chart(v.quadrant_chart(bundle, _matched, pal))),
+    ], gap=1.5, align="start", wrap=True)
+    _rules = mo.md(f"""
+    #### 상권 유형을 정한 방법 (2025년 자료, 관광특구 {_c['tourist_excluded']}곳을 뺀 {_c['areas']:,}곳)
+
+    - **L 생활형 / V 방문형 [가정]:** 직장인구 ÷ 상주인구, 유동인구 ÷ 상주인구를 서울 안 순위(백분위)로 바꿔 평균한 **L/V 점수**가 서울 중앙값보다 크면 V입니다.
+      두 비율 중 하나만 써도 {_d['lv_worker_ratio_only_agree'] * 100:.0f}% · {_d['lv_floating_ratio_only_agree'] * 100:.0f}% 상권이 같은 글자가 나옵니다.
+    - **E 실속형 / P 프리미엄형 [가정]:** 같은 업종 안에서 객단가(매출 금액 ÷ 매출 건수) 순위를 매긴 뒤, 상권별로 매출 건수로 가중 평균한 **E/P 점수**가 서울 중앙값보다 크면 P입니다.
+      매출 제공 업종 {_c['ep_industries']}개, 4개 분기 매출이 모두 있는 {_c['ep_cells']:,}칸을 썼습니다. 점포 5개 이상 칸만 써도 {_d['ep_stores_ge5_agree'] * 100:.0f}% 상권이 같은 글자입니다.
+    - **S 안정형 / G 성장형:** 상권 쪽에서는 판정하지 않습니다 (2025년 자료만 있어 성장성은 산출하지 않습니다).
+    - **경계에 가까운 상권:** 중앙값 ±{bundle.meta5['rules']['near_median_points']}점 안에 L/V {_d['lv_near_median_5']}곳, E/P {_d['ep_near_median_5']}곳이 있습니다. 기준을 조금만 바꿔도 글자가 바뀔 수 있습니다.
+    - L/V와 E/P는 거의 따로 움직입니다 (순위상관 {_d['spearman_lv_ep']:.2f}).
+
+    #### 이 결과로 말할 수 없는 것
+
+    - 유형이 맞는 상권에서 창업하면 결과가 좋다는 것. 유형은 상권을 고르는 조건일 뿐입니다.
+    - **소비 잠재력**(기대 소비액과 실제 소비액의 차이). 계산 방식이 확정되지 않아 만들지 않았습니다.
+    - 예산 적합성 (보증금 · 월세 자료가 없습니다).
+    """)
+    mo.vstack([
+        *([] if _whose else [view_type_ui]),
+        _maps,
+        panel("상권 MBTI 유형별 상권 수", "상권 유형(골목상권 · 발달상권 · 전통시장)별로 나눠 셌습니다. 발달상권은 대부분 V(방문형)로 나옵니다. " + v.unknown_text(bundle),
+              table(v.type_count_table(bundle), wrapped_columns=["S/G를 붙인 팀 유형표 이름"])),
+        _rules,
+    ], gap=1.2)
+    return
+
+
+@app.cell(hide_code=True)
+def _(PAGES, industry, industry_scored, mbti, mbti_filter, mbti_mode_ui, mo, nav, profile, summary, survey, v, weights, weights_zero):
+    mo.stop(nav.value != PAGES[1])
     _name = industry["업종명"]
     _notes = []
+    _wider = "왼쪽에서 자치구나 상권 유형을 넓혀 보세요" + (" ('유형이 맞는 상권만 보기'를 끄면 모든 MBTI 유형의 상권을 봅니다)." if mbti_filter is not None else ".")
+    if profile:
+        _scope = (f"상권 MBTI 유형이 {mbti.matched_text(profile['matched'])}인 상권만 보여 줍니다." if mbti_filter is not None
+                  else "모든 상권을 보여 주고, 비교표의 '유형 일치' 열에 표시합니다.")
+        _notes.append(mo.callout(mo.md(
+            f"**금융 MBTI {profile['emoji']} {profile['type']} {profile['name']}** 적용 중 ({profile['text']}). {_scope} "
+            f"가중치는 **{profile['weight_label']}** 기본값입니다 [가정]. 상권의 S/G는 판정하지 않아 앞의 두 글자(L/V · E/P)만 맞춥니다."), kind="info"))
+    elif mbti_mode_ui.value == mbti.MODE_SURVEY:
+        _notes.append(mo.callout(f"금융 MBTI 검사를 15문항 중 {survey['answered']}개 답했습니다. '금융 MBTI 검사' 탭에서 끝까지 답하면 적용됩니다.", kind="neutral"))
     if summary["areas"] == 0:
-        _notes.append(mo.callout("조건에 맞는 상권이 없습니다. 왼쪽에서 자치구나 상권 유형을 넓혀 보세요.", kind="warn"))
+        _notes.append(mo.callout(f"조건에 맞는 상권이 없습니다. {_wider}", kind="warn"))
     elif summary["areas"] == summary["no_store"]:
-        _notes.append(mo.callout(f"현재 조건의 상권 {summary['areas']:,}곳에는 **{_name}** 점포가 없습니다. 왼쪽에서 자치구나 상권 유형을 넓혀 보세요.", kind="warn"))
+        _notes.append(mo.callout(f"현재 조건의 상권 {summary['areas']:,}곳에는 **{_name}** 점포가 없습니다. {_wider}", kind="warn"))
     if not industry_scored:
         _notes.append(mo.callout(mo.md(
             f"**{_name}**은 평균 점포 5개 이상인 상권이 서울 전체에서 {industry['비교 상권 수(평균 점포 5개 이상)']}곳뿐입니다(30곳 미만). "
@@ -165,7 +305,7 @@ def _(PAGES, industry, industry_scored, mo, nav, summary, v, weights, weights_ze
 
 @app.cell(hide_code=True)
 def _(PAGES, bundle, industry_scored, mo, nav, pal, panel, rows, selected_code, shown, summary, table, v):
-    mo.stop(nav.value != PAGES[0] or rows.empty)
+    mo.stop(nav.value != PAGES[1] or rows.empty)
     if industry_scored:
         map_ui = mo.ui.altair_chart(v.map_chart(bundle, rows, shown, selected_code, pal), chart_selection=False, legend_selection=False)
         _legend = mo.md(
@@ -197,17 +337,21 @@ def _(map_ui, set_code, v):
 
 @app.cell(hide_code=True)
 def _(PAGES, industry_scored, mo, nav, panel, rows, table, v):
-    mo.stop(nav.value != PAGES[0] or rows.empty or not industry_scored)
+    mo.stop(nav.value != PAGES[1] or rows.empty or not industry_scored)
+    _table = v.score_table(rows)
+    _tips = {
+        "종합 점수": "자료가 있는 영역끼리 가중치를 다시 나눈 가중 평균입니다.",
+        "계산 영역 수": "종합 점수를 계산할 때 쓴 영역의 수입니다 (가중치가 0인 영역은 세지 않음).",
+        "경쟁": "유동인구 1,000명당 같은 업종 점포 수가 적을수록 높은 점수 [가정]",
+        "안정성 (신뢰도 낮음)": "축소 추정 폐업률이 낮을수록 높은 점수. 1년치 자료라 신뢰도가 낮습니다.",
+        "수요": "면적당 유동·직장·상주인구 백분위의 평균 [가정]",
+        "MBTI 유형": "상권의 금융 MBTI 앞 두 글자 (L 생활형/V 방문형 · E 실속형/P 프리미엄형). S/G는 판정하지 않음",
+        "유형 일치": "내 금융 MBTI와 같은 유형이면 일치, 경계 글자를 바꾼 유형이면 경계 유형",
+    }
     area_ui = mo.ui.table(
-        v.score_table(rows), selection="single", page_size=10, hidden_columns=["trdar_code"], format_mapping=v.score_formats(),
+        _table, selection="single", page_size=10, hidden_columns=["trdar_code"], format_mapping=v.score_formats(),
         freeze_columns_left=["상권"], wrapped_columns=["자료 없는 영역"], show_column_summaries=False, show_data_types=False,
-        header_tooltip={
-            "종합 점수": "자료가 있는 영역끼리 가중치를 다시 나눈 가중 평균입니다.",
-            "계산 영역 수": "종합 점수를 계산할 때 쓴 영역의 수입니다 (가중치가 0인 영역은 세지 않음).",
-            "경쟁": "유동인구 1,000명당 같은 업종 점포 수가 적을수록 높은 점수 [가정]",
-            "안정성 (신뢰도 낮음)": "축소 추정 폐업률이 낮을수록 높은 점수. 1년치 자료라 신뢰도가 낮습니다.",
-            "수요": "면적당 유동·직장·상주인구 백분위의 평균 [가정]",
-        })
+        header_tooltip={k: x for k, x in _tips.items() if k in _table.columns})  # MBTI 열은 유형을 적용했을 때만 있다
     _ref = v.reference_table(rows)
     _items = [panel("상권 비교표",
                     "종합 점수가 높은 순서입니다. 열 이름을 눌러 정렬하고, 검색창(Search)으로 상권을 찾을 수 있습니다. "
@@ -229,8 +373,8 @@ def _(area_ui, set_code):
 
 @app.cell(hide_code=True)
 def _(PAGES, industry_ui, mo, nav, rows, selected_code, set_code, v):
-    mo.stop(nav.value != PAGES[1])
-    mo.stop(rows.empty, mo.vstack([industry_ui, mo.callout("현재 조건에 이 업종 점포가 있는 상권이 없습니다. 왼쪽에서 자치구·유형 필터를 넓혀 보세요.", kind="warn")]))
+    mo.stop(nav.value != PAGES[2])
+    mo.stop(rows.empty, mo.vstack([industry_ui, mo.callout("현재 조건에 이 업종 점포가 있는 상권이 없습니다. 왼쪽에서 자치구·유형 필터나 '유형이 맞는 상권만 보기'를 넓혀 보세요.", kind="warn")]))
     _labels = {}
     for _r in v.order_rows(rows).itertuples():
         _key = f"{_r.trdar_name} · {_r.gu_name}" + ("" if _r.scored else " (참고용)")
@@ -243,10 +387,13 @@ def _(PAGES, industry_ui, mo, nav, rows, selected_code, set_code, v):
 
 @app.cell(hide_code=True)
 def _(PAGES, bundle, chart, industry, medians, mo, nav, pal, panel, rows, selected_code, table, v):
-    mo.stop(nav.value != PAGES[1] or selected_code is None)
+    mo.stop(nav.value != PAGES[2] or selected_code is None)
     _cell = rows.loc[rows["trdar_code"].eq(selected_code)].iloc[0]
     _q = v.quarter_rows(bundle, selected_code, _cell["industry_code"])
-    _head = mo.md(f"### {_cell['trdar_name']} · {_cell['industry_name']}\n{_cell['gu_name']} · {_cell['trdar_type']} · 평균 점포 {_cell['stores']:,.2f}개 · {_cell['status']}")
+    _mbti = f"MBTI 유형 {v.type2_text(_cell['type2'])} (L/V {v.fmt(_cell['lv_score'], '.1f', '점')} · E/P {v.fmt(_cell['ep_score'], '.1f', '점')})"
+    if "mbti_match" in _cell:
+        _mbti += f" · 내 유형과 {_cell['mbti_match']}"
+    _head = mo.md(f"### {_cell['trdar_name']} · {_cell['industry_name']}\n{_cell['gu_name']} · {_cell['trdar_type']} · 평균 점포 {_cell['stores']:,.2f}개 · {_cell['status']}<br><small>{_mbti}</small>")
     if _cell["scored"]:
         _total = "자료 없음 (가중치가 0인 영역만 자료가 있음)" if v.fmt(_cell["total"]) == v.MISSING else f"{_cell['total']:.1f}점"
         _scores = mo.vstack([
@@ -289,7 +436,7 @@ def _(mo, v):
 
 @app.cell(hide_code=True)
 def _(PAGES, all_rows, bundle, chart, gu_ui, industry, industry_scored, industry_ui, metric_ui, mo, nav, pal, panel, rows, v, weights_zero):
-    mo.stop(nav.value != PAGES[2])
+    mo.stop(nav.value != PAGES[3])
     _hist, _info = v.histogram_chart(rows, metric_ui.value, bundle.meta["rules"]["min_stores"], pal)
     if _hist is None:
         _left = "현재 조건에 이 지표 값이 있는 상권이 없습니다. 매출 미제공 업종이면 점포당 월매출은 자료 없음입니다."
@@ -321,7 +468,7 @@ def _(PAGES, all_rows, bundle, chart, gu_ui, industry, industry_scored, industry
 
 @app.cell(hide_code=True)
 def _(PAGES, bundle, mo, nav, panel, rows, table, v):
-    mo.stop(nav.value != PAGES[3])
+    mo.stop(nav.value != PAGES[4])
     _m = bundle.meta
     _cd = _m["diagnostics"]["competition_demand"]
     _rel = {(x["구간"], x["지표"]): x["상관"] for x in bundle.shared_meta["reliability"] if x["단위"] == "상권×업종 칸"}
@@ -329,6 +476,8 @@ def _(PAGES, bundle, mo, nav, panel, rows, table, v):
     mo.vstack([
         panel("점수 설계표 (2026-11-07 승인)", "[가정]은 데이터로 정할 수 없어 팀이 확인해야 하는 항목입니다. data/점수_설계표.csv와 같습니다.",
               mo.md(v.design_markdown(bundle.design))),
+        panel("STEP 5 금융 MBTI 설계표 (2026-11-14 승인)", "김지영/step5_design/data/STEP5_설계표.csv와 같습니다. 자세한 설명은 STEP5_금융MBTI_설계.md에 있습니다.",
+              mo.md(v.design_markdown(bundle.design5))),
         mo.hstack([
             panel("대상 조건과 제외 사유 (서울 전체)", "2025년 연간 상권×업종 77,694칸을 사유별로 나눴습니다.", table(v.exclusion_table(_m), wrapped_columns=["설명"])),
             panel("고른 업종 · 현재 조건", "점포가 있는 상권만 셉니다.", table(_industry_counts) if len(_industry_counts) else "현재 조건에 이 업종 점포가 있는 상권이 없습니다."),
@@ -347,6 +496,8 @@ def _(PAGES, bundle, mo, nav, panel, rows, table, v):
     - 예산 적합성 (임대료 · 보증금 · 권리금 자료가 없습니다)
     - 전년 대비 성장 (2025년 자료만 있어 성장성은 산출하지 않습니다)
     - 개별 가게의 매출 (상권 안 같은 업종 평균입니다)
+    - 금융 MBTI 유형이 맞는 상권에서 창업하면 결과가 좋다는 것 (유형은 상권을 고르는 조건일 뿐입니다)
+    - 소비 잠재력 (계산 방식이 확정되지 않아 만들지 않았습니다)
 
     **읽을 때 주의할 점**
 
@@ -366,7 +517,8 @@ def _(PAGES, bundle, mo, nav, panel, rows, table, v):
 def _(mo):
     mo.md("""
     <small>출처: 서울특별시 서울시 상권분석서비스 (추정매출 · 점포 · 유동인구 · 직장인구 · 상주인구 · 집객시설 · 상권 영역).
-    데이터 가공: 팀 공용 STEP 2·3 산출물(김지영/step2_3), 상권 경계(김지영/claude_dashboard/data). 점수 계산: build_scores.py.</small>
+    데이터 가공: 팀 공용 STEP 2·3 산출물(김지영/step2_3), 상권 경계(김지영/claude_dashboard/data). 점수 계산: build_scores.py.
+    금융 MBTI: 팀 유형표(seoul-commercial-analysis/data/raw/금융_MBTI.md), 상권 MBTI 유형 계산: 김지영/step5_design/build_types.py.</small>
     """)
     return
 

@@ -12,11 +12,15 @@ import altair as alt
 import numpy as np
 import pandas as pd
 
+import mbti
+
 HERE = Path(__file__).resolve().parent  # 작업 폴더
 ROOT = HERE.parents[1]  # 팀 저장소 루트
 DATA = HERE / "data"
 # 상권 경계·지도 배경·데이터 시점은 팀 공용 대시보드 데이터를 읽기만 한다.
 SHARED = ROOT / "김지영" / "claude_dashboard" / "data"
+# STEP 5 금융 MBTI 상권 유형·검사 문항·유형표·S/G 가중치 (김지영/step5_design/build_types.py 결과)
+STEP5 = ROOT / "김지영" / "step5_design" / "data"
 
 AREA_KEYS = ["sales", "competition", "stability", "demand"]
 AREA_NAMES = {"sales": "매출 잠재력", "competition": "경쟁", "stability": "안정성 (1년치·신뢰도 낮음)", "demand": "수요"}
@@ -95,18 +99,34 @@ class Bundle:
     geometry: tuple
     backdrop: pd.DataFrame
     shared_meta: dict
+    area_types: pd.DataFrame  # STEP 5 상권 MBTI 유형 (L/V · E/P)
+    questions: pd.DataFrame
+    type_table: pd.DataFrame
+    sg_weights: pd.DataFrame
+    design5: pd.DataFrame
+    meta5: dict
 
 
-def load_bundle(data: Path = DATA, shared: Path = SHARED) -> Bundle:
+TYPE_INFO = ["trdar_code", "type2", "lv", "ep", "lv_score", "ep_score"]
+
+
+def load_bundle(data: Path = DATA, shared: Path = SHARED, step5: Path = STEP5) -> Bundle:
     required = [data / "상권_업종_비교점수_2025.parquet", data / "업종별_점수_가능여부.csv", data / "점수_설계표.csv",
                 data / "분기_추이_2025.parquet", data / "stage4_meta.json",
                 shared / "areas.parquet", shared / "areas.geojson.json", shared / "backdrop.parquet", shared / "meta.json"]
     missing = [p.name for p in required if not p.exists()]
     if missing:
         raise FileNotFoundError(f"대시보드 데이터가 없습니다: {', '.join(missing)}. build_scores.py를 먼저 실행하세요.")
+    step5_files = [step5 / n for n in ["상권_유형_2025.parquet", "검사_문항.csv", "유형표.csv", "유형별_가중치.csv", "STEP5_설계표.csv", "stage5_meta.json"]]
+    missing = [p.name for p in step5_files if not p.exists()]
+    if missing:
+        raise FileNotFoundError(f"금융 MBTI 데이터가 없습니다: {', '.join(missing)}. 김지영/step5_design/build_types.py를 먼저 실행하세요.")
     geometry = tuple(json.loads((shared / "areas.geojson.json").read_text(encoding="utf-8")))
     points = pd.DataFrame([{k: f[k] for k in ("trdar_code", "lon", "lat")} for f in geometry])
-    areas = pd.read_parquet(shared / "areas.parquet", columns=["trdar_code", "trdar_name", "trdar_type", "gu_name"]).merge(points, on="trdar_code", how="left")
+    area_types = pd.read_parquet(step5 / "상권_유형_2025.parquet")
+    areas = (pd.read_parquet(shared / "areas.parquet", columns=["trdar_code", "trdar_name", "trdar_type", "gu_name"])
+             .merge(points, on="trdar_code", how="left").merge(area_types[["trdar_code", "type2"]], on="trdar_code", how="left"))
+    csv = dict(encoding="utf-8-sig")
     return Bundle(
         scores=pd.read_parquet(data / "상권_업종_비교점수_2025.parquet"),
         availability=pd.read_csv(data / "업종별_점수_가능여부.csv", dtype={"업종코드": str}, encoding="utf-8-sig"),
@@ -117,6 +137,12 @@ def load_bundle(data: Path = DATA, shared: Path = SHARED) -> Bundle:
         geometry=geometry,
         backdrop=pd.read_parquet(shared / "backdrop.parquet"),
         shared_meta=json.loads((shared / "meta.json").read_text(encoding="utf-8")),
+        area_types=area_types,
+        questions=pd.read_csv(step5 / "검사_문항.csv", **csv),
+        type_table=pd.read_csv(step5 / "유형표.csv", **csv),
+        sg_weights=pd.read_csv(step5 / "유형별_가중치.csv", **csv),
+        design5=pd.read_csv(step5 / "STEP5_설계표.csv", dtype=str, **csv),
+        meta5=json.loads((step5 / "stage5_meta.json").read_text(encoding="utf-8")),
     )
 
 
@@ -183,13 +209,18 @@ def weight_text(weights: dict[str, float]) -> str:
 # ---------------------------------------------------------------- 조회
 
 
-def visible_areas(areas: pd.DataFrame, gus=None, types=None) -> pd.DataFrame:
-    """출처: 김지영/claude_dashboard/views.py visible_areas. 아무것도 고르지 않으면 전체다."""
+def visible_areas(areas: pd.DataFrame, gus=None, types=None, mbti=None) -> pd.DataFrame:
+    """출처: 김지영/claude_dashboard/views.py visible_areas. 아무것도 고르지 않으면 전체다.
+
+    mbti: 보여 줄 상권 MBTI 유형(두 글자) 목록. 주면 그 유형의 상권만 남긴다 (금융 MBTI '유형이 맞는 상권만 보기').
+    """
     d = areas
     if gus:
         d = d.loc[d["gu_name"].isin(list(gus))]
     if types:
         d = d.loc[d["trdar_type"].isin(list(types))]
+    if mbti is not None:
+        d = d.loc[d["type2"].isin(list(mbti))]
     return d
 
 
@@ -199,16 +230,25 @@ def industry_rows(bundle: Bundle, industry_code: str, weights: dict[str, float])
     d["total"], d["used"] = composite(d, weights)
     d["total"] = d["total"].where(d["scored"])
     d["used"] = d["used"].where(d["scored"], 0).astype(int)
-    return d.merge(bundle.areas[["trdar_code", "lon", "lat"]], on="trdar_code", how="left")
+    return d.merge(bundle.areas[["trdar_code", "lon", "lat"]], on="trdar_code", how="left").merge(bundle.area_types[TYPE_INFO], on="trdar_code", how="left")
 
 
-def filter_rows(rows: pd.DataFrame, gus=None, types=None) -> pd.DataFrame:
+def filter_rows(rows: pd.DataFrame, gus=None, types=None, mbti=None) -> pd.DataFrame:
     d = rows
     if gus:
         d = d.loc[d["gu_name"].isin(list(gus))]
     if types:
         d = d.loc[d["trdar_type"].isin(list(types))]
+    if mbti is not None:
+        d = d.loc[d["type2"].isin(list(mbti))]
     return d
+
+
+def with_match(rows: pd.DataFrame, matched: dict[str, str] | None) -> pd.DataFrame:
+    """'유형 일치' 열 (일치 / 경계 유형 / 다른 유형 / 판정 불가). 금융 MBTI를 적용하지 않았으면 그대로."""
+    if matched is None:
+        return rows
+    return rows.assign(mbti_match=[mbti.match_label(t, matched) for t in rows["type2"]])
 
 
 def order_rows(rows: pd.DataFrame) -> pd.DataFrame:
@@ -274,6 +314,7 @@ def map_chart(bundle: Bundle, rows: pd.DataFrame, shown: pd.DataFrame, selected:
         painted.append({
             "trdar_code": code, "geometry": f["geometry"], "name": r["trdar_name"], "gu": r["gu_name"], "kind": r["trdar_type"],
             "value": None if pd.isna(r["total"]) else round(float(r["total"]), 2), "label": label, "stores": f"{r['stores']:.1f}개",
+            "mbti": type2_text(r.get("type2")),
         })
 
     lon_min, lon_max = float(shown["lon"].min()) - 0.012, float(shown["lon"].max()) + 0.012
@@ -298,7 +339,7 @@ def map_chart(bundle: Bundle, rows: pd.DataFrame, shown: pd.DataFrame, selected:
             .encode(shape=alt.Shape(field="geometry", type="geojson"),
                     color=alt.condition("isValid(datum.value)", color, alt.value(pal["missing"])),
                     tooltip=[alt.Tooltip("name:N", title="상권"), alt.Tooltip("gu:N", title="자치구"), alt.Tooltip("kind:N", title="유형"),
-                             alt.Tooltip("label:N", title="종합 점수"), alt.Tooltip("stores:N", title="평균 점포 수")])
+                             alt.Tooltip("label:N", title="종합 점수"), alt.Tooltip("stores:N", title="평균 점포 수"), alt.Tooltip("mbti:N", title="MBTI 유형")])
             .add_params(pick))
         chosen = [r for r in painted if r["trdar_code"] == selected]
         if chosen:
@@ -309,8 +350,15 @@ def map_chart(bundle: Bundle, rows: pd.DataFrame, shown: pd.DataFrame, selected:
     return styled(alt.layer(*layers).project("mercator").properties(width=width, height=height), pal)
 
 
+def type2_text(type2) -> str:
+    return mbti.UNKNOWN if type2 is None or pd.isna(type2) else str(type2)
+
+
 def score_table(rows: pd.DataFrame) -> pd.DataFrame:
-    """점수 대상 상권 표. 점수 열은 숫자로 두어 정렬되게 하고, 화면에서는 '자료 없음'으로 보이게 한다 (score_formats)."""
+    """점수 대상 상권 표. 점수 열은 숫자로 두어 정렬되게 하고, 화면에서는 '자료 없음'으로 보이게 한다 (score_formats).
+
+    금융 MBTI를 적용했으면(rows에 mbti_match 열) 'MBTI 유형'과 '유형 일치' 열을 붙인다.
+    """
     d = order_rows(rows.loc[rows["scored"]])
     missing = []
     for r in d.itertuples():
@@ -320,12 +368,16 @@ def score_table(rows: pd.DataFrame) -> pd.DataFrame:
         if pd.isna(r.score_demand):
             parts.append("수요(인구 자료 일부 없음)")
         missing.append(", ".join(parts))
-    return pd.DataFrame({
+    out = pd.DataFrame({
         "trdar_code": d["trdar_code"], "상권": d["trdar_name"], "자치구": d["gu_name"], "유형": d["trdar_type"],
         "종합 점수": d["total"], "계산 영역 수": d["used"],
         "매출 잠재력": d["score_sales"], "경쟁": d["score_competition"], "안정성 (신뢰도 낮음)": d["score_stability"], "수요": d["score_demand"],
         "평균 점포 수": d["stores"], "자료 없는 영역": missing,
     })
+    if "mbti_match" in d:
+        out.insert(4, "MBTI 유형", [type2_text(t) for t in d["type2"]])
+        out.insert(5, "유형 일치", d["mbti_match"].to_numpy())
+    return out
 
 
 SCORE_COLUMNS = ["종합 점수", "매출 잠재력", "경쟁", "안정성 (신뢰도 낮음)", "수요"]
@@ -598,3 +650,109 @@ def correlation_table(meta: dict) -> pd.DataFrame:
              ("pct_worker", "pct_resident", "직장인구 ↔ 상주인구 (수요 안)"), ("score_sales", "score_competition", "매출 ↔ 경쟁"),
              ("score_sales", "score_demand", "매출 ↔ 수요"), ("score_stability", "score_sales", "안정성 ↔ 매출")]
     return pd.DataFrame([{"두 점수": label, "순위상관": round(sp[a][b], 2)} for a, b, label in pairs])
+
+
+# ---------------------------------------------------------------- 탭 0. 금융 MBTI (STEP 5)
+
+
+def match_colors(pal: dict) -> dict:
+    """유형마다 다른 색을 쓰지 않는다: 4색 범주 팔레트는 모든 쌍 비교(지도는 어떤 두 상권이든 맞닿을 수 있음)에서
+    색 구분 기준을 넘지 못했다. 그래서 '내 유형과 맞는가'만 파랑(일치) · 주황(경계 유형)으로 칠하고, 유형 이름은 툴팁과 사분면 글자로 보인다."""
+    return {mbti.MATCH: pal["s1"], mbti.NEAR: pal["s2"], mbti.OTHER: pal["out"], mbti.UNKNOWN: pal["missing"]}
+
+
+def match_scale(pal: dict, matched: dict[str, str]):
+    colors = match_colors(pal)
+    domain = [s for s in mbti.MATCH_ORDER if s != mbti.NEAR or mbti.NEAR in matched.values()]
+    return alt.Scale(domain=domain, range=[colors[s] for s in domain])
+
+
+def type_frame(bundle: Bundle, matched: dict[str, str]) -> pd.DataFrame:
+    d = bundle.area_types.copy()
+    d["상태"] = [mbti.match_label(t, matched) for t in d["type2"]]
+    d["MBTI 유형"] = [type2_text(t) for t in d["type2"]]
+    d["판정 불가 이유"] = [" · ".join(x for x in (a, b) if x) for a, b in zip(d["lv_note"], d["ep_note"])]
+    return d
+
+
+def mbti_map_chart(bundle: Bundle, matched: dict[str, str], pal: dict, height: int = 470, width: int = 600):
+    """서울 상권을 '내 유형과 맞는가'로 칠한다. 출처: 이 파일의 map_chart (배경 격자·자치구 이름)."""
+    d = type_frame(bundle, matched).set_index("trdar_code")
+    values = []
+    for f in bundle.geometry:
+        code = f["trdar_code"]
+        if code not in d.index:
+            continue
+        r = d.loc[code]
+        values.append({"geometry": f["geometry"], "name": r["trdar_name"], "gu": r["gu_name"], "kind": r["trdar_type"], "mbti": r["MBTI 유형"],
+                       "status": r["상태"], "lv": fmt(r["lv_score"], ".1f", "점"), "ep": fmt(r["ep_score"], ".1f", "점"),
+                       "why": r["판정 불가 이유"] or "-", "order": mbti.MATCH_ORDER[::-1].index(r["상태"])})
+    values.sort(key=lambda x: x["order"])  # 일치 상권을 위에 그린다
+    a = bundle.areas
+    lon_min, lon_max = float(a["lon"].min()) - 0.012, float(a["lon"].max()) + 0.012
+    lat_min, lat_max = float(a["lat"].min()) - 0.012, float(a["lat"].max()) + 0.012
+    back = bundle.backdrop
+    inside = back["lon"].between(lon_min, lon_max) & back["lat"].between(lat_min, lat_max)
+    grid = back.loc[back["kind"].eq("grid") & inside, ["lon", "lat"]]
+    labels = back.loc[back["kind"].eq("label") & inside, ["lon", "lat", "gu_name"]]
+    cell_px = width / max((lon_max - lon_min) / 0.0045, 1)
+    shapes = alt.Chart(alt.Data(values=values)).mark_geoshape(stroke=pal["axis"], strokeWidth=0.3).encode(
+        shape=alt.Shape(field="geometry", type="geojson"),
+        color=alt.Color("status:N", scale=match_scale(pal, matched), legend=alt.Legend(title=None)),
+        tooltip=[alt.Tooltip("name:N", title="상권"), alt.Tooltip("gu:N", title="자치구"), alt.Tooltip("kind:N", title="유형"),
+                 alt.Tooltip("mbti:N", title="MBTI 유형"), alt.Tooltip("status:N", title="내 유형과"), alt.Tooltip("lv:N", title="L/V 점수 (높을수록 V)"),
+                 alt.Tooltip("ep:N", title="E/P 점수 (높을수록 P)"), alt.Tooltip("why:N", title="판정 불가 이유")])
+    layers = [alt.Chart(grid).mark_square(size=float(np.clip(cell_px ** 2, 30, 900)), color=pal["neutral"], opacity=0.75).encode(longitude="lon:Q", latitude="lat:Q"),
+              shapes]
+    if not labels.empty:
+        layers.append(alt.Chart(labels).mark_text(fontSize=10, color=pal["ink2"]).encode(longitude="lon:Q", latitude="lat:Q", text="gu_name:N"))
+    return styled(alt.layer(*layers).project("mercator").properties(width=width, height=height), pal)
+
+
+def quadrant_chart(bundle: Bundle, matched: dict[str, str], pal: dict, width: int = 470, height: int = 420):
+    """L/V 점수 × E/P 점수. 점선(서울 중앙값)으로 나뉜 네 칸이 LE · LP · VE · VP다."""
+    med = bundle.meta5["medians"]
+    d = type_frame(bundle, matched).dropna(subset=["lv_score", "ep_score"])
+    d["order"] = [mbti.MATCH_ORDER[::-1].index(s) for s in d["상태"]]
+    d = d.sort_values(["order", "trdar_code"])[["trdar_name", "gu_name", "MBTI 유형", "상태", "lv_score", "ep_score"]]
+    x = alt.X("lv_score:Q", title="L/V 점수 (높을수록 V 방문형)", scale=alt.Scale(domain=[0, 100]), axis=alt.Axis(values=[0, 25, 50, 75, 100], grid=False))
+    y = alt.Y("ep_score:Q", title="E/P 점수 (높을수록 P 프리미엄형)", scale=alt.Scale(domain=[0, 100]), axis=alt.Axis(values=[0, 25, 50, 75, 100], grid=False))
+    dots = alt.Chart(d).mark_circle(size=24, opacity=0.85, stroke=pal["surface"], strokeWidth=0.6).encode(
+        x=x, y=y, color=alt.Color("상태:N", scale=match_scale(pal, matched), legend=alt.Legend(title=None)),
+        tooltip=[alt.Tooltip("trdar_name:N", title="상권"), alt.Tooltip("gu_name:N", title="자치구"), alt.Tooltip("MBTI 유형:N"),
+                 alt.Tooltip("상태:N", title="내 유형과"), alt.Tooltip("lv_score:Q", title="L/V 점수", format=".1f"), alt.Tooltip("ep_score:Q", title="E/P 점수", format=".1f")])
+    counts = bundle.meta5["counts"]["type2"]
+    corners = pd.DataFrame([
+        {"x": 2, "y": 2, "t": f"LE {counts['LE']:,}곳", "align": "left", "base": "bottom"},
+        {"x": 2, "y": 98, "t": f"LP {counts['LP']:,}곳", "align": "left", "base": "top"},
+        {"x": 98, "y": 2, "t": f"VE {counts['VE']:,}곳", "align": "right", "base": "bottom"},
+        {"x": 98, "y": 98, "t": f"VP {counts['VP']:,}곳", "align": "right", "base": "top"},
+    ])
+    text = [alt.Chart(corners.loc[(corners["align"] == al) & (corners["base"] == ba)]).mark_text(align=al, baseline=ba, fontSize=12, fontWeight=600, color=pal["ink"])
+            .encode(x=alt.X("x:Q", scale=alt.Scale(domain=[0, 100])), y=alt.Y("y:Q", scale=alt.Scale(domain=[0, 100])), text="t:N")
+            for al in ["left", "right"] for ba in ["top", "bottom"]]
+    vline = alt.Chart(pd.DataFrame({"x": [med["lv_score"]]})).mark_rule(color=pal["ink2"], strokeDash=[4, 3]).encode(x="x:Q")
+    hline = alt.Chart(pd.DataFrame({"y": [med["ep_score"]]})).mark_rule(color=pal["ink2"], strokeDash=[4, 3]).encode(y="y:Q")
+    return styled(alt.layer(dots, vline, hline, *text).properties(width=width, height=height), pal)
+
+
+def type_count_table(bundle: Bundle) -> pd.DataFrame:
+    """상권 MBTI 유형(두 글자)별 상권 수와 상권 유형(골목·발달·전통시장)별 나뉨. S/G를 붙이면 되는 8유형 이름도 함께."""
+    c = bundle.meta5["counts"]
+    names = bundle.type_table.set_index("유형")
+    rows = []
+    for code in ["LE", "LP", "VE", "VP"]:
+        lv, ep = names.loc[f"{code}S", "주요 고객"], names.loc[f"{code}S", "소비 성향"]
+        eight = " / ".join(f"{t} {names.loc[t, '이모지']} {names.loc[t, '이름']}" for t in (f"{code}S", f"{code}G"))
+        by = {k: c["type2_by_trdar_type"].get(k, {}).get(code, 0) for k in TYPES}
+        rows.append({"MBTI 유형": code, "뜻": f"{lv} · {ep}", "상권 수": f"{c['type2'][code]:,}", **{k: f"{n:,}" for k, n in by.items()},
+                     "S/G를 붙인 팀 유형표 이름": eight})
+    rows.append({"MBTI 유형": mbti.UNKNOWN, "뜻": f"L/V {c['lv']['판정 불가']}곳 · E/P {c['ep']['판정 불가']}곳 판정 불가 (겹침 포함)",
+                 "상권 수": f"{c['type2']['판정 불가']:,}", **{k: "-" for k in TYPES}, "S/G를 붙인 팀 유형표 이름": "-"})
+    return pd.DataFrame(rows)
+
+
+def unknown_text(bundle: Bundle) -> str:
+    c = bundle.meta5["counts"]
+    why = " · ".join(f"{k} {n}곳" for k, n in c["lv_notes"].items())
+    return f"판정 불가: L/V {c['lv']['판정 불가']}곳({why}), E/P {c['ep']['판정 불가']}곳(매출 제공 업종의 4개 분기 매출 없음)."
