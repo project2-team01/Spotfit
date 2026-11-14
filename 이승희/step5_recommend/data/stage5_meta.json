@@ -1,0 +1,117 @@
+{
+  "area_counts": {
+    "LV": {
+      "L": 1107,
+      "V": 409,
+      "보류": 128
+    },
+    "SD": {
+      "D": 504,
+      "S": 541,
+      "중간(보류)": 599
+    },
+    "areas": 1644,
+    "chg_name": {
+      "다이나믹": 504,
+      "상권축소": 349,
+      "상권확장": 250,
+      "정체": 541
+    },
+    "chg_same_all_year": 1443
+  },
+  "counts": {
+    "cells": 76591,
+    "ep_cells": 12273,
+    "hold_reasons": {
+      "EP": {
+        "4개 분기 매출 없음 (미공개)": 4039,
+        "4개 분기 매출 없음 (일부 분기)": 815,
+        "건당 금액 비교 상권 30곳 미만": 125,
+        "건당 금액이 업종 중간 (백분위 45~55)": 1362,
+        "네 분기 매출이 똑같음 (품질 확인 필요)": 146,
+        "매출 미제공 업종": 1762
+      },
+      "LV": {
+        "주민·직장인 비중이 비슷함 (0.45~0.55)": 1372,
+        "주민·직장인 자료 없음 또는 합계 0": 126
+      },
+      "SD": {
+        "상권변화지표 중간 유형 (상권축소)": 3737,
+        "상권변화지표 중간 유형 (상권확장)": 2777
+      }
+    },
+    "partial_cells": 12842,
+    "target_cells": 20522,
+    "type_status": {
+      "유형 판정": 7680,
+      "일부 축 보류": 12842,
+      "점수 대상 아님": 56069
+    },
+    "typed_areas": 828,
+    "typed_cells": 7680,
+    "typed_industries": 53
+  },
+  "inputs": {
+    "김지영/claude_dashboard/data/areas.parquet": "7ab2e25102dbe3be574ecb54fc46ed71248eeee2c5e83c16ff1e9b5b726f4941",
+    "김지영/claude_dashboard/data/cells.parquet": "8f8f1bff9bdf8f8d8dfba0ac634a971e2a193dac7f4a73c04c5ef55cb923ebbe",
+    "이승희/data/processed/stage2/상권_분기_마트.csv": "ff6c76770a55441a9f25b09356784380c8211e4227a9fb342659837213e02679",
+    "이승희/step4_dashboard/data/상권_업종_비교점수_2025.parquet": "1f5420477dd156e620b86f21fcb29eec9380e10a37224db6d15d36a59b2a12af"
+  },
+  "rules": {
+    "axes": {
+      "EP": {
+        "E": "실속형",
+        "P": "프리미엄형"
+      },
+      "LV": {
+        "L": "생활형",
+        "V": "방문형"
+      },
+      "SD": {
+        "D": "역동형",
+        "S": "안정형"
+      }
+    },
+    "axis_titles": {
+      "EP": "가격대",
+      "LV": "주 고객",
+      "SD": "상권 변화"
+    },
+    "ep_bounds": [
+      45.0,
+      55.0
+    ],
+    "legacy_codes": {
+      "LEG": "LED",
+      "LES": "LES",
+      "LPG": "LPD",
+      "LPS": "LPS",
+      "VEG": "VED",
+      "VES": "VES",
+      "VPG": "VPD",
+      "VPS": "VPS"
+    },
+    "lv_bounds": [
+      0.45,
+      0.55
+    ],
+    "min_peers": 30,
+    "sd_map": {
+      "다이나믹": "D",
+      "상권축소": null,
+      "상권확장": null,
+      "정체": "S"
+    },
+    "sd_quarter": 20254
+  },
+  "sd_stability_overlap": {
+    "D_안정성_중앙값": 46.06,
+    "D여부_안정성_spearman_업종별_중앙값": -0.07,
+    "D여부_안정성_spearman_전체": -0.088,
+    "S_안정성_중앙값": 54.32,
+    "건당금액백분위_매출_spearman": 0.214,
+    "업종별_계산_업종_수": 74,
+    "운영개월_안정성_spearman_전체": 0.063,
+    "주민비중_수요주민_spearman": 0.724
+  }
+}
