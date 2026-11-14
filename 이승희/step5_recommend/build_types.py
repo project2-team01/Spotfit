@@ -73,12 +73,16 @@ TYPE_NAMES = {t[0]: t[2] for t in TYPES}
 LEGACY = {t[1]: t[0] for t in TYPES}   # 예전 G 코드 → D 코드
 
 
+TEXT_SUFFIXES = {".csv", ".json", ".md", ".txt", ".html"}
+
+
 def sha256(path):
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
+    """파일 지문. 글자 파일은 줄바꿈(CRLF/LF)을 LF로 맞춘 뒤 계산한다.
+    윈도우 Git(core.autocrlf=true)은 받을 때 CRLF로 바꾸므로, 맞추지 않으면 같은 데이터인데 지문이 달라진다."""
+    data = Path(path).read_bytes()
+    if Path(path).suffix.lower() in TEXT_SUFFIXES:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def spearman(x, y):

@@ -11,7 +11,6 @@
 """
 from __future__ import annotations
 
-import hashlib
 import json
 import sys
 from dataclasses import dataclass
@@ -27,7 +26,7 @@ sys.path.insert(0, str(HERE))  # 다른 폴더에서 불러도 build_types를 �
 import build_scores as bs  # noqa: E402  STEP 4의 composite(종합 점수)를 그대로 쓴다
 import views as v4  # noqa: E402  STEP 4의 데이터 묶음·지도·색을 그대로 쓴다
 
-from build_types import AXES, AXIS_MEANING, AXIS_TITLES, LEGACY, REPO, TYPE_NAMES  # noqa: E402
+from build_types import AXES, AXIS_MEANING, AXIS_TITLES, LEGACY, REPO, TYPE_NAMES, sha256  # noqa: E402
 
 DATA = HERE / "data"
 DEMAND_LINK = {"L": "resident", "V": "floating", None: "avg"}
@@ -50,7 +49,7 @@ def stale_inputs(meta: dict) -> tuple:
     out = []
     for rel, digest in meta.get("inputs", {}).items():
         p = REPO / rel
-        if not p.exists() or hashlib.sha256(p.read_bytes()).hexdigest() != digest:
+        if not p.exists() or sha256(p) != digest:  # 줄바꿈 차이는 무시한다 (build_types.sha256 설명)
             out.append(rel)
     return tuple(out)
 
