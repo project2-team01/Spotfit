@@ -271,6 +271,36 @@ def main():
     record(19, "입력 파일과 이 폴더 밖 보존", before_in == after_in and before_out == outside_changes(),
            f"입력 {len(after_in)}개 SHA-256 동일 {before_in == after_in}, 폴더 밖 변경 목록 동일 {before_out == outside_changes()}")
 
+    # 20. 검사지: 구성, .md 원문과 같은지, 채점 규칙, 화면 순서
+    import re
+    import quiz as q
+    qs = q.QUESTIONS
+    shape = (len(qs) == 15 and sorted(x[0] for x in qs) == list(range(1, 16))
+             and all(sum(x[1] == ax for x in qs) == 5 for ax in bt.AXES)
+             and all({x[3][1], x[4][1]} == set(bt.AXES[x[1]]) for x in qs)
+             and all(len({x[3][1] for x in qs if x[1] == ax}) == 2 for ax in bt.AXES))  # 기준마다 A 자리에 두 글자가 모두 나옴
+    md = (HERE / "금융MBTI_검사지_초안.md").read_text(encoding="utf-8")
+    rows = re.findall(r"^\| +(\d+) \| (.+?) \| (.+?) → \*\*([A-Z])\*\* \| (.+?) → \*\*([A-Z])\*\* \|$", md, flags=re.M)
+    md_q = {int(n): (qq, (a, al), (bb, bl)) for n, qq, a, al, bb, bl in rows}
+    same_md = len(md_q) == 15 and all(md_q[x[0]] == (x[2], x[3], x[4]) for x in qs)
+    pick = lambda letters: {x[0]: (x[3][1] if x[3][1] in letters else x[4][1]) for x in qs}
+    full = q.score(pick({"L", "P", "D"}))
+    edge = q.score({**pick({"V", "E", "S"}), 1: "L", 2: "L"})  # L/V를 3:2로 → 경계
+    part = q.score({1: "V"})
+    try:
+        q.score({1: "E"}); bad_rejected = False
+    except ValueError:
+        bad_rejected = True
+    rules = (full["code"] == "LPD" and full["choice"] == {"LV": "L", "EP": "P", "SD": "D"} and full["complete"]
+             and edge["axes"]["LV"]["status"] == "경계" and edge["choice"]["LV"] is None and edge["choice"]["EP"] == "E"
+             and part["choice"] == {"LV": None, "EP": None, "SD": None} and part["code"] is None and bad_rejected)
+    order = q.display_order()
+    order_ok = sorted(order) == list(range(1, 16)) and order == q.display_order() and order != list(range(1, 16))
+    picks_ok = len(r.recommend(b, "CS100010", full["choice"])) == int(b.industries.set_index("업종_코드").loc["CS100010", "LPD"])
+    record(20, "검사지 15문항 (구성·원문 일치·채점·순서)", shape and same_md and rules and order_ok and picks_ok,
+           f"구성 {shape}, .md 원문과 같음 {same_md} ({len(md_q)}문항), 채점 규칙 {rules} (LPD 5:0, 3:2 경계 → 상관없음, 미완료·잘못된 답 처리), "
+           f"섞은 순서 고정 {order_ok}, 검사 결과로 추천 {picks_ok}")
+
     failed = [x for x in RESULTS if not x[2]]
     print(f"\n결과: {len(RESULTS) - len(failed)}/{len(RESULTS)} 통과")
     sys.exit(1 if failed else 0)

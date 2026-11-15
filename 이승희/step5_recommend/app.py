@@ -10,9 +10,10 @@ def _():
     import pandas as pd
 
     import recommend as r
+    import quiz as q
 
-    PAGES = ["내 유형으로 상권 찾기", "유형 분포", "유형 기준과 한계"]
-    return PAGES, mo, pd, r
+    PAGES = ["내 유형으로 상권 찾기", "검사로 내 유형 찾기", "유형 분포", "유형 기준과 한계"]
+    return PAGES, mo, pd, q, r
 
 
 @app.cell(hide_code=True)
@@ -49,6 +50,8 @@ def _(bundle, mo):
     **나의 창업 성향(주 고객 · 가격대 · 상권 변화)**과 **희망 업종**을 고르면, 성향이 맞는 상권을 STEP 4 비교 점수 순서로 보여 줍니다.
     STEP 4 점수 대상 {_c['target_cells']:,}칸 중 세 축이 모두 판정된 칸 {_c['typed_cells']:,}칸 · 업종 {_c['typed_industries']}개.
     **유형과 점수는 창업 성공 가능성이나 수익을 뜻하지 않습니다.** 예산은 비용 자료(임대료·보증금 등)가 없어 판단하지 않습니다.
+
+    <small>공유용 HTML 파일(정적 스냅숏)에서는 탭은 바뀌지만, 업종·유형·검사 답을 바꿔도 다시 계산하지 않습니다(커피-음료, 모든 유형 기준). 바꿔 보려면 대시보드를 실행하세요.</small>
     """)
     return
 
@@ -64,9 +67,9 @@ def _(bundle, mo):
 
 @app.cell(hide_code=True)
 def _(PAGES, mo):
-    nav = mo.ui.tabs({name: "" for name in PAGES})
-    nav
-    return (nav,)
+    # 지금 보고 있는 탭. 선택을 바꿔 탭을 다시 그려도 첫 탭으로 돌아가지 않게 기억한다
+    get_tab, set_tab = mo.state(PAGES[0])
+    return get_tab, set_tab
 
 
 @app.cell(hide_code=True)
@@ -87,21 +90,13 @@ def _(bundle, mo, r):
 
 
 @app.cell(hide_code=True)
-def _(PAGES, ep_ui, gu_ui, industry_ui, lv_ui, mo, nav, sd_ui, w_comp, w_dem, w_sales, w_stab):
-    mo.stop(nav.value == PAGES[2])
-    if nav.value == PAGES[1]:  # 유형 분포 탭은 업종과 유형만 쓴다. 자치구·가중치는 첫 탭에만 적용된다
-        _out = mo.vstack([industry_ui, lv_ui, ep_ui, sd_ui], gap=0.6)
-    else:
-        _out = mo.vstack([
-            mo.hstack([industry_ui, gu_ui], justify="start", align="end", gap=1.5, wrap=True),
-            lv_ui, ep_ui, sd_ui,
-            mo.accordion({"점수 가중치 바꾸기 (선택)": mo.vstack([
-                mo.hstack([w_sales, w_comp, w_stab, w_dem], justify="start", gap=1.5, wrap=True),
-                mo.md("<small>기본값(매출 30 · 경쟁 25 · 안정성 15 · 수요 30)은 STEP 4와 같은 <b>가정</b>입니다. "
-                      "유형별로 다른 가중치는 근거가 없어 만들지 않았습니다(팀 결정 필요).</small>")])}),
-        ], gap=0.6)
-    _out
-    return
+def _(mo, q):
+    quiz_ui = mo.ui.dictionary({
+        str(no): mo.ui.radio({q.question(no)[3][0]: q.question(no)[3][1], q.question(no)[4][0]: q.question(no)[4][1]},
+                             label=f"**{i}. {q.question(no)[2]}**")
+        for i, no in enumerate(q.display_order(), start=1)
+    })
+    return (quiz_ui,)
 
 
 @app.cell(hide_code=True)
@@ -116,8 +111,17 @@ def _(bundle, ep_ui, gu_ui, industry_ui, lv_ui, r, sd_ui, w_comp, w_dem, w_sales
 
 
 @app.cell(hide_code=True)
-def _(PAGES, choice, industry, mo, nav, picks, r, seoul, steps, weights):
-    mo.stop(nav.value != PAGES[0])
+def _(bundle, choice, ep_ui, gu_ui, industry, industry_ui, lv_ui, mo, pal, panel, picks, r, sd_ui, seoul, steps,
+      w_comp, w_dem, w_sales, w_stab, weights):
+    # 탭 1: 내 유형으로 상권 찾기
+    _controls = mo.vstack([
+        mo.hstack([industry_ui, gu_ui], justify="start", align="end", gap=1.5, wrap=True),
+        lv_ui, ep_ui, sd_ui,
+        mo.accordion({"점수 가중치 바꾸기 (선택)": mo.vstack([
+            mo.hstack([w_sales, w_comp, w_stab, w_dem], justify="start", gap=1.5, wrap=True),
+            mo.md("<small>기본값(매출 30 · 경쟁 25 · 안정성 15 · 수요 30)은 STEP 4와 같은 <b>가정</b>입니다. "
+                  "유형별로 다른 가중치는 근거가 없어 만들지 않았습니다(팀 결정 필요).</small>")])}),
+    ], gap=0.6)
     _notes = []
     if sum(weights.values()) == 0:
         _notes.append(mo.callout("가중치가 모두 0입니다. 하나 이상 올려 주세요.", kind="warn"))
@@ -133,52 +137,95 @@ def _(PAGES, choice, industry, mo, nav, picks, r, seoul, steps, weights):
         mo.stat(f"{len(picks):,}곳", label="내 조건과 일치", caption=r.choice_name(choice), bordered=True),
     ], widths="equal", gap=1)
     _funnel = " → ".join(f"{name} **{n:,}**" for name, n in steps)
-    mo.hstack([
+    _summary = mo.hstack([
         mo.md(r.type_card(choice)),
         mo.vstack([*_notes, _tiles, mo.md(f"<small>조건별로 남은 상권: {_funnel}</small>")], gap=0.6),
     ], widths=[1, 1.4], gap=2, align="start", wrap=True)
-    return
+    _body = [_controls, _summary]
+    if not picks.empty:
+        _fig = r.map_figure(bundle, picks, seoul, None, pal, view_key=str(picks["industry_code"].iloc[0]))
+        _body.append(panel(
+            "조건에 맞는 상권 지도",
+            f"내 조건과 일치하는 상권만 칠했습니다. 진할수록 종합 점수가 높고, 검은 번호는 상위 {r.v4.TOP_N}곳입니다. "
+            "마우스를 올리면 서울 같은 업종(유형 무관) 안의 순위가 나옵니다. 배경 지도는 인터넷 연결이 필요합니다.",
+            mo.Html(mo.as_html(_fig).text) if _fig is not None else "지도에 그릴 상권이 없습니다."))
+        _table = mo.ui.table(
+            r.result_table(picks), selection=None, page_size=10, hidden_columns=["trdar_code"], show_column_summaries=False,
+            show_data_types=False, freeze_columns_left=["상권"],
+            header_tooltip={
+                "종합 점수": "STEP 4 종합 점수(0~100). 수요는 고른 주 고객(L 주민 / V 유동인구)으로 자동 연결됩니다.",
+                "서울 순위": "서울 같은 업종 점수 대상 상권(유형 무관) 안의 순위입니다.",
+                "주민 비중": "주민 ÷ (주민 + 직장인). 0.55 초과 L, 0.45 미만 V.",
+                "건당 금액 백분위": "같은 업종 안 결제 1건당 금액의 위치. 45 미만 E, 55 초과 P.",
+                "상권변화지표": "서울시 2025년 4분기. 정체 → S, 다이나믹 → D, 상권확장·상권축소 → 중간.",
+                "영업 중 가게 평균 개월": "지금 영업 중인 가게들의 평균 영업 기간. 서울 평균 115개월.",
+                "문 닫은 가게 평균 개월": "문을 닫은 가게들이 닫기까지 영업한 평균 기간. 서울 평균 53개월.",
+            })
+        _body.append(panel("추천 상권 표", "종합 점수가 높은 순서입니다. 빈칸은 자료가 없다는 뜻이고 0점이 아닙니다. "
+                                         "오른쪽 칸들은 유형을 판정한 근거 값입니다.", _table))
+    page_find = mo.vstack(_body, gap=1)
+    return (page_find,)
 
 
 @app.cell(hide_code=True)
-def _(PAGES, bundle, mo, nav, pal, panel, picks, r, seoul):
-    mo.stop(nav.value != PAGES[0] or picks.empty)
-    _fig = r.map_figure(bundle, picks, seoul, None, pal, view_key=str(picks["industry_code"].iloc[0]))
-    panel("조건에 맞는 상권 지도",
-          f"내 조건과 일치하는 상권만 칠했습니다. 진할수록 종합 점수가 높고, 검은 번호는 상위 {r.v4.TOP_N}곳입니다. "
-          "마우스를 올리면 서울 같은 업종(유형 무관) 안의 순위가 나옵니다. 배경 지도는 인터넷 연결이 필요합니다.",
-          mo.Html(mo.as_html(_fig).text) if _fig is not None else "지도에 그릴 상권이 없습니다.")
-    return
+def _(bundle, gu_ui, industry_ui, mo, panel, q, quiz_ui, r):
+    # 탭 2: 검사로 내 유형 찾기
+    _ind = r.industry_row(bundle, industry_ui.value)
+    _res = q.score({int(k): v for k, v in quiz_ui.value.items()})
+    _key = mo.ui.table(
+        [{"번호": i, "기준": r.AXIS_TITLES[q.question(no)[1]], "질문": q.question(no)[2],
+          "A": f"{q.question(no)[3][0]} → {q.question(no)[3][1]}", "B": f"{q.question(no)[4][0]} → {q.question(no)[4][1]}"}
+         for i, no in enumerate(q.display_order(), start=1)],
+        selection=None, pagination=False, show_column_summaries=False, show_data_types=False, show_download=False, show_search=False)
+    _questions = mo.vstack([
+        mo.md("## 금융 MBTI 검사 (15문항)\n"
+              "둘 중 **더 마음에 드는 쪽**을 고르세요. 정답은 없습니다. 답을 고르는 대로 아래 결과가 바뀝니다.<br>"
+              f"<small>답한 문항 {_res['answered']} / {len(q.QUESTIONS)} · 검사지 원문: `이승희/step5_recommend/금융MBTI_검사지_초안.md` (팀 검토 전 초안)</small>"),
+        mo.vstack([quiz_ui[str(no)] for no in q.display_order()], gap=0.9),
+        mo.accordion({"팀 확인용: 문항별 글자 보기": _key}),
+    ], gap=1)
+    _rows = []
+    for _ax, _a in _res["axes"].items():
+        _c = " : ".join(f"{k} {_a['counts'][k]}" for k in r.AXES[_ax])
+        _rows.append(f"| {r.AXIS_TITLES[_ax]} | {_c} | **{_a['letter'] or '-'}** | {_a['status']} |"
+                     f" {'상관없음 (두 글자 모두)' if _res['choice'][_ax] is None else _a['letter'] + ' ' + r.AXES[_ax][_a['letter']]} |")
+    _title = (f"### 내 유형: {_res['code']} · {_res['name']}" if _res["code"] else "### 내 유형: 아직 다 답하지 않았습니다")
+    _table_md = mo.md(f"{_title}\n\n<small>{q.summary_text(_res)}</small>\n\n"
+                      "| 기준 | 고른 수 | 글자 | 상태 | 상권 찾기에 쓰는 값 |\n| :--- | :--- | :---: | :--- | :--- |\n" + "\n".join(_rows)
+                      + "\n\n<small>5:0·4:1은 뚜렷함, 3:2는 경계입니다. 경계이거나 아직 다 답하지 않은 기준은 '상관없음'으로 두고 두 글자 상권을 모두 보여 줍니다.</small>")
+    _choice = _res["choice"]
+    _picks = r.recommend(bundle, industry_ui.value, _choice, gu_ui.value)
+    _steps = r.funnel(bundle, industry_ui.value, _choice, gu_ui.value)
+    _notes = []
+    if _ind["EP_판정_칸"] == 0 and _choice["EP"]:
+        _notes.append(mo.callout(mo.md(f"**{_ind['업종명']}**은 {_ind['판정_불가_사유']}이라 가격대(E/P)로 거르면 결과가 없습니다."), kind="info"))
+    if _picks.empty:
+        _notes.append(mo.callout("조건에 맞는 상권이 없습니다. 희망 업종이나 자치구를 바꿔 보거나, '내 유형으로 상권 찾기' 탭에서 기준을 하나씩 '상관없음'으로 바꿔 보세요.", kind="warn"))
+    _list = (mo.ui.table(r.result_table(_picks).head(10), selection=None, pagination=False, hidden_columns=["trdar_code"],
+                         show_column_summaries=False, show_data_types=False, show_download=False, show_search=False, freeze_columns_left=["상권"])
+             if not _picks.empty else None)
+    page_quiz = mo.vstack([
+        mo.hstack([industry_ui, gu_ui], justify="start", align="end", gap=1.5, wrap=True),
+        _questions,
+        mo.hstack([_table_md, mo.md(r.type_card(_choice))], widths="equal", gap=2, align="start", wrap=True),
+        *_notes,
+        mo.md(f"<small>조건별로 남은 상권: {' → '.join(f'{n_} **{c:,}**' for n_, c in _steps)}</small>"),
+        panel(f"{_ind['업종명']}: 내 유형에 맞는 상권 상위 10곳",
+              "STEP 4 기본 가중치(매출 30 · 경쟁 25 · 안정성 15 · 수요 30)로 줄 세웠습니다. 지도와 전체 목록은 "
+              "'내 유형으로 상권 찾기' 탭에서 같은 글자를 고르면 볼 수 있습니다.", _list),
+    ], gap=1)
+    return (page_quiz,)
 
 
 @app.cell(hide_code=True)
-def _(PAGES, mo, nav, panel, picks, r):
-    mo.stop(nav.value != PAGES[0] or picks.empty)
-    _table = mo.ui.table(
-        r.result_table(picks), selection=None, page_size=10, hidden_columns=["trdar_code"], show_column_summaries=False,
-        show_data_types=False, freeze_columns_left=["상권"],
-        header_tooltip={
-            "종합 점수": "STEP 4 종합 점수(0~100). 수요는 고른 주 고객(L 주민 / V 유동인구)으로 자동 연결됩니다.",
-            "서울 순위": "서울 같은 업종 점수 대상 상권(유형 무관) 안의 순위입니다.",
-            "주민 비중": "주민 ÷ (주민 + 직장인). 0.55 초과 L, 0.45 미만 V.",
-            "건당 금액 백분위": "같은 업종 안 결제 1건당 금액의 위치. 45 미만 E, 55 초과 P.",
-            "상권변화지표": "서울시 2025년 4분기. 정체 → S, 다이나믹 → D, 상권확장·상권축소 → 중간.",
-            "영업 중 가게 평균 개월": "지금 영업 중인 가게들의 평균 영업 기간. 서울 평균 115개월.",
-            "문 닫은 가게 평균 개월": "문을 닫은 가게들이 닫기까지 영업한 평균 기간. 서울 평균 53개월.",
-        })
-    panel("추천 상권 표", "종합 점수가 높은 순서입니다. 빈칸은 자료가 없다는 뜻이고 0점이 아닙니다. "
-          "오른쪽 칸들은 유형을 판정한 근거 값입니다.", _table)
-    return
-
-
-@app.cell(hide_code=True)
-def _(PAGES, bundle, chart, choice, industry, industry_ui, mo, nav, pal, panel, plain, r):
-    mo.stop(nav.value != PAGES[1])
+def _(bundle, chart, choice, ep_ui, industry, industry_ui, lv_ui, mo, pal, panel, plain, r, sd_ui):
+    # 탭 3: 유형 분포 (업종과 유형만 쓴다. 자치구·가중치는 첫 탭에만 적용된다)
     _t = r.type_counts(bundle, industry_ui.value)
     _code = r.choice_code(choice)
-    mo.vstack([
+    page_dist = mo.vstack([
+        mo.vstack([industry_ui, lv_ui, ep_ui, sd_ui], gap=0.6),
         mo.hstack([
-            panel(f"{industry['업종명']}: 8유형별 상권 수", f"STEP 4 점수 대상 상권 중 세 축이 모두 판정된 곳입니다. 지금 고른 유형({_code})이 완성된 유형이면 진하게 표시합니다.",
+            panel(f"{industry['업종명']}: 8유형별 상권 수", f"STEP 4 점수 대상 상권 중 세 축이 모두 판정된 곳입니다. 지금 고른 유형({r.choice_name(choice)})이 완성된 유형이면 진하게 표시합니다.",
                   chart(r.type_bar(_t, _code, pal))),
             panel(f"{industry['업종명']}: 축별 판정과 보류", "회색 '보류'는 판정 경계에 있거나 자료가 부족한 상권입니다. 보류가 많은 축은 '상관없음'으로 두면 결과가 늘어납니다.",
                   chart(r.hold_bar(r.hold_counts(bundle, industry_ui.value), pal))),
@@ -192,15 +239,15 @@ def _(PAGES, bundle, chart, choice, industry, industry_ui, mo, nav, pal, panel, 
         panel("업종별 유형 판정 가능 여부 (100개 업종)", "점수 대상이 없거나 매출 자료가 부족한 업종은 유형을 만들 수 없습니다.",
               mo.ui.table(bundle.industries, selection=None, page_size=10, show_column_summaries=False, show_data_types=False, freeze_columns_left=["업종명"])),
     ], gap=1.2)
-    return
+    return (page_dist,)
 
 
 @app.cell(hide_code=True)
-def _(PAGES, bundle, mo, nav):
-    mo.stop(nav.value != PAGES[2])
+def _(bundle, mo):
+    # 탭 4: 유형 기준과 한계
     _o = bundle.meta["sd_stability_overlap"]
     _a = bundle.meta["area_counts"]
-    mo.md(f"""
+    page_rules = mo.md(f"""
     ## 세 축을 만든 방법
 
     | 축 | 쓰는 값 | 판정 | 단위 |
@@ -239,13 +286,21 @@ def _(PAGES, bundle, mo, nav):
 
     ## 이 추천으로 말할 수 없는 것
 
-    - **사용자의 금융 성향을 측정하지 않습니다.** 사용자가 세 축을 직접 고르는 방식입니다. 설문 문항은 팀이 따로 만들 예정입니다.
+    - **검사는 검증되지 않은 초안입니다.** '검사로 내 유형 찾기'의 15문항은 창업자가 원하는 상권을 묻는 팀 검토 전 초안이고, 실제 사람에게 시험해 보지 않았습니다.
+      창업자의 성격이나 금융 능력을 재는 검사가 아닙니다.
     - **역동형이 유망하거나 성장한다는 뜻이 아닙니다.** 가게가 자주 바뀌는 상권입니다.
     - **L/V는 실제 손님의 출처가 아닙니다.** 주민·직장인 수의 비율이고, 두 인구는 겹칠 수 있습니다. 관광객·외부 방문객은 반영하지 못합니다.
     - **E/P는 실제 가격대나 브랜드가 아닙니다.** 결제 1건당 금액의 상대 위치입니다.
     - **예산 적합성은 판단하지 않습니다.** 임대료·보증금·권리금·시설비 자료가 없습니다(팀 결정 7.10).
     - 추천이 맞았는지 확인할 정답 자료(실제 창업 성과·만족도)는 없습니다.
     """)
+    return (page_rules,)
+
+
+@app.cell(hide_code=True)
+def _(PAGES, get_tab, mo, page_dist, page_find, page_quiz, page_rules, set_tab):
+    # 네 탭의 내용을 모두 넣어 둔다. 그래서 공유용 HTML(정적 스냅숏)에서도 탭을 누르면 바뀐다
+    mo.ui.tabs(dict(zip(PAGES, [page_find, page_quiz, page_dist, page_rules])), value=get_tab(), on_change=set_tab)
     return
 
 

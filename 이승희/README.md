@@ -9,8 +9,8 @@
 | STEP 1 기본 EDA | [01_기본EDA_보고서](report/01_기본EDA_보고서_2025Q4.md) | [01_기본EDA_대시보드](report/01_기본EDA_대시보드_2025Q4.html) |
 | STEP 2 전처리·결합 | [02_전처리_결합설계_보고서](report/02_전처리_결합설계_보고서_2025Q4.md) | [02_결합검증_대시보드](report/02_결합검증_대시보드_2025Q4.html) |
 | STEP 3 파생변수 | [03_파생변수_설계보고서](report/03_파생변수_설계보고서_2025Q4.md), [03_팀논의자료](report/03_팀논의자료_2025Q4.md) | [03_상권특성_대시보드](report/03_상권특성_대시보드_2025Q4.html) |
-| STEP 4 비교 점수 | [step4_dashboard/README](step4_dashboard/README.md) | [04_상권비교점수_대시보드](step4_dashboard/report/04_상권비교점수_대시보드_2025.html) (정적 스냅숏) |
-| STEP 5 금융 MBTI 추천 | [step5_recommend/README](step5_recommend/README.md) | [05_금융MBTI_상권추천](step5_recommend/report/05_금융MBTI_상권추천_2025.html) (정적 스냅숏) |
+| STEP 4 비교 점수 | [04_점수화_설계보고서](report/04_점수화_설계보고서_2025.md), [step4_dashboard/README](step4_dashboard/README.md) | [04_상권비교점수_대시보드](step4_dashboard/report/04_상권비교점수_대시보드_2025.html) (정적 스냅숏, 첫 탭만) |
+| STEP 5 금융 MBTI 추천 | [05_추천모델_설계보고서](report/05_추천모델_설계보고서_2025.md), [검사지 초안](step5_recommend/금융MBTI_검사지_초안.md), [step5_recommend/README](step5_recommend/README.md) | [05_금융MBTI_상권추천](step5_recommend/report/05_금융MBTI_상권추천_2025.html) (정적 스냅숏, 탭 4개) |
 
 가공 결과 표는 `data/processed/`에 있습니다. 바로 열어서 분석에 쓸 수 있습니다.
 
