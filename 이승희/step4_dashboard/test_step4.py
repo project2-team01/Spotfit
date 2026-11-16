@@ -6,6 +6,7 @@ STEP 4 점수표·대시보드 검증. 팀 저장소 루트에서 실행:
 검사 1~10, 13을 이 파일에서 한다. 11(marimo check)과 12(HTML 내보내기)는 명령으로 따로 실행한다.
 """
 import hashlib
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -105,7 +106,8 @@ def main():
     in_before = {p: sha(p) for p in bs.INPUTS}
     hashes = []
     for _ in range(2):
-        r = subprocess.run([sys.executable, str(HERE / "build_scores.py")], capture_output=True, text=True, encoding="utf-8")
+        r = subprocess.run([sys.executable, str(HERE / "build_scores.py")], capture_output=True, text=True, encoding="utf-8",
+                           env={**os.environ, "PYTHONIOENCODING": "utf-8"})
         if r.returncode != 0:
             print(r.stdout, r.stderr)
             sys.exit("build_scores.py 실행 실패")
