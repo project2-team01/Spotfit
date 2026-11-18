@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "version": "spotfit-unified-1.0.0-20261118",
+  "rows": 76591,
+  "target": 20522,
+  "full": 7678,
+  "maxDefaultScoreDifference": 9.237055564881302e-13,
+  "pythonOracleCases": 216,
+  "comparedRows": 2038,
+  "emptyCases": 2,
+  "quizCases": 32768,
+  "htmlIds": 81
+}

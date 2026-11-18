@@ -1,0 +1,26 @@
+{
+  "version": "spotfit-unified-1.0.0-20261118",
+  "tests_run": 13,
+  "failures": 0,
+  "errors": 0,
+  "passed": true,
+  "input_sha256": {
+    "박성은/step4_dashboard/data/상권_업종_비교점수_2025.parquet": "1f5420477dd156e620b86f21fcb29eec9380e10a37224db6d15d36a59b2a12af",
+    "김지영/step4_dashboard/data/상권_업종_비교점수_2025.parquet": "871fa74fccec2cde65424cea5f4e2f3d2186deff7064c6d84aa9df17d49454fd",
+    "이승희/step5_recommend/data/상권업종_유형_2025.parquet": "7cc6208e622a79aef340ad8f7aa830eec9cbac822b86fa19759233026a90bac0",
+    "박성은/step5_personalization/data/상권업종_유형후보_2025.parquet": "55d221683208df01d572fbb08eacb1209cfc23824921a8b9b0a26a6e425d29bc",
+    "김지영/step2_3/data/fact_trdar_industry_quarter.csv.gz": "1aec8222e0e6600a6d89d8a922abdae1bad859f623c926885cc11e69c3e6b919",
+    "김지영/step2_3/data/trdar_quarter_context.csv.gz": "b37c8473b457110f74da57a8a30c49db8e416132ce320b5bc7c76021b03eb4fd",
+    "김지영/step2_3/data/dim_trdar.csv.gz": "d54e6c03a8d08b8f6e1bf791abc46bbf5844958f0aa2f1ee838bf7c2280af7e9",
+    "이승희/data/processed/stage2/상권_분기_마트.csv": "cefa1d7ac5945a07554c6905477ea723a247d1f068e9e22de80442996602c7d9",
+    "김지영/claude_dashboard/data/cells.parquet": "8f8f1bff9bdf8f8d8dfba0ac634a971e2a193dac7f4a73c04c5ef55cb923ebbe",
+    "김지영/claude_dashboard/data/areas.parquet": "7ab2e25102dbe3be574ecb54fc46ed71248eeee2c5e83c16ff1e9b5b726f4941",
+    "김지영/claude_dashboard/data/meta.json": "cea1cb2eee4a0389c28ad83e65fd46a90c1b29f6451418dc32c6deb0d8363327",
+    "박성은/step4_dashboard/data/quarter_mart.parquet": "f50d2b2db92ae17bf114bcf9e7bcb6d6265afbdff51228ab370310f98c373a23",
+    "박성은/step4_dashboard/data/map_geometry.json": "3663dda17f48dda90c4fa18f1f31802a09c9eede54cc52f09f3a31e086d833de",
+    "이승희/step5_recommend/quiz.py": "a6ec76eb11987d04cd53be0e8f47ce139c481d07c516d6a69511ddc0fb5101ca",
+    "박성은/integrated_dashboard/config.json": "253811d050bae75b5b2b02c20c0e46df9056c8c946ec7b56cef35322e62d8652",
+    "박성은/integrated_dashboard/model.py": "dfabec82608d6b56b2461aa50bb98f7d12ba69dc920f68a2ce67208aba16fc26",
+    "박성은/integrated_dashboard/build.py": "e40d3f4f3ae2ddae249756ecc5e99fef26da09aac3882b987707afd0421e0940"
+  }
+}

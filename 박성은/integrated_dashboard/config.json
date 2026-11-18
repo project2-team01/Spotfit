@@ -1,0 +1,25 @@
+{
+  "version": "spotfit-unified-1.0.0-20261118",
+  "date": "2026-11-18",
+  "status": "박성은 통합 구현 기준. 팀 전체 승인으로 주장하지 않음",
+  "source_commit": "22d1c6842c67ab4902e0317f8afdf32c85c98870",
+  "year": 2025,
+  "min_stores": 5,
+  "min_peers": 30,
+  "percentile_round_decimals": 12,
+  "weights": {"sales": 30, "comp": 25, "stab": 15, "dem": 30},
+  "demand_default": "avg",
+  "demand_rule": "세 인구 밀도의 업종 내 백분위가 모두 있는 경우에만 평균",
+  "sd_quarter": "20254",
+  "sd_mapping": {"HH": "S", "LL": "D", "LH": null, "HL": null},
+  "type_demand_link_default": false,
+  "quiz_axis_size": 5,
+  "quiz_confident_min": 4,
+  "quiz_boundary_filter": "3:2 또는 미완료 축은 제한하지 않음",
+  "sources": [
+    {"name": "김지영 공통 패널과 EDA", "url": "https://github.com/project2-team01/Spotfit/tree/22d1c6842c67ab4902e0317f8afdf32c85c98870/김지영"},
+    {"name": "이승희 점수·공식 S/D·검사지", "url": "https://github.com/project2-team01/Spotfit/tree/22d1c6842c67ab4902e0317f8afdf32c85c98870/이승희"},
+    {"name": "박성은 검증·변동성·공유 화면", "url": "https://github.com/project2-team01/Spotfit/tree/22d1c6842c67ab4902e0317f8afdf32c85c98870/박성은"},
+    {"name": "서울시 상권변화지표 공식 정의", "url": "https://data.seoul.go.kr/dataList/OA-15576/S/1/datasetView.do"}
+  ]
+}

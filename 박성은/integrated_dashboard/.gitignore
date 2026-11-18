@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+.uv-cache/
+dist/data/
+dist/assets/
+report/qa/
+test_fixtures.json

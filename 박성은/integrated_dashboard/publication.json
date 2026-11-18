@@ -1,0 +1,22 @@
+{
+  "version": "spotfit-unified-1.0.0-20261118",
+  "url": "https://spotfit-park-2025.park24401859.chatgpt.site/#overview",
+  "project_id": "appgprj_6af1cb4541208191a7d7473b1847f0ee",
+  "site_version_number": 3,
+  "site_version_id": "appgprj_6af1cb4541208191a7d7473b1847f0ee~appgver_35f3deebbb70819195131aa21830bdee",
+  "site_source_commit": "369099314cf10696cff797e8ceaa85b60195d03c",
+  "deployment_id": "appgdep_6afda53f87808191a00978b9d74f5961",
+  "status": "succeeded",
+  "audience": "public",
+  "published_at": "2026-11-18T13:17:18.116733+00:00",
+  "analysis_input_commit": "22d1c6842c67ab4902e0317f8afdf32c85c98870",
+  "public_browser_check": {
+    "passed": true,
+    "target": 20522,
+    "fully_classified": 7678,
+    "held": 12844,
+    "changed_default_scores": 126,
+    "console_warnings_errors": [],
+    "screenshot": "report/공유화면.jpg"
+  }
+}
