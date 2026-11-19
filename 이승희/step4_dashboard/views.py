@@ -186,8 +186,15 @@ def raw_compare(row: pd.Series, industry_scope: pd.DataFrame) -> pd.DataFrame:
     """영역별 원값과 서울 같은 업종(점수 대상 칸) 중앙값."""
     t = industry_scope.loc[industry_scope["score_status"].eq("점수 대상")]
     med = lambda c: t[c].median() if len(t) else np.nan
+    # 매출 중앙값은 매출 점수가 있는 칸만으로 낸다 (박성은 통합본 rawMed와 같은 기준).
+    # 1~3개 분기 칸까지 섞으면 커피-음료 465만 원이 되어 김지영 482.6만 원과 어긋났다(2026-11-19 확인).
+    t4 = t.loc[t["score_sales"].notna()]
+    sales_med = t4["sales_month"].median() if len(t4) else np.nan
+    sales_txt = fmt_money(row["sales_month"])
+    if not pd.isna(row["sales_month"]) and row["sales_quarters"] < 4:
+        sales_txt += f" ({int(row['sales_quarters'])}개 분기만)"
     rows = [
-        ("매출 잠재력", "점포당 월매출", fmt_money(row["sales_month"]), fmt_money(med("sales_month")), row["sales_area_status"]),
+        ("매출 잠재력", "점포당 월매출", sales_txt, fmt_money(sales_med), row["sales_area_status"]),
         ("경쟁", "유동인구 1,000명당 같은 업종 점포", fmt_num(row["comp_ratio"], 3, "개"), fmt_num(med("comp_ratio"), 3, "개"), "낮을수록 높은 점수"),
         ("안정성", "보정 폐업률 (연간)", fmt_num(row["close_pct_shrunk"], 1, "%"), fmt_num(med("close_pct_shrunk"), 1, "%"),
          f"실제 폐업 {row['closes']:.0f}건 · 1년치라 신뢰도 낮음"),
