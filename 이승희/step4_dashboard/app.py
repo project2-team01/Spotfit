@@ -1,7 +1,8 @@
 import marimo
 
 __generated_with = "0.25.2"
-app = marimo.App(width="full", app_title="SpotFit 상권 비교 점수 (2025)")
+app = marimo.App(width="full", app_title="SpotFit 상권 비교 점수 (2025)", css_file="../pixel_theme/spotfit.css",
+                   html_head_file="../pixel_theme/spotfit_head.html")
 
 
 @app.cell(hide_code=True)
@@ -36,15 +37,13 @@ def _(mo, v):
 
 
 @app.cell(hide_code=True)
-def _(bundle, mo):
+def _(bundle, mo, v):
     _c = bundle.meta["counts"]
-    mo.md(f"""
-    # SpotFit 상권 비교 점수 (2025년)
-
+    mo.vstack([mo.Html(v.header_html("서울 상권 비교 점수 대시보드 · 2025년 자료")), mo.md(f"""
     희망 업종을 고르면, **서울의 같은 업종 상권끼리** 4개 영역(매출 잠재력 · 경쟁 · 안정성 · 수요)을 비교한 점수를 보여 줍니다.
     관광특구를 뺀 상권 기준 · 점수 대상 {_c['target_cells']:,}칸 · 점수를 만들 수 있는 업종 {_c['scored_industries']}개 / {_c['industries']}개.
     **성장성은 2025년 자료만 있어 산출하지 않습니다.** 이 점수는 창업 성공 가능성이나 수익을 뜻하지 않습니다.
-    """)
+    """)], gap=0.2)
     return
 
 
@@ -126,6 +125,25 @@ def _(PAGES, demand_mode, industry, mo, nav, scope, summary, v, weights):
 
 
 @app.cell(hide_code=True)
+def _(PAGES, bundle, demand_mode, gu_ui, industry_all, industry_ui, mo, nav, panel, scope, type_ui, v, weights):
+    # 자치구 지도는 따로 칸을 둔다. 아래 지도 2종과 한 칸에 넣으면 칸 출력이 marimo 한도(8MB)를 넘는다.
+    mo.stop(nav.value != PAGES[0] or scope.empty)
+    from time import perf_counter as _clock
+    _t1 = _clock()
+    _pixel, _pixel_source = v.pixel_map_view(bundle, industry_ui.value, gu_ui.value, type_ui.value, weights, demand_mode,
+                                             scope=scope, seoul=industry_all)
+    _pixel_sec = _clock() - _t1
+    panel("자치구 지도: 서울은 도트, 구를 누르면 상권 상세",
+          "구 색은 구 중앙값과 <b>서울 같은 업종 중앙값의 차이</b>입니다(크림 = 비슷, 파랑 = 높음, 노랑 = 낮음, 이름표 숫자 = 차이). "
+          "오른쪽 위 <b>구 색 기준</b> 버튼으로 종합·매출·경쟁·안정성·수요·상위 10% 상권 수를 바꿔 봅니다. 점수 상권 10곳 미만인 구는 흐린 색·점선(참고용)입니다. "
+          "<b>구를 클릭하면</b> 배경 지도 위에 그 구의 상권을 점수 색으로 그리고, <b>상권이나 왼쪽 상위 5곳 목록을 누르면</b> 4개 영역 점수와 원값 카드가 나옵니다. "
+          "'서울 전체'로 돌아갑니다. 이 지도를 클릭해도 상세 탭의 상권은 바뀌지 않습니다(아래 Altair 지도를 쓰세요). "
+          f"구 상세 화면의 배경 지도는 인터넷 연결이 필요합니다. 지도 준비 {_pixel_sec:.2f}초({_pixel_source}).",
+          mo.Html(f'<div class="sf-map">{mo.iframe(_pixel, height="680px").text}</div>'))
+    return
+
+
+@app.cell(hide_code=True)
 def _(PAGES, bundle, demand_mode, gu_ui, industry_all, industry_ui, mo, nav, panel, scope, selected_code, type_ui, v, weights):
     mo.stop(nav.value != PAGES[0] or scope.empty)
     import time as _time
@@ -138,10 +156,10 @@ def _(PAGES, bundle, demand_mode, gu_ui, industry_all, industry_ui, mo, nav, pan
     _sec = _time.perf_counter() - _t0
     _how = {"메모리": "이번 실행 중 저장해 둔 지도를 불러왔습니다", "저장 파일": "저장된 지도 파일을 불러왔습니다",
             "새로 계산": "처음 보는 조합이라 새로 그리고 저장했습니다. 다음부터는 바로 불러옵니다"}[_source]
-    _common = (f"진한 파란색일수록 종합 점수가 높습니다. 검은 번호는 지금 보이는 범위의 상위 {v.TOP_N}곳, 주황 테두리는 지금 고른 상권입니다. "
+    _common = (f"진한 파란색일수록 종합 점수가 높습니다. 검은 번호는 지금 보이는 범위의 상위 {v.TOP_N}곳, 진한 노란 테두리는 지금 고른 상권입니다. "
                "옅은 회색은 점수가 없는 상권(점포 5개 미만 등)이고 0점이 아닙니다.")
     mo.vstack([
-        mo.md(f"**상권 지도**<br><small>{_common}<br>지도 준비: {_how} ({_sec:.2f}초).</small>"),
+        mo.md(f"**상권 지도 (확대·이동, 클릭해서 고르기)**<br><small>{_common}<br>지도 준비: {_how} ({_sec:.2f}초).</small>"),
         mo.hstack([
             panel("Plotly 지도: 확대·이동", "마우스 휠로 확대·축소, 끌어서 이동합니다. 오른쪽 위 도구로 처음 위치로 돌아갑니다. 배경 지도는 인터넷 연결이 필요합니다.",
                   _fig if _fig is not None else "지도에 그릴 상권이 없습니다."),

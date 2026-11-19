@@ -47,12 +47,16 @@ INPUTS = [
 ]
 
 
+TEXT_SUFFIXES = {".json", ".csv", ".md", ".txt"}
+
+
 def sha256(path):
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
+    """파일 지문. 글자 파일(.json·.csv 등)은 줄바꿈(CRLF/LF)을 LF로 맞춘 뒤 계산한다 (STEP 5 build_types.sha256과 같은 방식).
+    윈도우 Git(core.autocrlf=true)은 받을 때 CRLF로 바꾸므로, 맞추지 않으면 같은 데이터인데 지문이 달라진다."""
+    data = Path(path).read_bytes()
+    if Path(path).suffix.lower() in TEXT_SUFFIXES:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def pct_rank(s, higher_is_better=True):
@@ -137,7 +141,8 @@ def build(cells, areas, industries, quarters, dim):
         d[f"score_dem_{key}"] = np.nan
         d.loc[target, f"score_dem_{key}"] = g[f"{key}_density"].transform(pct_rank)
     dem_cols = ["score_dem_floating", "score_dem_worker", "score_dem_resident"]
-    d["score_dem_avg"] = d[dem_cols].mean(axis=1, skipna=True)
+    # 기본 수요 = 세 값이 모두 있을 때만 평균 (박성은 통합 기준 v1 · 김지영 방식, 2026-11-18). 하나라도 없으면 수요 '자료 없음'.
+    d["score_dem_avg"] = d[dem_cols].mean(axis=1, skipna=False)
     d["dem_avg_n"] = d[dem_cols].notna().sum(axis=1).where(target)
 
     d["score_total_default"], d["n_areas_default"] = composite(d)

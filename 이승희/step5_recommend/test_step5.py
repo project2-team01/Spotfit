@@ -103,9 +103,10 @@ def check_types(c):
     return ok, f"없는 코드 {bad_code}, 판정 여부 불일치 {bad_full}, 글자 조합 불일치 {bad_concat}, 점수 대상 밖 유형 {non_target}, G 코드 {has_g}"
 
 
-def check_scores(picks, choice, weights):
-    """종합 점수를 가중 평균 공식으로 손계산한다. 자료가 없는 영역은 빼고 가중치를 다시 나눈다."""
-    mode = r.DEMAND_LINK[choice.get("LV")]
+def check_scores(picks, choice, weights, link=False):
+    """종합 점수를 가중 평균 공식으로 손계산한다. 자료가 없는 영역은 빼고 가중치를 다시 나눈다.
+    수요는 기본 세 값 평균이고, link=True(사용자가 켰을 때)만 L → 주민, V → 유동인구로 연결한다 (박성은 통합 기준 v1)."""
+    mode = r.DEMAND_LINK[choice.get("LV")] if link else "avg"
     cols = {"sales": "score_sales", "comp": "score_comp", "stab": "score_stab", "dem": f"score_dem_{mode}"}
     worst = 0.0
     for _, row in picks.iterrows():
@@ -192,8 +193,13 @@ def main():
     part = r.recommend(b, "CS100010", {"LV": "V", "SD": "S"}, ["강남구", "서초구"], {"sales": 50, "comp": 0, "stab": 10, "dem": 40})
     ok_p, det_p = check_scores(part, {"LV": "V"}, {"sales": 50, "comp": 0, "stab": 10, "dem": 40})
     part_ok = bool(part["LV"].eq("V").all() and part["SD"].eq("S").all() and part["gu_name"].isin(["강남구", "서초구"]).all())
-    record(12, "상관없음·일부 축·자치구·가중치 변경", len(allp) == 960 and ok_s and ok_p and part_ok and len(part) > 0,
-           f"모두 상관없음 {len(allp)}곳({det_s}) / V+S+강남·서초 {len(part)}곳 필터 {part_ok} ({det_p})")
+    # 수요 연결을 켜면(link=True) V → 유동인구 수요로 다시 계산하고, 같은 상권만 남는다
+    linked = r.recommend(b, "CS100010", {"LV": "V", "SD": "S"}, ["강남구", "서초구"], {"sales": 50, "comp": 0, "stab": 10, "dem": 40}, link=True)
+    ok_l, det_l = check_scores(linked, {"LV": "V"}, {"sales": 50, "comp": 0, "stab": 10, "dem": 40}, link=True)
+    link_ok = ok_l and set(linked["trdar_code"]) == set(part["trdar_code"]) and r.demand_mode({"LV": "V"}) == "avg"
+    record(12, "상관없음·일부 축·자치구·가중치 변경·수요 연결", len(allp) == 960 and ok_s and ok_p and part_ok and len(part) > 0 and link_ok,
+           f"모두 상관없음 {len(allp)}곳({det_s}) / V+S+강남·서초 {len(part)}곳 필터 {part_ok} ({det_p}) / "
+           f"수요 연결 켬: 같은 상권 {set(linked['trdar_code']) == set(part['trdar_code'])} ({det_l}), 기본은 끔 {r.demand_mode({'LV': 'V'}) == 'avg'}")
 
     sd_hold = r.recommend(b, "CS100010", {"SD": "D"})
     no_mid = not sd_hold["chg_name"].isin(["상권확장", "상권축소"]).any()
@@ -300,6 +306,48 @@ def main():
     record(20, "검사지 15문항 (구성·원문 일치·채점·순서)", shape and same_md and rules and order_ok and picks_ok,
            f"구성 {shape}, .md 원문과 같음 {same_md} ({len(md_q)}문항), 채점 규칙 {rules} (LPD 5:0, 3:2 경계 → 상관없음, 미완료·잘못된 답 처리), "
            f"섞은 순서 고정 {order_ok}, 검사 결과로 추천 {picks_ok}")
+
+    # 21. 자치구 픽셀 지도: 조건에 맞는 상권만 칠하고, 순위는 서울 같은 업종(유형 무관) 기준이어야 함
+    try:
+        px = r.v4.pixel_module()
+        ch = r.check_choice({"LV": "L", "EP": None, "SD": "S"})
+        seoul21 = r.seoul_scope(b, "CS100010", ch)
+        picks21 = r.recommend(b, "CS100010", ch)
+        d21 = px.prepare(picks21, seoul21, b.step4.points)
+        g21 = px.gu_summary(d21)
+        hand = picks21.dropna(subset=["score_total"]).groupby("gu_name")["score_total"].median()
+        med_ok = bool(np.allclose(g21["median"].sort_index(), hand.sort_index())) and set(g21.index) == set(hand.index)
+        # 조건 안 1위의 서울 순위 = 서울 같은 업종(유형 무관) 안에서 그 점수보다 높은 상권 수 + 1
+        top = d21.loc[d21["score"].idxmax()]
+        rank_ok = int(top["seoul_rank"]) == int((seoul21["score_total"] > top["score"]).sum()) + 1
+        h1, s1 = r.pixel_map_html(b, picks21, seoul21, "커피-음료", ch)
+        _, s2 = r.pixel_map_html(b, picks21, seoul21, "커피-음료", ch)
+        pins = h1.count('class=\\"px-rank\\"')
+        up_ok = h1.count('class="px-mbtn"') >= 5 and '"k": {' in h1   # 기준 버튼과 상권 상세 카드 자료가 지도에 들어 있음
+        ok21 = (med_ok and rank_ok and pins == min(px.TOP_PINS, int(picks21["score_total"].notna().sum())) and (s1, s2) == ("새로 계산", "메모리")
+                and up_ok)
+        record(21, "자치구 픽셀 지도 (조건 안 상권·서울 순위)", ok21,
+               f"LS 커피-음료 {len(picks21)}곳: 구 {len(g21)}개 중앙값 손계산 일치 {med_ok}, 조건 안 1위의 서울 순위 {int(top['seoul_rank'])}위 일치 {rank_ok}, "
+               f"핀 {pins}개, 저장 {s1}→{s2}, 기준 버튼·상세 카드 {up_ok}")
+    except Exception as e:  # noqa: BLE001
+        record(21, "자치구 픽셀 지도 (조건 안 상권·서울 순위)", False, f"오류 {type(e).__name__}: {e}")
+
+    # 22. 박성은 통합 기준 v1에 맞춘 것: 백분위 반올림 뒤 경계 판정, 상권확장·상권축소 공식 이름, S/D 문항 표현
+    c22 = pd.read_parquet(bt.OUT / "상권업종_유형_2025.parquet")
+    a22 = pd.read_csv(bt.OUT / "상권_유형축_2025.csv", dtype={"trdar_code": str}, encoding="utf-8-sig")
+    edge = c22.loc[c22["ticket_pct"].isin([45.0, 55.0])]
+    edge_ok = len(edge) > 0 and bool(edge["EP"].isna().all())
+    named = c22.loc[(c22["trdar_name"].eq("대청초등학교") & c22["industry_name"].eq("제과점"))
+                    | (c22["trdar_name"].eq("천호역") & c22["industry_name"].eq("PC방")), "EP"]
+    named_ok = len(named) == 2 and bool(named.isna().all())
+    reason_col = next(col for col in a22.columns if col.startswith("SD") and ("reason" in col or "사유" in col))
+    mid = a22.loc[a22["chg_name"].isin(["상권확장", "상권축소"])]
+    names_ok = bool((mid[reason_col] == mid["chg_name"] + " · S/D 연결 보류").all()) and not a22[reason_col].fillna("").str.contains("중간").any()
+    words = " ".join(q.question(n)[2] + q.question(n)[3][0] + q.question(n)[4][0] for n in range(11, 16))
+    words_ok = not any(w in words for w in ("기회", "대박", "잘된다", "수익"))
+    record(22, "경계값 반올림·상권확장 표기·S/D 문항 (통합 기준 v1)", edge_ok and named_ok and names_ok and words_ok,
+           f"백분위가 정확히 45·55인 {len(edge)}칸 모두 보류 {edge_ok}, 대청초등학교·제과점과 천호역·PC방 보류 {named_ok}, "
+           f"상권확장·상권축소 {len(mid)}곳 공식 이름으로 보류 {names_ok}, 11~15번에 수익·기회 표현 없음 {words_ok}")
 
     failed = [x for x in RESULTS if not x[2]]
     print(f"\n결과: {len(RESULTS) - len(failed)}/{len(RESULTS)} 통과")

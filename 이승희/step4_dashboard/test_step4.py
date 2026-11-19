@@ -293,6 +293,103 @@ def main():
         v._MAP_MEM.clear()
     record(13, "화면 함수 경계 상황 (오류 없음·기대 결과)", ok13, " | ".join(out))
 
+    # 14. 자치구 픽셀 지도 (../pixel_theme): 구 중앙값·서울 순위를 손으로 다시 계산해 맞춰 보고, 필터·점수 없는 업종·빈 결과에서도 오류가 없어야 함
+    out14, ok14 = [], True
+    try:
+        px = v.pixel_module()
+        w = bs.DEFAULT_WEIGHTS
+        seoul = v.filter_scope(bundle, "CS100010", None, None, w, "avg")
+        d14 = px.prepare(seoul, seoul, bundle.points)
+        g14 = px.gu_summary(d14)
+        hand = seoul.dropna(subset=["score_total"]).groupby("gu_name")["score_total"].median()
+        med_ok = len(g14) == 25 and bool(np.allclose(g14["median"].sort_index(), hand.sort_index()))
+        cls_ok = sorted(g14["cls"].value_counts().tolist()) == [5, 5, 5, 5, 5]
+        rank_ok = int(d14.loc[d14["score"].idxmax(), "seoul_rank"]) == 1
+        # 구 상세 화면: 강남구를 누르면 그 구의 상권이 모두(경계가 있는 것) 그려지고, 색은 점수 색, 번호는 구 안 상위 5곳
+        geo14 = {a["trdar_code"]: a["geometry"] for a in bundle.geometry}
+        det = px.detail_data(d14, g14, int(seoul["score_total"].notna().sum()), geo14)["강남구"]
+        gn_rows = d14.loc[d14["gu_name"].eq("강남구") & d14["trdar_code"].isin(geo14)]
+        want_colors = sorted(px.score_color(x) for x in gn_rows["score"])
+        got_colors = sorted(f["properties"]["c"] for f in det["areas"])
+        top5 = gn_rows.dropna(subset=["score"]).nlargest(5, "score")["trdar_name"].tolist()
+        detail_ok = (len(det["areas"]) == len(gn_rows) and want_colors == got_colors and [t["name"] for t in det["top"]] == top5
+                     and [n["n"] for n in det["nums"]] == [1, 2, 3, 4, 5] and px.score_color(0) == "#D6E6FA" and px.score_color(100) == "#163F82"
+                     and px.score_color(float("nan")) == px.AREA_NO_SCORE)
+        ok14 &= detail_ok
+        out14.append(f"강남구 상세: 상권 {len(det['areas'])}곳(표 {len(gn_rows)}곳)·점수 색·상위 5곳 번호 일치 {detail_ok}")
+        # 업그레이드(기준 버튼·상세 카드): 손계산과 비교
+        per, legends, keys = px.metric_views(d14, seoul, sorted(seoul["gu_name"].dropna().unique()))
+        base = seoul.loc[seoul["score_total"].notna()]
+        gn_s = d14.loc[d14["gu_name"].eq("강남구"), "score_sales"].dropna()
+        hand_sales = gn_s.median() - base["score_sales"].median()
+        sales_ok = per["강남구"]["sales"]["l"].rstrip("*") == f"{hand_sales:+.1f}"
+        thr = base["score_total"].quantile(0.9)
+        hand_top = int((d14.loc[d14["gu_name"].eq("송파구"), "score"] >= thr).sum())
+        top_ok = per["송파구"]["top10"]["l"] == f"{hand_top}곳"
+        keys_ok = [k for k, _ in keys] == ["total", "sales", "comp", "stab", "dem", "top10"] and set(legends) == {k for k, _ in keys}
+        meds = px.raw_medians(seoul)
+        det2 = px.detail_data(d14, g14, int(seoul["score_total"].notna().sum()), geo14, None, meds)["강남구"]
+        first = next(f for f in det2["areas"] if f["properties"]["s"])["properties"]
+        row = d14.loc[d14["trdar_code"].eq(first["id"])].iloc[0]
+        card_ok = (first["k"]["raw"][0][1] == px._fmt(row["sales_month"], "money")
+                   and first["k"]["raw"][0][2] == px._fmt(base["sales_month"].median(), "money")
+                   and [a[1] for a in first["k"]["a"]] == [None if pd.isna(row[c]) else round(float(row[c]), 1)
+                                                           for c in ("score_sales", "score_comp", "score_stab", "score_dem")])
+        no_sales = v.filter_scope(bundle, "CS200010", None, None, w, "avg")   # 매출 미제공 업종(변호사사무소): 매출 버튼 없음
+        keys_ns = [k for k, _ in px.metric_views(px.prepare(no_sales, no_sales, bundle.points), no_sales,
+                                                  sorted(no_sales["gu_name"].dropna().unique()))[2]]
+        ns_ok = "sales" not in keys_ns and "total" in keys_ns
+        up_ok = sales_ok and top_ok and keys_ok and card_ok and ns_ok and px.gu_map_html(seoul, seoul, bundle.geometry, "검사", upgrade=True).count('class="px-mbtn"') == 6
+        ok14 &= up_ok
+        out14.append(f"기준 버튼·카드: 강남구 매출 차이 손계산 {hand_sales:+.1f} 일치 {sales_ok}, 송파구 상위 10% {hand_top}곳 일치 {top_ok}, "
+                     f"버튼 6개 {keys_ok}, 카드 원값·영역 점수 일치 {card_ok}, 매출 미제공 업종은 매출 버튼 없음 {ns_ok}")
+        html1, src1 = v.pixel_map_view(bundle, "CS100010", None, None, w, "avg")
+        _, src2 = v.pixel_map_view(bundle, "CS100010", None, None, w, "avg")
+        pins = html1.count('class=\\"px-rank\\"')
+        ok14 &= med_ok and cls_ok and rank_ok and pins == px.TOP_PINS and (src1, src2) == ("새로 계산", "메모리") and "gu-panel" in html1
+        out14.append(f"커피-음료: 구 {len(g14)}개 중앙값 손계산 일치 {med_ok}, 5단계 각 5개 구 {cls_ok}, 1위 서울 1위 {rank_ok}, 핀 {pins}개, 저장 {src1}→{src2}")
+        gn = v.filter_scope(bundle, "CS100010", ["강남구"], None, w, "avg")
+        g_gn = px.gu_summary(px.prepare(gn, seoul, bundle.points))
+        gn_ok = list(g_gn.index) == ["강남구"] and int(g_gn.loc["강남구", "cls"]) == 2   # 구 하나면 가운데 단계
+        two = v.filter_scope(bundle, "CS100010", ["강남구", "금천구"], None, w, "avg")
+        g_two = px.gu_summary(px.prepare(two, seoul, bundle.points))
+        two_ok = sorted(g_two["cls"].tolist()) == [0, 4]   # 구 둘이면 양 끝 단계
+        ok14 &= gn_ok and two_ok
+        out14.append(f"강남구만: 칠한 구 {list(g_gn.index)} 가운데 색 {gn_ok} · 두 구: 양 끝 색 {two_ok}")
+        for name, code, gus in [("점수 없는 업종", "CS200004", None), ("빈 결과", "CS100010", ["없는구"])]:
+            h = v.pixel_map_view(bundle, code, gus, None, w, "avg")[0]
+            n_pin = h.count('class=\\"px-rank\\"')
+            ok14 &= n_pin == 0 and "gu-panel" in h
+            out14.append(f"{name}: 오류 없음, 핀 {n_pin}개")
+        # 칸 출력 한도: marimo는 칸 하나의 출력이 8MB를 넘으면 보여 주지 않는다. 상권이 가장 많은 업종에서도 지도 칸이 넉넉히 작아야 함
+        import marimo as mo
+        big = bundle.scores.groupby("industry_code")["trdar_code"].size().idxmax()
+        big_html = v.pixel_map_view(bundle, big, None, None, w, "avg")[0]
+        cell_mb = len(mo.Html(f'<div class="sf-map">{mo.iframe(big_html, height="600px").text}</div>').text.encode("utf-8")) / 1e6
+        size_ok = cell_mb < 4
+        ok14 &= size_ok
+        out14.append(f"상권이 가장 많은 업종({big}) 지도 칸 {cell_mb:.1f}MB (한도 8MB의 절반 미만 {size_ok})")
+        head = v.header_html("부제 <b>")
+        head_ok = "SPOTFIT" in head and "&lt;b&gt;" in head
+        ok14 &= head_ok
+        out14.append(f"머리말 글자 처리 {head_ok}")
+    except Exception as e:  # noqa: BLE001
+        ok14 = False
+        out14.append(f"오류 {type(e).__name__}: {e}")
+    finally:
+        v._PIXEL_MEM.clear()
+    record(14, "자치구 픽셀 지도 (손계산·경계 상황)", ok14, " | ".join(out14))
+
+    # 15. 기본 수요 평균은 유동·직장·상주 세 값이 모두 있을 때만 낸다 (박성은 통합 기준 v1 · 김지영 방식, 2026-11-18)
+    dem15 = ["score_dem_floating", "score_dem_worker", "score_dem_resident"]
+    t15 = d.loc[d["score_status"].eq("점수 대상")]
+    partial15 = t15[dem15].notna().any(axis=1) & t15[dem15].isna().any(axis=1)
+    leak15 = int(t15.loc[partial15, "score_dem_avg"].notna().sum())
+    full15 = t15[dem15].notna().all(axis=1)
+    err15 = float((t15.loc[full15, dem15].mean(axis=1) - t15.loc[full15, "score_dem_avg"]).abs().max())
+    record(15, "기본 수요 평균은 세 값이 모두 있을 때만", leak15 == 0 and int(partial15.sum()) > 0 and err15 < 1e-9,
+           f"일부 값만 있는 점수 대상 {int(partial15.sum())}칸 중 수요 점수가 있는 칸 {leak15}개, 세 값이 있는 칸의 평균 손계산 오차 {err15:.1e}")
+
     fails = [r for r in RESULTS if not r[2]]
     print(f"\n결과: {len(RESULTS) - len(fails)}/{len(RESULTS)} 통과")
     sys.exit(1 if fails else 0)
