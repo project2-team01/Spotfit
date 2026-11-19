@@ -107,9 +107,15 @@ def _fmt(v, how) -> str:
 
 
 def raw_medians(seoul: pd.DataFrame) -> dict:
-    """서울 같은 업종 점수 상권의 원값 중앙값 (상세 카드의 비교 기준)."""
+    """서울 같은 업종 점수 상권의 원값 중앙값 (상세 카드의 비교 기준).
+    점포당 월매출은 매출 점수가 있는 칸만으로 낸다 (박성은 통합본 rawMed와 같은 기준). 1~3개 분기 칸까지 섞으면
+    커피-음료가 465만 원이 되어 김지영 482.6만 원과 어긋났다(2026-11-19 확인)."""
     t = seoul.loc[seoul["score_total"].notna()]
-    return {col: (float(t[col].median()) if col in t.columns and t[col].notna().any() else None) for _, col, _ in RAW_ITEMS}
+    out = {}
+    for _, col, _ in RAW_ITEMS:
+        base = t.loc[t["score_sales"].notna()] if col == "sales_month" and "score_sales" in t.columns else t
+        out[col] = float(base[col].median()) if col in base.columns and base[col].notna().any() else None
+    return out
 
 
 def card_data(r: dict, n_seoul: int, meds: dict) -> dict:
@@ -126,6 +132,9 @@ def card_data(r: dict, n_seoul: int, meds: dict) -> dict:
         "status": str(r.get("score_status") or "점수 없음"),
         "raw": [[label, _fmt(r.get(col), how), _fmt(meds.get(col), how)] for label, col, how in RAW_ITEMS if col in r],
     }
+    q = r.get("sales_quarters")   # 매출이 1~3개 분기만 있으면 값 옆에 표시 (매출 점수는 4개 분기 칸만 매김)
+    if out["raw"] and "sales_month" in r and q is not None and not pd.isna(q) and q < 4 and not pd.isna(r.get("sales_month")):
+        out["raw"][0][1] += f" ({int(q)}개 분기만)"
     if has and "score_sales" in r:
         out["a"] = [[label, None if pd.isna(r.get(col)) else round(float(r[col]), 1), color] for label, col, color in AREA_BARS]
     return out
@@ -175,7 +184,7 @@ def prepare(shown: pd.DataFrame, seoul: pd.DataFrame, points: pd.DataFrame) -> p
     s = seoul.loc[seoul["score_total"].notna(), ["trdar_code", "score_total"]]
     s = s.assign(seoul_rank=s["score_total"].rank(ascending=False, method="min").astype(int))
     extra = [c for c in ("score_sales", "score_comp", "score_stab", "score_dem", "score_status", "stores", "trdar_type",
-                         "sales_month", "comp_ratio", "close_pct_shrunk", "floating_density") if c in shown.columns]
+                         "sales_month", "sales_quarters", "comp_ratio", "close_pct_shrunk", "floating_density") if c in shown.columns]
     d = shown[["trdar_code", "trdar_name", "gu_name", "score_total", *extra]].merge(points, on="trdar_code", how="inner")
     d = d.merge(s[["trdar_code", "seoul_rank"]], on="trdar_code", how="left").rename(columns={"score_total": "score"})
     return d

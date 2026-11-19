@@ -331,8 +331,12 @@ def main():
         det2 = px.detail_data(d14, g14, int(seoul["score_total"].notna().sum()), geo14, None, meds)["강남구"]
         first = next(f for f in det2["areas"] if f["properties"]["s"])["properties"]
         row = d14.loc[d14["trdar_code"].eq(first["id"])].iloc[0]
-        card_ok = (first["k"]["raw"][0][1] == px._fmt(row["sales_month"], "money")
-                   and first["k"]["raw"][0][2] == px._fmt(base["sales_month"].median(), "money")
+        # 매출 중앙값은 매출 점수가 있는 칸만 (박성은 통합본과 같은 기준). 1~3개 분기 칸 값에는 "(n개 분기만)"을 붙인다
+        want_sales = px._fmt(row["sales_month"], "money") + (f" ({int(row['sales_quarters'])}개 분기만)"
+                                                              if not pd.isna(row["sales_month"]) and row["sales_quarters"] < 4 else "")
+        med4 = base.loc[base["score_sales"].notna(), "sales_month"].median()
+        card_ok = (first["k"]["raw"][0][1] == want_sales
+                   and first["k"]["raw"][0][2] == px._fmt(med4, "money") and round(med4 / 1e4, 1) == 482.6   # 김지영 기준과 같은 값
                    and [a[1] for a in first["k"]["a"]] == [None if pd.isna(row[c]) else round(float(row[c]), 1)
                                                            for c in ("score_sales", "score_comp", "score_stab", "score_dem")])
         no_sales = v.filter_scope(bundle, "CS200010", None, None, w, "avg")   # 매출 미제공 업종(변호사사무소): 매출 버튼 없음
@@ -342,7 +346,7 @@ def main():
         up_ok = sales_ok and top_ok and keys_ok and card_ok and ns_ok and px.gu_map_html(seoul, seoul, bundle.geometry, "검사", upgrade=True).count('class="px-mbtn"') == 6
         ok14 &= up_ok
         out14.append(f"기준 버튼·카드: 강남구 매출 차이 손계산 {hand_sales:+.1f} 일치 {sales_ok}, 송파구 상위 10% {hand_top}곳 일치 {top_ok}, "
-                     f"버튼 6개 {keys_ok}, 카드 원값·영역 점수 일치 {card_ok}, 매출 미제공 업종은 매출 버튼 없음 {ns_ok}")
+                     f"버튼 6개 {keys_ok}, 카드 원값·영역 점수 일치(매출 중앙값 매출 점수 칸 {med4 / 1e4:,.1f}만 원) {card_ok}, 매출 미제공 업종은 매출 버튼 없음 {ns_ok}")
         html1, src1 = v.pixel_map_view(bundle, "CS100010", None, None, w, "avg")
         _, src2 = v.pixel_map_view(bundle, "CS100010", None, None, w, "avg")
         pins = html1.count('class=\\"px-rank\\"')
