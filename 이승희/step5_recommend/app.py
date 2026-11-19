@@ -1,7 +1,8 @@
 import marimo
 
 __generated_with = "0.25.2"
-app = marimo.App(width="full", app_title="SpotFit 금융 MBTI 상권 추천 (2025)")
+app = marimo.App(width="full", app_title="SpotFit 금융 MBTI 상권 추천 (2025)", css_file="../pixel_theme/spotfit.css",
+                   html_head_file="../pixel_theme/spotfit_head.html")
 
 
 @app.cell(hide_code=True)
@@ -42,17 +43,15 @@ def _(mo, r):
 
 
 @app.cell(hide_code=True)
-def _(bundle, mo):
+def _(bundle, mo, r):
     _c = bundle.meta["counts"]
-    mo.md(f"""
-    # SpotFit 금융 MBTI 상권 추천 (2025년)
-
+    mo.vstack([mo.Html(r.v4.header_html("금융 MBTI 상권 추천 · 2025년 자료")), mo.md(f"""
     **나의 창업 성향(주 고객 · 가격대 · 상권 변화)**과 **희망 업종**을 고르면, 성향이 맞는 상권을 STEP 4 비교 점수 순서로 보여 줍니다.
     STEP 4 점수 대상 {_c['target_cells']:,}칸 중 세 축이 모두 판정된 칸 {_c['typed_cells']:,}칸 · 업종 {_c['typed_industries']}개.
     **유형과 점수는 창업 성공 가능성이나 수익을 뜻하지 않습니다.** 예산은 비용 자료(임대료·보증금 등)가 없어 판단하지 않습니다.
 
     <small>공유용 HTML 파일(정적 스냅숏)에서는 탭은 바뀌지만, 업종·유형·검사 답을 바꿔도 다시 계산하지 않습니다(커피-음료, 모든 유형 기준). 바꿔 보려면 대시보드를 실행하세요.</small>
-    """)
+    """)], gap=0.2)
     return
 
 
@@ -86,7 +85,9 @@ def _(bundle, mo, r):
     w_comp = mo.ui.slider(0, 50, step=5, value=_w["comp"], label="경쟁", show_value=True, debounce=True)
     w_stab = mo.ui.slider(0, 50, step=5, value=_w["stab"], label="안정성", show_value=True, debounce=True)
     w_dem = mo.ui.slider(0, 50, step=5, value=_w["dem"], label="수요", show_value=True, debounce=True)
-    return ep_ui, gu_ui, industry_ui, lv_ui, sd_ui, w_comp, w_dem, w_sales, w_stab
+    # 기본 끄기 (박성은 통합 기준 v1, 2026-11-18): 켤 때만 L → 주민, V → 유동인구로 수요 점수를 바꾼다
+    link_ui = mo.ui.checkbox(value=False, label="유형에 맞춰 수요 고객층 연결 (L → 주민, V → 유동인구) [가정]")
+    return ep_ui, gu_ui, industry_ui, link_ui, lv_ui, sd_ui, w_comp, w_dem, w_sales, w_stab
 
 
 @app.cell(hide_code=True)
@@ -100,23 +101,24 @@ def _(mo, q):
 
 
 @app.cell(hide_code=True)
-def _(bundle, ep_ui, gu_ui, industry_ui, lv_ui, r, sd_ui, w_comp, w_dem, w_sales, w_stab):
+def _(bundle, ep_ui, gu_ui, industry_ui, link_ui, lv_ui, r, sd_ui, w_comp, w_dem, w_sales, w_stab):
     choice = r.check_choice({"LV": lv_ui.value, "EP": ep_ui.value, "SD": sd_ui.value})
     weights = {"sales": w_sales.value, "comp": w_comp.value, "stab": w_stab.value, "dem": w_dem.value}
     industry = r.industry_row(bundle, industry_ui.value)
-    seoul = r.seoul_scope(bundle, industry_ui.value, choice, weights)
-    picks = r.recommend(bundle, industry_ui.value, choice, gu_ui.value, weights)
+    seoul = r.seoul_scope(bundle, industry_ui.value, choice, weights, link_ui.value)
+    picks = r.recommend(bundle, industry_ui.value, choice, gu_ui.value, weights, link_ui.value)
     steps = r.funnel(bundle, industry_ui.value, choice, gu_ui.value)
     return choice, industry, picks, seoul, steps, weights
 
 
 @app.cell(hide_code=True)
-def _(bundle, choice, ep_ui, gu_ui, industry, industry_ui, lv_ui, mo, pal, panel, picks, r, sd_ui, seoul, steps,
+def _(bundle, choice, ep_ui, gu_ui, industry, industry_ui, link_ui, lv_ui, mo, pal, panel, picks, r, sd_ui, seoul, steps,
       w_comp, w_dem, w_sales, w_stab, weights):
     # 탭 1: 내 유형으로 상권 찾기
     _controls = mo.vstack([
         mo.hstack([industry_ui, gu_ui], justify="start", align="end", gap=1.5, wrap=True),
         lv_ui, ep_ui, sd_ui,
+        link_ui,
         mo.accordion({"점수 가중치 바꾸기 (선택)": mo.vstack([
             mo.hstack([w_sales, w_comp, w_stab, w_dem], justify="start", gap=1.5, wrap=True),
             mo.md("<small>기본값(매출 30 · 경쟁 25 · 안정성 15 · 수요 30)은 STEP 4와 같은 <b>가정</b>입니다. "
@@ -138,11 +140,19 @@ def _(bundle, choice, ep_ui, gu_ui, industry, industry_ui, lv_ui, mo, pal, panel
     ], widths="equal", gap=1)
     _funnel = " → ".join(f"{name} **{n:,}**" for name, n in steps)
     _summary = mo.hstack([
-        mo.md(r.type_card(choice)),
+        mo.md(r.type_card(choice, link_ui.value)),
         mo.vstack([*_notes, _tiles, mo.md(f"<small>조건별로 남은 상권: {_funnel}</small>")], gap=0.6),
     ], widths=[1, 1.4], gap=2, align="start", wrap=True)
     _body = [_controls, _summary]
     if not picks.empty:
+        _pixel, _pixel_source = r.pixel_map_html(bundle, picks, seoul, industry["업종명"], choice, gu_ui.value, weights, link_ui.value)
+        _body.append(panel(
+            "자치구 지도: 서울은 도트, 구를 누르면 상권 상세",
+            "내 조건과 일치하는 상권만으로 칠했습니다. 구 색은 구 중앙값과 <b>서울 같은 업종(유형 무관) 중앙값의 차이</b>입니다"
+            "(크림 = 비슷, 파랑 = 높음, 노랑 = 낮음). 오른쪽 위 <b>구 색 기준</b> 버튼으로 종합·매출·경쟁·안정성·수요·상위 10% 상권 수를 바꿔 봅니다. "
+            "<b>구를 클릭하면</b> 그 구의 조건에 맞는 상권을 점수 색으로 그리고, <b>상권이나 상위 5곳 목록을 누르면</b> 4개 영역 점수와 원값 카드가 나옵니다. '서울 전체'로 돌아갑니다. "
+            f"빨간 핀 번호는 조건 안 상위 10곳입니다. 구 상세 화면의 배경 지도는 인터넷 연결이 필요합니다. 지도 준비: {_pixel_source}.",
+            mo.Html(f'<div class="sf-map">{mo.iframe(_pixel, height="680px").text}</div>')))
         _fig = r.map_figure(bundle, picks, seoul, None, pal, view_key=str(picks["industry_code"].iloc[0]))
         _body.append(panel(
             "조건에 맞는 상권 지도",
@@ -153,11 +163,11 @@ def _(bundle, choice, ep_ui, gu_ui, industry, industry_ui, lv_ui, mo, pal, panel
             r.result_table(picks), selection=None, page_size=10, hidden_columns=["trdar_code"], show_column_summaries=False,
             show_data_types=False, freeze_columns_left=["상권"],
             header_tooltip={
-                "종합 점수": "STEP 4 종합 점수(0~100). 수요는 고른 주 고객(L 주민 / V 유동인구)으로 자동 연결됩니다.",
+                "종합 점수": "STEP 4 종합 점수(0~100). 수요는 기본 세 값 평균이고, '수요 고객층 연결'을 켰을 때만 L 주민 / V 유동인구로 바뀝니다.",
                 "서울 순위": "서울 같은 업종 점수 대상 상권(유형 무관) 안의 순위입니다.",
                 "주민 비중": "주민 ÷ (주민 + 직장인). 0.55 초과 L, 0.45 미만 V.",
                 "건당 금액 백분위": "같은 업종 안 결제 1건당 금액의 위치. 45 미만 E, 55 초과 P.",
-                "상권변화지표": "서울시 2025년 4분기. 정체 → S, 다이나믹 → D, 상권확장·상권축소 → 중간.",
+                "상권변화지표": "서울시 2025년 4분기. 정체 → S, 다이나믹 → D, 상권확장·상권축소는 공식 이름 그대로 두고 S/D 연결 보류.",
                 "영업 중 가게 평균 개월": "지금 영업 중인 가게들의 평균 영업 기간. 서울 평균 115개월.",
                 "문 닫은 가게 평균 개월": "문을 닫은 가게들이 닫기까지 영업한 평균 기간. 서울 평균 53개월.",
             })
@@ -231,7 +241,7 @@ def _(bundle, chart, choice, ep_ui, industry, industry_ui, lv_ui, mo, pal, panel
                   chart(r.hold_bar(r.hold_counts(bundle, industry_ui.value), pal))),
         ], widths="equal", gap=2, align="start", wrap=True),
         mo.hstack([
-            panel("서울 상권 1,644곳의 상권변화지표 (2025년 4분기)", "관광특구 제외. 정체는 S 안정형, 다이나믹은 D 역동형이고 상권확장·상권축소는 '중간'으로 보류합니다.",
+            panel("서울 상권 1,644곳의 상권변화지표 (2025년 4분기)", "관광특구 제외. 정체는 S 안정형, 다이나믹은 D 역동형입니다. 상권확장·상권축소는 공식 이름 그대로 보여 주고 S/D 연결만 보류합니다.",
                   chart(r.area_sd_chart(bundle.areas, pal))),
             panel("8유형 정의", "S/D 이름은 박성은 제안(팀 확정 전)입니다. 아이템은 설명용 예시이고 데이터로 검증하지 않았습니다.",
                   plain(bundle.types)),
@@ -254,20 +264,21 @@ def _(bundle, mo):
     | :--- | :--- | :--- | :--- |
     | **주 고객** L 생활형 / V 방문형 [가정] | 주민 ÷ (주민 + 직장인) | 0.55 초과 L, 0.45 미만 V, 그 사이 보류 | 상권 |
     | **가격대** E 실속형 / P 프리미엄형 [가정] | 결제 1건당 금액(연간 추정매출 ÷ 건수)의 같은 업종 안 백분위 | 45 미만 E, 55 초과 P, 그 사이 보류 | 상권×업종 |
-    | **상권 변화** S 안정형 / D 역동형 | 서울시 상권변화지표 2025년 4분기 | 정체 → S, 다이나믹 → D, 상권확장·상권축소 → 중간(보류) | 상권 |
+    | **상권 변화** S 안정형 / D 역동형 | 서울시 상권변화지표 2025년 4분기 | 정체 → S, 다이나믹 → D, 상권확장·상권축소는 S/D 연결 보류 | 상권 |
 
     - **S/D는 'G 성장형' 대신 새로 정한 축입니다.** 성장을 보려면 작년 자료와 비교해야 하지만, 변화가 많은지 적은지는 2025년 자료로도 판단할 수 있습니다.
       상권변화지표는 2025년에 잰 값이지만 가게들이 여러 해 동안 영업한 기간(영업 중 가게 평균, 문 닫은 가게 평균)을 서울 평균과 비교한 결과입니다.
-    - **정체**는 두 값이 모두 서울 평균보다 길고(오래 버팀), **다이나믹**은 둘 다 평균보다 짧습니다(자주 바뀜). 상권확장·상권축소는 둘 중 하나만 길어 '중간'으로 둡니다.
-      이름과 달리 시간에 따라 커지거나 줄어든다는 뜻이 아닙니다.
-    - 서울 상권 {_a['areas']:,}곳 중 S {_a['SD'].get('S', 0)}곳, D {_a['SD'].get('D', 0)}곳, 중간 {_a['SD'].get('중간(보류)', 0)}곳입니다.
+    - **정체**는 두 값이 모두 서울 평균보다 길고, **다이나믹**은 둘 다 평균보다 짧습니다. 상권확장·상권축소는 둘 중 하나만 길어서 S/D 연결을 보류하고 공식 이름을 그대로 보여 줍니다.
+      중간 점수나 자료 없음이 아니며, 이름과 달리 시간에 따라 커지거나 줄어든다는 뜻도 아닙니다.
+    - S는 저위험, D는 성장·높은 수익이라는 뜻이 아닙니다. 이 연결(정체 → S, 다이나믹 → D) 자체가 팀의 분석 가정입니다.
+    - 서울 상권 {_a['areas']:,}곳 중 S {_a['SD'].get('S', 0)}곳, D {_a['SD'].get('D', 0)}곳, S/D 연결 보류(상권확장·상권축소) {_a['SD'].get('보류', 0)}곳입니다.
       4개 분기 내내 같은 지표를 유지한 상권은 {_a['chg_same_all_year']:,}곳({_a['chg_same_all_year'] / _a['areas']:.1%})입니다.
     - L/V·E/P 경계값(0.45/0.55, 45/55)은 박성은 STEP 5와 같은 운영 가정이고 검증된 값이 아닙니다.
 
     ## 추천 순서를 정하는 방법
 
     1. 희망 업종의 STEP 4 점수 대상 상권에서 고른 축이 일치하는 곳만 남깁니다. 보류된 칸은 그 축을 고르면 빠지고, 다른 유형으로 채우지 않습니다.
-    2. STEP 4 종합 점수로 줄을 세웁니다. 유형에 따라 바뀌는 것은 **수요의 주 고객층** 하나입니다(L → 주민 중심, V → 유동인구 중심, 상관없음 → 세 값 평균).
+    2. STEP 4 종합 점수로 줄을 세웁니다. 수요 점수는 기본 **세 값 평균**입니다. '유형에 맞춰 수요 고객층 연결'을 **직접 켤 때만** L → 주민 중심, V → 유동인구 중심으로 바뀝니다(기본 끄기).
     3. **E/P와 S/D는 거르는 데만 쓰고 점수에 다시 더하지 않습니다.** 같은 정보를 두 번 반영하지 않기 위해서입니다.
 
     ## S/D와 안정성 점수는 얼마나 겹치나

@@ -5,7 +5,8 @@
     1. 희망 업종의 STEP 4 점수 대상 상권 중, 고른 축(L/V · E/P · S/D)이 일치하는 곳만 남긴다.
        '상관없음'으로 둔 축은 거르지 않는다. 판정이 보류된 칸은 그 축을 고르면 빠진다(다른 유형으로 채우지 않음).
     2. 남은 상권을 STEP 4 종합 점수로 줄 세운다. 가중치는 STEP 4 기본값(매출 30 · 경쟁 25 · 안정성 15 · 수요 30) [가정].
-    3. 유형에 따라 자동으로 바뀌는 것은 '수요의 주 고객층' 하나다. L → 주민 중심, V → 유동인구 중심, 상관없음 → 세 값 평균.
+    3. 수요 점수는 기본 '세 값 평균'이다. 사용자가 '유형에 맞춰 수요 연결'을 켤 때만 L → 주민 중심, V → 유동인구 중심으로 바꾼다
+       (기본 끄기: 박성은 통합 기준 v1, 2026-11-18).
        E/P와 S/D는 거르는 데만 쓰고 점수에 다시 더하지 않는다. 같은 정보를 두 번 반영하지 않기 위해서다.
        (S/D와 안정성 점수의 겹침은 build_types.py에서 직접 확인했고 약하다: Spearman −0.09)
 """
@@ -112,8 +113,9 @@ def choice_name(choice: dict) -> str:
     return f"{code} · " + " + ".join(parts) if parts else "모든 유형 (세 축 모두 상관없음)"
 
 
-def demand_mode(choice: dict) -> str:
-    return DEMAND_LINK[choice.get("LV")]
+def demand_mode(choice: dict, link: bool = False) -> str:
+    """수요 점수 모드. 기본은 세 값 평균이고, link=True(사용자가 켰을 때)만 L → 주민, V → 유동인구로 연결한다."""
+    return DEMAND_LINK[choice.get("LV")] if link else "avg"
 
 
 # ---------------------------------------------------------------- 추천
@@ -126,10 +128,10 @@ def industry_row(b: Bundle, industry_code: str) -> pd.Series:
     return ind.loc[industry_code]
 
 
-def seoul_scope(b: Bundle, industry_code: str, choice: dict, weights=None) -> pd.DataFrame:
-    """같은 업종 점수 대상 전체(유형 무관)에 고른 유형의 수요 연결로 종합 점수를 매긴다. 순위의 기준."""
+def seoul_scope(b: Bundle, industry_code: str, choice: dict, weights=None, link: bool = False) -> pd.DataFrame:
+    """같은 업종 점수 대상 전체(유형 무관)의 종합 점수. 순위의 기준. 수요 연결을 켜면(link) 고른 L/V에 맞춘 수요로 계산한다."""
     industry_row(b, industry_code)
-    mode = demand_mode(check_choice(choice))
+    mode = demand_mode(check_choice(choice), link)
     d = b.cells.loc[b.cells["industry_code"].eq(industry_code) & b.cells["score_status"].eq("점수 대상")].copy()
     d["score_dem"] = d[f"score_dem_{mode}"]
     d["score_total"], d["n_areas"] = bs.composite(d, v4.normalize_weights(weights or bs.DEFAULT_WEIGHTS), mode)
@@ -138,10 +140,10 @@ def seoul_scope(b: Bundle, industry_code: str, choice: dict, weights=None) -> pd
     return d.sort_values(["score_total", "stores"], ascending=[False, False], na_position="last").reset_index(drop=True)
 
 
-def recommend(b: Bundle, industry_code: str, choice: dict, gus=None, weights=None) -> pd.DataFrame:
+def recommend(b: Bundle, industry_code: str, choice: dict, gus=None, weights=None, link: bool = False) -> pd.DataFrame:
     """희망 업종 + 고른 축에 맞는 상권. STEP 4 종합 점수 순서. 점수는 서울 같은 업종 기준이라 자치구로 다시 계산하지 않는다."""
     choice = check_choice(choice)
-    d = seoul_scope(b, industry_code, choice, weights)
+    d = seoul_scope(b, industry_code, choice, weights, link)
     match = pd.Series(True, index=d.index)
     for ax, val in choice.items():
         if val is not None:
@@ -213,18 +215,21 @@ def result_table(d: pd.DataFrame) -> pd.DataFrame:
     })
 
 
-def type_card(choice: dict) -> str:
+def type_card(choice: dict, link: bool = False) -> str:
     """고른 유형을 쉬운 말로 설명하는 마크다운."""
     lines = [f"### {choice_name(choice)}"]
     for ax in AXES:
         val = choice.get(ax)
         lines.append(f"- **{AXIS_TITLES[ax]}**: " + (f"{val} {AXES[ax][val]} — {AXIS_MEANING[val]}" if val else f"{ANY} (거르지 않음)"))
-    mode = bs.DEMAND_MODES[demand_mode(choice)]
-    lines.append(f"- **자동 설정**: 수요 점수의 주 고객층 = **{mode}**"
-                 + (" (L 생활형이라 주민을 봄)" if choice.get("LV") == "L" else " (V 방문형이라 유동인구를 봄)" if choice.get("LV") == "V" else ""))
+    mode = bs.DEMAND_MODES[demand_mode(choice, link)]
+    if link and choice.get("LV"):
+        lines.append(f"- **수요 연결 (켬, [가정])**: 수요 점수의 주 고객층 = **{mode}**"
+                     + (" (L 생활형이라 주민을 봄)" if choice.get("LV") == "L" else " (V 방문형이라 유동인구를 봄)"))
+    else:
+        lines.append(f"- **수요 점수**: {mode} (유형에 맞춘 수요 연결은 꺼져 있음)")
     if choice.get("SD") == "D":
-        lines.append("- ⚠️ **역동형은 '좋은 상권'이라는 뜻이 아닙니다.** 새 가게가 많이 들어오지만 일찍 닫는 가게도 많습니다. "
-                     "변화와 위험을 감수하고 기회를 노리는 선택입니다.")
+        lines.append("- ⚠️ **역동형은 좋은 상권이나 성장하는 상권이라는 뜻이 아닙니다.** 서울시 지표에서 영업 중인 가게와 문 닫은 가게의 "
+                     "평균 영업 기간이 모두 서울 평균보다 짧은 상권(다이나믹)일 뿐이며, 수익이나 성장을 뜻하지 않습니다.")
     return "\n".join(lines)
 
 
@@ -265,6 +270,27 @@ def area_sd_chart(areas: pd.DataFrame, pal: dict, width: int = 460):
     base = alt.Chart(d).encode(y=alt.Y("보기:N", sort=[label[o] for o in order], title=None), x=alt.X("n:Q", title="상권 수"))
     return v4.styled((base.mark_bar(height=18).encode(color=alt.Color("색:N", scale=None))
                       + base.mark_text(align="left", dx=4, color=pal["ink2"]).encode(text="n:Q")).properties(width=width, height=130), pal)
+
+
+_PIXEL_MEM: dict[str, str] = {}
+
+
+def pixel_map_html(b: Bundle, picks: pd.DataFrame, seoul: pd.DataFrame, industry_name: str, choice: dict, gus=None,
+                   weights=None, link: bool = False) -> tuple[str, str]:
+    """조건에 맞는 상권만으로 칠한 자치구 픽셀 지도 HTML과 출처('메모리'·'새로 계산').
+    그리는 코드는 STEP 4와 같은 ../pixel_theme/pixel_map.py 이고, 순위는 서울 같은 업종(유형 무관) 기준이다."""
+    code = str(picks["industry_code"].iloc[0]) if not picks.empty else industry_name
+    key = json.dumps([code, choice_code(choice), sorted(gus or []), v4.normalize_weights(weights or bs.DEFAULT_WEIGHTS),
+                      len(picks), bool(link), v4._signature()], ensure_ascii=False, sort_keys=True)
+    if key in _PIXEL_MEM:
+        return _PIXEL_MEM[key], "메모리"
+    where = f" · {', '.join(sorted(gus))}" if gus else ""
+    title = f"{industry_name} · {choice_name(choice)}{where} · 자치구별 종합 점수"
+    text = v4.pixel_module().gu_map_html(picks, seoul, b.step4.geometry, title, upgrade=True)   # 기준 버튼·상세 카드·실제 구 경계
+    if len(_PIXEL_MEM) >= v4.MEM_LIMIT:
+        _PIXEL_MEM.pop(next(iter(_PIXEL_MEM)))
+    _PIXEL_MEM[key] = text
+    return text, "새로 계산"
 
 
 def map_figure(b: Bundle, picks: pd.DataFrame, seoul: pd.DataFrame, selected: str | None, pal: dict, view_key: str = ""):

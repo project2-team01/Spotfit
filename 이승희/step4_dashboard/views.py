@@ -27,13 +27,14 @@ JY_DATA = REPO / "김지영" / "claude_dashboard" / "data"
 TYPES = ["골목상권", "발달상권", "전통시장"]
 QUARTER_LABELS = {"20251": "1분기", "20252": "2분기", "20253": "3분기", "20254": "4분기"}
 AREA_KEYS = ["sales", "comp", "stab", "dem"]
-FONT = 'system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif'
+FONT = '"Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif'   # 본문은 맑은 고딕 (도트 디자인)
 
-# 출처: 김지영/claude_dashboard/views.py (dataviz 기준 팔레트)
+# 출처: 김지영/claude_dashboard/views.py (dataviz 기준 팔레트). 밝은 화면은 SpotFit 도트 디자인 색(크림 바탕 · 파랑 · 노랑 · 초록)으로 바꿨다.
+# 선·막대 색은 크림 바탕(#FBF3DC)에서 대비 3:1 이상: 파랑 5.4 · 노랑(진하게) 3.4 · 초록 3.8 · 남색 9.2
 LIGHT = {
-    "ink": "#0b0b0b", "ink2": "#52514e", "muted": "#898781", "grid": "#e1e0d9", "axis": "#c3c2b7", "surface": "#fcfcfb",
-    "neutral": "#f0efec", "out": "#e8e7e1", "missing": "#a8a69f", "s1": "#2a78d6", "s2": "#eb6834", "s3": "#1baf7a",
-    "blues": ["#cde2fb", "#86b6ef", "#3987e5", "#1c5cab", "#0d366b"],
+    "ink": "#2B2A26", "ink2": "#5A5446", "muted": "#7A7262", "grid": "#E8DDBF", "axis": "#CFC2A0", "surface": "#FFFBEF",
+    "neutral": "#EFE6CC", "out": "#E6DCC0", "missing": "#A89F88", "s1": "#1F5FC4", "s2": "#A67C00", "s3": "#2E8B57",
+    "blues": ["#D6E6FA", "#9EC3F2", "#5B8FE0", "#1F5FC4", "#163F82"],
 }
 DARK = {
     "ink": "#f0efec", "ink2": "#c3c2b7", "muted": "#898781", "grid": "#2c2c2a", "axis": "#383835", "surface": "#1a1a19",
@@ -582,3 +583,54 @@ def map_views(bundle: Bundle, industry_code: str, gus, types, weights, demand_mo
         _MAP_MEM.pop(next(iter(_MAP_MEM)))
     _MAP_MEM[name] = value
     return (*value, source)
+
+
+# ---------------------------------------------------------------- 픽셀 지도 (도트 디자인)
+# 자치구 도트 지도(folium). 만드는 코드는 ../pixel_theme/pixel_map.py 에 있고 STEP 5도 같이 쓴다.
+# 약 0.3~0.5초 걸려 메모리에만 저장한다(파일 저장 없음).
+
+PIXEL_DIR = HERE.parent / "pixel_theme"
+_PIXEL_MEM: dict[str, str] = {}
+
+
+def _pixel_path() -> None:
+    import sys
+
+    if str(PIXEL_DIR) not in sys.path:
+        sys.path.insert(0, str(PIXEL_DIR))
+
+
+def header_html(subtitle: str, note: str = "") -> str:
+    """대시보드 맨 위 도트 로고와 'SPOTFIT' 도트 제목 (../pixel_theme/header.py, folium 없이 가볍다)."""
+    _pixel_path()
+    import header
+
+    return header.header_html(subtitle, note)
+
+
+def pixel_module():
+    """../pixel_theme/pixel_map.py 를 불러온다 (folium을 쓰는 지도에서만 불러 시작을 가볍게 한다)."""
+    _pixel_path()
+    import pixel_map
+
+    return pixel_map
+
+
+def pixel_map_view(bundle: Bundle, industry_code: str, gus, types, weights, demand_mode: str,
+                   scope: pd.DataFrame | None = None, seoul: pd.DataFrame | None = None) -> tuple[str, str]:
+    """(자치구 픽셀 지도 HTML, 출처)를 돌려준다. 출처는 '메모리' 또는 '새로 계산'."""
+    name = map_cache_key(industry_code, gus, types, weights, demand_mode, None, "light")
+    if name in _PIXEL_MEM:
+        return _PIXEL_MEM[name], "메모리"
+    if scope is None:
+        scope = filter_scope(bundle, industry_code, gus, types, weights, demand_mode)
+    if seoul is None:
+        seoul = filter_scope(bundle, industry_code, None, None, weights, demand_mode)
+    info = industry_info(bundle, industry_code)
+    where = " · ".join([", ".join(sorted(gus)) if gus else "", ", ".join(sorted(types)) if types else ""]).strip(" ·")
+    title = f"{info['업종명']} · 자치구별 종합 점수" + (f" ({where})" if where else "")
+    html_text = pixel_module().gu_map_html(scope, seoul, bundle.geometry, title, upgrade=True)   # 기준 버튼·상세 카드·실제 구 경계
+    if len(_PIXEL_MEM) >= MEM_LIMIT:
+        _PIXEL_MEM.pop(next(iter(_PIXEL_MEM)))
+    _PIXEL_MEM[name] = html_text
+    return html_text, "새로 계산"

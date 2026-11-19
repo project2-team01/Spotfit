@@ -78,7 +78,10 @@ uv run --project 이승희 python 이승희/src/run_stage3_pipeline.py          
 ├── src/                                             # STEP 1~3 생성·검증 코드, 원본 수집 코드
 ├── report/                                          # STEP 1~3 보고서·대시보드
 ├── images/                                          # STEP 1~3 그림
-└── step4_dashboard/                                 # STEP 4 점수표·marimo 대시보드 (따로 실행 환경)
+├── step4_dashboard/                                 # STEP 4 점수표·marimo 대시보드 (따로 실행 환경)
+├── step5_recommend/                                 # STEP 5 금융 MBTI 상권 추천 marimo 대시보드 (따로 실행 환경)
+├── pixel_theme/                                     # STEP 4·5 공용 도트 디자인 (CSS, 머리말, 자치구 픽셀 지도)
+└── design_samples/                                  # 지도 디자인 시안 (folium 픽셀 아트)
 ```
 
 출처: 서울특별시 상권분석서비스·서울 열린데이터광장, 소상공인시장진흥공단 상가(상권)정보, 국민연금공단 등. 자세한 출처는 [data/RAW_DATA_SOURCES.md](data/RAW_DATA_SOURCES.md)에 있습니다.

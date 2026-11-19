@@ -17,7 +17,7 @@ SpotFit STEP 5: 금융 MBTI 3개 축(L/V · E/P · S/D)으로 상권×업종마�
 축 정의:
     L 생활형 / V 방문형   [가정] 주민 ÷ (주민 + 직장인). 0.55 초과 L, 0.45 미만 V, 그 사이는 보류 (박성은 규칙과 같음)
     E 실속형 / P 프리미엄형 [가정] 결제 건당 금액의 업종 안 백분위. 45 미만 E, 55 초과 P, 그 사이는 보류 (박성은 규칙과 같음)
-    S 안정형 / D 역동형   서울시 상권변화지표 2025년 4분기. 정체 → S, 다이나믹 → D, 상권확장·상권축소 → 중간(보류)
+    S 안정형 / D 역동형   서울시 상권변화지표 2025년 4분기. 정체 → S, 다이나믹 → D, 상권확장·상권축소 → 공식 이름 그대로 두고 S/D 연결 보류
                          (2026-11-12 이승희 제안: 'G 성장형'은 2025년 1년치로 만들 수 없어 'D 역동형'으로 바꿈)
 """
 
@@ -55,8 +55,8 @@ AXIS_MEANING = {
     "V": "직장인이 주민보다 많은 상권 (출퇴근·방문 생활권)",
     "E": "같은 업종 안에서 결제 1건당 금액이 낮은 편",
     "P": "같은 업종 안에서 결제 1건당 금액이 높은 편",
-    "S": "변화가 적은 상권: 영업 중인 가게도, 문 닫은 가게도 오래 영업함 (서울시 '정체')",
-    "D": "변화가 활발한 상권: 영업 기간이 짧고 가게가 자주 바뀜 (서울시 '다이나믹')",
+    "S": "영업 중인 가게도, 문 닫은 가게도 영업 기간이 서울 평균보다 긴 상권 (서울시 '정체')",
+    "D": "영업 중인 가게도, 문 닫은 가게도 영업 기간이 서울 평균보다 짧은 상권 (서울시 '다이나믹')",
 }
 # 이름: S/D 이름은 박성은 types.json 제안을 따름 (팀 확정 전). 아이템은 설명용 예시이며 데이터로 검증하지 않음.
 TYPES = [
@@ -134,7 +134,7 @@ def build_areas(areas, mart):
     a["SD"] = a["chg_name"].map(SD_MAP)
     a["SD_reason"] = np.select(
         [a["chg_name"].isna(), a["chg_name"].isin(["상권확장", "상권축소"])],
-        ["상권변화지표 없음", "상권변화지표 중간 유형 (" + a["chg_name"].fillna("") + ")"], default="")
+        ["상권변화지표 없음", a["chg_name"].fillna("") + " · S/D 연결 보류"], default="")
     a["SD_reason"] = a["SD_reason"].replace("", None)
     return a.drop(columns=["chg_kinds"]).sort_values("trdar_code").reset_index(drop=True)
 
@@ -149,7 +149,9 @@ def build_cells(scores, cells, area_axes):
     d["ep_peers"] = d["industry_code"].map(peers).fillna(0).astype(int)
     ep_ok = ep_ok & d["ep_peers"].ge(MIN_PEERS)
     d["ticket_pct"] = np.nan
-    d.loc[ep_ok, "ticket_pct"] = d.loc[ep_ok].groupby("industry_code")["ticket"].transform(pct_rank)
+    # 소수 12자리로 반올림한 뒤 판정한다. 55/100×100이 55.000000000000007이 되는 부동소수점 오차로 경계값이 P가 되는 것을 막는다
+    # (박성은 통합 기준 v1에서 찾은 오류: 대청초등학교·제과점, 천호역·PC방, 2026-11-18)
+    d.loc[ep_ok, "ticket_pct"] = d.loc[ep_ok].groupby("industry_code")["ticket"].transform(pct_rank).round(12)
     d["EP"] = pd.Series(np.select([d["ticket_pct"] < EP_E, d["ticket_pct"] > EP_P], ["E", "P"], default=""), index=d.index).replace("", None)
     d["EP_reason"] = np.select(
         [~target, d["sales_status"].eq("미제공 업종"), ~d["sales_status"].eq("네 분기"),
@@ -220,7 +222,7 @@ def summarize(c, a, scores):
     area_counts = {
         "areas": int(len(a)),
         "LV": {k: int(v) for k, v in a["LV"].fillna("보류").value_counts().sort_index().items()},
-        "SD": {k: int(v) for k, v in a["SD"].fillna("중간(보류)").value_counts().sort_index().items()},
+        "SD": {k: int(v) for k, v in a["SD"].fillna("보류").value_counts().sort_index().items()},
         "chg_name": {k: int(v) for k, v in a["chg_name"].fillna("없음").value_counts().sort_index().items()},
         "chg_same_all_year": int(a["chg_same_all_year"].sum()),
     }

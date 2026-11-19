@@ -1,0 +1,79 @@
+/*
+  SpotFit 도트 디자인 (STEP 4·STEP 5 marimo 대시보드 공용)
+  - 바탕: 노란빛 크림색 / 주요 색: 파랑·노랑·초록
+  - 도트 글꼴(Press Start 2P)은 큰 제목에만, 본문은 맑은 고딕
+  - 밝은 화면에만 크림 바탕과 색을 입힌다. 어두운 화면(.dark)은 marimo 기본 색을 쓰고 글꼴·제목만 같다.
+  각 app.py의 marimo.App(css_file="../pixel_theme/spotfit.css")로 불러온다.
+  marimo 위젯(탭·숫자 카드·안내 상자) 안쪽은 spotfit_head.html이 맡는다.
+*/
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;500;700&display=swap");
+
+:root {
+  --marimo-text-font: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+  --marimo-heading-font: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+  --sf-ink: #2B2A26;
+  --sf-ink2: #5A5446;
+  --sf-cream: #FBF3DC;
+  --sf-card: #FFFBEF;
+  --sf-blue: #1F5FC4;
+  --sf-navy: #163F82;
+  --sf-yellow: #F4C430;
+  --sf-green: #2E8B57;
+  --sf-line: #E8DDBF;
+}
+
+/* ---------- 밝은 화면: 크림 바탕과 카드 색 ---------- */
+:root:not(.dark):not(.dark-theme) body:not(.dark):not(.dark-theme) {
+  --background: var(--sf-cream);
+  --card: var(--sf-card);
+  --popover: var(--sf-card);
+  background: var(--sf-cream);
+  color: var(--sf-ink);
+}
+
+/* ---------- 머리말: 도트 로고 + 도트 제목 ---------- */
+.sf-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 4px 0 8px;
+}
+.sf-header svg { flex: none; }
+.sf-title {
+  margin: 0 !important;
+  font-family: "Press Start 2P", monospace !important;
+  font-size: clamp(28px, 4vw, 44px) !important;
+  line-height: 1.15 !important;
+  letter-spacing: 2px;
+  font-weight: 400 !important;
+  color: var(--sf-blue) !important;
+  text-shadow: 4px 4px 0 var(--sf-yellow);
+  border: 0 !important;
+}
+.sf-sub {
+  margin: 8px 0 0 !important;
+  font-size: 17px;
+  font-weight: 700;
+}
+.sf-note {
+  margin: 4px 0 0 !important;
+  font-size: 14px;
+  color: var(--sf-ink2);
+}
+.dark .sf-title, .dark-theme .sf-title { color: #86B6EF !important; text-shadow: 4px 4px 0 #8A6D00; }
+.dark .sf-note, .dark-theme .sf-note { color: inherit; opacity: 0.8; }
+
+/* ---------- 밝은 화면: 소제목 ---------- */
+/* 탭·숫자 카드·안내 상자는 marimo 위젯(shadow DOM) 안이라 여기서 바꿀 수 없다 → spotfit_head.html */
+:root:not(.dark):not(.dark-theme) body:not(.dark):not(.dark-theme) .markdown h2,
+:root:not(.dark):not(.dark-theme) body:not(.dark):not(.dark-theme) .markdown h3 {
+  color: var(--sf-blue);
+}
+
+/* 픽셀 지도 틀 */
+.sf-map iframe {
+  border: 4px solid var(--sf-ink) !important;
+  box-shadow: 6px 6px 0 var(--sf-ink);
+  background: var(--sf-cream);
+}

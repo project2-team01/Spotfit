@@ -1,0 +1,56 @@
+<!--
+  SpotFit 도트 디자인: marimo 위젯(탭·숫자 카드·안내 상자) 안쪽 스타일.
+  marimo 위젯은 shadow DOM 안에 그려져 spotfit.css가 닿지 않는다. 그래서 아래 스타일을 각 위젯의 shadow DOM에 복사해 넣는다.
+  각 app.py의 marimo.App(html_head_file="../pixel_theme/spotfit_head.html")로 불러온다.
+  marimo는 이 파일을 'marimo run'(앱 모드)과 HTML 내보내기에서만 넣는다. 편집 모드(marimo edit)에서는 marimo 기본 모양으로 보인다.
+  밝은 화면(.light)에만 적용한다. 어두운 화면은 marimo 기본 색 그대로다.
+-->
+<style id="sf-shadow-css" media="not all">
+  .light [role="tablist"] {
+    gap: 8px !important; flex-wrap: wrap !important; max-height: none !important; height: auto !important;
+    background: transparent !important; padding: 0 6px 6px 0 !important;
+  }
+  .light [role="tab"] {
+    min-height: 42px !important; padding: 0 16px !important; border: 3px solid #2B2A26 !important; border-radius: 0 !important;
+    background: #FFFBEF !important; color: #2B2A26 !important; font-weight: 500 !important; box-shadow: none !important;
+  }
+  .light [role="tab"][data-state="active"] {
+    background: #1F5FC4 !important; color: #FFFFFF !important; font-weight: 700 !important; box-shadow: 3px 3px 0 #2B2A26 !important;
+  }
+  .light .bg-card.rounded-xl {
+    background: #FFFBEF !important; border: 3px solid #2B2A26 !important; border-radius: 0 !important; box-shadow: 4px 4px 0 #2B2A26 !important;
+  }
+  .light .admonition { border-radius: 0 !important; }
+</style>
+<script>
+(function () {
+  var css = null, queued = false, seen = new WeakSet();
+  function add(root) {
+    if (seen.has(root)) { return; }
+    seen.add(root);
+    var s = document.createElement("style");
+    s.setAttribute("data-spotfit", "");
+    s.textContent = css;
+    root.appendChild(s);
+    new MutationObserver(queue).observe(root, { childList: true, subtree: true });  // 위젯 안에 새로 생기는 위젯도 찾는다
+  }
+  function scan(root) {
+    root.querySelectorAll("*").forEach(function (el) {
+      if (el.shadowRoot) { add(el.shadowRoot); scan(el.shadowRoot); }
+    });
+  }
+  function queue() {
+    if (queued) { return; }
+    queued = true;
+    requestAnimationFrame(function () { queued = false; scan(document); });
+  }
+  function start() {
+    var src = document.getElementById("sf-shadow-css");
+    if (!src) { return; }
+    css = src.textContent;
+    scan(document);
+    new MutationObserver(queue).observe(document.documentElement, { childList: true, subtree: true });
+  }
+  if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", start); } else { start(); }
+})();
+</script>
