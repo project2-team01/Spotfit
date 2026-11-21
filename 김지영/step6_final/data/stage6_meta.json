@@ -1,0 +1,135 @@
+{
+  "title": "STEP 6 EDA·시각화와 최종 산출물 대시보드 (2025)",
+  "version": "v1.0 (2026-11-21)",
+  "default_industry": "CS100010",
+  "counts": {
+    "areas": 1644,
+    "industries": 100,
+    "score_industries": 77,
+    "score_cells": 20522,
+    "store_cells": 76591,
+    "type2_areas": 1534,
+    "facility_missing_areas": 72
+  },
+  "checks": {
+    "map": {
+      "areas": 1522,
+      "top10Areas": 153,
+      "top10Share": 48.8
+    },
+    "sales_close": {
+      "industries": 53,
+      "negative": 35,
+      "median": -0.0342,
+      "min": -0.3932,
+      "max": 0.2565
+    },
+    "facility_unknown_share": 57.2,
+    "facility_transport_share_known": 46.4,
+    "heat_lead_over_half": 11,
+    "seoul_sales_trillion": 86.97,
+    "mbti_default_industry": {
+      "LE": {
+        "pool": 225,
+        "S": [
+          "3111003",
+          "3110459",
+          "3110061",
+          "3120087",
+          "3110714"
+        ],
+        "G": [
+          "3111003",
+          "3120087",
+          "3110396",
+          "3130313",
+          "3110649"
+        ],
+        "overlap": 2
+      },
+      "LP": {
+        "pool": 211,
+        "S": [
+          "3110057",
+          "3110254",
+          "3110373",
+          "3110365",
+          "3110658"
+        ],
+        "G": [
+          "3110057",
+          "3110658",
+          "3110457",
+          "3110373",
+          "3110365"
+        ],
+        "overlap": 4
+      },
+      "VE": {
+        "pool": 245,
+        "S": [
+          "3110023",
+          "3110814",
+          "3110512",
+          "3110214",
+          "3110766"
+        ],
+        "G": [
+          "3120246",
+          "3110023",
+          "3120210",
+          "3110214",
+          "3120074"
+        ],
+        "overlap": 2
+      },
+      "VP": {
+        "pool": 272,
+        "S": [
+          "3110296",
+          "3120229",
+          "3110118",
+          "3110787",
+          "3110481"
+        ],
+        "G": [
+          "3110296",
+          "3120151",
+          "3120229",
+          "3110918",
+          "3120159"
+        ],
+        "overlap": 2
+      }
+    }
+  },
+  "input_sha256": {
+    "김지영/step4_dashboard/data/상권_업종_비교점수_2025.parquet": "871fa74fccec2cde65424cea5f4e2f3d2186deff7064c6d84aa9df17d49454fd",
+    "김지영/step4_dashboard/data/업종별_점수_가능여부.csv": "acd1eeda56469140acff11f63654fcb8e59fc25b2a65bc6ce41f4001e898bbf2",
+    "김지영/step4_dashboard/data/점수_설계표.csv": "bfe9315427ed05d54c2457e7034a9b30e3014a924b04c8f1ada38e98652f2764",
+    "김지영/step4_dashboard/data/stage4_meta.json": "89a3cc0cd4081294b4ce7e93e98206cf4ac6862266dabdc7339e20323826b681",
+    "김지영/step5_design/data/상권_유형_2025.parquet": "e776507a21113d18844628ec3862143643a9eafc817bc39261658ca27d40f948",
+    "김지영/step5_design/data/검사_문항.csv": "c70eeb39a0c29dfaa5888df8260812fcead3e316768a86f8d15021c5a650dafe",
+    "김지영/step5_design/data/유형표.csv": "949cba194a3812bb499340358962bbd4eb061c4c0398e24c0c6daa9808b2985d",
+    "김지영/step5_design/data/유형별_가중치.csv": "8803ac0c290fea01fd5fae14c1f957bb87bbdbead778996c09a7a4592ca22acd",
+    "김지영/step5_design/data/STEP5_설계표.csv": "c97a6389586347f9ce772802a13fb7441ae449e452d70650db69b4ce83e5ef22",
+    "김지영/step5_design/data/stage5_meta.json": "ce9f62362cb37aa0b6b0d928d40af7b16a1c9ee2da87f6cc26e554d8d712d1dd",
+    "김지영/claude_dashboard/data/areas.geojson.json": "233d21fe7f467151f5b01659181f8ea4600dcc44ac0845d1f7c86a03ada0c83e",
+    "김지영/claude_dashboard/data/backdrop.parquet": "19afda52a1e215e53c4316c97a6f201585c20addd867721ecd59ae729cba88c6",
+    "김지영/claude_dashboard/data/meta.json": "cea1cb2eee4a0389c28ad83e65fd46a90c1b29f6451418dc32c6deb0d8363327",
+    "김지영/step2_3/data/annual_features.csv.gz": "769c3c9ec4624d172ff0208c9dd9b91e889255c46b15c4cbc216ed2ea40add65",
+    "김지영/step2_3/data/trdar_quarter_context.csv.gz": "b37c8473b457110f74da57a8a30c49db8e416132ce320b5bc7c76021b03eb4fd",
+    "김지영/step2_3/data/dim_trdar.csv.gz": "d54e6c03a8d08b8f6e1bf791abc46bbf5844958f0aa2f1ee838bf7c2280af7e9",
+    "김지영/step2_3/data/semas_spatial_bridge.csv.gz": "658f329a95ba73ac21ff60d7a6c2e2e4c8bcc3e071d7b54cb260ba78c0a1570d",
+    "김지영/step2_3/data/semas_q4_industry_counts.csv.gz": "ee3ba93c973b30ba29495706743ce393e30b348ebbc316ea91d7a66098a59310",
+    "김지영/step2_3/feature_dictionary.csv": "d84a0d083cc62167000025a72fc1bc6ea6d1fac8117be29ae170692d2733e9e8",
+    "김지영/step2_3/table_schema.csv": "7dd758854e6c14f2bb00146f406f66412e4322da0086b22fc1a901a70b1e3254",
+    "김지영/step2_3/manifest.json": "0f83be8e1ed5e4fcb546255b9aca322b6ba07281c91d825491d86fee3eae318a",
+    "seoul-commercial-analysis/data/metadata/data_catalog.csv": "76989a7f5c65b2b68bd61b2cceacc4ae726c3a78323d0e86224fea1e87b00700",
+    "seoul-commercial-analysis/data/metadata/data_dictionary.csv": "f2177f1d05741b3abb3d96e5253572f4e33a431a5e4dcfaa4e786b8b64a4e70f",
+    "김지영/step6_final/web/template.html": "e8c6024f8b51c0775c5ee946bc32b91a04aef955d3dcef41a3a5d650aa640962",
+    "김지영/step6_final/web/style.css": "b6d83ee44bde87c5c4e23b5f0bb8909fea93a2a63e553b80d982015658f24a28",
+    "김지영/step6_final/web/core.js": "733938eee5755008536132e6957c9b0451327827032e888c5ff36d65b38612ba",
+    "김지영/step6_final/web/app.js": "e7e93ba3a2152ac2519d7db0a9b8a526be601313b68a50c7206f59b256f5236c"
+  }
+}
