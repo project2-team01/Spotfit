@@ -113,3 +113,8 @@ python3 -m venv .venv
 ## Claude 대시보드
 
 [상권 탐색기 실행 안내](claude_dashboard/README.md)에서 희망 업종별 상권 지도와 비교표를 보고, 지표의 신뢰도와 데이터 시점을 함께 확인할 수 있습니다.
+
+## 최종 산출물 대시보드 (STEP 6)
+
+[step6_final/report/SpotFit_최종산출물_대시보드_2025.html](step6_final/report/SpotFit_최종산출물_대시보드_2025.html)을 브라우저로 열면 됩니다(설치 · 인터넷 연결 필요 없음).
+계획서 5장 순서의 10개 화면에 STEP 6 시각화 7종, STEP 4 점수, STEP 5 금융 MBTI 검사가 들어 있습니다. 만드는 방법과 검증은 [step6_final/README.md](step6_final/README.md)에 있습니다.
