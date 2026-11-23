@@ -1,0 +1,140 @@
+{
+  "version": "team-evidence-20261123",
+  "source_commit": "aafbb4a",
+  "counts": {
+    "areas": 1644,
+    "all_cells": 77173,
+    "positive_cells": 76591,
+    "scored_cells": 20522,
+    "industries": 100,
+    "scored_industries": 77,
+    "full_types": 7678,
+    "held_types": 12844,
+    "sd_unmapped_areas": 599,
+    "sd_area_denominator": 1644
+  },
+  "checks": {
+    "jy_recomputed_vs_saved": {
+      "score_sales": {
+        "different": 0,
+        "compared": 77173,
+        "max_abs": 0.0
+      },
+      "score_competition": {
+        "different": 0,
+        "compared": 77173,
+        "max_abs": 0.0
+      },
+      "score_stability": {
+        "different": 0,
+        "compared": 77173,
+        "max_abs": 0.0
+      },
+      "score_demand": {
+        "different": 0,
+        "compared": 77173,
+        "max_abs": 0.0
+      },
+      "score_total": {
+        "different": 0,
+        "compared": 77173,
+        "max_abs": 0.0
+      }
+    },
+    "canonical_vs_jy": {
+      "score_sales": {
+        "different": 0,
+        "compared": 20522,
+        "max_abs": 0.0
+      },
+      "score_comp": {
+        "different": 0,
+        "compared": 20522,
+        "max_abs": 0.0
+      },
+      "score_stab": {
+        "different": 0,
+        "compared": 20522,
+        "max_abs": 0.0
+      },
+      "score_dem_avg": {
+        "different": 0,
+        "compared": 20522,
+        "max_abs": 0.0
+      },
+      "score_total_default": {
+        "different": 0,
+        "compared": 20522,
+        "max_abs": 0.0
+      }
+    },
+    "canonical_vs_latest_seunghee": {
+      "score_total_default": {
+        "different": 0,
+        "compared": 20522,
+        "max_abs": 0.0
+      }
+    },
+    "canonical_vs_old_park": {
+      "score_total_default": {
+        "different": 126,
+        "compared": 20522,
+        "max_abs": 23.08102345415779
+      }
+    },
+    "latest_seunghee_type_differences": 0,
+    "jy_area_vs_industry_axes": {
+      "LV": {
+        "both_known": 19024,
+        "different": 4113,
+        "unit": "상권×업종"
+      },
+      "EP": {
+        "both_known": 12271,
+        "different": 4749,
+        "unit": "상권×업종"
+      }
+    }
+  },
+  "official_definition": "https://data.seoul.go.kr/dataList/OA-15576/S/1/datasetView.do",
+  "team_decision": "https://innercircledata13.slack.com/archives/C0C00701HEE/p1795094826703179",
+  "objective_limit": "정답 창업 성과·실제 고객 구성·심리검사 타당도 자료가 없어 최적 모델은 판별 불가. 목적 적합성·해석 가능성·재현성 기준으로 선택.",
+  "input_sha256": {
+    "김지영/step2_3/manifest.json": "0f83be8e1ed5e4fcb546255b9aca322b6ba07281c91d825491d86fee3eae318a",
+    "김지영/claude_dashboard/data/areas.geojson.json": "233d21fe7f467151f5b01659181f8ea4600dcc44ac0845d1f7c86a03ada0c83e",
+    "김지영/step5_design/data/stage5_meta.json": "ce9f62362cb37aa0b6b0d928d40af7b16a1c9ee2da87f6cc26e554d8d712d1dd",
+    "박성은/step4_dashboard/data/quarter_mart.parquet": "f50d2b2db92ae17bf114bcf9e7bcb6d6265afbdff51228ab370310f98c373a23",
+    "박성은/step5_personalization/data/상권업종_유형후보_2025.parquet": "55d221683208df01d572fbb08eacb1209cfc23824921a8b9b0a26a6e425d29bc",
+    "seoul-commercial-analysis/data/metadata/data_catalog.csv": "fa82ca3fe00f6acf7cb4f206b836c28d1e5c131b6f533810c8cf4932b0e057ef",
+    "김지영/step2_3/data/semas_spatial_bridge.csv.gz": "658f329a95ba73ac21ff60d7a6c2e2e4c8bcc3e071d7b54cb260ba78c0a1570d",
+    "김지영/claude_dashboard/data/cells.parquet": "8f8f1bff9bdf8f8d8dfba0ac634a971e2a193dac7f4a73c04c5ef55cb923ebbe",
+    "seoul-commercial-analysis/data/metadata/data_dictionary.csv": "0584fd8097ae57f404cc6acf6cf676895d8f58e44e07c3843f1411ec8da28f1e",
+    "이승희/data/processed/stage2/상권_분기_마트.csv": "cefa1d7ac5945a07554c6905477ea723a247d1f068e9e22de80442996602c7d9",
+    "김지영/step2_3/data/semas_q4_industry_counts.csv.gz": "ee3ba93c973b30ba29495706743ce393e30b348ebbc316ea91d7a66098a59310",
+    "박성은/step4_dashboard/data/상권_업종_비교점수_2025.parquet": "1f5420477dd156e620b86f21fcb29eec9380e10a37224db6d15d36a59b2a12af",
+    "박성은/integrated_dashboard/model.py": "dfabec82608d6b56b2461aa50bb98f7d12ba69dc920f68a2ce67208aba16fc26",
+    "김지영/step5_design/data/STEP5_설계표.csv": "c97a6389586347f9ce772802a13fb7441ae449e452d70650db69b4ce83e5ef22",
+    "김지영/step4_dashboard/data/점수_설계표.csv": "bfe9315427ed05d54c2457e7034a9b30e3014a924b04c8f1ada38e98652f2764",
+    "김지영/step4_dashboard/data/stage4_meta.json": "89a3cc0cd4081294b4ce7e93e98206cf4ac6862266dabdc7339e20323826b681",
+    "김지영/step2_3/data/fact_trdar_industry_quarter.csv.gz": "1aec8222e0e6600a6d89d8a922abdae1bad859f623c926885cc11e69c3e6b919",
+    "박성은/integrated_dashboard/config.json": "253811d050bae75b5b2b02c20c0e46df9056c8c946ec7b56cef35322e62d8652",
+    "이승희/step5_recommend/data/상권업종_유형_2025.parquet": "a37baa7aa4e9f9d0489be11e09348ab09a5c08dce866943a574f4136e2302a26",
+    "김지영/step4_dashboard/data/상권_업종_비교점수_2025.parquet": "871fa74fccec2cde65424cea5f4e2f3d2186deff7064c6d84aa9df17d49454fd",
+    "김지영/claude_dashboard/data/meta.json": "cea1cb2eee4a0389c28ad83e65fd46a90c1b29f6451418dc32c6deb0d8363327",
+    "김지영/step2_3/data/trdar_quarter_context.csv.gz": "b37c8473b457110f74da57a8a30c49db8e416132ce320b5bc7c76021b03eb4fd",
+    "김지영/claude_dashboard/data/areas.parquet": "7ab2e25102dbe3be574ecb54fc46ed71248eeee2c5e83c16ff1e9b5b726f4941",
+    "김지영/step2_3/feature_dictionary.csv": "d84a0d083cc62167000025a72fc1bc6ea6d1fac8117be29ae170692d2733e9e8",
+    "김지영/step5_design/data/검사_문항.csv": "c70eeb39a0c29dfaa5888df8260812fcead3e316768a86f8d15021c5a650dafe",
+    "김지영/step4_dashboard/data/업종별_점수_가능여부.csv": "acd1eeda56469140acff11f63654fcb8e59fc25b2a65bc6ce41f4001e898bbf2",
+    "박성은/step4_dashboard/data/map_geometry.json": "3663dda17f48dda90c4fa18f1f31802a09c9eede54cc52f09f3a31e086d833de",
+    "김지영/step5_design/data/유형표.csv": "949cba194a3812bb499340358962bbd4eb061c4c0398e24c0c6daa9808b2985d",
+    "박성은/integrated_dashboard/build.py": "e40d3f4f3ae2ddae249756ecc5e99fef26da09aac3882b987707afd0421e0940",
+    "김지영/step2_3/data/annual_features.csv.gz": "769c3c9ec4624d172ff0208c9dd9b91e889255c46b15c4cbc216ed2ea40add65",
+    "김지영/step2_3/table_schema.csv": "7dd758854e6c14f2bb00146f406f66412e4322da0086b22fc1a901a70b1e3254",
+    "김지영/claude_dashboard/data/backdrop.parquet": "19afda52a1e215e53c4316c97a6f201585c20addd867721ecd59ae729cba88c6",
+    "김지영/step2_3/data/dim_trdar.csv.gz": "d54e6c03a8d08b8f6e1bf791abc46bbf5844958f0aa2f1ee838bf7c2280af7e9",
+    "김지영/step5_design/data/유형별_가중치.csv": "8803ac0c290fea01fd5fae14c1f957bb87bbdbead778996c09a7a4592ca22acd",
+    "김지영/step5_design/data/상권_유형_2025.parquet": "e776507a21113d18844628ec3862143643a9eafc817bc39261658ca27d40f948",
+    "이승희/step5_recommend/quiz.py": "04fc25676207765f44690f337051535c7f19629dbfd080a37c7c927bd445332b"
+  }
+}

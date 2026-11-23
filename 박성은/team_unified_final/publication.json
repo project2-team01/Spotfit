@@ -1,0 +1,16 @@
+{
+  "version": "team-evidence-20261123",
+  "url": "https://spotfit-park-2025.park24401859.chatgpt.site/#s1",
+  "project_id": "appgprj_6af1cb4541208191a7d7473b1847f0ee",
+  "site_version": 4,
+  "saved_version_id": "appgprj_6af1cb4541208191a7d7473b1847f0ee~appgver_09e5fdc412248191a8c337225eb1bd65",
+  "source_commit": "a8c308331b59f9b328bc6415205f49b7e28b38f9",
+  "deployment_id": "appgdep_6b041c72d8788191b0cee3ce3e595a07",
+  "status": "succeeded",
+  "audience": "public",
+  "updated_at": "2026-11-23T10:59:19.256322+00:00",
+  "analysis_input_commit": "aafbb4a00cf1df80e7eca81344e43f6acbecb3dc",
+  "public_browser_verified": true,
+  "public_console_errors": [],
+  "screenshot": "report/공유화면.jpg"
+}

@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "rows": 20522,
+  "maxError": 0,
+  "pythonTypeTop5Cases": 616,
+  "quizCases": 32768,
+  "standaloneHtml": true
+}

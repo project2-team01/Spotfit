@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpotFit 팀 통합 최종 산출물</title>
+<meta name="description" content="서울 2025년 상권 분석 STEP 1~6 최종 산출물: 업종 내 비교 점수, 금융 MBTI 개인화, EDA 시각화 7종">
+<style>/*__STYLE__*/</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="top">
+  <div class="brand">
+    <strong>SpotFit</strong>
+    <span class="sub">서울 창업 상권 분석 · 최종 산출물 (2025년)</span>
+  </div>
+  <div class="filters" role="group" aria-label="모든 화면에 함께 적용되는 조건">
+    <label class="field">희망 업종
+      <select id="industry" aria-describedby="industryNote"></select>
+    </label>
+    <span id="industryNote" class="note-inline"></span>
+    <span id="profileChip" class="chip-wrap"></span>
+    <button id="themeBtn" class="ghost" type="button" aria-label="화면 테마 바꾸기">테마: 자동</button>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="side" aria-label="최종 산출물 목차">
+  <p class="nav-head">최종 산출물 구성 (계획서 5장)</p>
+  <ol id="nav">
+    <li><a href="#s1">분석 방향 요약</a></li>
+    <li><a href="#s2">데이터셋과 다운로드 링크</a></li>
+    <li><a href="#s3">데이터셋별 주요 컬럼</a></li>
+    <li><a href="#s4">전처리와 결합 구조</a></li>
+    <li><a href="#s5">파생변수 정의서</a></li>
+    <li><a href="#s6">상권 점수화 모델 <span class="tag">STEP 4</span></a></li>
+    <li><a href="#s7">금융 MBTI 개인화 <span class="tag">STEP 5</span></a></li>
+    <li><a href="#s8">EDA와 시각화 <span class="tag">STEP 6</span></a></li>
+    <li><a href="#s9">폴더 구조</a></li>
+    <li><a href="#s10">구현 로드맵</a></li>
+  </ol>
+  <p class="nav-foot" id="versionNote"></p>
+</nav>
+
+<main id="main" tabindex="-1">
+
+<!-- 1 -->
+<section id="p-s1" class="page" aria-labelledby="h1">
+  <h2 id="h1"><span class="no">1</span>분석 방향 요약</h2>
+  <p class="lead">희망 업종을 고르면 <b>서울의 같은 업종 상권끼리</b> 비교한 점수(0~100)와, 금융 MBTI에 맞는 상권을 보여 줍니다.
+    서울시 상권분석서비스와 소상공인 상가정보의 <b>2025년 1~4분기</b> 자료를 썼습니다.
+    이 화면에서 <b>칸</b>은 상권×업종 조합 하나를 뜻합니다.</p>
+  <div class="tiles" id="kpiTiles"></div>
+
+  <div class="callout"><b>팀 자료를 다시 비교한 11월 23일 통합본</b><p>보고서·EDA는 김지영, 공식 지표·검사지·픽셀 지도는 이승희, 재계산 검증·화면 연결·배포는 박성은의 산출물을 결합했습니다. 11월 19일 팀 합의와 통계적 근거는 구별합니다. <a href="#s10">선택 이유와 검증 결과</a></p></div><h3>계획서 목표별 결과</h3>
+  <div class="table-wrap">
+  <table class="data">
+    <thead><tr><th>목표 (계획서 1장)</th><th>결과</th><th>상태</th></tr></thead>
+    <tbody>
+      <tr><td>1. 상업시설 구성과 업종 분포</td><td>서비스 업종 100개 × 상권 <span data-k="kpi.areas"></span>곳의 점포 분포. STEP 6 시각화 1 · 3 · 5</td><td><span class="status done">● 완료</span></td></tr>
+      <tr><td>2. 매출 · 경쟁 · 성장성 · 안정성</td><td>매출 · 경쟁 · 안정성은 분석했습니다. <b>성장성은 2025년 자료만 있어 산출하지 않았습니다.</b></td><td><span class="status part">◐ 일부</span></td></tr>
+      <tr><td>3. 상권별 파생변수</td><td>정의 <span data-k="kpi.features"></span>개(산출 52 · 보류 5)와 STEP 4 · 5 변수 7개</td><td><span class="status done">● 완료</span></td></tr>
+      <tr><td>4. 창업 적합성 점수</td><td>4개 영역 업종 내 비교 점수. 점수 대상 <span data-k="kpi.scoredCells"></span>칸, <span data-k="kpi.scoredIndustries"></span>개 업종. 성장성 영역은 없습니다</td><td><span class="status part">◐ 일부</span></td></tr>
+      <tr><td>5. 금융 MBTI · 예산 · 위험 성향 개인화</td><td>15문항 운영 선호 → L/V·희망 업종 E/P·공식 S/D 조건으로 후보 비교. <b>예산 적합성은 판단하지 않습니다</b> (임대료 · 보증금 · 권리금 자료 없음)</td><td><span class="status part">◐ 일부</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>분석하면서 확인한 것</h3>
+  <div class="cards3">
+    <article class="card finding"><h4>매출이 0이 아니라 '자료 없음'인 칸이 많습니다</h4>
+      <p>매출 행은 점포 3개 이상인 칸에만 있습니다. 매출 제공 62개 업종 칸의 48.8%가 점포 0~2개라 매출이 없습니다. 0으로 채우지 않고 "자료 없음"으로 두었습니다.</p></article>
+    <article class="card finding"><h4>'2025년' 값이 2025년에 바뀌지 않은 자료가 있습니다</h4>
+      <p>집객시설은 2021Q1 이후 값이 그대로이고, 직장인구는 2024Q4, 상주인구는 2023Q4에 마지막으로 바뀌었습니다. 상권별 고정 속성으로만 씁니다.</p></article>
+    <article class="card finding"><h4>관광특구는 비교에서 뺐습니다</h4>
+      <p>관광특구 상가의 97.1%가 다른 상권에도 속합니다. 빼면 서울 매출 합계가 92.7조원에서 <span data-k="kpi.seoulSales"></span>조원으로 줄어듭니다.</p></article>
+    <article class="card finding"><h4>총매출 순위는 입지보다 업종을 보여 줍니다</h4>
+      <p>매출 상위 20개 상권 중 <span data-k="step6.leadOverHalf"></span>곳은 업종 하나가 매출의 절반을 넘습니다(시각화 2). 그래서 점수는 희망 업종 안에서만 비교합니다.</p></article>
+    <article class="card finding"><h4>칸 단위 폐업률은 1년치로 믿기 어렵습니다</h4>
+      <p>점포당 매출의 상·하반기 상관은 0.93~0.95인데 폐업률은 0.01~0.26입니다. 축소 추정 폐업률(α = <span data-k="kpi.alpha"></span>)을 쓰고, 안정성 가중치는 15로 낮췄습니다.</p></article>
+    <article class="card finding"><h4>점포 수를 그대로 경쟁 감점으로 쓰지 않습니다</h4>
+      <p>같은 업종 점포가 2배인 칸의 폐업률은 1.004배로 차이가 없었습니다. 경쟁은 유동인구 1,000명당 같은 업종 점포 수로 정의했습니다 [가정].</p></article>
+  </div>
+
+  <div class="callout">
+    <h4>이 결과로 말할 수 없는 것</h4>
+    <ul>
+      <li>점수는 <b>창업 성공 확률이나 수익을 예측하지 않습니다.</b> 같은 업종의 다른 상권보다 지표가 상대적으로 낫다는 뜻입니다.</li>
+      <li>상관은 인과가 아닙니다. 장사가 되는 곳에 점포가 몰린다는 설명도 똑같이 성립합니다.</li>
+      <li>금융 MBTI 검사는 팀이 만든 초안이고, 타당도를 검증하지 않았습니다. 상권 유형은 인구 구성·희망 업종 건당 금액·공식 영업 기간의 대리 지표입니다.</li>
+      <li>추정매출은 카드 결제 자료를 바탕으로 한 추정치입니다. 개별 점포의 실제 매출이 아닙니다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="p-s2" class="page" aria-labelledby="h2" hidden>
+  <h2 id="h2"><span class="no">2</span>수집 대상 데이터셋과 다운로드 링크</h2>
+  <p class="lead">공공데이터포털과 서울 열린데이터광장에서 공통 9종을 수집했고, 통합에서는 공식 상권변화지표(K08)를 추가로 연결했습니다. 행 수와 열 수는 실제로 받은 파일을 세어 확인한 값입니다
+    (<code>seoul-commercial-analysis/data/metadata/data_catalog.csv</code>).</p>
+  <div class="table-wrap" id="datasetTable"></div>
+  <p class="note">원본 파일(<code>data/raw/</code>)은 용량 때문에 Git에 올리지 않았습니다. 받는 방법은 <code>seoul-commercial-analysis/docs/DATA_HANDOFF.md</code>에 있습니다.
+    '실제 값 시점'은 2021Q1~2026Q2 자료에서 값이 마지막으로 바뀐 분기를 직접 확인한 결과이며, 기관이 밝힌 통계 작성 시점은 아직 확인하지 못했습니다.</p>
+</section>
+
+<!-- 3 -->
+<section id="p-s3" class="page" aria-labelledby="h3" hidden>
+  <h2 id="h3"><span class="no">3</span>데이터셋별 주요 컬럼</h2>
+  <p class="lead">원본 컬럼의 의미 · 단위 · 결측률과, STEP 2에서 옮긴 <b>표준 컬럼</b> 이름입니다.
+    의미는 공식 명세를 따랐고(<code>data_dictionary.csv</code>), 표준 컬럼은 <code>김지영/STEP2(Codex).md</code> 3장을 따릅니다.</p>
+  <div class="controls">
+    <div class="seg" id="colDatasets" role="tablist" aria-label="데이터셋"></div>
+    <label class="check"><input type="checkbox" id="colOnlyStd" checked> 표준 컬럼으로 옮긴 것만</label>
+  </div>
+  <p class="note" id="colSummary"></p>
+  <div class="table-wrap tall" id="columnTable"></div>
+</section>
+
+<!-- 4 -->
+<section id="p-s4" class="page" aria-labelledby="h4" hidden>
+  <h2 id="h4"><span class="no">4</span>데이터 전처리와 결합 구조</h2>
+  <p class="lead">핵심 단위는 <b>상권 × 서울 서비스업종 × 분기</b>입니다. 점포 자료(K02)에 실제로 있는 행을 기준으로 매출을 왼쪽 결합했습니다.
+    인구 · 시설은 업종마다 같은 값을 반복해서 더하지 않도록 상권 × 분기 표로 따로 둡니다.</p>
+  <div class="card"><div id="pipeline" class="diagram" role="img" aria-label="원본 9개에서 STEP 2·3 표를 거쳐 STEP 4 점수, STEP 5 유형, 최종 대시보드로 이어지는 흐름"></div></div>
+  <h3>STEP 2 · 3 표</h3>
+  <div class="table-wrap" id="tableRows"></div>
+  <h3>처리 원칙</h3>
+  <div class="table-wrap">
+  <table class="data">
+    <thead><tr><th>상황</th><th>처리</th><th>이유</th></tr></thead>
+    <tbody>
+      <tr><td>매출 제공 업종이 아님 (100개 중 38개)</td><td>매출 결측, <code>sales_status = unsupported_industry</code></td><td>그 업종에는 매출 자료 자체가 없습니다</td></tr>
+      <tr><td>제공 업종인데 그 칸에 매출 행이 없음</td><td>매출 결측, <code>missing_cell</code></td><td>점포 0~2개 칸은 매출이 공개되지 않습니다. 0원과 다릅니다</td></tr>
+      <tr><td>관광특구 (6곳)</td><td>저장은 하되 분석 · 점수에서 제외</td><td>다른 상권과 공간이 겹쳐 합계가 중복됩니다</td></tr>
+      <tr><td>상가정보 시점 (2025-12-31 하나)</td><td>2025Q4 보조 자료로만 사용</td><td>점포별 분기 이력을 만들 수 없습니다</td></tr>
+      <tr><td>좌표계가 다름</td><td>상가 WGS84 → 경계 EPSG:5181로 변환 후 within 조인</td><td>어느 상권에도 속하지 않는 점포 <span data-k="docs.pipeline.semas_unassigned"></span>개는 따로 셉니다</td></tr>
+      <tr><td>집객시설 세부 항목 공백</td><td>0으로 바꾸지 않고 공백 유지</td><td>근거 없이 0개로 볼 수 없습니다 (시각화 5의 '세부 미기재')</td></tr>
+      <tr><td>점포 증감 ≠ 개업 − 폐업 (<span data-k="docs.pipeline.nonzero_stock_flow_residual_rows"></span>행)</td><td>보정 · 삭제하지 않고 기록</td><td>분류 변경 · 수집 정비 가능성을 확인해야 합니다</td></tr>
+      <tr><td>업종 체계 (소상공인 247개 · 서울 100개)</td><td>서울 100개를 기준, 소상공인은 보조</td><td>공식 연계표가 없습니다. 매출 · 개폐업이 서울 체계입니다</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="p-s5" class="page" aria-labelledby="h5" hidden>
+  <h2 id="h5"><span class="no">5</span>파생변수 정의서</h2>
+  <p class="lead">STEP 3에서 정의한 <span data-k="kpi.features"></span>개(<code>김지영/step2_3/feature_dictionary.csv</code>)와 STEP 4 · 5에서 점수 · 유형을 만들 때 추가한 7개입니다.
+    '보류'는 2025년 자료만으로 계산할 수 없거나 필요한 자료가 없는 변수입니다.</p>
+  <div class="controls">
+    <div class="seg" id="featLevels" aria-label="단위"></div>
+    <div class="seg" id="featAvail" aria-label="확보 여부"></div>
+    <label class="field">찾기 <input type="search" id="featQuery" placeholder="변수명 · 설명"></label>
+  </div>
+  <p class="note" id="featSummary"></p>
+  <div class="table-wrap tall" id="featureTable"></div>
+</section>
+
+<!-- 6 -->
+<section id="p-s6" class="page" aria-labelledby="h6" hidden>
+  <h2 id="h6"><span class="no">6</span>상권 점수화 모델 <span class="tag">STEP 4</span></h2>
+  <p class="lead">같은 업종의 점수 대상 상권 안에서 4개 영역의 백분위(0~100)를 매기고, 자료가 있는 영역끼리 가중 평균해 종합 점수를 냅니다.
+    대상은 관광특구가 아니고 연간 평균 점포 5개 이상인 칸이며, 같은 업종의 비교 상권이 30곳 미만이면 점수를 만들지 않습니다.</p>
+  <details class="card fold"><summary>점수 설계표 (2026-11-07 승인)</summary><div class="table-wrap" id="scoreDesign"></div></details>
+
+  <div class="card weights">
+    <div class="weights-head">
+      <h3>영역별 가중치</h3>
+      <p id="weightText" class="note"></p>
+      <button type="button" id="weightReset" class="ghost">기본값 30 · 25 · 15 · 30</button>
+    </div>
+    <div id="weightSliders" class="sliders"></div>
+  </div>
+  <div class="card pixel-panel"><h3>자치구별 상대 수준</h3><div id="guControls"></div><div id="guMap"></div><div id="guLegend" class="note"></div></div>
+  <p id="scoreStatus" class="status-line"></p>
+  <div id="scoreBody">
+    <div class="grid2">
+      <figure class="card chart">
+        <figcaption><b>종합 점수 지도</b><span class="note">상권을 누르면 아래 상세가 바뀝니다</span></figcaption>
+        <div id="scoreMap" class="map"></div>
+        <div id="scoreLegend" class="legend"></div>
+      </figure>
+      <div class="card">
+        <div class="table-head">
+          <h3>종합 점수 순</h3>
+          <label class="check" id="onlyMatchWrap" hidden><input type="checkbox" id="onlyMatch"> 금융 MBTI 유형이 맞는 상권만</label>
+          <label class="field small">상권 찾기 <input type="search" id="rankQuery" placeholder="상권명 · 자치구"></label>
+        </div>
+        <div class="table-wrap" id="rankTable"></div>
+        <button type="button" id="rankMore" class="ghost">더 보기</button>
+      </div>
+    </div>
+    <div class="card" id="detail"></div><div class="card"><h3>가정에 따른 순위 변화와 결과 다운로드</h3><p class="note">가중치 비교는 서울 전체 같은 업종 기준입니다. CSV는 현재 가중치·구·적용한 선호 조건을 반영합니다.</p><button id="downloadCsv">현재 조건 CSV 다운로드</button><div id="sensitivity"></div></div>
+    <details class="card fold"><summary>영역 점수 간 순위상관 (점수 대상 전체)</summary>
+      <div class="table-wrap" id="corrTable"></div>
+      <p class="note">경쟁과 수요는 둘 다 유동인구를 써서 함께 움직입니다. 두 영역의 가중치를 모두 높이면 유동인구를 두 번 반영하게 됩니다.</p>
+    </details>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="p-s7" class="page" aria-labelledby="h7" hidden>
+  <h2 id="h7"><span class="no">7</span>운영 선호 기반 후보 비교 <span class="tag">STEP 5</span></h2>
+  <p class="lead">고객·가격 운영·영업 환경에 대한 선호를 묻는 팀 제작 초안입니다. L/V는 인구 구성, E/P는 희망 업종의 건당 금액, S/D는 공식 영업 기간 특성에 연결합니다. 각 축 5문항 중 4:1 이상만 후보 조건으로 적용합니다. 성장률·금융 성향·창업 성공률을 검증한 검사는 아닙니다.</p>
+  <div class="seg big" id="mbtiMode" role="tablist" aria-label="유형 정하는 방법">
+    <button type="button" role="tab" data-mode="survey">15문항 검사</button>
+    <button type="button" role="tab" data-mode="direct">유형 직접 고르기</button>
+  </div>
+  <div class="grid2 wide-left">
+    <div class="card" id="mbtiInput"></div>
+    <div class="card sticky" id="mbtiResult"></div>
+  </div>
+  <h3 id="recoTitle">유형이 맞는 상권</h3>
+  <p class="note" id="recoNote"></p>
+  <div class="grid2" id="recoBody">
+    <figure class="card chart">
+      <figcaption><b>상권 유형 지도</b><span class="note" id="mbtiMapNote"></span></figcaption>
+      <div id="mbtiMap" class="map"></div>
+      <div id="mbtiLegend" class="legend"></div>
+    </figure>
+    <div class="card"><div class="table-wrap" id="recoTable"></div></div>
+  </div>
+  <figure class="card chart">
+    <figcaption><b>직장 구성 비율 × 업종 건당 금액 백분위</b><span class="note">점 하나가 상권 하나입니다. 가운데 45~55 구간은 보류입니다. 가로축은 직장/(상주+직장) %, 세로축은 희망 업종 건당 금액 백분위입니다</span></figcaption>
+    <div id="quadrant" class="chart-box"></div>
+    <div id="quadLegend" class="legend"></div>
+  </figure>
+  <details class="card fold"><summary>통합 STEP 5 규칙 · 유형표 · 공통 비중</summary>
+    <div class="table-wrap" id="step5Design"></div>
+    <h4>팀 유형표 (이름과 창업 아이템은 유형표의 예시입니다)</h4>
+    <div class="table-wrap" id="typeTable"></div>
+    <h4>유형별 가중치를 자동 적용하지 않습니다</h4>
+    <div class="table-wrap" id="sgTable"></div>
+  </details>
+</section>
+
+<!-- 8 -->
+<section id="p-s8" class="page" aria-labelledby="h8" hidden>
+  <h2 id="h8"><span class="no">8</span>EDA와 시각화 <span class="tag">STEP 6</span></h2>
+  <p class="lead">계획서 STEP 6의 시각화 7종입니다. 시각화마다 분석 목적 · 필요한 데이터 · 구현 방법 · 기대 인사이트를 적고, 실제로 그려서 확인한 결과를 붙였습니다.
+    4번(매출 성장률)은 2024년 자료가 없어 <b>대체 지표로 그렸습니다.</b> 위의 희망 업종을 바꾸면 1 · 3 · 4 · 6 · 7번이 함께 바뀝니다.</p>
+  <nav class="pills" id="vizPills" aria-label="시각화 바로가기"></nav>
+  <details class="card fold"><summary>STEP 6 시각화 설계표 (<code>data/STEP6_시각화_설계표.csv</code>)</summary><div class="table-wrap" id="step6Design"></div></details>
+  <div id="vizCards"></div>
+</section>
+
+<!-- 9 -->
+<section id="p-s9" class="page" aria-labelledby="h9" hidden>
+  <h2 id="h9"><span class="no">9</span>Python 프로젝트 폴더 구조</h2>
+  <p class="lead">원본 팀원 폴더는 읽기만 합니다. 이 통합본은 박성은/team_unified_final에 별도로 작성했습니다.</p>
+  <div class="card"><p>김지영: 공통 데이터·원패널 점수·10개 보고서 화면·EDA 7종</p><p>이승희: 공식 S/D·검사지·픽셀 지도 자산과 표시 규칙</p><p>박성은: 독립 재계산·비교 검증·공통 규칙 연결·공유 배포</p><pre>python 박성은/team_unified_final/build.py
+node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFit_팀통합_최종대시보드.html입니다. 파일을 더블클릭해 열 수 있습니다. 외부 지도 타일·API·설치 없이 동작합니다.</p></div>
+</section>
+
+<!-- 10 -->
+<section id="p-s10" class="page" aria-labelledby="h10" hidden>
+  <h2 id="h10"><span class="no">10</span>단계별 구현 로드맵</h2>
+  <div class="table-wrap">
+  <table class="data">
+    <thead><tr><th>단계</th><th>내용</th><th>상태</th><th>산출물</th><th>시점</th></tr></thead>
+    <tbody>
+      <tr><td>STEP 1</td><td>데이터 수집 설계</td><td><span class="status done">● 완료</span> 2025년 범위</td><td><code>seoul-commercial-analysis/docs</code>, <code>data/metadata</code></td><td>2026-10-29</td></tr>
+      <tr><td>EDA</td><td>매출 결측 · 시점 · 관광특구 · 폐업률 신뢰도 확인</td><td><span class="status done">● 완료</span></td><td><code>eda.ipynb</code></td><td>2026-10-31</td></tr>
+      <tr><td>STEP 2</td><td>전처리 · 결합</td><td><span class="status done">● 완료</span></td><td><code>STEP2(Codex).md</code>, <code>step2_3/data</code></td><td>2026-10-31</td></tr>
+      <tr><td>STEP 3</td><td>파생변수</td><td><span class="status done">● 완료</span> 산출 52 · 보류 5</td><td><code>STEP3(Codex).md</code>, <code>feature_dictionary.csv</code></td><td>2026-10-31</td></tr>
+      <tr><td>STEP 4</td><td>상권 점수화</td><td><span class="status part">◐ 일부</span> 성장성 제외</td><td><code>step4_dashboard</code></td><td>2026-11-07 설계 승인</td></tr>
+      <tr><td>STEP 5</td><td>금융 MBTI 개인화</td><td><span class="status part">◐ 일부</span> 예산 판단 제외</td><td><code>step5_design</code></td><td>2026-11-14 설계 승인</td></tr>
+      <tr><td>STEP 6</td><td>EDA · 시각화 7종</td><td><span class="status done">● 완료</span> 4번은 대체 구현</td><td><code>step6_final</code></td><td>2026-11-21</td></tr>
+      <tr><td>최종</td><td>최종 산출물 대시보드</td><td><span class="status done">● 완료</span></td><td>이 HTML 파일</td><td>2026-11-21</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>자료가 더 있으면 할 수 있는 것</h3>
+  <div class="table-wrap">
+  <table class="data">
+    <thead><tr><th>추가 자료</th><th>할 수 있게 되는 것</th></tr></thead>
+    <tbody>
+      <tr><td>K01 · K02 2024년 자료</td><td>전년 동기 대비 매출 성장률 → 성장성 영역, 시각화 4 원래 설계. 폐업률 관측 기간도 2배가 됩니다</td></tr>
+      <tr><td>실제 고객 구성·성과 관측</td><td>L/V 대리 구분과 추천 결과를 실증 검증합니다. 공식 영업 기간 자료는 이미 S/D에 사용했습니다.</td></tr>
+      <tr><td>임대료 · 보증금 · 권리금 · 시설비</td><td>예산을 점수 가중치가 아닌 <b>제약조건(필터)</b>으로 적용</td></tr>
+      <tr><td>집객시설 총수 정의 (서울신용보증재단 문의)</td><td>세부 미기재 비중(시각화 5)을 해소하고 수요 보조 지표로 검토</td></tr>
+      <tr><td>소상공인 247개 ↔ 서울 100개 업종 연계 승인</td><td>상가정보 좌표로 같은 업종 경쟁 점포를 정밀하게 셈</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>객관적 재검토와 통합 선택</h3>
+  <div class="card"><p>작성자 이름이나 기존 박성은 안을 우선순위로 두지 않았습니다. 목적 적합성·원입력 재현성·해석 가능성·결측 처리·성과 검증 여부를 기준으로 비교했습니다.</p>
+  <ul><li>희망 업종을 비교하므로 업종 내 점수와 E/P를 채택했습니다. 업종 전체의 건당 금액을 섞으면 사용자가 고른 업종의 의미가 흐려집니다.</li>
+  <li>수요는 유동·직장·상주의 세 백분위가 모두 있을 때 같은 구성으로 평균합니다. 유동 하나만으로 실제 구매 수요를 설명할 수는 없습니다.</li>
+  <li>2025년 한 해의 매출 수준을 ‘성장’으로 바꾸지 않습니다. 공식 S/D는 장기 영업 기간 특성이고 분기 변동성은 별도 참고입니다.</li>
+  <li>상권 전체를 중앙값으로 강제 양분하는 유형 대신 경계와 자료 부족을 보류합니다. 45/55·점포 5개·비교 30곳은 운영 가정이며 객관적 정답은 아닙니다.</li>
+  <li>기본 비중 30·25·15·30은 비교용 기본 시나리오입니다. 실제 창업 성과 자료가 없어 최적이라고 입증할 수 없습니다. 사용자는 비중을 바꿔 비교할 수 있습니다.</li>
+  <li>L/V는 실제 고객 구성이 아니고 E/P는 가격 민감도 검증이 아닙니다. 공식 HH·LL의 S/D 연결은 팀의 해석입니다.</li></ul>
+  <p>11월 19일 슬랙에 두 팀원이 공식 지표·공통 기준 채택을 명시했습니다. 이번 보고서·화면 통합 전체에 대한 새로운 팀 승인을 의미하지는 않습니다.</p>
+  <p><a href="audit.json" download>원패널 재계산·최신 팀원 비교 결과 JSON</a> · <a href="review.md" download>팀원별 채택·수정 이유 보고서</a></p>
+  </div><div id="auditSummary" class="card"></div>
+</section>
+
+</main>
+</div>
+
+<div id="tip" role="tooltip" hidden></div>
+<script id="payload" type="application/json">__PAYLOAD__</script>
+<script>/*__CORE__*/</script>
+<script>/*__APP__*/</script>
+</body>
+</html>

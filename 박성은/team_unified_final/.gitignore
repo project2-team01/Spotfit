@@ -1,0 +1,4 @@
+__pycache__/
+data/payload.json
+data/oracle.json
+dist/index.html
