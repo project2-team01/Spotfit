@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "cases": 2187,
+  "completeCases": 128,
+  "axisQuestionCounts": {
+    "LV": 2,
+    "EP": 3,
+    "SD": 2
+  }
+}

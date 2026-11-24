@@ -99,7 +99,8 @@
   }
 
   /* 기준마다 5문항 중 3개 이상 고른 쪽이 그 글자. 5:0·4:1은 뚜렷, 3:2는 경계. 한 문항이라도 비면 그 기준은 글자가 없다. */
-  function scoreAnswers(answers, questions, axes) {
+  function scoreAnswers(answers, questions, axes, version) {
+    version=version||"standard15";
     var out = [];
     axes.forEach(function (ax) {
       var left = ax["왼쪽"], right = ax["오른쪽"];
@@ -111,17 +112,18 @@
       });
       var nl = picked.filter(function (c) { return c === left; }).length;
       var nr = picked.filter(function (c) { return c === right; }).length;
-      var done = picked.length === rows.length;
+      var done = rows.length > 0 && picked.length === rows.length;
       var counts = {};
       counts[left] = nl;
       counts[right] = nr;
-      var clear = done && Math.max(nl, nr) >= 4;
-      out.push({ axis: ax["기준"], left: left, right: right, letter: done ? (nl > nr ? left : right) : null, counts: counts,
+      var clear = done && Math.max(nl, nr) / rows.length >= 0.8;
+      out.push({ axis: ax["기준"], left: left, right: right, letter: done && nl !== nr ? (nl > nr ? left : right) : null, counts: counts,
                  answered: picked.length, total: rows.length, clear: clear, boundary: done && !clear });
     });
-    var complete = out.every(function (a) { return a.letter; });
-    return { source: "검사 결과", complete: complete, answered: out.reduce(function (s, a) { return s + a.answered; }, 0),
-             total: questions.length, type: complete ? out.map(function (a) { return a.letter; }).join("") : null, axes: out };
+    var complete = out.every(function (a) { return a.total > 0 && a.answered === a.total; });
+    var typed = out.every(function(a){return a.letter;});
+    return { source: version==="short7"?"7문항 간편 검사":"15문항 기본 검사", quizVersion: version, complete: complete, answered: out.reduce(function (s, a) { return s + a.answered; }, 0),
+             total: questions.length, type: typed ? out.map(function (a) { return a.letter; }).join("") : null, axes: out };
   }
 
   /* 유형을 직접 고른 경우. 검사 점수가 없으므로 모든 글자를 뚜렷으로 본다. */
@@ -165,7 +167,7 @@
   function axisText(result) {
     if (result.source === "직접 고르기") return result.axes.map(function (a) { return a.letter; }).join(" · ") + " (직접 고름, 검사 점수 없음)";
     return result.axes.map(function (a) {
-      if (!a.letter) return a.axis + " " + a.answered + "/" + a.total + "문항";
+      if (!a.letter) return a.answered===a.total ? a.axis+" "+a.counts[a.left]+":"+a.counts[a.right]+" (동률 · 제한 없음)" : a.axis + " " + a.answered + "/" + a.total + "문항";
       var other = a.letter === a.left ? a.right : a.left;
       return a.letter + " " + a.counts[a.letter] + ":" + a.counts[other] + (a.boundary ? " (경계)" : "");
     }).join(" · ");
@@ -207,7 +209,15 @@
       out[key]={pool:rows.length,top:rankRows(rows).slice(0,n)};
     });return out;
   }
-  var api = {
+  var QUIZ_VERSIONS = {
+    standard15:{label:'15문항 기본 검사',counts:{LV:5,EP:5,SD:5}},
+    short7:{label:'7문항 간편 검사',ids:[2,6,11,3,8,14,10],counts:{LV:2,EP:3,SD:2}}
+  };
+  function quizQuestions(questions,version){
+    if(version==='short7')return QUIZ_VERSIONS.short7.ids.map(id=>questions.find(q=>q['번호']===id));
+    return questions.slice().sort((a,b)=>a['화면 순서']-b['화면 순서']);
+  }
+  var api = {QUIZ_VERSIONS:QUIZ_VERSIONS,quizQuestions:quizQuestions,
     KEYS: KEYS, COLS: COLS, WEIGHT_NAMES: WEIGHT_NAMES, MATCH: MATCH, NEAR: NEAR, OTHER: OTHER, UNKNOWN: UNKNOWN,
     composite: composite, industryRows: industryRows, rankRows: rankRows, median: median, ranks: ranks, spearman: spearman,
     scoreAnswers: scoreAnswers, directResult: directResult, matchedTypes: unifiedMatched, sgWeights: sgWeights,

@@ -159,3 +159,5 @@ html=html.replace('/*__APP__*/','/*__APP__*/')
 css=(SOURCE/'style.css').read_text(encoding='utf-8')+'\n'+(HERE/'team_style.css').read_text(encoding='utf-8')
 (WEB/'style.css').write_text(css,encoding='utf-8')
 print('팀원 원본은 수정하지 않고 통합 화면 생성 완료')
+from short_quiz_upgrade import upgrade
+upgrade(WEB)

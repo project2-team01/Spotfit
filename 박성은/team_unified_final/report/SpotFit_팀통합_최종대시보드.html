@@ -475,9 +475,10 @@ button,.chip,.tag,input,select{border-radius:0}button{border:2px solid var(--bor
 <!-- 7 -->
 <section id="p-s7" class="page" aria-labelledby="h7" hidden>
   <h2 id="h7"><span class="no">7</span>운영 선호 기반 후보 비교 <span class="tag">STEP 5</span></h2>
-  <p class="lead">고객·가격 운영·영업 환경에 대한 선호를 묻는 팀 제작 초안입니다. L/V는 인구 구성, E/P는 희망 업종의 건당 금액, S/D는 공식 영업 기간 특성에 연결합니다. 각 축 5문항 중 4:1 이상만 후보 조건으로 적용합니다. 성장률·금융 성향·창업 성공률을 검증한 검사는 아닙니다.</p>
+  <p class="lead">고객·가격 운영·영업 환경에 대한 선호를 묻는 팀 제작 초안입니다. L/V는 인구 구성, E/P는 희망 업종의 건당 금액, S/D는 공식 영업 기간 특성에 연결합니다. 15문항 기본형과 7문항 간편형을 선택할 수 있습니다. 기본형은 각 축 4:1 이상, 간편형은 각 축 전원 일치 때만 후보 조건으로 적용합니다. 성장률·금융 성향·창업 성공률을 검증한 검사는 아닙니다.</p>
   <div class="seg big" id="mbtiMode" role="tablist" aria-label="유형 정하는 방법">
-    <button type="button" role="tab" data-mode="survey">15문항 검사</button>
+    <button type="button" role="tab" data-mode="survey">15문항 기본 검사</button>
+    <button type="button" role="tab" data-mode="short">7문항 간편 검사</button>
     <button type="button" role="tab" data-mode="direct">유형 직접 고르기</button>
   </div>
   <div class="grid2 wide-left">
@@ -678,7 +679,8 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
   }
 
   /* 기준마다 5문항 중 3개 이상 고른 쪽이 그 글자. 5:0·4:1은 뚜렷, 3:2는 경계. 한 문항이라도 비면 그 기준은 글자가 없다. */
-  function scoreAnswers(answers, questions, axes) {
+  function scoreAnswers(answers, questions, axes, version) {
+    version=version||"standard15";
     var out = [];
     axes.forEach(function (ax) {
       var left = ax["왼쪽"], right = ax["오른쪽"];
@@ -690,17 +692,18 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
       });
       var nl = picked.filter(function (c) { return c === left; }).length;
       var nr = picked.filter(function (c) { return c === right; }).length;
-      var done = picked.length === rows.length;
+      var done = rows.length > 0 && picked.length === rows.length;
       var counts = {};
       counts[left] = nl;
       counts[right] = nr;
-      var clear = done && Math.max(nl, nr) >= 4;
-      out.push({ axis: ax["기준"], left: left, right: right, letter: done ? (nl > nr ? left : right) : null, counts: counts,
+      var clear = done && Math.max(nl, nr) / rows.length >= 0.8;
+      out.push({ axis: ax["기준"], left: left, right: right, letter: done && nl !== nr ? (nl > nr ? left : right) : null, counts: counts,
                  answered: picked.length, total: rows.length, clear: clear, boundary: done && !clear });
     });
-    var complete = out.every(function (a) { return a.letter; });
-    return { source: "검사 결과", complete: complete, answered: out.reduce(function (s, a) { return s + a.answered; }, 0),
-             total: questions.length, type: complete ? out.map(function (a) { return a.letter; }).join("") : null, axes: out };
+    var complete = out.every(function (a) { return a.total > 0 && a.answered === a.total; });
+    var typed = out.every(function(a){return a.letter;});
+    return { source: version==="short7"?"7문항 간편 검사":"15문항 기본 검사", quizVersion: version, complete: complete, answered: out.reduce(function (s, a) { return s + a.answered; }, 0),
+             total: questions.length, type: typed ? out.map(function (a) { return a.letter; }).join("") : null, axes: out };
   }
 
   /* 유형을 직접 고른 경우. 검사 점수가 없으므로 모든 글자를 뚜렷으로 본다. */
@@ -744,7 +747,7 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
   function axisText(result) {
     if (result.source === "직접 고르기") return result.axes.map(function (a) { return a.letter; }).join(" · ") + " (직접 고름, 검사 점수 없음)";
     return result.axes.map(function (a) {
-      if (!a.letter) return a.axis + " " + a.answered + "/" + a.total + "문항";
+      if (!a.letter) return a.answered===a.total ? a.axis+" "+a.counts[a.left]+":"+a.counts[a.right]+" (동률 · 제한 없음)" : a.axis + " " + a.answered + "/" + a.total + "문항";
       var other = a.letter === a.left ? a.right : a.left;
       return a.letter + " " + a.counts[a.letter] + ":" + a.counts[other] + (a.boundary ? " (경계)" : "");
     }).join(" · ");
@@ -786,7 +789,15 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
       out[key]={pool:rows.length,top:rankRows(rows).slice(0,n)};
     });return out;
   }
-  var api = {
+  var QUIZ_VERSIONS = {
+    standard15:{label:'15문항 기본 검사',counts:{LV:5,EP:5,SD:5}},
+    short7:{label:'7문항 간편 검사',ids:[2,6,11,3,8,14,10],counts:{LV:2,EP:3,SD:2}}
+  };
+  function quizQuestions(questions,version){
+    if(version==='short7')return QUIZ_VERSIONS.short7.ids.map(id=>questions.find(q=>q['번호']===id));
+    return questions.slice().sort((a,b)=>a['화면 순서']-b['화면 순서']);
+  }
+  var api = {QUIZ_VERSIONS:QUIZ_VERSIONS,quizQuestions:quizQuestions,
     KEYS: KEYS, COLS: COLS, WEIGHT_NAMES: WEIGHT_NAMES, MATCH: MATCH, NEAR: NEAR, OTHER: OTHER, UNKNOWN: UNKNOWN,
     composite: composite, industryRows: industryRows, rankRows: rankRows, median: median, ranks: ranks, spearman: spearman,
     scoreAnswers: scoreAnswers, directResult: directResult, matchedTypes: unifiedMatched, sgWeights: sgWeights,
@@ -824,6 +835,7 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
     const GROUPS = ["외식", "서비스", "소매"];
     const TYPE_ORDER = ["LES", "LED", "LPS", "LPD", "VES", "VED", "VPS", "VPD"];
     const TYPES = Object.fromEntries(P.step5.types.map((r) => [r["유형"], r]));
+    const SHORT_QUIZ_VERSION="short7";
     const QUESTIONS = P.step5.questions.slice().sort((a, b) => a["화면 순서"] - b["화면 순서"]);
     const DS_ORDER = ["S01", "S02", "K01", "K02", "K03", "K04", "K05", "K06", "K07", "K08"];
     const PAGES = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10"];
@@ -837,7 +849,7 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
     const state = {
       industry: savedIndustry && IND[savedIndustry] ? savedIndustry : P.defaultIndustry,
       weights: Object.assign({}, P.defaultWeights), profile: null, selected: null, compare: null,
-      answers: {}, mode: "survey", pick: null, rankLimit: 15, rankQuery: "", onlyMatch: false,
+      answers: {}, shortAnswers: {}, mode: "survey", pick: null, rankLimit: 15, rankQuery: "", onlyMatch: false,
       v1: "industry", v2: "area", v5: "type", colDs: "K01", colOnlyStd: true, featLevel: "전체", featAvail: "전체", featQuery: "",
       theme: store.get("theme") || "light", page: "s1", gu: "", guMetric:"total",
     };
@@ -992,7 +1004,10 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
 
 
     // ------------------------------------------------------------ 금융 MBTI
-    function surveyResult() { return C.scoreAnswers(state.answers, P.step5.questions, P.step5.axes); }
+    function quizVersion(){return state.mode==='short'?SHORT_QUIZ_VERSION:'standard15';}
+    function currentQuestions(){return C.quizQuestions(P.step5.questions,quizVersion());}
+    function currentAnswers(){return state.mode==='short'?state.shortAnswers:state.answers;}
+    function surveyResult() { return C.scoreAnswers(currentAnswers(),currentQuestions(),P.step5.axes,quizVersion()); }
     function makeProfile(result) {
       const type=result.type||result.axes.map(a=>a.letter||'?').join('');
       const info=TYPES[type]||{'이름':'일부 축 선호','이모지':'','상권 특징':'완료한 축 중 4:1 이상인 축만 적용','창업 아이템 예시':'희망 업종을 직접 고르세요.'};
@@ -1000,7 +1015,7 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
     }
 
     function pendingProfile() {
-      if (state.mode === "survey") { const r = surveyResult(); return r.answered>0 ? makeProfile(r) : null; }
+      if (state.mode !== "direct") { const r = surveyResult(); return r.answered>0 ? makeProfile(r) : null; }
       return state.pick ? makeProfile(C.directResult(state.pick, P.step5.axes)) : null;
     }
     function applyProfile(p) {
@@ -1042,7 +1057,7 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
       $("industryNote").textContent = r.scored ? `점수 대상 ${nf(r.cells)}곳` : "점수 없음 (사유는 6장)";
       const p = state.profile;
       $("profileChip").innerHTML = p
-        ? `<span class="chip">금융 MBTI <b>${p.type}</b> ${esc(p.info["이름"])} · ${esc(p.weightLabel)}<button type="button" data-clear aria-label="금융 MBTI 적용 해제">✕</button></span>`
+        ? `<span class="chip">금융 MBTI <b>${p.type}</b> ${esc(p.info["이름"])} · ${esc(p.result.source)} · ${esc(p.weightLabel)}<button type="button" data-clear aria-label="금융 MBTI 적용 해제">✕</button></span>`
         : `<a class="chip off" href="#s7">금융 MBTI 적용 안 함</a>`;
     }
 
@@ -1294,43 +1309,42 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
       $("sgTable").innerHTML = autoTable(P.step5.weights);
     }
     function drawMbtiInput() {
-      const host = $("mbtiInput");
-      if (state.mode === "survey") {
-        const r = surveyResult();
-        host.innerHTML = `<div class="table-head"><h3>15문항 검사</h3><button type="button" class="ghost" id="clearAnswers">응답 지우기</button></div>` +
-          `<p class="note">둘 중 더 가까운 쪽을 고르세요. 문항 순서는 섞었고 어느 글자인지는 숨겼습니다. ${r.answered}/15 답함</p>` +
-          `<div class="progress" aria-hidden="true"><i style="width:${(r.answered / 15) * 100}%"></i></div>` +
-          QUESTIONS.map((q, k) => {
-            const no = q["번호"], a = state.answers[no];
-            return `<div class="q" role="group" aria-label="문항 ${k + 1}"><p>${k + 1}. ${esc(q["질문"])}</p><div class="opts">` +
-              ["A", "B"].map((x) => `<button type="button" data-q="${no}" data-a="${x}" aria-pressed="${a === x}">${esc(q[x])}</button>`).join("") + "</div></div>";
-          }).join("");
-        host.onclick = (e) => {
-          if (e.target.closest("#clearAnswers")) { state.answers={}; if(state.profile&&state.profile.result.source!=="직접 고르기")applyProfile(null); renderS7(); return; }
-          const b = e.target.closest("[data-q]");
-          if (!b) return;
-          state.answers[b.getAttribute("data-q")] = b.getAttribute("data-a");
-          b.parentNode.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-          const rr = surveyResult();
-          host.querySelector(".progress i").style.width = (rr.answered / 15) * 100 + "%";
-          host.querySelector(".note").textContent = `둘 중 더 가까운 쪽을 고르세요. 문항 순서는 섞었고 어느 글자인지는 숨겼습니다. ${rr.answered}/15 답함`;
-          drawMbtiResult();
-          drawReco();
-        };
-      } else {
-        host.innerHTML = `<h3>유형 직접 고르기</h3><p class="note">검사를 하지 않고 유형을 고릅니다. 이때는 경계 유형 없이 세 글자를 모두 뚜렷한 것으로 봅니다.</p><div class="types">` +
-          TYPE_ORDER.map((t) => `<button type="button" data-t="${t}" aria-pressed="${state.pick === t}">${TYPES[t]["이모지"]} <b>${t}</b> ${esc(TYPES[t]["이름"])}<small>${esc(TYPES[t]["상권 특징"])}</small></button>`).join("") + "</div>";
-        host.onclick = (e) => { const b = e.target.closest("[data-t]"); if (b) { state.pick = b.getAttribute("data-t"); renderS7(); } };
+      const host=$('mbtiInput');
+      if(state.mode==='direct'){
+        host.innerHTML='<h3>유형 직접 고르기</h3><p class="note">검사 대신 세 축을 직접 고릅니다.</p><div class="types">'+TYPE_ORDER.map(t=>`<button data-t="${t}" aria-pressed="${state.pick===t}"><b>${t}</b> ${esc(TYPES[t]['이름'])}</button>`).join('')+'</div>';
+        host.onclick=e=>{const b=e.target.closest('[data-t]');if(b){state.pick=b.dataset.t;renderS7();}};return;
       }
+      const qs=currentQuestions(),answers=currentAnswers(),r=surveyResult(),short=state.mode==='short';
+      host.innerHTML=`<div class="table-head"><h3>${esc(r.source)}</h3><button class="ghost" id="clearAnswers">이 버전 응답 지우기</button></div>
+      <p class="note" id="quizNote">${short?'고객층 2 · 가격 운영 3 · 영업 환경 2문항. 축의 답이 모두 같을 때만 조건으로 적용합니다.':'각 축 5문항 중 4:1·5:0만 조건으로 적용합니다.'} <span id="quizProgress">${r.answered}/${qs.length} 답함</span></p>
+      ${short?'<p class="note">15문항에서 고른 간편 초안입니다. 같은 정확도나 검사 타당도를 검증하지 않았습니다. 애매하면 15문항으로 더 살펴보세요.</p>':''}
+      <p class="note">버전별 응답은 따로 유지됩니다. ‘선호 조건 적용’을 눌러야 공통 추천 조건이 바뀝니다.</p>
+      <div class="progress" aria-hidden="true"><i style="width:${r.answered/qs.length*100}%"></i></div>`+
+      qs.map((q,k)=>`<div class="q" role="group" aria-label="문항 ${k+1}"><p>${k+1}. ${esc(q['질문'])}</p><div class="opts">${['A','B'].map(x=>`<button data-q="${q['번호']}" data-a="${x}" aria-pressed="${answers[q['번호']]===x}">${esc(q[x])}</button>`).join('')}</div></div>`).join('');
+      host.onclick=e=>{
+        if(e.target.closest('#clearAnswers')){
+          const key=quizVersion();if(state.mode==='short')state.shortAnswers={};else state.answers={};
+          if(state.profile&&state.profile.result.quizVersion===key)applyProfile(null);
+          renderS7();return;
+        }
+        const b=e.target.closest('[data-q]');if(!b)return;
+        currentAnswers()[b.dataset.q]=b.dataset.a;
+        b.parentNode.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+        const rr=surveyResult();host.querySelector('.progress i').style.width=rr.answered/qs.length*100+'%';
+        $('quizProgress').textContent=rr.answered+'/'+qs.length+' 답함';drawMbtiResult();drawReco();
+      };
     }
-    function drawMbtiResult() {
-      const host=$('mbtiResult'),p=pendingProfile();
-      if(!p){host.innerHTML='<h3>운영 선호</h3><p>문항에 답하거나 유형을 직접 고르세요.</p>';return;}
-      const choices=p.matched.pattern.filter(Boolean).length;
-      host.innerHTML=`<h3>${esc(p.type)} · ${esc(p.info['이름'])}</h3><p>${esc(p.text)}</p>
-      <p>필터로 적용할 선호: <b>${p.matched.pattern.map((v,j)=>v||['L/V 제한 없음','E/P 제한 없음','S/D 제한 없음'][j]).join(' · ')}</b></p>
-      <p class="note">4:1·5:0만 적용합니다. 3:2·미완료 축은 제한하지 않습니다. 현재 비중 ${weightText(state.weights)}를 그대로 씁니다.</p>
-      <div class="actions"><button class="primary" data-act="on" ${choices?'':'disabled'}>선호 조건 적용</button><button class="ghost" data-act="off">선호 해제</button></div>`;
+    function drawMbtiResult(){
+      const host=$('mbtiResult'),p=pendingProfile(),applied=state.profile;
+      const active=applied?`<p class="note">현재 적용 중: ${esc(applied.result.source)} · ${esc(applied.type)}</p><button class="ghost" data-act="off">적용된 선호 해제</button>`:'';
+      if(!p){host.innerHTML='<h3>운영 선호</h3><p>문항에 답하거나 유형을 직접 고르세요.</p>'+active;}
+      else{
+        const short=p.result.quizVersion==='short7',choices=p.matched.pattern.filter(Boolean).length;
+        host.innerHTML=`<h3>${esc(p.type)} · ${esc(p.info['이름'])}</h3><p><b>${esc(p.result.source)}</b> · ${p.result.source==='직접 고르기'?'검사 응답 없음':p.result.answered+'/'+p.result.total+' 답함'}</p><p>${esc(p.text)}</p>
+        <p>필터로 적용할 선호: <b>${p.matched.pattern.map((v,j)=>v||['L/V 제한 없음','E/P 제한 없음','S/D 제한 없음'][j]).join(' · ')}</b></p>
+        <p class="note">${short?'고객층·영업 환경은 2:0, 가격 운영은 3:0일 때만 적용합니다. 1:1·2:1·미완료 축은 제한하지 않습니다.':'기본형은 각 축 4:1·5:0만 적용합니다. 3:2·미완료 축은 제한하지 않습니다.'} 현재 비중 ${weightText(state.weights)}를 그대로 씁니다.</p>
+        <div class="actions"><button class="primary" data-act="on" ${choices?'':'disabled'}>선호 조건 적용</button></div>`+active;
+      }
       host.onclick=e=>{const b=e.target.closest('[data-act]');if(b)applyProfile(b.dataset.act==='on'?pendingProfile():null);};
     }
 
@@ -1359,7 +1373,7 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
       const c = scoreRows(ap.weights), matched = ap.p.matched;
       const hit = c.rows.filter(x=>x.total!==null && C.matchLabel(A.type2[x.i],matched)===C.MATCH);
       const nm=hit.length;
-      $("recoNote").textContent = `${ap.applied ? "적용 중인" : "아직 적용하지 않은"} ${ap.p.type} 기준 · 가중치 ${weightText(ap.weights)} · 점수 대상 ${nf(c.rows.length)}곳 중 일치 ${nf(nm)}곳` +
+      $("recoNote").textContent = `${ap.applied ? "적용 중인" : "아직 적용하지 않은"} ${ap.p.type} · ${ap.p.result.source} 기준 · 가중치 ${weightText(ap.weights)} · 점수 대상 ${nf(c.rows.length)}곳 중 일치 ${nf(nm)}곳` +
         (hit.length > nm ? `, 경계 유형 ${nf(hit.length - nm)}곳` : "") + ". 순서는 성공 가능성이 아니라 업종 내 비교 점수입니다.";
       const out = tok("out"), neutral = tok("neutral"), s1c = tok("s1"), s2c = tok("s2");
       drawMap($("mbtiMap"), {
@@ -1709,9 +1723,9 @@ node 박성은/team_unified_final/verify.js</pre><p>완성 HTML은 report/SpotFi
       const current=c.rows.filter(r=>(!state.gu||A.gu[r.i]===state.gu)&&(!state.profile||!state.onlyMatch||C.matchLabel(A.type2[r.i],state.profile.matched)===C.MATCH));
       $('downloadCsv').disabled=!current.length;
       $('downloadCsv').onclick=()=>{
-        const header=['상권','자치구','유형','점수','매출','경쟁','안정성','수요','계산영역수','적용비중','선호패턴','버전'];
+        const header=['상권','자치구','유형','점수','매출','경쟁','안정성','수요','계산영역수','적용비중','선호패턴','검사버전','버전'];
         const quote=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
-        const values=current.map(r=>[A.name[r.i],A.gu[r.i],A.type2[r.i],r.total,r.sales,r.competition,r.stability,r.demand,r.used,JSON.stringify(state.weights),state.profile&&state.onlyMatch?state.profile.matched.pattern.join('/'):"제한 없음",P.version]);
+        const values=current.map(r=>[A.name[r.i],A.gu[r.i],A.type2[r.i],r.total,r.sales,r.competition,r.stability,r.demand,r.used,JSON.stringify(state.weights),state.profile&&state.onlyMatch?state.profile.matched.pattern.join('/'):"제한 없음",state.profile&&state.onlyMatch?state.profile.result.source:"적용 없음",P.version]);
         const blob=new Blob(['\ufeff'+[header,...values].map(row=>row.map(quote).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'});
         const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SpotFit_팀통합_'+state.industry+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000);
       };

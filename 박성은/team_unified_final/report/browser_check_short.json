@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-25",
+  "feature": "seven-question-v1",
+  "public_url": "https://spotfit-park-2025.park24401859.chatgpt.site/#s7",
+  "passed": true,
+  "checks": [
+    "15문항 기본·7문항 간편·직접 선택 탭 표시",
+    "간편형 7문항과 0/7→7/7 진행 표시",
+    "간편형 LES 응답 결과를 적용해 커피 64개 후보 확인",
+    "15문항과 7문항 응답 분리 보존",
+    "버전 전환만으로 적용 중 추천 조건을 바꾸지 않음",
+    "L/V 1:1 동률과 E/P 2:1은 제한 없음",
+    "이 버전 응답 지우기는 해당 버전 적용만 해제",
+    "추천 안내·공통 적용 표시·CSV에 검사 버전 포함",
+    "390x844 모바일과 1100x850 데스크톱 화면 확인, 문서 가로 넘침 없음"
+  ],
+  "public_questions": 7,
+  "public_console_errors": [],
+  "automated": {
+    "standard_complete_responses": 32768,
+    "short_partial_and_complete_states": 2187,
+    "short_complete_responses": 128
+  }
+}

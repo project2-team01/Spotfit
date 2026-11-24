@@ -1,5 +1,7 @@
 # SpotFit 팀 자료 재검토 통합본 · 2026-11-23
 
+7장에 [7문항 간편 검사](QUIZ_7.md)를 추가했다. 15문항 기본 검사와 함께 선택할 수 있으며 버전별 응답·결과를 구별한다. 간편형은 고객층 2·가격 운영 3·영업 환경 2문항, 각 축 전원 일치 때만 적용한다.
+
 [공유 대시보드](https://spotfit-park-2025.park24401859.chatgpt.site/#s1) · [판단 근거와 변경 내용](REVIEW.md) · [더블클릭 실행 HTML](report/SpotFit_팀통합_최종대시보드.html)
 
 팀원의 최신 분석·화면을 목적 적합성·재현성·해석 가능성으로 비교했다. 김지영의 10개 보고서 화면과 STEP 6 시각화, 이승희의 공식 지표·최신 검사지·픽셀 지도 자산, 박성은의 독립 검증·공유 배포를 결합했다. 원본 팀원 폴더와 이전 결과는 수정하지 않았다.
@@ -11,6 +13,7 @@
 uv run --frozen --project "박성은/step5_personalization" python "박성은/team_unified_final/build.py"
 cd "박성은/team_unified_final"
 node verify.js
+python test_short.py
 ```
 
 `web/`은 추적하는 최종 화면 원본이다. 상위 팀원 화면과의 연결을 다시 생성하려면 `adapt_sources.py`를 먼저 실행한다. 화면만 바뀌고 입력 데이터가 그대로라면 `build.py --assemble-only`로 재조립할 수 있다. 전체 재계산은 `build.py`다.
