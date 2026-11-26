@@ -1,22 +1,31 @@
 {
   "version": "team-evidence-20261123",
-  "feature": "seven-question-v1",
-  "url": "https://spotfit-park-2025.park24401859.chatgpt.site/#s7",
+  "feature": "mermaid-flowcharts-v1",
+  "retained_features": [
+    "seven-question-v1"
+  ],
+  "url": "https://spotfit-park-2025.park24401859.chatgpt.site/#s1",
+  "mbti_url": "https://spotfit-park-2025.park24401859.chatgpt.site/#s7",
   "project_id": "appgprj_6af1cb4541208191a7d7473b1847f0ee",
-  "site_version": 5,
-  "saved_version_id": "appgprj_6af1cb4541208191a7d7473b1847f0ee~appgver_7dc41209228c8191844933ba47d76f4b",
-  "source_commit": "09ed6fa15c859e53e366ef5a7bb670718d6df4ef",
-  "deployment_id": "appgdep_6b05b038e2248191b420d397e78e7643",
+  "site_version": 6,
+  "saved_version_id": "appgprj_6af1cb4541208191a7d7473b1847f0ee~appgver_8fb9eef36e6081919e05185375dae30a",
+  "source_commit": "556cad43b87aa2fdd34700d8eb2a7725a991bade",
+  "deployment_id": "appgdep_6b0820acae5481918103538bf8feb89f",
   "status": "succeeded",
   "audience": "public",
-  "updated_at": "2026-11-24T15:41:59.641885+00:00",
+  "updated_at": "2026-11-26T12:06:25.671395+00:00",
   "analysis_input_commit": "aafbb4a00cf1df80e7eca81344e43f6acbecb3dc",
   "questionnaire_versions": [
     "standard15",
     "short7",
     "direct"
   ],
+  "flowcharts": [
+    "analysis",
+    "mbti"
+  ],
+  "mermaid_version": "12.3.0",
   "public_browser_verified": true,
   "public_console_errors": [],
-  "screenshot": "report/7문항_공유화면.jpg"
+  "screenshot": "report/Mermaid_공유화면.jpg"
 }

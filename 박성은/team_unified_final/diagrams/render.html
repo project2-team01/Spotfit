@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SpotFit Mermaid 원본 렌더링</title>
+<style>body{font:16px/1.6 'Malgun Gothic',sans-serif;background:#fbf3dc;color:#282720;margin:24px}section{margin:24px 0;padding:20px;background:#fffcf3;border:2px solid #37352e}svg{display:block;max-width:100%;height:auto}</style>
+<h1>SpotFit Mermaid 원본 렌더링</h1><p id="status">Mermaid 12.3.0으로 두 원본을 렌더링합니다.</p><main></main>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@12.3.0/dist/mermaid.esm.min.mjs';
+try {
+  const config=await (await fetch('mermaid-config.json')).json();
+  mermaid.initialize(config);
+  for(const name of ['analysis','mbti']){
+    const source=await (await fetch(name+'.mmd')).text();
+    const {svg}=await mermaid.render('spotfit-'+name+'-svg',source);
+    const section=document.createElement('section');section.dataset.diagram=name;section.innerHTML=svg;document.querySelector('main').append(section);
+    const result=await fetch('/__diagram_export/'+name,{method:'POST',headers:{'Content-Type':'image/svg+xml'},body:svg});
+    if(!result.ok)throw new Error('로컬 SVG 저장 실패: '+name);
+  }
+  document.querySelector('#status').textContent='완료 · Mermaid 12.3.0 · 두 SVG 저장됨';
+  document.body.dataset.rendered='true';
+}catch(error){document.querySelector('#status').textContent=String(error);document.body.dataset.rendered='error';}
+</script></html>

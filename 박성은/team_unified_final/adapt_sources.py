@@ -161,3 +161,5 @@ css=(SOURCE/'style.css').read_text(encoding='utf-8')+'\n'+(HERE/'team_style.css'
 print('팀원 원본은 수정하지 않고 통합 화면 생성 완료')
 from short_quiz_upgrade import upgrade
 upgrade(WEB)
+from diagram_upgrade import upgrade as upgrade_diagrams
+upgrade_diagrams(WEB)

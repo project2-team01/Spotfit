@@ -1,0 +1,16 @@
+flowchart TB
+  accTitle: SpotFit MBTI 운영 선호 추천 흐름
+  accDescr: 15문항과 7문항 및 직접 선택을 구분합니다. 뚜렷한 축만 후보 조건으로 쓰고, 미리보기와 공통 조건 적용을 구분하며, 현재 가중치를 유지합니다.
+  industry["희망 업종 선택"] --> mode{"선호 입력 방식"}
+  mode --> standard["15문항 기본형<br/>L/V · E/P · S/D 각 5문항"]
+  mode --> short["7문항 간편형<br/>L/V 2 · E/P 3 · S/D 2문항"]
+  mode --> direct["유형 직접 선택<br/>세 축을 직접 설정"]
+  standard --> standardRule["각 축 4:1 · 5:0만 적용<br/>3:2 · 미완료 축은 제한 없음"]
+  short --> shortRule["각 축 전원 일치만 적용<br/>2:0 · 3:0 · 2:0 기준"]
+  standardRule & shortRule & direct --> preview["유형 · 후보 미리보기<br/>기존 적용 조건이 있으면 그 조건 우선"]
+  preview --> apply["선호 조건 적용 선택<br/>뚜렷한 축이 1개 이상일 때 가능"]
+  apply --> match["같은 업종의 점수 대상에서<br/>적용 축이 일치하는 후보 선택"]
+  match --> ranking["현재 가중치로 점수순 비교<br/>검사로 가중치를 자동 변경하지 않음"]
+  ranking --> output["7장 추천 지도 · 상위 20곳<br/>6장 일치 필터 · 목록 · CSV에 반영"]
+  classDef focus fill:#d6e6fa,stroke:#1f5fc4,stroke-width:2px,color:#282720
+  class preview,match,ranking focus

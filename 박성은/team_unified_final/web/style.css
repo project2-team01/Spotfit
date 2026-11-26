@@ -272,3 +272,23 @@ button,.chip,.tag,input,select{border-radius:0}button{border:2px solid var(--bor
 #guControls .seg{flex-wrap:wrap;margin-bottom:16px}#guControls [aria-pressed="true"]{background:#1f5fc4;color:white}
 .actions select{min-width:160px}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #ba3b0b;outline-offset:3px}
 @media(max-width:760px){.layout{display:block}.side{position:static;width:auto;max-height:none}.side ol{display:flex;gap:8px;overflow:auto;padding:12px}.side li{min-width:135px}#main{padding:16px}.grid2,.wide-left{grid-template-columns:1fr}.top{position:static}.card{padding:16px}.mini-grid{grid-template-columns:1fr}#guControls button{font-size:14px;padding:8px}}
+
+/* BEGIN SPOTFIT MERMAID */
+.flow-card { margin-block: 18px; }
+.flow-card summary { color: var(--accent); }
+.flow-card .flow-intro { font-size: 1rem; margin: 12px 0; }
+.flow-viewport { overflow-x: auto; max-width: 100%; padding: 12px 4px; background: var(--surface); }
+.flow-viewport:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.flow-viewport > svg { display: block; width: 100%; height: auto; margin: auto; max-width: 900px !important; min-width: 620px; }
+.flow-viewport svg text, .flow-viewport svg tspan { fill: var(--ink) !important; font-size: 16px !important; font-family: inherit; }
+.flow-viewport svg .node rect, .flow-viewport svg .node polygon, .flow-viewport svg .node path { fill: var(--surface) !important; stroke: var(--border) !important; stroke-width: 1.5px !important; }
+.flow-viewport svg .node.focus rect, .flow-viewport svg .node.focus polygon { fill: var(--seq1) !important; stroke: var(--accent) !important; stroke-width: 2px !important; }
+.flow-viewport svg .cluster rect { fill: var(--surface-2) !important; stroke: var(--axis) !important; }
+.flow-viewport svg .flowchart-link { stroke: var(--ink2) !important; }
+.flow-viewport svg marker path { fill: var(--ink2) !important; stroke: var(--ink2) !important; }
+.flow-viewport svg .edgeLabel rect, .flow-viewport svg .labelBkg { fill: var(--surface) !important; background-color: var(--surface) !important; }
+.flow-notes { padding-left: 22px; font-size: 1rem; }
+.flow-source summary { font-size: .875rem; color: var(--ink2); }
+.flow-source pre { white-space: pre-wrap; word-break: normal; font-size: .875rem; max-height: 320px; overflow: auto; }
+@media print { .flow-viewport > svg { min-width: 0; } .flow-source { display: none; } }
+/* END SPOTFIT MERMAID */

@@ -1,0 +1,26 @@
+flowchart TB
+  accTitle: SpotFit 전체 분석 흐름
+  accDescr: 배포 전 데이터 준비와 브라우저에서의 업종별 비교를 구분합니다. 점수와 유형은 별도로 계산하고 운영 선호는 후보 조건으로 연결합니다.
+  subgraph prepare["자료 준비 · 배포 전"]
+    raw["공공데이터 수집<br/>2025년 분기 자료 · 공식 상권변화지표"]
+    clean["전처리 · 상권 코드 결합<br/>관광특구 제외 · 결측값 보존"]
+    score["업종 내 4영역 점수<br/>매출 · 경쟁 · 안정성 · 수요"]
+    types["상권 유형 L/V · E/P · S/D<br/>인구 구성 · 업종 건당 금액 · 공식 영업 기간"]
+    package["점수 · 유형 대조 검증<br/>분석자료를 대시보드 HTML에 포함"]
+    raw --> clean
+    clean --> score & types
+    score & types --> package
+  end
+  subgraph use["대시보드 이용 · 브라우저 안"]
+    industry["희망 업종 선택"]
+    preference["운영 선호 조건 선택<br/>15문항 · 7문항 · 유형 직접 선택"]
+    compare["같은 업종 안에서 후보 비교<br/>현재 가중치로 점수순 정렬"]
+    output["지도 · 순위 · 상세 · CSV"]
+    industry -->|전체 비교| compare
+    industry --> preference
+    preference -->|조건 적용| compare
+    compare --> output
+  end
+  package --> industry
+  classDef focus fill:#d6e6fa,stroke:#1f5fc4,stroke-width:2px,color:#282720
+  class score,types,compare focus

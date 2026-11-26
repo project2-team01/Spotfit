@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-26",
+  "local_url": "http://127.0.0.1:8767/dist/index.html",
+  "desktop_viewport": [
+    1100,
+    850
+  ],
+  "mobile_viewport": [
+    390,
+    844
+  ],
+  "diagram_nodes": {
+    "analysis": 9,
+    "mbti": 12
+  },
+  "diagram_text_px": 16,
+  "horizontal_page_overflow": false,
+  "mobile_diagram_scroll_contained": true,
+  "light_dark_theme_verified": true,
+  "short_quiz_questions": 7,
+  "coffee_LES_candidates": 64,
+  "short_quiz_pattern": "L 2:0 / E 3:0 / S 2:0",
+  "weights_preserved": "30/25/15/30",
+  "console_errors": [],
+  "public_verification": "passed",
+  "public_url": "https://spotfit-park-2025.park24401859.chatgpt.site",
+  "public_diagram_nodes": {"analysis": 9, "mbti": 12},
+  "public_modes": ["15문항 기본 검사", "7문항 간편 검사", "유형 직접 고르기"],
+  "public_desktop_page_overflow": false,
+  "public_mobile_page_overflow": false,
+  "public_mobile_diagram_scroll_contained": true,
+  "public_console_errors": [],
+  "screenshot": "Mermaid_공유화면.jpg"
+}

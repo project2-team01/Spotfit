@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-26",
+  "renderer": "Mermaid 12.3.0",
+  "diagrams": {
+    "analysis": {
+      "viewBox": "0 -1.3333320617675781 671.53125 816.9332885742188",
+      "bytes": 36752,
+      "sha256": "fb5d83b1175cd6b62eaa4e1ad1bd884811c46b8ba5db9ad23988a45554f80aad"
+    },
+    "mbti": {
+      "viewBox": "0 0.0000019073486328125 652.125 943.2000122070312",
+      "bytes": 39867,
+      "sha256": "48b3261a9f07f783931ef663b4dca1a550f8ac39c8c9de6aada91e3e47fd8686"
+    }
+  },
+  "existing_html_preserved_except_diagram_blocks": true,
+  "existing_styles_preserved_as_prefix": true,
+  "core_js_unchanged": true,
+  "app_js_unchanged": true,
+  "embedded_analysis_payload_unchanged": true,
+  "standalone_equals_deployed_html": true,
+  "runtime_mermaid_cdn_required": false,
+  "baseline_commit": "f7a1d335c2696e6bcff9b44b694350a9e45ae520",
+  "upgrade_idempotent": true,
+  "final_html_sha256": "4bd1675666c47a59820c4f1561364c8157e59de1cbf5a50e93bd3b3843fdb2e1"
+}
