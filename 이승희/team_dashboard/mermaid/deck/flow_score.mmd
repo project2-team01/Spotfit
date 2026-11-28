@@ -1,0 +1,14 @@
+flowchart LR
+    A["전체 표본<br/>(상권 × 업종)"] --> B{"최소 표본 충족?<br/>(점포 수 · 비교 상권 수)"}
+    B -- 미달 --> X["점수 산출 제외<br/>(원값만 참고)"]
+    B -- 충족 --> C["4대 영역 백분위화<br/>(매출↑ · 경쟁↓ · 안정성↓ · 수요↑)"]
+    C --> D["결측 영역 제외 후<br/>잔여 가중치 재분배"]
+    D --> E["가중 평균<br/>종합 점수"]
+    E --> F["동일 업종 내<br/>최종 순위"]
+
+    class E,F blue
+    class X gray
+
+    classDef blue fill:#0047AB,stroke:#0047AB,stroke-width:2px,color:#FFFFFF,font-weight:bold
+    classDef yellow fill:#FFFFFF,stroke:#0047AB,stroke-width:3px,color:#0047AB,font-weight:bold
+    classDef gray fill:#EEEEEE,stroke:#B5B5B5,stroke-width:1.5px,color:#555555

@@ -20,6 +20,7 @@ from __future__ import annotations
 import copy
 import html
 import json
+import os
 from functools import lru_cache
 from pathlib import Path
 
@@ -57,11 +58,24 @@ RAW_ITEMS = [("점포당 월매출", "sales_month", "money"), ("유동인구 1,0
 SCALE = [(0.0, "#D6E6FA"), (0.5, "#5B8FE0"), (1.0, "#163F82")]    # 상세 화면 점수 색 (STEP 4 views.LIGHT blues[0]·[2]·[4]와 같음)
 NO_SCORE = "#CFC6AE"
 AREA_NO_SCORE = "#A89F88"                            # 상세 화면 점수 없는 상권 (STEP 4 views.LIGHT missing과 같음)
-# 구 상세 화면 배경 지도: Esri 회색 지도(API 키 필요 없음) + 지명 글자 층.
+# 구 상세 화면 배경 지도.
+# - VWORLD_API_KEY 환경변수가 있으면 브이월드(국토교통부) 회색 지도를 쓴다. 지명이 들어 있고 19단계까지 그림이 있다.
+#   키는 이승희/.env(Git 제외)에 두고 `uv run --env-file 이승희/.env ... marimo run ...`으로 열 때만 넣는다.
+#   정적 HTML을 내보낼 때는 --env-file 없이 실행해 키가 파일에 들어가지 않게 한다.
+# - 키가 없으면 Esri 회색 지도(API 키 필요 없음) + 지명 글자 층을 쓴다. Esri는 한국에 13단계까지만 그림이 있고
+#   14단계부터 'Map data not yet available' 그림이 오므로, 13단계 그림을 확대해 보여 준다(2026-11-25 확인).
 # CARTO 타일은 대시보드 iframe 안에서 'API KEY REQUIRED' 워터마크가 찍혀 쓰지 않는다(2026-11-17 확인).
-TILES = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
-TILES_LABELS = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"
-TILES_ATTR = "Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors"
+VWORLD_KEY = os.environ.get("VWORLD_API_KEY", "").strip()
+if VWORLD_KEY:
+    TILES = f"https://api.vworld.kr/req/wmts/1.0.0/{VWORLD_KEY}/gray/{{z}}/{{y}}/{{x}}.png"
+    TILES_LABELS = None
+    TILES_ATTR = "&copy; VWorld (국토교통부)"
+    TILES_NATIVE_MAX = 19
+else:
+    TILES = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+    TILES_LABELS = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"
+    TILES_ATTR = "Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors"
+    TILES_NATIVE_MAX = 13
 PAD_OVERVIEW = {"paddingTopLeft": [20, 110], "paddingBottomRight": [290, 20]}
 TOP_PINS = 10      # 서울 전체 화면 핀 (지금 조건의 상위 10곳)
 TOP_GU = 5         # 구 상세 화면 번호·상자 (그 구의 상위 5곳)
@@ -382,8 +396,9 @@ class ClickDetail(MacroElement):
   var UPGRADE = __UPGRADE__, LEGENDS = __LEGENDS__, curMetric = 'total';   // [업그레이드] 구 색 기준 버튼
   var riverRef = __RIVER__, ringRef = __RING__, byGu = {};
   gj.eachLayer(function (l) { byGu[l.feature.properties.name] = l; });
-  var tiles = L.layerGroup([L.tileLayer(__TILES__, {attribution: __ATTR__, maxZoom: 17, maxNativeZoom: 16}),
-                             L.tileLayer(__LABELS_TILES__, {maxZoom: 17, maxNativeZoom: 16, pane: 'shadowPane'})]);
+  var tileList = [L.tileLayer(__TILES__, {attribution: __ATTR__, maxZoom: 17, maxNativeZoom: __NATIVE__})];
+  if (__LABELS_TILES__) { tileList.push(L.tileLayer(__LABELS_TILES__, {maxZoom: 17, maxNativeZoom: __NATIVE__, pane: 'shadowPane'})); }
+  var tiles = L.layerGroup(tileList);
   var layer = L.layerGroup().addTo(map);
   var panel = document.getElementById('gu-panel');
   var lgOverview = document.getElementById('legend-overview'), lgDetail = document.getElementById('legend-detail');
@@ -594,6 +609,7 @@ class ClickDetail(MacroElement):
                     "__MAP__": map_obj.get_name(), "__GJ__": gj.get_name(), "__DATA__": json.dumps(data, ensure_ascii=False),
                     "__SEOUL__": json.dumps(seoul), "__PAD__": json.dumps(PAD_OVERVIEW),
                     "__LABELS_TILES__": json.dumps(TILES_LABELS), "__TILES__": json.dumps(TILES), "__ATTR__": json.dumps(TILES_ATTR),
+                    "__NATIVE__": json.dumps(TILES_NATIVE_MAX),
                     **{f"__{k.upper()}__": (v.get_name() if v is not None else "null") for k, v in parts.items()}}
 
     def render(self, **kwargs):

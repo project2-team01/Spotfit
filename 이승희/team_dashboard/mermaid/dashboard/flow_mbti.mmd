@@ -1,0 +1,13 @@
+flowchart LR
+    S1["업종 선택"] --> S2["운영 선호 입력<br/>(설문 · 직접 선택)"]
+    S2 --> S3["실시간 미리보기<br/>(유형 · 후보 수 확인)"]
+    S3 -->|조건 적용| S4["유형 일치 상권 필터<br/>(가중치 유지)"]
+    S4 --> S5["종합 점수순 정렬"]
+    S5 --> S6["추천 지도 ·<br/>상위 목록"]
+
+    class S3,S4,S5 blue
+    class S6 yellow
+
+    classDef blue fill:#1F5FC4,stroke:#2B2A26,stroke-width:2px,color:#FFFFFF,font-weight:bold
+    classDef yellow fill:#F4C430,stroke:#2B2A26,stroke-width:2px,color:#2B2A26,font-weight:bold
+    classDef gray fill:#E8DDBF,stroke:#5A5446,stroke-width:1.5px,color:#2B2A26

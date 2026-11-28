@@ -1,0 +1,25 @@
+flowchart LR
+    subgraph AREA["상권 유형 판정"]
+        direction TB
+        A1["3대 지표<br/>(인구 · 객단가 · 변화)"] --> A2{"경계 구간?"}
+        A2 -- 아니오 --> A3["상권 유형 확정"]
+        A2 -- 예 --> A4["판정 보류(?)"]
+    end
+
+    subgraph USER["사용자 성향 판정"]
+        direction TB
+        U1["설문 응답<br/>(15 / 7문항)"] --> U2{"뚜렷한 우세?"}
+        U2 -- 예 --> U3["선호 유형 확정"]
+        U2 -- 아니오 --> U4["상관없음"]
+    end
+
+    U3 & A3 --> M["확정 기준만 일치 매칭<br/>(사용자 '상관없음'은 미필터 /<br/>선택 축의 상권 '보류'는 제외)"]
+    U4 -.->|필터 미적용| M
+    M --> OUT["종합 점수순 후보 추천"]
+
+    class OUT blue
+    class U4,A4 gray
+
+    classDef blue fill:#0047AB,stroke:#0047AB,stroke-width:2px,color:#FFFFFF,font-weight:bold
+    classDef yellow fill:#FFFFFF,stroke:#0047AB,stroke-width:3px,color:#0047AB,font-weight:bold
+    classDef gray fill:#EEEEEE,stroke:#B5B5B5,stroke-width:1.5px,color:#555555

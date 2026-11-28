@@ -29,6 +29,7 @@ STEP 4 상권 비교 점수 대시보드와 STEP 5 금융 MBTI 추천 대시보�
 
 ## 알아 둘 점
 
+- **구 상세 화면 배경 지도:** 브이월드 API 키가 있으면 브이월드 회색 지도(19단계까지)를 씁니다. `이승희/.env.example`을 `이승희/.env`로 복사해 키를 넣고 `uv run --env-file 이승희/.env --project "이승희/step5_recommend" marimo run "이승희/step5_recommend/app.py"`로 엽니다. 키가 없으면 Esri 회색 지도 13단계 그림을 확대해 보여 줍니다(Esri는 한국에 14단계부터 'Map data not yet available'). 정적 HTML을 내보낼 때는 `--env-file`을 빼서 키가 파일에 들어가지 않게 합니다.
 - 탭·숫자 카드 모양은 `marimo run`(앱 모드)과 HTML 내보내기에서만 바뀝니다. `marimo edit`(편집 모드)에서는 marimo가 보안상 `html_head_file`을 넣지 않아 기본 모양으로 보입니다.
 - 어두운 화면에서는 크림 바탕 대신 marimo 기본 어두운 색을 쓰고, 글꼴과 도트 제목만 같습니다. 어두운 화면은 직접 확인하지 못했습니다.
 - `spotfit_head.html`은 marimo 0.25.2의 위젯 구조(`role="tab"`, `bg-card`)에 맞춰 썼습니다. marimo 버전을 올리면 모양이 다시 기본으로 돌아갈 수 있습니다.

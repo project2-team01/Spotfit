@@ -1,0 +1,25 @@
+flowchart TB
+    subgraph prepare["1. 오프라인 데이터 준비 (Python)"]
+        direction LR
+        P1["공공데이터 수집"] --> P2["정제 · 결합<br/>(결측 보존)"]
+        P2 --> P3["업종별 점수화"]
+        P2 --> P4["상권 유형 판정"]
+        P3 & P4 --> P5["교차 검증"]
+    end
+
+    subgraph use["2. 브라우저 대시보드 탐색"]
+        direction LR
+        U1["업종 선택"] --> U2["가중치 조정<br/>(선택)"]
+        U1 --> U3["운영 선호 입력<br/>(MBTI · 직접)"]
+        U2 & U3 --> U4["조건 필터 ·<br/>점수순 비교"]
+        U4 --> U5["지도 · 순위 ·<br/>상세 시각화"]
+    end
+
+    prepare -->|정적 데이터| use
+
+    class P3,P4,U4 blue
+    class U5 yellow
+
+    classDef blue fill:#0047AB,stroke:#0047AB,stroke-width:2px,color:#FFFFFF,font-weight:bold
+    classDef yellow fill:#FFFFFF,stroke:#0047AB,stroke-width:3px,color:#0047AB,font-weight:bold
+    classDef gray fill:#EEEEEE,stroke:#B5B5B5,stroke-width:1.5px,color:#555555

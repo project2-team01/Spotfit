@@ -1,0 +1,11 @@
+ID,제공 기관,데이터셋,행 수,열 수,기간,링크
+S01,소상공인시장진흥공단,소상공인시장진흥공단_상가(상권)정보_20251231,534978,39,20251231,https://www.data.go.kr/data/15083033/fileData.do
+S02,소상공인시장진흥공단,소상공인시장진흥공단_상가(상권)정보 업종코드_20230228,247,6,20230228,https://www.data.go.kr/data/15067631/fileData.do
+K01,서울신용보증재단(서울특별시),서울시 상권분석서비스(추정매출-상권),85732,55,20251~20254 (4개 분기),https://data.seoul.go.kr/dataList/OA-15572/S/1/datasetView.do
+K02,서울신용보증재단(서울특별시),서울시 상권분석서비스(점포-상권),304775,14,20251~20254 (4개 분기),https://data.seoul.go.kr/dataList/OA-15577/S/1/datasetView.do
+K03,서울신용보증재단(서울특별시),서울시 상권분석서비스(영역-상권),1650,11,현행 상권 영역(시점 구분 없음),https://data.seoul.go.kr/dataList/OA-15560/S/1/datasetView.do
+K04,서울신용보증재단(서울특별시),서울시 상권분석서비스(길단위인구-상권),6595,27,20251~20254 (4개 분기),https://data.seoul.go.kr/dataList/OA-15568/S/1/datasetView.do
+K05,서울신용보증재단(서울특별시),서울시 상권분석서비스(집객시설-상권),34716,25,20211~20262 (22개 분기),https://data.seoul.go.kr/dataList/OA-15580/S/1/datasetView.do
+K06,서울신용보증재단(서울특별시),서울시 상권분석서비스(직장인구-상권),36027,26,20211~20262 (22개 분기),https://data.seoul.go.kr/dataList/OA-15569/S/1/datasetView.do
+K07,서울신용보증재단(서울특별시),서울시 상권분석서비스(상주인구-상권),35908,29,20211~20262 (22개 분기),https://data.seoul.go.kr/dataList/OA-15584/S/1/datasetView.do
+K08,서울신용보증재단(서울특별시),서울시 상권분석서비스(상권변화지표-상권),,,2025년 4분기 사용,https://data.seoul.go.kr/dataList/OA-15576/S/1/datasetView.do
