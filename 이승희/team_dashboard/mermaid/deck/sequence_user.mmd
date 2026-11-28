@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    participant U as 예비 창업자
+    participant App as 대시보드 (UI · 브라우저 계산)
+    participant Data as 정적 데이터
+
+    rect rgb(245, 247, 250)
+        Note over U,Data: 1. 업종 선택 및 초기 조회
+        U->>App: 희망 업종 선택
+        App->>Data: 업종별 점수표 로드
+        Data-->>App: 점수 대상 상권 데이터
+        App-->>U: 기본 순위 · 지도 표시
+    end
+
+    opt 2. 가중치 조정 (선택)
+        U->>App: 영역별 가중치 변경
+        App->>App: 종합 점수 즉시 재계산
+        App-->>U: 순위 · 지도 갱신
+    end
+
+    rect rgb(245, 247, 250)
+        Note over U,App: 3. 성향 필터링 및 상세 탐색
+        U->>App: 금융 MBTI 입력 · 조건 적용
+        App->>App: 일치 상권 필터링
+        App-->>U: 추천 상권 지도 · 상위 목록
+        U->>App: 특정 자치구 선택
+        App-->>U: 구별 상세 · 상권 카드 표시
+    end

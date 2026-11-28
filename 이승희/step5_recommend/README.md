@@ -24,6 +24,7 @@ uv run --project "이승희/step5_recommend" python "이승희/step5_recommend/t
 - **설치 없이 보기:** [report/05_금융MBTI_상권추천_2025.html](report/05_금융MBTI_상권추천_2025.html)을 브라우저로 엽니다. 정적 스냅숏이라 **탭 4개는 모두 눌러 볼 수 있지만**, 업종·유형·검사 답을 바꿔도 다시 계산하지 않습니다(커피-음료, 모든 유형 기준). 지도 배경은 인터넷 연결이 필요합니다.
 - 스냅숏 다시 만들기 (팀 저장소 루트): `uv run --project "이승희/step5_recommend" marimo export html --no-include-code "이승희/step5_recommend/app.py" -o "이승희/step5_recommend/report/05_금융MBTI_상권추천_2025.html"`
 - **도트 디자인:** STEP 4와 같은 [../pixel_theme/](../pixel_theme/README.md)을 씁니다. 탭·숫자 카드 모양은 `marimo run`과 정적 스냅숏에서만 바뀌고, `marimo edit`에서는 marimo 기본 모양입니다.
+- **구 상세 화면 배경 지도:** 브이월드 API 키가 있으면 브이월드 회색 지도(19단계까지)를 씁니다. `이승희/.env.example`을 `이승희/.env`로 복사해 키를 넣고 `uv run --env-file 이승희/.env --project "이승희/step5_recommend" marimo run "이승희/step5_recommend/app.py"`로 엽니다. 키가 없으면 Esri 회색 지도 13단계 그림을 확대해 보여 줍니다(Esri는 한국에 14단계부터 'Map data not yet available'). 정적 HTML을 내보낼 때는 `--env-file`을 빼서 키가 파일에 들어가지 않게 합니다.
 
 ## 세 축
 

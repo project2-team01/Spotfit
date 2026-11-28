@@ -1,0 +1,1783 @@
+<meta name="dash-one-writer">
+<meta name="dash-form" content="dashboard">
+<style>
+@font-face{font-family:"Press Start 2P";src:url(/_blob/3e83777e58e7c11cd722aca193c6c033) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+#dash-root{--dash-gutter:0}
+.sf{--sf-ink:#2B2A26;--sf-muted:#5A5446;--sf-line:#E8DDBF;--sf-panel:#FFFBEF;--sf-bg:#FBF3DC;--sf-accent:#1F5FC4;--sf-navy:#163F82;--sf-yellow:#F4C430;--sf-gold:#A67C00;--sf-green:#2E8B57;--sf-red:#C8443C;color-scheme:light;background:var(--sf-bg);padding:20px max(16px,2vw) 32px;font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;color:var(--sf-ink);font-size:15px;line-height:1.55}
+.sf.sf-big{font-size:18px}
+.sf *{box-sizing:border-box}
+.sf [hidden]{display:none!important}
+.sf-top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;padding-bottom:14px;border-bottom:3px solid var(--sf-ink)}
+.sf-logo{display:flex;align-items:center;gap:16px}
+.sf-logo svg{flex:none;image-rendering:pixelated;shape-rendering:crispEdges}
+.sf-brand{flex:1 1 320px;min-width:0}
+.sf-brand h1{margin:0;font-family:"Press Start 2P",monospace;font-weight:400;font-size:clamp(26px,3.4vw,40px);line-height:1.2;letter-spacing:2px;color:var(--sf-accent);text-shadow:4px 4px 0 var(--sf-yellow)}
+.sf-take{margin:8px 0 0;color:var(--sf-muted);font-size:.95em}
+.sf-take b{color:var(--sf-ink)}
+.sf-ctl{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.sf-ctl label{display:flex;align-items:center;gap:8px;font-size:.85em;color:var(--sf-muted)}
+.sf-ctl .dash-select{min-width:200px;min-height:40px;background-color:var(--sf-panel);font-weight:700}
+.sf-pill{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:4px 6px 4px 14px;border:3px solid var(--sf-ink);border-radius:0;font-size:.86em;font-weight:700;background:var(--sf-panel)}
+.sf-pill.sf-on{background:var(--sf-accent);color:#FFFFFF;box-shadow:3px 3px 0 var(--sf-ink)}
+.sf-pbtn{min-height:32px;padding:2px 12px;border-radius:0;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:.92em;cursor:pointer}
+.sf-btn{min-height:42px;padding:8px 16px;border:3px solid var(--sf-ink);border-radius:0;background:var(--sf-panel);color:var(--sf-ink);font:inherit;font-weight:700;cursor:pointer;box-shadow:3px 3px 0 var(--sf-ink)}
+.sf-btn.sf-primary{background:var(--sf-accent);border-color:var(--sf-ink);color:#FFFFFF}
+.sf-btn:disabled{opacity:.45;cursor:default;box-shadow:none}
+.sf-btn.sf-flat{box-shadow:none;font-weight:500}
+.sf-btn:focus-visible,.sf-opt:focus-visible,.sf-chip:focus-visible,.sf-nav button:focus-visible{outline:3px solid var(--sf-accent);outline-offset:2px}
+.sf-body{display:flex;flex-wrap:wrap;align-items:flex-start;gap:24px;padding-top:20px}
+.sf-nav{flex:1 1 210px;max-width:240px;display:flex;flex-direction:column;gap:16px;padding:14px;background:var(--sf-panel);border:3px solid var(--sf-ink);box-shadow:4px 4px 0 var(--sf-ink)}
+.sf-nav .sf-note{font-size:.74em;color:var(--sf-muted)}
+.sf-grp{display:flex;flex-direction:column;gap:2px}
+.sf-grp h2{margin:0 0 4px;padding:0 10px;font-size:.76em;font-weight:800;letter-spacing:.04em;color:var(--sf-accent)}
+.sf-nav button{display:flex;align-items:center;gap:10px;min-height:42px;padding:6px 10px;border:3px solid transparent;border-radius:0;background:transparent;color:var(--sf-ink);font:inherit;font-size:.92em;text-align:left;cursor:pointer}
+.sf-nav button:hover{background:var(--sf-bg)}
+.sf-nav button[aria-current="page"]{border-color:var(--sf-ink);background:var(--sf-accent);color:#FFFFFF;font-weight:700;box-shadow:3px 3px 0 var(--sf-ink)}
+.sf-nav button[aria-current="page"] .sf-num{color:#FFFFFF}
+.sf-nav .sf-num{color:var(--sf-muted);font-size:.85em;min-width:18px}
+.sf-main{flex:999 1 640px;min-width:0;display:flex;flex-direction:column;gap:22px}
+.sf-sec{display:flex;flex-direction:column;gap:18px}
+.sf-head{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.sf-badge{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:0;background:var(--sf-accent);color:#FFFFFF;font-family:"Press Start 2P",monospace;font-size:14px;box-shadow:3px 3px 0 var(--sf-ink)}
+.sf-head h2{margin:0;font-size:1.6em;font-weight:800;color:var(--sf-accent);text-wrap:balance}
+.sf-step-tag{border:2px solid var(--sf-ink);background:var(--sf-yellow);padding:0 8px;font-size:.72em;font-weight:700;color:var(--sf-ink)}
+.sf-sub{color:var(--sf-muted);font-size:.9em}
+.sf-lead{margin:0;max-width:62em;color:var(--sf-muted)}
+.sf-card{background:var(--sf-panel);border:3px solid var(--sf-ink);box-shadow:4px 4px 0 var(--sf-ink);border-radius:0;padding:20px;min-width:0}
+.sf-card h3{margin:0 0 10px;font-size:1.1em;color:var(--sf-navy)}
+.sf-row{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start}
+.sf-grow{flex:999 1 440px;min-width:0}
+.sf-side{flex:1 1 290px;min-width:260px;position:sticky;top:12px}
+.sf-tabs{display:flex}
+.sf-tabs{gap:8px;flex-wrap:wrap}
+.sf-tabs button{min-height:44px;padding:8px 18px;border:3px solid var(--sf-ink);background:var(--sf-panel);color:var(--sf-ink);font:inherit;font-size:.93em;cursor:pointer}
+.sf-tabs button[aria-selected="true"]{background:var(--sf-accent);color:#FFFFFF;font-weight:700;box-shadow:3px 3px 0 var(--sf-ink)}
+.sf-bar{height:14px;background:var(--sf-bg);border:3px solid var(--sf-ink);border-radius:0;overflow:hidden}
+.sf-bar i{display:block;height:100%;width:0;background:var(--sf-accent)}
+.sf-q{margin:0;padding:0 0 14px;border:0;border-bottom:1px solid var(--sf-line);display:flex;flex-direction:column;gap:10px}
+.sf-q legend{padding:0 0 8px;font-weight:700}
+.sf-opts{display:flex;flex-wrap:wrap;gap:10px}
+.sf-opt{flex:1 1 220px;min-height:48px;padding:10px 14px;text-align:left;border:2px solid var(--sf-ink);border-radius:0;background:var(--sf-bg);font:inherit;font-size:.92em;color:var(--sf-ink);cursor:pointer}
+.sf-opt:hover{border-color:var(--sf-ink)}
+.sf-opt[aria-pressed="true"]{background:var(--sf-accent);color:#FFFFFF;font-weight:700;box-shadow:3px 3px 0 var(--sf-ink)}
+.sf-chips{display:flex;flex-wrap:wrap;gap:8px}
+.sf-chip{min-height:44px;padding:8px 16px;border:2px solid var(--sf-ink);border-radius:0;background:var(--sf-bg);font:inherit;font-size:.9em;color:var(--sf-ink);cursor:pointer}
+.sf-chip[aria-pressed="true"]{background:var(--sf-accent);color:#FFFFFF;font-weight:700;box-shadow:3px 3px 0 var(--sf-ink)}
+.sf-navrow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.sf-tally{display:flex;flex-direction:column;gap:10px}
+.sf-ax{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px solid var(--sf-line)}
+.sf-ax-top{display:flex;justify-content:space-between;gap:8px;font-size:.85em;color:var(--sf-muted)}
+.sf-ax b{font-variant-numeric:tabular-nums}
+.sf-st{font-size:.85em;font-weight:700;padding:1px 8px;border-radius:4px;white-space:nowrap;border:1px solid var(--sf-line)}
+.sf-st.ok{color:var(--sf-green);border-color:var(--sf-green)}
+.sf-st.warn{color:var(--sf-gold);border-color:var(--sf-gold)}
+.sf-big-n{font-size:2.4em;font-weight:800;line-height:1.1;color:var(--sf-accent)}
+.sf-empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:28px;border:3px dashed var(--sf-ink);border-radius:0;background:var(--sf-panel);text-align:center;color:var(--sf-muted)}
+.sf-empty strong{color:var(--sf-ink);font-size:1.1em}
+.sf-tbl{overflow-x:auto}
+.sf-tbl table{border-collapse:collapse;width:100%;font-size:.9em}
+.sf-tbl th,.sf-tbl td{padding:8px 10px;border-bottom:1px solid var(--sf-line);text-align:left;white-space:nowrap}
+.sf-tbl th{font-size:.82em;color:#FFFFFF;background:var(--sf-ink)}
+.sf-tbl td.n,.sf-tbl th.n{text-align:right;font-variant-numeric:tabular-nums}
+.sf-tbl td.w{white-space:normal;min-width:16em}
+.sf-tbl tr.sf-hit td{font-weight:700}
+.sf-map{position:relative;width:100%;min-height:200px;border:3px solid var(--sf-ink);background:#F3EBD2;overflow:hidden}
+.sf-map-detail{background:#FFFFFF;max-width:calc((100vh - 150px) * 1.2245);margin:0 auto}
+.sf-map svg{display:block;width:100%;height:auto}
+.sf-chart{position:relative;width:100%;min-height:140px}
+.sf-chart svg{display:block;width:100%}
+.sf-chart text,.sf-map text{fill:var(--sf-muted);font-size:11px}
+.sf-chart .sf-strong{fill:var(--sf-ink);font-weight:700}
+.sf-tip{position:absolute;pointer-events:none;z-index:5;padding:6px 10px;background:var(--sf-panel);border:2px solid var(--sf-ink);box-shadow:3px 3px 0 var(--sf-ink);border-radius:0;font-size:12px;color:var(--sf-ink);white-space:nowrap}
+.sf-legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:.8em;color:var(--sf-muted)}
+.sf-legend i{display:inline-block;width:14px;height:14px;margin-right:4px;vertical-align:-2px;border:1px solid var(--sf-line)}
+.sf-result{padding:14px 16px;border:3px solid var(--sf-accent);border-radius:0;background:#EAF1FC}
+.sf-result .sf-k{font-size:.78em;font-weight:800;color:var(--sf-accent)}
+.sf-result p{margin:2px 0 0;font-weight:700;font-size:1.05em}
+.sf-eda-chips{display:flex;flex-wrap:wrap;gap:8px}
+.sf-eda-chips a{display:inline-flex;align-items:center;min-height:36px;padding:4px 12px;border:2px solid var(--sf-ink);border-radius:0;font-size:.82em;color:var(--sf-ink);text-decoration:none;background:var(--sf-panel)}
+.sf-design summary{cursor:pointer;min-height:40px;display:flex;align-items:center;font-weight:700;font-size:.9em}
+.sf-dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;padding-top:6px}
+.sf-dgrid div{padding:10px 12px;background:var(--sf-bg);border:2px solid var(--sf-line);font-size:.85em}
+.sf-dgrid b{display:block;font-size:.85em;color:var(--sf-muted)}
+.sf-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.sf-tile{background:var(--sf-panel);border:3px solid var(--sf-ink);box-shadow:4px 4px 0 var(--sf-ink);padding:14px}
+.sf-tile .v{font-size:1.9em;font-weight:800;color:var(--sf-accent);line-height:1.15}
+.sf-tile .l{font-weight:700;font-size:.9em}
+.sf-tile .s{font-size:.78em;color:var(--sf-muted)}
+.sf-weights{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px 22px}
+.sf-weights label{display:flex;flex-direction:column;gap:4px;font-size:.88em}
+.sf-weights span{display:flex;justify-content:space-between}
+.sf-weights input{width:100%;accent-color:var(--sf-accent)}
+.sf-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sf-flow div{padding:10px 14px;border:3px solid var(--sf-ink);background:var(--sf-panel);box-shadow:3px 3px 0 var(--sf-ink)}
+.sf-flow div b{display:block;font-size:1.4em;font-weight:800;color:var(--sf-accent)}
+.sf-list{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.sf-mono{font-family:ui-monospace,Consolas,monospace;font-size:.88em}
+.sf-filters{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.sf-filters label{display:flex;align-items:center;gap:8px;font-size:.88em}
+
+.sf-mapwrap{min-height:320px}
+.sf-ad-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.sf-ad-head b{font-size:1.1em}
+.sf-ad-score{font-size:1.5em;font-weight:800;color:var(--sf-accent)}
+.sf-tbl td.sf-wrap{white-space:normal;min-width:6em;font-size:.92em}
+.sf-finds{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.sf-find{position:relative;background:var(--sf-bg);border:3px solid var(--sf-ink);box-shadow:3px 3px 0 var(--sf-ink);padding:14px 14px 12px 14px}
+.sf-find h4{margin:0 0 6px;padding-right:30px;font-size:1em;color:var(--sf-navy);line-height:1.4}
+.sf-find p{margin:0;font-size:.88em;color:var(--sf-ink)}
+.sf-find-n{position:absolute;top:10px;right:10px;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:var(--sf-yellow);border:2px solid var(--sf-ink);font-family:"Press Start 2P",monospace;font-size:10px}
+.sf-ad-bars{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.sf-ad-bar{display:grid;grid-template-columns:5em 1fr 3em;gap:8px;align-items:center;font-size:.88em}
+.sf-ad-bar div{position:relative;height:14px;background:#EFE6CC;border:2px solid #2B2A26}
+.sf-ad-bar div i{position:absolute;left:0;top:0;bottom:0}
+.sf-ad-bar div u{position:absolute;top:-5px;bottom:-5px;border-left:2px solid #C8443C}
+.sf-ad-bar em{font-style:normal;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.sf-typecards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.sf-tc{background:var(--sf-panel);border:3px solid var(--sf-ink);padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.sf-tc h4{margin:0;font-size:1em;color:var(--sf-navy)}
+.sf-tc .c{font-size:.85em;color:var(--sf-muted)}
+.sf-tc ol{margin:4px 0 0;padding-left:1.3em;font-size:.86em;display:flex;flex-direction:column;gap:2px}
+.sf-tc ol li span{float:right;font-variant-numeric:tabular-nums;color:var(--sf-muted)}
+.sf-flowimg{overflow-x:auto;border:3px solid #2B2A26;background:#FBF3DC}
+.sf-flowimg img{display:block;width:100%;min-width:560px;height:auto}
+.sf-mermaid-src{margin:6px 0 0;padding:12px;max-height:320px;overflow:auto;background:#FFFFFF;border:2px solid #E8DDBF;font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.45;white-space:pre}
+.sf-zoombar{position:absolute;right:10px;top:10px;display:flex;gap:6px;z-index:4}
+.sf-zoombar button{min-width:36px;min-height:36px;padding:2px 10px;border:2px solid #2B2A26;background:#FFFFFF;font:inherit;font-weight:700;cursor:pointer;box-shadow:2px 2px 0 #2B2A26}
+.sf-pm{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.sf-pm-map{position:relative;flex:999 1 420px;min-width:0;max-width:calc((100vh - 150px) * 1.2245);border:3px solid #2B2A26;background:#F3EBD2;overflow:hidden}
+.sf-pm-map svg{display:block;width:100%;height:auto}
+.sf-pm-gu{transition:filter .15s}
+.sf-pm-gu:hover{filter:drop-shadow(3px 3px 0 #2B2A26)}
+.sf-pm-side{flex:1 1 250px;min-width:240px;display:flex;flex-direction:column;gap:10px;font-size:.9em}
+.sf-pm-mapback{position:absolute;left:10px;top:10px;z-index:4;min-height:40px;padding:6px 14px;border:3px solid #2B2A26;background:#F4C430;color:#2B2A26;font:inherit;font-weight:800;cursor:pointer;box-shadow:3px 3px 0 #2B2A26}
+.sf-pm-mapback:hover{background:#FFD95A}
+.sf-pm-mapback:focus-visible{outline:3px solid #1F5FC4;outline-offset:2px}
+.sf-pm-crumb{font-weight:700;font-size:1.05em;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.sf-pm-back{min-height:36px;padding:4px 10px;border:2px solid #2B2A26;background:#FFFBEF;font:inherit;font-weight:700;cursor:pointer;box-shadow:2px 2px 0 #2B2A26}
+.sf-pm-small{font-size:.82em;color:#5A5446}
+.sf-pm-small b{color:#2B2A26}
+.sf-pm-mbtns{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sf-pm-mbtns .sf-pm-small{width:100%}
+.sf-pm-mbtn{min-height:34px;padding:2px 10px;border:2px solid #2B2A26;background:#FFFBEF;font:inherit;font-size:.9em;cursor:pointer}
+.sf-pm-mbtn[aria-pressed="true"]{background:#1F5FC4;color:#FFFFFF;font-weight:700;box-shadow:3px 3px 0 #2B2A26}
+.sf-pm-legend{display:flex;flex-direction:column;gap:4px;padding:10px;border:3px solid #2B2A26;background:#FFFBEF}
+.sf-pm-lrow{display:flex;align-items:center;gap:8px;font-size:.86em}
+.sf-pm-lrow i{display:inline-block;width:16px;height:16px;border:2px solid #2B2A26;flex:none}
+.sf-pm-lrow em{margin-left:auto;font-style:normal;color:#5A5446;font-size:.92em}
+.sf-pm-warn{font-size:.82em;padding:4px 8px;border:2px dashed #2B2A26;background:#FFFFFF}
+.sf-pm-pinrow{display:flex;align-items:flex-start;gap:8px;font-size:.82em;padding:6px 8px;border:2px solid #2B2A26;background:#FFFFFF}
+.sf-pm-pinrow svg{flex:none;image-rendering:pixelated;shape-rendering:crispEdges}
+.sf-pm-hint{font-size:.82em;padding:6px 8px;border:2px dashed #B9AE8F;color:#5A5446}
+.sf-pm-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.sf-pm-stats div{background:#FFF3C4;border:2px solid #2B2A26;padding:4px 8px}
+.sf-pm-stats small{display:block;font-size:.78em;color:#5A5446}
+.sf-pm-card{padding:10px;background:#FFFFFF;border:3px solid #2B2A26;box-shadow:3px 3px 0 #2B2A26;display:flex;flex-direction:column;gap:6px}
+.sf-pm-cname{font-weight:800;font-size:1.05em}
+.sf-pm-cscore b{font-size:1.6em;color:#1F5FC4}
+.sf-pm-bar{display:grid;grid-template-columns:3.5em 1fr 3.2em;align-items:center;gap:6px;font-size:.85em}
+.sf-pm-bar div{position:relative;height:12px;background:#EFE6CC;border:2px solid #2B2A26}
+.sf-pm-bar div i{position:absolute;left:0;top:0;bottom:0}
+.sf-pm-bar div u{position:absolute;left:50%;top:-4px;bottom:-4px;border-left:2px dashed #2B2A26}
+.sf-pm-bar em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
+.sf-pm-top{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.sf-pm-top button{width:100%;display:grid;grid-template-columns:24px 1fr auto;gap:2px 8px;align-items:center;padding:6px 8px;background:#FFFFFF;border:2px solid #2B2A26;font:inherit;text-align:left;cursor:pointer}
+.sf-pm-top10 .n{background:#E5484D !important}
+.sf-pm-top10 button{padding:4px 8px}
+.sf-pm-top .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:#2B2A26;color:#FFFFFF;font-weight:700;font-size:.85em}
+.sf-pm-top .s{font-weight:700;color:#1F5FC4}
+.sf-pm-top small{grid-column:2/4;font-size:.8em;color:#5A5446}
+.sf-pm-scale{display:flex;align-items:center;gap:6px;font-size:.8em}
+.sf-pm-scale i{flex:1;height:12px;border:2px solid #2B2A26;background:linear-gradient(90deg,#D6E6FA,#5B8FE0,#163F82)}
+</style>
+
+<div class="sf" id="sf-root">
+<header class="sf-top" id="top">
+  <div class="sf-brand">
+    <div class="sf-logo"><svg width="44" height="57" viewBox="0 0 10 13" aria-hidden="true"><path fill="#2B2A26" d="M2 0h6v1H2zM1 1h8v1H1zM0 2h10v4H0zM1 6h8v2H1zM2 8h6v1H2zM3 9h4v1H3zM4 10h2v2H4z"></path><path fill="#1F5FC4" d="M3 1h4v1H3zM2 2h6v1H2zM1 3h8v3H1zM2 6h6v1H2zM3 7h4v1H3zM4 8h2v1H4z"></path><path fill="#F4C430" d="M4 3h2v1H4zM3 4h4v1H3zM4 5h2v1H4z"></path></svg><h1>SPOTFIT</h1></div>
+    <p class="sf-take">서울 창업 상권 분석 · 2025년 · <b data-draw="ind-name">—</b> 점수 대상 <b data-draw="n-areas" data-source="ranked">—</b>곳, 현재 가중치 1위는 <b data-draw="top1-name" data-source="ranked" data-field="상권" data-row="0">—</b> <b data-draw="top1-score" data-source="ranked" data-field="종합" data-row="0">—</b>점입니다.</p>
+  </div>
+  <div class="sf-ctl">
+    <label for="sf-industry">희망 업종 <select id="sf-industry" class="dash-select" data-draw="industry" data-source="industries" aria-label="희망 업종"></select></label>
+    <span class="sf-pill" id="sf-pill-off">금융 MBTI: 아직 없음 <button class="sf-pbtn" type="button" data-go="mbti">검사하기 →</button></span>
+    <span class="sf-pill sf-on" id="sf-pill-on" hidden><span data-draw="applied-label">—</span> · 후보 <span data-draw="applied-count" data-source="applied_count">—</span>곳 <button class="sf-pbtn" type="button" id="sf-clear" aria-label="금융 MBTI 적용 해제">해제 ✕</button></span>
+    <button class="sf-btn sf-flat" type="button" id="sf-bigtext" aria-pressed="false">크게 보기</button>
+  </div>
+</header>
+
+<div class="sf-body">
+<nav class="sf-nav" aria-label="대시보드 목차">
+  <div class="sf-note">번호는 계획서 5장 순서입니다</div>
+  <div class="sf-grp"><h2>써 보기</h2>
+    <button type="button" data-go="mbti"><span class="sf-num">7</span>금융 MBTI 추천</button>
+    <button type="button" data-go="scores"><span class="sf-num">6</span>상권 점수</button>
+  </div>
+  <div class="sf-grp"><h2>분석 근거</h2>
+    <button type="button" data-go="flow"><span class="sf-num">0</span>전체 흐름도</button>
+    <button type="button" data-go="summary"><span class="sf-num">1</span>분석 요약</button>
+    <button type="button" data-go="eda"><span class="sf-num">8</span>EDA와 시각화</button>
+  </div>
+  <div class="sf-grp"><h2>자료와 재현</h2>
+    <button type="button" data-go="datasets"><span class="sf-num">2</span>데이터셋과 링크</button>
+    <button type="button" data-go="columns"><span class="sf-num">3</span>주요 컬럼</button>
+    <button type="button" data-go="join"><span class="sf-num">4</span>전처리와 결합</button>
+    <button type="button" data-go="features"><span class="sf-num">5</span>파생변수 정의서</button>
+    <button type="button" data-go="folders"><span class="sf-num">9</span>폴더 구조</button>
+    <button type="button" data-go="roadmap"><span class="sf-num">10</span>구현 로드맵</button>
+  </div>
+</nav>
+
+<main class="sf-main">
+
+<!-- 0. 전체 흐름도 -->
+<section class="sf-sec" id="flow" hidden>
+  <div class="sf-head"><span class="sf-badge">0</span><h2>전체 흐름도</h2><span class="sf-step-tag">Mermaid</span></div>
+  <p class="sf-lead">SpotFit이 데이터를 어떻게 모아 점수와 추천을 만들고, 사용자가 대시보드를 어떤 순서로 쓰는지를 Mermaid 다이어그램 5개로 정리했습니다. 흐름이 한눈에 보이도록 세부 수치 · 기준값은 덜어냈고, 정확한 숫자와 기준은 1장 요약 · 6장 점수 · 7장 금융 MBTI · 5장 파생변수 정의서에서 확인할 수 있습니다.</p>
+  <nav class="sf-eda-chips" aria-label="흐름도 바로가기"><a href="#flow-flow_overall">① 전체 분석 흐름</a><a href="#flow-sequence_user">② 사용 순서</a><a href="#flow-flow_score">③ 점수 과정</a><a href="#flow-flow_type">④ 판정 규칙</a><a href="#flow-flow_mbti">⑤ 추천 진행 순서</a></nav>
+  <article class="sf-card" id="flow-flow_overall" style="display:flex;flex-direction:column;gap:12px">
+    <h3>① 전체 분석 흐름 (flowchart)</h3>
+    <p class="sf-sub" style="margin:0">위쪽은 배포 전에 Python으로 미리 준비하는 단계(수집 · 정제와 결합 · 점수화 · 유형 판정 · 교차 검증), 아래쪽은 대시보드를 여는 사람의 브라우저 안에서 일어나는 탐색 단계입니다. 파란 칸은 점수와 유형이 계산되는 곳, 노란 칸은 결과 화면입니다.</p>
+    <div class="sf-flowimg"><img src="/_blob/2e0691c33f5024ffd19a34cd9c7b651f" alt="① 전체 분석 흐름 (flowchart) 다이어그램" loading="lazy" style="max-width:660px;margin:0 auto"></div>
+    <details class="sf-design"><summary>Mermaid 원본 코드 보기 (복사해서 고쳐 쓸 수 있음)</summary><pre class="sf-mermaid-src">flowchart TB
+    subgraph prepare[&quot;1. 오프라인 데이터 준비 (Python)&quot;]
+        direction LR
+        P1[&quot;공공데이터 수집&quot;] --&gt; P2[&quot;정제 · 결합&lt;br/&gt;(결측 보존)&quot;]
+        P2 --&gt; P3[&quot;업종별 점수화&quot;]
+        P2 --&gt; P4[&quot;상권 유형 판정&quot;]
+        P3 &amp; P4 --&gt; P5[&quot;교차 검증&quot;]
+    end
+
+    subgraph use[&quot;2. 브라우저 대시보드 탐색&quot;]
+        direction LR
+        U1[&quot;업종 선택&quot;] --&gt; U2[&quot;가중치 조정&lt;br/&gt;(선택)&quot;]
+        U1 --&gt; U3[&quot;운영 선호 입력&lt;br/&gt;(MBTI · 직접)&quot;]
+        U2 &amp; U3 --&gt; U4[&quot;조건 필터 ·&lt;br/&gt;점수순 비교&quot;]
+        U4 --&gt; U5[&quot;지도 · 순위 ·&lt;br/&gt;상세 시각화&quot;]
+    end
+
+    prepare --&gt;|정적 데이터| use
+
+    class P3,P4,U4 blue
+    class U5 yellow
+
+    classDef blue fill:#1F5FC4,stroke:#2B2A26,stroke-width:2px,color:#FFFFFF,font-weight:bold
+    classDef yellow fill:#F4C430,stroke:#2B2A26,stroke-width:2px,color:#2B2A26,font-weight:bold
+    classDef gray fill:#E8DDBF,stroke:#5A5446,stroke-width:1.5px,color:#2B2A26</pre></details>
+  </article>
+  <article class="sf-card" id="flow-sequence_user" style="display:flex;flex-direction:column;gap:12px">
+    <h3>② 사용자가 대시보드를 쓰는 순서 (sequence diagram)</h3>
+    <p class="sf-sub" style="margin:0">예비 창업자가 업종을 고르고, 가중치를 바꾸고(선택), 금융 MBTI로 후보를 거른 뒤 자치구를 눌러 자세히 볼 때 대시보드와 정적 데이터가 주고받는 순서입니다.</p>
+    <div class="sf-flowimg"><img src="/_blob/45d400e75c82e502d0f35473dc11b440" alt="② 사용자가 대시보드를 쓰는 순서 (sequence diagram) 다이어그램" loading="lazy" style="max-width:800px;margin:0 auto"></div>
+    <details class="sf-design"><summary>Mermaid 원본 코드 보기 (복사해서 고쳐 쓸 수 있음)</summary><pre class="sf-mermaid-src">sequenceDiagram
+    autonumber
+    participant U as 예비 창업자
+    participant App as 대시보드 (UI · 브라우저 계산)
+    participant Data as 정적 데이터
+
+    rect rgb(245, 247, 250)
+        Note over U,Data: 1. 업종 선택 및 초기 조회
+        U-&gt;&gt;App: 희망 업종 선택
+        App-&gt;&gt;Data: 업종별 점수표 로드
+        Data--&gt;&gt;App: 점수 대상 상권 데이터
+        App--&gt;&gt;U: 기본 순위 · 지도 표시
+    end
+
+    opt 2. 가중치 조정 (선택)
+        U-&gt;&gt;App: 영역별 가중치 변경
+        App-&gt;&gt;App: 종합 점수 즉시 재계산
+        App--&gt;&gt;U: 순위 · 지도 갱신
+    end
+
+    rect rgb(245, 247, 250)
+        Note over U,App: 3. 성향 필터링 및 상세 탐색
+        U-&gt;&gt;App: 금융 MBTI 입력 · 조건 적용
+        App-&gt;&gt;App: 일치 상권 필터링
+        App--&gt;&gt;U: 추천 상권 지도 · 상위 목록
+        U-&gt;&gt;App: 특정 자치구 선택
+        App--&gt;&gt;U: 구별 상세 · 상권 카드 표시
+    end</pre></details>
+  </article>
+  <article class="sf-card" id="flow-flow_score" style="display:flex;flex-direction:column;gap:12px">
+    <h3>③ 상권 점수가 만들어지는 과정 (flowchart)</h3>
+    <p class="sf-sub" style="margin:0">상권 × 업종 표본 중 최소 표본을 채운 것만 4개 영역 백분위로 바꾸고, 가중 평균 종합 점수와 같은 업종 안 순위를 만드는 과정입니다. 회색 칸은 점수를 만들지 않는 경우입니다.</p>
+    <div class="sf-flowimg"><img src="/_blob/f0303d77575f794241a9c57fa4385636" alt="③ 상권 점수가 만들어지는 과정 (flowchart) 다이어그램" loading="lazy" style="max-width:1224px;margin:0 auto"></div>
+    <details class="sf-design"><summary>Mermaid 원본 코드 보기 (복사해서 고쳐 쓸 수 있음)</summary><pre class="sf-mermaid-src">flowchart LR
+    A[&quot;전체 표본&lt;br/&gt;(상권 × 업종)&quot;] --&gt; B{&quot;최소 표본 충족?&lt;br/&gt;(점포 수 · 비교 상권 수)&quot;}
+    B -- 미달 --&gt; X[&quot;점수 산출 제외&lt;br/&gt;(원값만 참고)&quot;]
+    B -- 충족 --&gt; C[&quot;4대 영역 백분위화&lt;br/&gt;(매출↑ · 경쟁↓ · 안정성↓ · 수요↑)&quot;]
+    C --&gt; D[&quot;결측 영역 제외 후&lt;br/&gt;잔여 가중치 재분배&quot;]
+    D --&gt; E[&quot;가중 평균&lt;br/&gt;종합 점수&quot;]
+    E --&gt; F[&quot;동일 업종 내&lt;br/&gt;최종 순위&quot;]
+
+    class E,F blue
+    class X gray
+
+    classDef blue fill:#1F5FC4,stroke:#2B2A26,stroke-width:2px,color:#FFFFFF,font-weight:bold
+    classDef yellow fill:#F4C430,stroke:#2B2A26,stroke-width:2px,color:#2B2A26,font-weight:bold
+    classDef gray fill:#E8DDBF,stroke:#5A5446,stroke-width:1.5px,color:#2B2A26</pre></details>
+  </article>
+  <article class="sf-card" id="flow-flow_type" style="display:flex;flex-direction:column;gap:12px">
+    <h3>④ 금융 MBTI 판정 규칙: 사용자 쪽과 상권 쪽 (flowchart)</h3>
+    <p class="sf-sub" style="margin:0">사용자 성향(설문)과 상권 유형(3개 지표)이 각각 확정 · 보류로 나뉜 뒤, 확정된 기준끼리만 맞춰 후보를 정하는 규칙입니다. 규칙은 두 가지입니다. 사용자가 '상관없음'인 축은 거르지 않고, 사용자가 글자를 고른 축에서 상권이 '판정 보류(?)'이면 후보에서 뺍니다.</p>
+    <div class="sf-flowimg"><img src="/_blob/797fac9756b7a02ba571f169b7b56412" alt="④ 금융 MBTI 판정 규칙: 사용자 쪽과 상권 쪽 (flowchart) 다이어그램" loading="lazy" style="max-width:1160px;margin:0 auto"></div>
+    <details class="sf-design"><summary>Mermaid 원본 코드 보기 (복사해서 고쳐 쓸 수 있음)</summary><pre class="sf-mermaid-src">flowchart LR
+    subgraph AREA[&quot;상권 유형 판정&quot;]
+        direction TB
+        A1[&quot;3대 지표&lt;br/&gt;(인구 · 객단가 · 변화)&quot;] --&gt; A2{&quot;경계 구간?&quot;}
+        A2 -- 아니오 --&gt; A3[&quot;상권 유형 확정&quot;]
+        A2 -- 예 --&gt; A4[&quot;판정 보류(?)&quot;]
+    end
+
+    subgraph USER[&quot;사용자 성향 판정&quot;]
+        direction TB
+        U1[&quot;설문 응답&lt;br/&gt;(15 / 7문항)&quot;] --&gt; U2{&quot;뚜렷한 우세?&quot;}
+        U2 -- 예 --&gt; U3[&quot;선호 유형 확정&quot;]
+        U2 -- 아니오 --&gt; U4[&quot;상관없음&quot;]
+    end
+
+    U3 &amp; A3 --&gt; M[&quot;확정 기준만 일치 매칭&lt;br/&gt;(사용자 &#x27;상관없음&#x27;은 미필터 /&lt;br/&gt;선택 축의 상권 &#x27;보류&#x27;는 제외)&quot;]
+    U4 -.-&gt;|필터 미적용| M
+    M --&gt; OUT[&quot;종합 점수순 후보 추천&quot;]
+
+    class OUT blue
+    class U4,A4 gray
+
+    classDef blue fill:#1F5FC4,stroke:#2B2A26,stroke-width:2px,color:#FFFFFF,font-weight:bold
+    classDef yellow fill:#F4C430,stroke:#2B2A26,stroke-width:2px,color:#2B2A26,font-weight:bold
+    classDef gray fill:#E8DDBF,stroke:#5A5446,stroke-width:1.5px,color:#2B2A26</pre></details>
+  </article>
+  <article class="sf-card" id="flow-flow_mbti" style="display:flex;flex-direction:column;gap:12px">
+    <h3>⑤ 금융 MBTI 추천이 화면에서 진행되는 순서 (flowchart)</h3>
+    <p class="sf-sub" style="margin:0">운영 선호를 입력하면 미리보기로 유형과 후보 수를 먼저 보고, '조건 적용' 뒤에 유형이 맞는 상권만 남겨 종합 점수순으로 보여 줍니다. 검사 결과는 후보를 거르기만 하고 가중치는 바꾸지 않습니다.</p>
+    <div class="sf-flowimg"><img src="/_blob/521455cd4f50491a73b1795c7c25384f" alt="⑤ 금융 MBTI 추천이 화면에서 진행되는 순서 (flowchart) 다이어그램" loading="lazy" style="max-width:1082px;margin:0 auto"></div>
+    <details class="sf-design"><summary>Mermaid 원본 코드 보기 (복사해서 고쳐 쓸 수 있음)</summary><pre class="sf-mermaid-src">flowchart LR
+    S1[&quot;업종 선택&quot;] --&gt; S2[&quot;운영 선호 입력&lt;br/&gt;(설문 · 직접 선택)&quot;]
+    S2 --&gt; S3[&quot;실시간 미리보기&lt;br/&gt;(유형 · 후보 수 확인)&quot;]
+    S3 --&gt;|조건 적용| S4[&quot;유형 일치 상권 필터&lt;br/&gt;(가중치 유지)&quot;]
+    S4 --&gt; S5[&quot;종합 점수순 정렬&quot;]
+    S5 --&gt; S6[&quot;추천 지도 ·&lt;br/&gt;상위 목록&quot;]
+
+    class S3,S4,S5 blue
+    class S6 yellow
+
+    classDef blue fill:#1F5FC4,stroke:#2B2A26,stroke-width:2px,color:#FFFFFF,font-weight:bold
+    classDef yellow fill:#F4C430,stroke:#2B2A26,stroke-width:2px,color:#2B2A26,font-weight:bold
+    classDef gray fill:#E8DDBF,stroke:#5A5446,stroke-width:1.5px,color:#2B2A26</pre></details>
+  </article>
+</section>
+
+<!-- 7. 금융 MBTI 추천 -->
+<section class="sf-sec" id="mbti">
+  <div class="sf-head"><span class="sf-badge">7</span><h2>금융 MBTI 추천</h2><span class="sf-sub">운영 선호 기반</span><span class="sf-step-tag">STEP 5</span></div>
+  <p class="sf-lead">고객 · 가격 · 영업 환경 선호를 묻는 검사입니다. 15문항 기본 검사는 기준마다 5문항 중 4:1 이상일 때, 7문항 간편 검사는 기준의 모든 답이 같을 때만 그 글자로 상권을 거릅니다. 순서는 STEP 4 종합 점수로 정합니다. 창업 성공을 예측하는 검사가 아닙니다.</p>
+  <div class="sf-tabs" role="tablist" aria-label="입력 방법">
+    <button type="button" role="tab" id="sf-tab-quiz" aria-selected="true">15문항 기본 검사</button>
+    <button type="button" role="tab" id="sf-tab-quiz7" aria-selected="false">7문항 간편 검사</button>
+    <button type="button" role="tab" id="sf-tab-manual" aria-selected="false">유형 직접 고르기</button>
+  </div>
+  <div class="sf-row">
+    <div class="sf-card sf-grow">
+      <div id="sf-quiz" style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><strong data-draw="step-label">—</strong><span class="sf-sub"><span data-draw="answered">—</span> · 어느 글자인지는 숨겼습니다</span></div>
+          <div class="sf-bar"><i id="sf-progress"></i></div>
+        </div>
+        <div class="sf-step" data-step="0" style="display:flex;flex-direction:column;gap:14px">
+          <fieldset class="sf-q"><legend>1. 우리 가게가 가장 바빴으면 하는 때는?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="1" data-v="V" aria-pressed="false">평일 점심시간과 퇴근길</button><button class="sf-opt" type="button" data-ver="15" data-q="1" data-v="L" aria-pressed="false">평일 저녁과 주말</button></div></fieldset>
+          <fieldset class="sf-q"><legend>2. 대표 메뉴 가격을 정한다면?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="6" data-v="E" aria-pressed="false">주변 가게보다 조금 싸게 해서 자주 오게 한다</button><button class="sf-opt" type="button" data-ver="15" data-q="6" data-v="P" aria-pressed="false">주변 가게보다 비싸도 그만한 값어치를 보여 준다</button></div></fieldset>
+          <fieldset class="sf-q"><legend>3. 상권을 둘러볼 때 더 끌리는 환경은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="11" data-v="S" aria-pressed="false">오랫동안 운영한 가게들이 자리 잡은 거리</button><button class="sf-opt" type="button" data-ver="15" data-q="11" data-v="D" aria-pressed="false">영업 이력이 짧은 가게들이 주로 있는 거리</button></div></fieldset>
+          <fieldset class="sf-q"><legend>4. 손님 대부분이 이런 사람이면 좋겠다.</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="2" data-v="L" aria-pressed="false">걸어서 5분 거리에 사는 주민</button><button class="sf-opt" type="button" data-ver="15" data-q="2" data-v="V" aria-pressed="false">근처 사무실에 다니는 직장인</button></div></fieldset>
+          <fieldset class="sf-q"><legend>5. 손님 한 명이 한 번 올 때 쓰고 가는 돈은 어느 쪽이 좋을까요?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="7" data-v="P" aria-pressed="false">2~3만 원. 오래 머물며 여러 가지를 주문한다</button><button class="sf-opt" type="button" data-ver="15" data-q="7" data-v="E" aria-pressed="false">5천~1만 원. 짧게 들러 한두 가지만 산다</button></div></fieldset>
+        </div>
+        <div class="sf-step" data-step="1" hidden style="display:flex;flex-direction:column;gap:14px">
+          <fieldset class="sf-q"><legend>6. 주변 가게의 영업 이력이 짧은 곳을 본다면?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="12" data-v="D" aria-pressed="false">새롭게 자리 잡는 가게들과 함께 시도해 보고 싶다</button><button class="sf-opt" type="button" data-ver="15" data-q="12" data-v="S" aria-pressed="false">오래 운영한 가게들 사이에서 시작하고 싶다</button></div></fieldset>
+          <fieldset class="sf-q"><legend>7. 가게 문 앞 풍경으로 더 마음에 드는 쪽은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="3" data-v="V" aria-pressed="false">사원증을 목에 건 사람들이 바쁘게 지나간다</button><button class="sf-opt" type="button" data-ver="15" data-q="3" data-v="L" aria-pressed="false">장바구니와 유모차가 천천히 지나간다</button></div></fieldset>
+          <fieldset class="sf-q"><legend>8. 재료비가 크게 올랐다면?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="8" data-v="E" aria-pressed="false">구성을 조정해 가격은 그대로 지킨다</button><button class="sf-opt" type="button" data-ver="15" data-q="8" data-v="P" aria-pressed="false">더 좋은 재료로 바꾸고 가격을 올린다</button></div></fieldset>
+          <fieldset class="sf-q"><legend>9. 창업 후 운영 방식으로 더 편한 쪽은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="13" data-v="S" aria-pressed="false">일정한 콘셉트로 꾸준히 단골을 쌓는다</button><button class="sf-opt" type="button" data-ver="15" data-q="13" data-v="D" aria-pressed="false">반응을 보며 메뉴와 콘셉트를 계속 조정한다</button></div></fieldset>
+          <fieldset class="sf-q"><legend>10. 손님에게 가장 신경 쓸 부분은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="4" data-v="L" aria-pressed="false">아이 이름, 반려견 이름까지 기억하는 친근함</button><button class="sf-opt" type="button" data-ver="15" data-q="4" data-v="V" aria-pressed="false">점심시간 안에 주문부터 결제까지 끝나는 빠르기</button></div></fieldset>
+        </div>
+        <div class="sf-step" data-step="2" hidden style="display:flex;flex-direction:column;gap:14px">
+          <fieldset class="sf-q"><legend>11. 리뷰에서 가장 듣고 싶은 말은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="9" data-v="P" aria-pressed="false">"특별한 날 다시 오고 싶은 곳"</button><button class="sf-opt" type="button" data-ver="15" data-q="9" data-v="E" aria-pressed="false">"이 가격에 이 정도면 최고"</button></div></fieldset>
+          <fieldset class="sf-q"><legend>12. 상권의 영업 기간 설명을 읽고 더 살펴보고 싶은 곳은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="14" data-v="D" aria-pressed="false">운영 중·폐업한 가게 모두 서울 평균보다 영업 기간이 짧은 곳</button><button class="sf-opt" type="button" data-ver="15" data-q="14" data-v="S" aria-pressed="false">운영 중·폐업한 가게 모두 서울 평균보다 영업 기간이 긴 곳</button></div></fieldset>
+          <fieldset class="sf-q"><legend>13. 요일별 매출이 이렇다면 더 편한 쪽은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="5" data-v="V" aria-pressed="false">평일에 몰리고 주말에는 한산하다</button><button class="sf-opt" type="button" data-ver="15" data-q="5" data-v="L" aria-pressed="false">요일과 상관없이 비슷하게 꾸준하다</button></div></fieldset>
+          <fieldset class="sf-q"><legend>14. 매장 운영 방식으로 더 끌리는 쪽은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="10" data-v="E" aria-pressed="false">키오스크·셀프 주문으로 비용을 줄이고 가격을 낮춘다</button><button class="sf-opt" type="button" data-ver="15" data-q="10" data-v="P" aria-pressed="false">직원이 직접 응대하고 메뉴를 설명해 준다</button></div></fieldset>
+          <fieldset class="sf-q"><legend>15. 주변 매장 분위기로 더 마음이 가는 쪽은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="15" data-q="15" data-v="S" aria-pressed="false">오래된 가게들이 축적한 분위기</button><button class="sf-opt" type="button" data-ver="15" data-q="15" data-v="D" aria-pressed="false">영업을 시작한 지 오래되지 않은 가게들의 분위기</button></div></fieldset>
+        </div>
+        <div class="sf-navrow">
+          <button class="sf-btn" type="button" id="sf-prev" disabled>← 이전 5문항</button>
+          <button class="sf-btn sf-flat" type="button" id="sf-reset">응답 지우기</button>
+          <button class="sf-btn sf-primary" type="button" id="sf-next">다음 5문항 →</button>
+        </div>
+      </div>
+      <div id="sf-quiz7" hidden style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><strong>7문항 간편 검사</strong><span class="sf-sub"><span data-draw="answered">—</span> · 어느 글자인지는 숨겼습니다</span></div>
+          <div class="sf-bar"><i id="sf-progress7"></i></div>
+          <p class="sf-sub" style="margin:0;font-size:.85em">15문항 중 7문항(주 고객 2 · 가격대 3 · 상권 변화 2)만 묻습니다. 기준마다 <b>모든 답이 같을 때(2:0 · 3:0 · 2:0)만</b> 그 글자로 상권을 거르고, 1:1 · 2:1은 거르지 않습니다. 15문항과 같은 정확도인지는 검증하지 않았으니, 더 살펴보려면 15문항 기본 검사를 하세요.</p>
+        </div>
+          <fieldset class="sf-q"><legend>1. 손님 대부분이 이런 사람이면 좋겠다.</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="7" data-q="2" data-v="L" aria-pressed="false">걸어서 5분 거리에 사는 주민</button><button class="sf-opt" type="button" data-ver="7" data-q="2" data-v="V" aria-pressed="false">근처 사무실에 다니는 직장인</button></div></fieldset>
+          <fieldset class="sf-q"><legend>2. 대표 메뉴 가격을 정한다면?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="7" data-q="6" data-v="E" aria-pressed="false">주변 가게보다 조금 싸게 해서 자주 오게 한다</button><button class="sf-opt" type="button" data-ver="7" data-q="6" data-v="P" aria-pressed="false">주변 가게보다 비싸도 그만한 값어치를 보여 준다</button></div></fieldset>
+          <fieldset class="sf-q"><legend>3. 상권을 둘러볼 때 더 끌리는 환경은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="7" data-q="11" data-v="S" aria-pressed="false">오랫동안 운영한 가게들이 자리 잡은 거리</button><button class="sf-opt" type="button" data-ver="7" data-q="11" data-v="D" aria-pressed="false">영업 이력이 짧은 가게들이 주로 있는 거리</button></div></fieldset>
+          <fieldset class="sf-q"><legend>4. 가게 문 앞 풍경으로 더 마음에 드는 쪽은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="7" data-q="3" data-v="V" aria-pressed="false">사원증을 목에 건 사람들이 바쁘게 지나간다</button><button class="sf-opt" type="button" data-ver="7" data-q="3" data-v="L" aria-pressed="false">장바구니와 유모차가 천천히 지나간다</button></div></fieldset>
+          <fieldset class="sf-q"><legend>5. 재료비가 크게 올랐다면?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="7" data-q="8" data-v="E" aria-pressed="false">구성을 조정해 가격은 그대로 지킨다</button><button class="sf-opt" type="button" data-ver="7" data-q="8" data-v="P" aria-pressed="false">더 좋은 재료로 바꾸고 가격을 올린다</button></div></fieldset>
+          <fieldset class="sf-q"><legend>6. 상권의 영업 기간 설명을 읽고 더 살펴보고 싶은 곳은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="7" data-q="14" data-v="D" aria-pressed="false">운영 중·폐업한 가게 모두 서울 평균보다 영업 기간이 짧은 곳</button><button class="sf-opt" type="button" data-ver="7" data-q="14" data-v="S" aria-pressed="false">운영 중·폐업한 가게 모두 서울 평균보다 영업 기간이 긴 곳</button></div></fieldset>
+          <fieldset class="sf-q"><legend>7. 매장 운영 방식으로 더 끌리는 쪽은?</legend><div class="sf-opts"><button class="sf-opt" type="button" data-ver="7" data-q="10" data-v="E" aria-pressed="false">키오스크·셀프 주문으로 비용을 줄이고 가격을 낮춘다</button><button class="sf-opt" type="button" data-ver="7" data-q="10" data-v="P" aria-pressed="false">직원이 직접 응대하고 메뉴를 설명해 준다</button></div></fieldset>
+        <div class="sf-navrow"><button class="sf-btn sf-flat" type="button" id="sf-reset7">응답 지우기</button><a class="sf-btn sf-primary" href="#sf-results-wrap" style="text-decoration:none;display:inline-flex;align-items:center">결과 보기 ↓</a></div>
+      </div>
+      <div id="sf-manual" hidden style="display:flex;flex-direction:column;gap:16px">
+        <strong>유형 직접 고르기</strong>
+        <div><div class="sf-sub">주 고객</div><div class="sf-chips"><button class="sf-chip" type="button" data-ax="LV" data-v="L" aria-pressed="false">L 생활형 · 동네 주민</button><button class="sf-chip" type="button" data-ax="LV" data-v="V" aria-pressed="false">V 방문형 · 직장인·유동</button><button class="sf-chip" type="button" data-ax="LV" data-v="" aria-pressed="true">상관없음</button></div></div>
+        <div><div class="sf-sub">가격대</div><div class="sf-chips"><button class="sf-chip" type="button" data-ax="EP" data-v="E" aria-pressed="false">E 실속형</button><button class="sf-chip" type="button" data-ax="EP" data-v="P" aria-pressed="false">P 프리미엄형</button><button class="sf-chip" type="button" data-ax="EP" data-v="" aria-pressed="true">상관없음</button></div></div>
+        <div><div class="sf-sub">상권 변화</div><div class="sf-chips"><button class="sf-chip" type="button" data-ax="SD" data-v="S" aria-pressed="false">S 안정형 · 오래된 가게가 많은 곳</button><button class="sf-chip" type="button" data-ax="SD" data-v="D" aria-pressed="false">D 역동형 · 가게가 자주 바뀌는 곳</button><button class="sf-chip" type="button" data-ax="SD" data-v="" aria-pressed="true">상관없음</button></div></div>
+      </div>
+    </div>
+    <aside class="sf-card sf-side" aria-label="내 운영 선호" id="sf-aside" style="display:flex;flex-direction:column;gap:12px">
+      <strong>내 운영 선호</strong>
+      <div class="sf-tally" data-draw="tally"></div>
+      <div>
+        <div class="sf-sub">지금 조건으로 남는 상권 (<span data-draw="ind-name">—</span>)</div>
+        <div class="sf-big-n"><span data-draw="pick-count" data-source="pick_count">—</span>곳</div>
+        <div style="font-weight:700" data-draw="pick-label">—</div>
+      </div>
+      <button class="sf-btn sf-primary" type="button" id="sf-apply" disabled>이 조건 적용하기</button>
+      <span class="sf-sub" style="font-size:.78em">적용하면 맨 위 상태 표시와 6장 '맞는 상권만 보기'에 반영됩니다. 검사 탭을 바꾸기만 해서는 적용 중인 조건이 바뀌지 않습니다.</span>
+    </aside>
+  </div>
+
+  <div id="sf-results-wrap" style="display:flex;flex-direction:column;gap:14px">
+    <h3 style="margin:0;font-size:1.25em">유형이 맞는 상권</h3>
+    <div class="sf-empty" id="sf-empty">
+      <strong>아직 표시할 상권이 없습니다</strong>
+      <span>위 15문항에 답하거나 유형을 직접 고르면 여기에 맞는 상권의 지도와 표가 나타납니다.</span>
+      <span data-draw="answered">—</span>
+    </div>
+    <div id="sf-results" hidden style="display:flex;flex-direction:column;gap:14px">
+      <div class="sf-sub" data-draw="filter-label">—</div>
+      <div class="sf-card">
+        <h3>자치구 도트 지도 · 구를 누르면 그 구의 맞는 상권을 자세히 봅니다</h3>
+        <div class="sf-mapwrap" data-draw="cand-map" data-source="candidates ranked geo gumap"></div>
+      </div>
+      <div class="sf-row">
+        <div class="sf-card sf-grow">
+          <h3>상위 10곳</h3>
+          <div class="sf-tbl"><table data-source="candidates" data-row-key="trdar_code"><thead><tr><th data-field="순위" class="n">서울 순위</th><th data-field="상권">상권</th><th data-field="자치구">자치구</th><th data-field="종합" class="n">종합</th><th data-field="매출" class="n">매출</th><th data-field="경쟁" class="n">경쟁</th><th data-field="안정성" class="n">안정성</th><th data-field="수요" class="n">수요</th></tr></thead><tbody data-draw="cand-table"></tbody></table></div>
+          <p class="sf-sub" style="font-size:.78em;margin:8px 0 0">서울 순위는 같은 업종 점수 대상 상권 전체 안의 순위입니다. 점수는 6장 가중치를 따릅니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sf-card">
+    <h3>상권 쪽 L/V · E/P 판정 지도: 주민 비율 × 건당 금액 백분위 (희망 업종)</h3>
+    <p class="sf-sub" style="margin:0 0 8px">점 하나가 상권 하나입니다. 가로는 주민 비율(상주 ÷ (상주 + 직장), 높을수록 L 생활형), 세로는 같은 업종 안 건당 결제 금액 백분위입니다. 회색 띠(45~55)는 판정을 보류하는 구간입니다. 검사나 직접 고르기로 조건이 생기면 맞는 상권을 파랑으로 표시합니다.</p>
+    <div class="sf-chart" data-draw="lvep-scatter" data-source="ranked raw candidates"></div>
+  </div>
+  <div class="sf-card">
+    <h3>상권 쪽 S/D는 이렇게 정했습니다</h3>
+    <p class="sf-sub" style="margin:0 0 8px">서울시 공식 상권변화지표(2025년 4분기)로 판정합니다. 상권확장 · 상권축소는 S/D 어느 쪽인지 근거가 부족해 보류합니다. 사용자가 S 또는 D를 고르면 보류 상권은 후보에서 빠집니다.</p>
+    <div class="sf-chart" data-draw="sd-chart" data-source="sd"></div>
+  </div>
+</section>
+
+<!-- 6. 상권 점수 -->
+<section class="sf-sec" id="scores" hidden>
+  <div class="sf-head"><span class="sf-badge">6</span><h2>상권 점수</h2><span class="sf-step-tag">STEP 4</span></div>
+  <p class="sf-lead">같은 업종의 점수 대상 상권 안에서 4개 영역의 백분위(0~100)를 매기고, 자료가 있는 영역끼리 가중 평균해 종합 점수를 냅니다. 성장성은 2025년 자료만 있어 만들지 않았습니다. 이 점수는 같은 업종 안의 상대 위치이며 창업 성공 확률이 아닙니다.</p>
+  <div class="sf-card">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center"><h3 style="margin:0">영역별 가중치 [가정]</h3><button class="sf-btn sf-flat" type="button" id="sf-wreset">기본값 30 · 25 · 15 · 30</button></div>
+    <div class="sf-weights" style="margin-top:12px">
+      <label for="sf-w-sales"><span>매출 잠재력 · 점포당 월매출<b data-draw="w-val" data-k="w_sales">—</b></span><input type="range" id="sf-w-sales" data-k="w_sales" min="0" max="50" step="5" value="30"></label>
+      <label for="sf-w-comp"><span>경쟁 · 유동인구 1,000명당 점포<b data-draw="w-val" data-k="w_comp">—</b></span><input type="range" id="sf-w-comp" data-k="w_comp" min="0" max="50" step="5" value="25"></label>
+      <label for="sf-w-stab"><span>안정성 · 폐업률(축소 추정)<b data-draw="w-val" data-k="w_stab">—</b></span><input type="range" id="sf-w-stab" data-k="w_stab" min="0" max="50" step="5" value="15"></label>
+      <label for="sf-w-dem"><span>수요 · 유동·직장·상주인구<b data-draw="w-val" data-k="w_dem">—</b></span><input type="range" id="sf-w-dem" data-k="w_dem" min="0" max="50" step="5" value="30"></label>
+    </div>
+  </div>
+  <div class="sf-filters">
+    <label for="sf-gu">자치구 <select id="sf-gu" class="dash-select" data-draw="gu" data-source="gu_avg" aria-label="자치구"></select></label>
+    <label for="sf-only"><input type="checkbox" id="sf-only" disabled> 금융 MBTI에 맞는 상권만 보기</label>
+  </div>
+  <div class="sf-card">
+    <h3>자치구 도트 지도 · 구를 누르면 그 구의 상권을 자세히 봅니다</h3>
+    <div class="sf-mapwrap" data-draw="score-map" data-source="ranked geo gumap"></div>
+  </div>
+  <div class="sf-row">
+    <div class="sf-card sf-grow" id="area-map-card">
+      <h3>상권 단위 종합 점수 지도 · 상권을 누르면 오른쪽 상세가 바뀝니다</h3>
+      <div class="sf-map sf-map-detail" data-draw="area-map" data-source="ranked geo gumap"></div>
+      <div class="sf-legend" data-draw="area-map-legend"></div>
+    </div>
+    <div class="sf-card sf-grow" id="area-detail-card">
+      <h3>상권 상세 · 업종 중앙값과 비교</h3>
+      <div data-draw="area-detail" data-source="ranked raw"></div>
+    </div>
+  </div>
+  <div class="sf-row">
+    <div class="sf-card sf-grow">
+      <h3>상권 순위 (상위 20곳)</h3>
+      <div class="sf-tbl"><table data-source="ranked" data-row-key="trdar_code"><thead><tr><th data-field="순위" class="n">순위</th><th data-field="상권">상권</th><th data-field="자치구">자치구</th><th data-field="종합" class="n">종합</th><th data-field="매출" class="n">매출</th><th data-field="경쟁" class="n">경쟁</th><th data-field="안정성" class="n">안정성</th><th data-field="수요" class="n">수요</th><th data-field="유형">유형</th></tr></thead><tbody data-draw="rank-table"></tbody></table></div>
+    </div>
+  </div>
+  <div class="sf-row">
+    <div class="sf-card sf-grow">
+      <h3>자치구별 평균 종합 점수</h3>
+      <div class="sf-chart" data-draw="gu-chart" data-source="gu_avg"></div>
+    </div>
+    <div class="sf-card sf-grow">
+      <h3>가중치를 바꾸면? 상위 10곳 중 그대로 남는 수 (77개 업종 중앙값)</h3>
+      <div class="sf-chart" data-draw="sens-chart" data-source="sensitivity"></div>
+      <p class="sf-sub" style="margin:8px 0 0">경쟁 영역을 빼면 순위가 가장 크게 바뀝니다. 경쟁과 수요가 같은 유동인구를 쓰기 때문입니다.</p>
+    </div>
+  </div>
+  <div class="sf-row">
+    <div class="sf-card sf-grow">
+      <h3>이 업종에서 가중치 가정별 순위 변화</h3>
+      <div class="sf-chart" data-draw="scen-chart" data-source="scen"></div>
+      <div class="sf-tbl"><table data-source="scen" data-row-key="가정"><thead><tr><th data-field="가정">가정</th><th data-field="가중치">매출·경쟁·안정성·수요</th><th data-field="상위10유지" class="n">기본 상위 10곳 유지</th><th data-field="순위상관" class="n">기본과 순위 상관</th></tr></thead><tbody data-draw="scen-table"></tbody></table></div>
+      <p class="sf-sub" style="margin:8px 0 0">위의 77개 업종 중앙값과 달리, 지금 고른 희망 업종 하나로 다시 계산합니다. '현재 설정'은 위 슬라이더 값입니다.</p>
+    </div>
+    <div class="sf-card sf-grow">
+      <h3>영역 점수 간 순위상관 (점수 대상 20,522칸 전체)</h3>
+      <div class="sf-chart" data-draw="corr-matrix" data-source="corr"></div>
+      <p class="sf-sub" style="margin:8px 0 0">1에 가까울수록 두 영역이 함께 움직입니다. 경쟁과 수요는 둘 다 유동인구를 써서 함께 움직이므로, 두 영역의 가중치를 모두 높이면 유동인구를 두 번 반영하게 됩니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 1. 분석 요약 -->
+<section class="sf-sec" id="summary" hidden>
+  <div class="sf-head"><span class="sf-badge">1</span><h2>분석 요약</h2></div>
+  <p class="sf-lead">희망 업종을 고르면 서울의 같은 업종 상권끼리 비교한 점수(0~100)와, 금융 MBTI에 맞는 상권을 보여 줍니다. 서울시 상권분석서비스와 소상공인 상가정보의 2025년 1~4분기 자료를 썼습니다.</p>
+  <div class="sf-tiles">
+    <div class="sf-tile"><div class="v"><span data-draw="num" data-source="summary" data-field="값" data-where="지표=비교 상권">—</span>곳</div><div class="l">비교 상권</div><div class="s">관광특구 제외</div></div>
+    <div class="sf-tile"><div class="v"><span data-draw="num" data-source="summary" data-field="값" data-where="지표=서비스 업종">—</span>개</div><div class="l">서울 서비스 업종</div><div class="s">상권분석서비스 업종</div></div>
+    <div class="sf-tile"><div class="v"><span data-draw="num" data-source="summary" data-field="값" data-where="지표=점수 대상">—</span>칸</div><div class="l">점수 대상 (상권×업종)</div><div class="s"><span data-draw="num" data-source="summary" data-field="값" data-where="지표=점수 업종">—</span>개 업종</div></div>
+    <div class="sf-tile"><div class="v"><span data-draw="num" data-source="summary" data-field="값" data-where="지표=매출 점수 칸">—</span>칸</div><div class="l">매출 잠재력 점수</div><div class="s"><span data-draw="num" data-source="summary" data-field="값" data-where="지표=매출 점수 업종">—</span>개 업종</div></div>
+    <div class="sf-tile"><div class="v"><span data-draw="num" data-source="summary" data-field="값" data-where="지표=세 축 판정 칸">—</span>칸</div><div class="l">세 기준 모두 판정</div><div class="s">일부 보류 <span data-draw="num" data-source="summary" data-field="값" data-where="지표=일부 축 보류 칸">—</span>칸</div></div>
+    <div class="sf-tile"><div class="v"><span data-draw="num" data-source="summary" data-field="값" data-where="지표=상가업소">—</span>개</div><div class="l">상가업소 (상가정보)</div><div class="s">2025-12-31 기준</div></div>
+  </div>
+  <div class="sf-card">
+    <h3>계획서 목표별 결과</h3>
+    <div class="sf-tbl"><table><thead><tr><th>목표 (계획서 1장)</th><th>결과</th><th>상태</th></tr></thead><tbody>
+      <tr><td class="w">상업시설 구성과 업종 분포</td><td class="w">서비스 업종 × 상권의 점포 분포. 8장 시각화 1 · 3 · 5</td><td>완료</td></tr>
+      <tr><td class="w">매출 · 경쟁 · 성장성 · 안정성</td><td class="w">매출 · 경쟁 · 안정성은 분석. 성장성은 2025년 자료만 있어 만들지 않음</td><td>일부</td></tr>
+      <tr><td class="w">상권별 파생변수</td><td class="w">5장 파생변수 정의서</td><td>완료</td></tr>
+      <tr><td class="w">창업 적합성 점수</td><td class="w">4개 영역 업종 내 비교 점수 (6장). 성장성 영역 없음</td><td>일부</td></tr>
+      <tr><td class="w">금융 MBTI · 예산 · 위험 성향 개인화</td><td class="w">15문항 → L/V · E/P · 공식 S/D로 후보 비교 (7장). 임대료 자료가 없어 예산은 판단하지 않음</td><td>일부</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="sf-card" id="findings">
+    <h3>분석하면서 확인한 것</h3>
+    <div class="sf-finds">
+      <article class="sf-find"><span class="sf-find-n">1</span><h4>매출이 0이 아니라 '자료 없음'인 칸이 많습니다</h4><p>매출 행은 점포 3개 이상인 칸에만 있습니다. 매출 제공 62개 업종 칸의 48.8%가 점포 0~2개라 매출이 없습니다. 0으로 채우지 않고 '자료 없음'으로 두었습니다.</p></article>
+      <article class="sf-find"><span class="sf-find-n">2</span><h4>'2025년' 값이 2025년에 바뀌지 않은 자료가 있습니다</h4><p>집객시설은 2021년 1분기 이후 값이 그대로이고, 직장인구는 2024년 4분기, 상주인구는 2023년 4분기에 마지막으로 바뀌었습니다. 상권별 고정 속성으로만 씁니다.</p></article>
+      <article class="sf-find"><span class="sf-find-n">3</span><h4>관광특구는 비교에서 뺐습니다</h4><p>관광특구 상가의 97.1%가 다른 상권에도 속합니다. 빼면 서울 매출 합계가 92.7조원에서 86.97조원으로 줄어듭니다.</p></article>
+      <article class="sf-find"><span class="sf-find-n">4</span><h4>총매출 순위는 입지보다 업종을 보여 줍니다</h4><p>매출 상위 20개 상권 중 11곳은 업종 하나가 매출의 절반을 넘습니다(8장 시각화 2). 그래서 점수는 희망 업종 안에서만 비교합니다.</p></article>
+      <article class="sf-find"><span class="sf-find-n">5</span><h4>칸 단위 폐업률은 1년치로 믿기 어렵습니다</h4><p>점포당 매출의 상·하반기 상관은 0.93~0.95인데 폐업률은 0.01~0.26입니다. 축소 추정 폐업률(α = 13.19)을 쓰고, 안정성 가중치는 15로 낮췄습니다.</p></article>
+      <article class="sf-find"><span class="sf-find-n">6</span><h4>점포 수를 그대로 경쟁 감점으로 쓰지 않습니다</h4><p>같은 업종 점포가 2배인 칸의 폐업률은 1.004배로 차이가 없었습니다. 경쟁은 유동인구 1,000명당 같은 업종 점포 수로 정의했습니다 [가정].</p></article>
+    </div>
+    <p class="sf-sub" style="margin:10px 0 0;font-size:.8em">출처: 팀 통합 대시보드 1장(박성은 정리, 2026-11-23 · 11-26)과 김지영 STEP 2 · 3 · 6 분석. 숫자는 2025년 자료 기준입니다.</p>
+  </div>
+  <div class="sf-card">
+    <h3>이 결과로 말할 수 없는 것</h3>
+    <ul class="sf-list">
+      <li>점수는 창업 성공 확률이나 수익을 뜻하지 않습니다. 같은 업종 안의 상대 위치입니다.</li>
+      <li>가중치 30 · 25 · 15 · 30은 성과로 검증된 값이 아니라 팀이 정한 가정입니다.</li>
+      <li>검사지는 팀 제작 초안이며 심리검사 타당도를 검증하지 않았습니다.</li>
+      <li>임대료 · 보증금 · 권리금 자료가 없어 예산 적합성은 판단하지 않습니다.</li>
+      <li>상관은 인과가 아닙니다. 장사가 되는 곳에 점포가 몰린다는 설명도 똑같이 성립합니다.</li>
+      <li>추정매출은 카드 결제 자료를 바탕으로 한 추정치입니다. 개별 점포의 실제 매출이 아닙니다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 8. EDA -->
+<section class="sf-sec" id="eda" hidden>
+  <div class="sf-head"><span class="sf-badge">8</span><h2>EDA와 시각화</h2><span class="sf-step-tag">STEP 6</span></div>
+  <p class="sf-lead">계획서 STEP 6의 시각화 7종입니다. 카드마다 확인한 결과를 먼저 보여 주고, 설계(목적 · 데이터 · 방법 · 기대 인사이트)는 접어 두었습니다. 위의 희망 업종을 바꾸면 1 · 3 · 4 · 6 · 7번이 함께 바뀝니다.</p>
+  <nav class="sf-eda-chips" aria-label="시각화 바로가기">
+    <a href="#eda-1">1. 업종 분포 지도</a><a href="#eda-2">2. 추정매출 히트맵</a><a href="#eda-3">3. 점포 밀집도</a><a href="#eda-4">4. 매출 수준과 폐업률</a><a href="#eda-5">5. 집객시설 구성</a><a href="#eda-6">6. 점수 레이더</a><a href="#eda-7">7. 금융 MBTI 8유형별 후보</a>
+  </nav>
+
+  <article class="sf-card" id="eda-1" style="display:flex;flex-direction:column;gap:12px">
+    <h3>1. 서울시 상권별 업종 분포 지도</h3>
+    <div class="sf-result"><div class="sf-k">확인한 결과 · <span data-draw="ind-name">—</span></div><p>점포가 있는 상권 <span data-draw="num" data-source="conc" data-field="값" data-where="지표=점포 있는 상권">—</span>곳 중 상위 10%(<span data-draw="num" data-source="conc" data-field="값" data-where="지표=상위 10% 상권">—</span>곳)에 점포의 <span data-draw="num" data-source="conc" data-field="값" data-where="지표=상위 10% 점포 비중">—</span>%가 있습니다.</p></div>
+    <div class="sf-filters"><label for="sf-eda1-mode">보기 <select id="sf-eda1-mode" class="dash-select"><option value="ind">선택 업종 점포 수</option><option value="group">상권별 최다 업종군</option></select></label></div>
+    <p class="sf-sub" style="margin:0">실제 자치구 경계 위의 상권 지도입니다. 마우스 휠이나 + 버튼으로 확대하고, 끌어서 옮깁니다.</p>
+    <div class="sf-map sf-map-detail" data-draw="eda-map" data-source="ind_stores area_lead geo gumap"></div>
+    <div class="sf-legend" data-draw="eda-map-legend"></div>
+    <details class="sf-design"><summary>설계 보기</summary><div class="sf-dgrid" data-draw="eda-design" data-n="1"></div></details>
+  </article>
+
+  <article class="sf-card" id="eda-2" style="display:flex;flex-direction:column;gap:12px">
+    <h3>2. 상권별 추정매출 히트맵</h3>
+    <div class="sf-result"><div class="sf-k">확인한 결과</div><p data-draw="eda-result" data-n="2">—</p></div>
+    <div class="sf-filters"><label for="sf-heat-mode">기준 <select id="sf-heat-mode" class="dash-select"><option value="상권">매출 상위 20개 상권</option><option value="자치구">25개 자치구</option></select></label></div>
+    <div class="sf-chart" data-draw="eda-heat" data-source="eda_heat" style="overflow-x:auto"></div>
+    <details class="sf-design"><summary>설계 보기</summary><div class="sf-dgrid" data-draw="eda-design" data-n="2"></div></details>
+  </article>
+
+  <article class="sf-card" id="eda-3" style="display:flex;flex-direction:column;gap:12px">
+    <h3>3. 업종별 점포 밀집도 비교</h3>
+    <div class="sf-result"><div class="sf-k">확인한 결과</div><p data-draw="eda-result" data-n="3">—</p></div>
+    <p class="sf-sub" style="margin:0">면적당 점포 수(개/㎢)의 25 · 50 · 75 백분위입니다. 서울 점포 수 상위 25개 업종과 선택 업종(금색)을 중앙값 순으로 보여 주며, 가로축은 로그 눈금입니다.</p>
+    <div class="sf-chart" data-draw="eda-density" data-source="eda_density ind_total"></div>
+    <p class="sf-sub" style="margin:0;font-weight:700;color:var(--sf-ink)" data-draw="dens-note" data-source="eda_density">—</p>
+    <details class="sf-design"><summary>설계 보기</summary><div class="sf-dgrid" data-draw="eda-design" data-n="3"></div></details>
+  </article>
+
+  <article class="sf-card" id="eda-4" style="display:flex;flex-direction:column;gap:12px">
+    <h3>4. 매출 수준과 폐업률의 관계 <span class="sf-step-tag">대체 구현</span></h3>
+    <div class="sf-result"><div class="sf-k">확인한 결과</div><p data-draw="eda-result" data-n="4">—</p></div>
+    <p class="sf-sub" style="margin:0">계획은 매출 성장률이었지만 2024년 자료가 없어 점포당 월매출(로그 눈금)로 바꿨습니다. <span data-draw="ind-name">—</span>의 순위상관 ρ = <b data-draw="rho" data-source="eda_rho" data-field="순위상관">—</b></p>
+    <div class="sf-chart" data-draw="eda-scatter" data-source="close_ind"></div>
+    <p class="sf-sub" style="margin:0">아래 띠: 매출 점수가 있는 53개 업종의 순위상관 ρ (점 하나 = 업종 하나, 금색 = 선택 업종, 점선 = 중앙값)</p>
+    <div class="sf-chart" data-draw="rho-strip" data-source="eda_rho" style="min-height:70px"></div>
+    <details class="sf-design"><summary>설계 보기</summary><div class="sf-dgrid" data-draw="eda-design" data-n="4"></div></details>
+  </article>
+
+  <article class="sf-card" id="eda-5" style="display:flex;flex-direction:column;gap:12px">
+    <h3>5. 상권별 집객시설 구성</h3>
+    <div class="sf-result"><div class="sf-k">확인한 결과</div><p data-draw="eda-result" data-n="5">—</p></div>
+    <div class="sf-chart" data-draw="eda-fac" data-source="eda_facility"></div>
+    <div class="sf-legend" data-draw="fac-legend"></div>
+    <details class="sf-design"><summary>설계 보기</summary><div class="sf-dgrid" data-draw="eda-design" data-n="5"></div></details>
+  </article>
+
+  <article class="sf-card" id="eda-6" style="display:flex;flex-direction:column;gap:12px">
+    <h3>6. 상권 점수 레이더 차트</h3>
+    <div class="sf-result"><div class="sf-k">확인한 결과 · <span data-draw="ind-name">—</span></div><p>현재 가중치 상위 3곳과 업종 중앙값의 4개 영역 점수입니다. 종합 점수가 비슷해도 강한 영역이 다릅니다.</p></div>
+    <div class="sf-chart" data-draw="eda-radar" data-source="radar"></div>
+    <div class="sf-legend" data-draw="radar-legend"></div>
+    <details class="sf-design"><summary>설계 보기</summary><div class="sf-dgrid" data-draw="eda-design" data-n="6"></div></details>
+  </article>
+
+  <article class="sf-card" id="eda-7" style="display:flex;flex-direction:column;gap:12px">
+    <h3>7. 금융 MBTI 8유형별 후보 비교</h3>
+    <div class="sf-result"><div class="sf-k">확인한 결과 · <span data-draw="ind-name">—</span></div><p>같은 업종이라도 유형마다 남는 상권 수와 1위 상권이 다릅니다. 세 기준이 모두 판정된 상권만 셉니다.</p></div>
+    <div class="sf-typecards" data-draw="eda-types" data-source="type_counts ranked"></div>
+    <details class="sf-design"><summary>설계 보기</summary><div class="sf-dgrid"><div><b>분석 목적</b>창업자 유형 8개마다 같은 업종에서 어떤 상권이 먼저 보이는지 비교한다</div><div><b>필요한 데이터</b>STEP 5 상권 L/V · E/P · 공식 S/D, STEP 4 종합 점수</div><div><b>구현 방법</b>유형 8개 카드: 세 글자가 모두 맞는 상권 수와 현재 가중치 종합 점수 상위 5곳</div><div><b>기대 인사이트</b>유형에 따라 후보 수와 먼저 보이는 상권이 달라진다</div></div></details>
+  </article>
+</section>
+
+<!-- 2. 데이터셋 -->
+<section class="sf-sec" id="datasets" hidden>
+  <div class="sf-head"><span class="sf-badge">2</span><h2>데이터셋과 다운로드 링크</h2></div>
+  <p class="sf-lead">공공데이터포털과 서울 열린데이터광장에서 공통 9종을 수집했고, S/D 판정을 위해 공식 상권변화지표(K08)를 추가로 연결했습니다. 행 수와 열 수는 실제로 받은 파일을 세어 확인한 값입니다.</p>
+  <div class="sf-card sf-tbl"><table data-source="catalog" data-row-key="ID"><thead><tr><th data-field="ID">ID</th><th data-field="데이터셋">데이터셋</th><th data-field="제공 기관">제공 기관</th><th data-field="행 수" class="n">행 수</th><th data-field="열 수" class="n">열 수</th><th data-field="기간">기간</th><th data-field="링크">링크</th></tr></thead><tbody data-draw="catalog-table"></tbody></table></div>
+</section>
+
+<!-- 3. 컬럼 -->
+<section class="sf-sec" id="columns" hidden>
+  <div class="sf-head"><span class="sf-badge">3</span><h2>데이터셋별 주요 컬럼</h2></div>
+  <p class="sf-lead">원본 컬럼의 의미 · 단위 · 결측률입니다. 의미는 공식 명세를 따랐습니다.</p>
+  <div class="sf-filters"><label for="sf-col-ds">데이터셋 <select id="sf-col-ds" class="dash-select"><option value="S01">S01 상가(상권)정보</option><option value="S02">S02 업종코드</option><option value="K01">K01 추정매출</option><option value="K02">K02 점포</option><option value="K03">K03 상권 영역</option><option value="K04">K04 길단위인구</option><option value="K05">K05 집객시설</option><option value="K06">K06 직장인구</option><option value="K07">K07 상주인구</option></select></label></div>
+  <div class="sf-card sf-tbl"><table data-source="columns" data-row-key="ID,순서"><thead><tr><th data-field="순서" class="n">순서</th><th data-field="컬럼">컬럼</th><th data-field="의미">의미</th><th data-field="단위">단위</th><th data-field="결측률(%)" class="n">결측률(%)</th></tr></thead><tbody data-draw="columns-table"></tbody></table></div>
+</section>
+
+<!-- 4. 결합 -->
+<section class="sf-sec" id="join" hidden>
+  <div class="sf-head"><span class="sf-badge">4</span><h2>데이터 전처리와 결합 구조</h2></div>
+  <p class="sf-lead">핵심 단위는 상권 × 서울 서비스업종 × 분기입니다. 점포 자료(K02)에 실제로 있는 행을 기준으로 매출을 왼쪽 결합했고, 인구 · 시설은 업종마다 같은 값을 반복해서 더하지 않도록 상권 × 분기 표로 따로 둡니다.</p>
+  <div class="sf-card">
+    <h3>점수 대상까지 걸러진 과정</h3>
+    <div class="sf-flow">
+      <div>상권 × 업종 칸 (관광특구 제외)<b><span data-draw="num" data-source="summary" data-field="값" data-where="지표=상권×업종 칸">—</span>칸</b></div>
+      <span aria-hidden="true">→</span>
+      <div>평균 점포 5개 미만 제외<b>−<span data-draw="num" data-source="summary" data-field="값" data-where="지표=평균 점포 5개 미만">—</span>칸</b></div>
+      <span aria-hidden="true">→</span>
+      <div>비교 상권 30곳 미만 업종 제외<b>−<span data-draw="num" data-source="summary" data-field="값" data-where="지표=비교 상권 30곳 미만">—</span>칸</b></div>
+      <span aria-hidden="true">→</span>
+      <div style="border-color:var(--sf-accent)">점수 대상<b><span data-draw="num" data-source="summary" data-field="값" data-where="지표=점수 대상">—</span>칸</b></div>
+    </div>
+  </div>
+  <div class="sf-card">
+    <h3>처리 원칙</h3>
+    <ul class="sf-list">
+      <li>매출이 없는 칸은 0으로 채우지 않고 '자료 없음'으로 둡니다. 점수는 자료가 있는 영역끼리 다시 가중 평균합니다.</li>
+      <li>관광특구는 다른 상권과 겹치는 경우가 많아 비교에서 뺐습니다.</li>
+      <li>집객시설은 2021년 1분기 이후 값이 바뀌지 않아 점수에 쓰지 않고 8장 시각화 5에만 씁니다.</li>
+      <li>S/D는 공식 상권변화지표를 그대로 써서 팀원 간 판정 차이를 없앴습니다(2026-11-19 팀 결정).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 5. 파생변수 -->
+<section class="sf-sec" id="features" hidden>
+  <div class="sf-head"><span class="sf-badge">5</span><h2>파생변수 정의서</h2></div>
+  <p class="sf-lead">STEP 3에서 정의한 파생변수입니다. '보류'는 2025년 자료만으로 계산할 수 없거나 필요한 자료가 없는 변수입니다.</p>
+  <div class="sf-card sf-tbl"><table data-source="features" data-row-key="변수"><thead><tr><th data-field="변수">변수</th><th data-field="단위 수준">단위 수준</th><th data-field="계산식">계산식</th><th data-field="단위">단위</th><th data-field="목적">목적</th><th data-field="확보">확보</th></tr></thead><tbody data-draw="features-table"></tbody></table></div>
+</section>
+
+<!-- 9. 폴더 -->
+<section class="sf-sec" id="folders" hidden>
+  <div class="sf-head"><span class="sf-badge">9</span><h2>Python 프로젝트 폴더 구조</h2></div>
+  <div class="sf-card">
+    <ul class="sf-list sf-mono">
+      <li>seoul-commercial-analysis/data/metadata/ · 데이터 목록 · 컬럼 사전</li>
+      <li>김지영/step2_3/ · 공통 데이터 정리 · 파생변수 정의</li>
+      <li>김지영/step6_final/ · STEP 6 시각화 7종 원본 계산</li>
+      <li>이승희/step4_dashboard/ · STEP 4 점수 (build_scores.py)</li>
+      <li>이승희/step5_recommend/ · STEP 5 유형 판정 · 검사지 · 추천 (recommend.py)</li>
+      <li>박성은/team_unified_final/ · 팀 통합 재계산 검증 · 공유 배포</li>
+    </ul>
+    <p class="sf-sub" style="margin:10px 0 0">이 대시보드의 데이터는 위 폴더의 결과(2026-11-25 기준 팀 저장소 main)에서 뽑았습니다. 각 출처는 오른쪽 위 Sources에서 볼 수 있습니다.</p>
+  </div>
+</section>
+
+<!-- 10. 로드맵 -->
+<section class="sf-sec" id="roadmap" hidden>
+  <div class="sf-head"><span class="sf-badge">10</span><h2>단계별 구현 로드맵</h2></div>
+  <div class="sf-card sf-tbl"><table><thead><tr><th>단계</th><th>내용</th><th>상태</th></tr></thead><tbody>
+    <tr><td>STEP 1</td><td class="w">공공데이터 9종 수집, 목록 · 컬럼 사전</td><td>완료</td></tr>
+    <tr><td>STEP 2</td><td class="w">전처리 · 결합 (상권 × 업종 × 분기)</td><td>완료</td></tr>
+    <tr><td>STEP 3</td><td class="w">파생변수 정의 (일부 보류)</td><td>완료</td></tr>
+    <tr><td>STEP 4</td><td class="w">4개 영역 업종 내 비교 점수 (성장성 제외)</td><td>완료</td></tr>
+    <tr><td>STEP 5</td><td class="w">금융 MBTI 15문항 · 공식 S/D · 후보 추천 (통합 기준 v1, 11-19)</td><td>완료</td></tr>
+    <tr><td>STEP 6</td><td class="w">EDA 시각화 7종 (4번은 대체 지표), 최종 대시보드</td><td>완료</td></tr>
+  </tbody></table></div>
+  <div class="sf-card">
+    <h3>자료가 더 있으면 할 수 있는 것</h3>
+    <ul class="sf-list">
+      <li>2024년 자료 → 성장성 영역과 매출 성장률 시각화</li>
+      <li>실제 창업자 응답 → 검사지 문항 다듬기</li>
+      <li>임대료 자료 → 예산에 맞는 추천</li>
+      <li>경쟁 지표 정의와 비중 재검토 (6장 민감도 참고)</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+
+<script>
+// 공통 상태와 도우미. 다른 스크립트는 window.SF로 쓴다.
+window.SF = {
+  ans: { quiz: {}, quiz7: {} }, appliedFrom: '', step: 0, tab: 'quiz', manual: { LV: '', EP: '', SD: '' },
+  K7: { LV: 2, EP: 3, SD: 2 }, SRC: { quiz: '15문항 기본 검사', quiz7: '7문항 간편 검사', manual: '유형 직접 고르기' }, guPick: '', onlyMatch: false, eda1: 'ind', heat: '상권',
+  Q: { 1: 'LV', 2: 'LV', 3: 'LV', 4: 'LV', 5: 'LV', 6: 'EP', 7: 'EP', 8: 'EP', 9: 'EP', 10: 'EP', 11: 'SD', 12: 'SD', 13: 'SD', 14: 'SD', 15: 'SD' },
+  AX: { LV: ['주 고객', 'L', '생활형', 'V', '방문형'], EP: ['가격대', 'E', '실속형', 'P', '프리미엄형'], SD: ['상권 변화', 'S', '안정형', 'D', '역동형'] },
+  NAMES: { LES: '동네 단골형', LED: '생활 역동형', LPS: '동네 취향형', LPD: '취향 역동형', VES: '실속 유동형', VED: '유동 역동형', VPS: '목적 방문형', VPD: '방문 역동형' },
+  fmt: d3.format(','),
+  num(v) { return v === null || v === undefined || v === '' ? null : Number(v); },
+  match(r, code) {
+    if (!code) return true;
+    const ax = ['LV', 'EP', 'SD'];
+    for (let i = 0; i < 3; i++) { const l = code[i]; if (l && l !== '?' && r[ax[i]] !== l) return false; }
+    return true;
+  },
+  axisState(ax) {
+    const d = SF.AX[ax];
+    if (SF.tab === 'manual') { const m = SF.manual[ax]; return { a: null, b: null, n: 5, letter: m || '?', status: m ? '직접 고름' : '거르지 않음', cls: m ? 'ok' : '' }; }
+    const short = SF.tab === 'quiz7', K = short ? SF.K7[ax] : 5;
+    let a = 0, b = 0;
+    Object.keys(SF.answers).forEach((q) => { if (SF.Q[q] === ax) { if (SF.answers[q] === d[1]) a++; else b++; } });
+    const n = a + b;
+    if (n < K) return { a, b, n, letter: '?', status: '답 ' + n + '/' + K, cls: '' };
+    const top = a > b ? d[1] : d[3];
+    if (short ? Math.max(a, b) === K : Math.max(a, b) >= 4) return { a, b, n, letter: top, status: '뚜렷함 → ' + top, cls: 'ok' };
+    return { a, b, n, letter: '?', status: (a === b ? '동률' : '경계') + ' → 거르지 않음', cls: 'warn' };
+  },
+  code() { return ['LV', 'EP', 'SD'].map((ax) => SF.axisState(ax).letter).join(''); },
+  get answers() { return SF.ans[SF.tab === 'quiz7' ? 'quiz7' : 'quiz']; },
+  total() { return SF.tab === 'quiz7' ? 7 : 15; },
+  codeName(code) {
+    if (!code || code === '???') return '거르는 조건 없음';
+    if (SF.NAMES[code]) return code + ' ' + SF.NAMES[code];
+    return ['LV', 'EP', 'SD'].map((ax, i) => { const d = SF.AX[ax]; const l = code[i]; return l === '?' ? null : l + ' ' + (l === d[1] ? d[2] : d[4]); }).filter(Boolean).join(' · ');
+  },
+  describe(code) {
+    return ['LV', 'EP', 'SD'].map((ax, i) => { const d = SF.AX[ax]; const l = (code || '???')[i]; return d[0] + ': ' + (l === '?' ? '상관없음' : l + ' ' + (l === d[1] ? d[2] : d[4])); }).join(' · ');
+  },
+  C: ['#1F5FC4', '#A67C00', '#2E8B57', '#163F82', '#C8443C'],
+  score: d3.scaleSequential(d3.interpolateRgbBasis(['#D6E6FA', '#5B8FE0', '#163F82'])).domain([0, 100]),
+  accent() { return '#1F5FC4'; },
+  tip(box) {
+    let t = box.querySelector('.sf-tip');
+    if (!t) { t = document.createElement('div'); t.className = 'sf-tip'; t.hidden = true; box.appendChild(t); }
+    return {
+      show(ev, lines) {
+        t.replaceChildren(...lines.map((l, i) => { const s = document.createElement('div'); s.textContent = l; if (i === 0) s.style.fontWeight = '700'; return s; }));
+        t.hidden = false;
+        const r = box.getBoundingClientRect();
+        let x = ev.clientX - r.left + 12, y = ev.clientY - r.top + 12;
+        if (x + t.offsetWidth > r.width) x = Math.max(0, ev.clientX - r.left - t.offsetWidth - 12);
+        if (y + t.offsetHeight > r.height) y = Math.max(0, ev.clientY - r.top - t.offsetHeight - 12);
+        t.style.left = x + 'px'; t.style.top = y + 'px';
+      },
+      hide() { t.hidden = true; }
+    };
+  },
+  // 상권 지도: 회색 도트 서울 배경 + 상권 경계. paint(row) → {fill, op} 또는 null(흐리게)
+  // EDA용 상세 지도: 도트 없이 실제 자치구 경계 위에 상권 경계. 휠·드래그로 확대 · 이동, 버튼으로 처음 크기
+  drawMap(el, { paint, tipLines, onClick, sig }) {
+    const geo = dash.data('geo'), gm = dash.data('gumap');
+    if (geo.status !== 'ok' || gm.status !== 'ok') { el.textContent = geo.status === 'error' || gm.status === 'error' ? '지도를 불러오지 못했습니다.' : '—'; return; }
+    if (sig && el.__sfSig === sig && el.querySelector('svg')) return;
+    el.__sfSig = sig;
+    const W = Number(gm.data[0]['폭']), H = Number(gm.data[0]['높이']);
+    const real = gm.data.filter((r) => r['종류'] === 'real');
+    const labels = gm.data.filter((r) => r['종류'] === 'gu' && r.lx !== null);
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '서울 상권 상세 지도 (실제 자치구 경계)').style('background', '#FFFFFF').style('cursor', 'grab');
+    const root = svg.append('g');
+    root.append('g').selectAll('path').data(real).join('path').attr('d', (r) => r.path).style('fill', '#F4F1E8').style('stroke', 'none');
+    const tip = SF.tip(el);
+    root.append('g').selectAll('path').data(geo.data).join('path')
+      .attr('d', (r) => r.path).attr('vector-effect', 'non-scaling-stroke')
+      .each(function (r) {
+        const p = paint(r);
+        const s = d3.select(this);
+        if (p) s.style('fill', p.fill).style('fill-opacity', p.op ?? 1).style('stroke', '#FFFFFF').style('stroke-width', 0.6);
+        else s.style('fill', '#E2DDD0').style('fill-opacity', 0.9).style('stroke', '#FFFFFF').style('stroke-width', 0.4);
+      })
+      .style('cursor', onClick ? 'pointer' : 'default')
+      .on('mouseenter', function () { d3.select(this).style('stroke', '#2B2A26').style('stroke-width', 2); })
+      .on('mousemove', (ev, r) => { const l = tipLines(r); if (l) tip.show(ev, l); else tip.hide(); })
+      .on('mouseleave', function (ev, r) { const p = paint(r); d3.select(this).style('stroke', '#FFFFFF').style('stroke-width', p ? 0.6 : 0.4); tip.hide(); })
+      .on('click', (ev, r) => { if (onClick) onClick(r); });
+    root.append('g').style('pointer-events', 'none').selectAll('path').data(real).join('path').attr('d', (r) => r.path).attr('vector-effect', 'non-scaling-stroke')
+      .style('fill', 'none').style('stroke', '#4A4540').style('stroke-width', 1.1);
+    const lab = root.append('g').style('pointer-events', 'none').selectAll('text').data(labels).join('text')
+      .attr('x', (r) => r.lx).attr('y', (r) => r.ly).attr('text-anchor', 'middle').style('font-size', '12px').style('font-weight', '700')
+      .style('fill', '#2B2A26').style('paint-order', 'stroke').style('stroke', '#FFFFFF').style('stroke-width', 3).text((r) => r['이름']);
+    const zoom = d3.zoom().scaleExtent([1, 12]).translateExtent([[0, 0], [W, H]]).extent([[0, 0], [W, H]])
+      .on('start', () => svg.style('cursor', 'grabbing')).on('end', () => svg.style('cursor', 'grab'))
+      .on('zoom', (ev) => { root.attr('transform', ev.transform); lab.style('font-size', (12 / ev.transform.k) + 'px').style('stroke-width', 3 / ev.transform.k); });
+    svg.call(zoom).on('dblclick.zoom', null);
+    const bar = document.createElement('div'); bar.className = 'sf-zoombar';
+    [['+', '확대', 1.6], ['−', '축소', 1 / 1.6], ['처음 크기', '처음 크기로', 0]].forEach(([txt, lbl, f]) => {
+      const btn = document.createElement('button'); btn.type = 'button'; btn.textContent = txt; btn.setAttribute('aria-label', lbl);
+      btn.onclick = () => { if (f) svg.transition().duration(250).call(zoom.scaleBy, f); else svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity); };
+      bar.appendChild(btn);
+    });
+    el.appendChild(bar);
+  },
+  // 가로 막대 차트
+  hbar(el, rows, { label, value, fmt, color, max, labelW }) {
+    const w = el.clientWidth || 600, rowH = 26, lw = labelW || 150, pad = 70;
+    el.replaceChildren();
+    const h = rows.length * rowH + 8;
+    const x = d3.scaleLinear().domain([0, max || d3.max(rows, value) || 1]).range([0, Math.max(40, w - lw - pad)]);
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${w} ${h}`).attr('height', h).attr('role', 'img').attr('aria-label', '막대 차트');
+    const g = svg.selectAll('g').data(rows).join('g').attr('transform', (d, i) => `translate(0,${i * rowH + 4})`);
+    g.append('text').attr('x', lw - 8).attr('y', rowH / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(label);
+    g.append('rect').attr('x', lw).attr('y', 4).attr('height', rowH - 8).attr('width', (d) => Math.max(1, x(value(d)))).style('fill', color);
+    g.append('text').attr('class', 'sf-strong').attr('x', (d) => lw + x(value(d)) + 6).attr('y', rowH / 2).attr('dy', '0.32em').text((d) => fmt(value(d)));
+  }
+};
+
+dash.calc('industries', {
+  inputs: ['cells'], title: '업종 목록', description: '점수 대상 상권이 있는 업종과 상권 수',
+  fn: (cells) => {
+    const m = d3.rollup(cells, (v) => v.length, (r) => r['업종']);
+    return Array.from(m, ([업종, 상권수]) => ({ 업종, 상권수 })).sort((a, b) => d3.ascending(a.업종, b.업종));
+  }
+});
+
+dash.calc('ranked', {
+  inputs: ['cells'], title: '선택 업종 상권 순위',
+  description: '희망 업종의 점수 대상 상권을 현재 가중치로 다시 매긴 종합 점수와 서울 순위. 자료가 있는 영역끼리 가중치를 다시 나눈 가중 평균',
+  fn: (cells) => {
+    const p = dash.params();
+    const ind = p.industry || '커피-음료';
+    const w = [['매출', Number(p.w_sales)], ['경쟁', Number(p.w_comp)], ['안정성', Number(p.w_stab)], ['수요', Number(p.w_dem)]];
+    const val = (v) => (v === null || v === undefined || v === '' ? null : Number(v));
+    const rows = cells.filter((r) => r['업종'] === ind).map((r) => {
+      let num = 0, den = 0;
+      for (const [k, ww] of w) { const v = val(r[k]); if (v !== null && ww > 0) { num += v * ww; den += ww; } }
+      const t = den > 0 ? num / den : null;
+      return {
+        trdar_code: r.trdar_code, 상권: r['상권'], 자치구: r['자치구'], 점포: Number(r['점포']),
+        매출: val(r['매출']), 경쟁: val(r['경쟁']), 안정성: val(r['안정성']), 수요: val(r['수요']),
+        LV: r.LV || '', EP: r.EP || '', SD: r.SD || '', 유형: (r.LV || '?') + (r.EP || '?') + (r.SD || '?'),
+        종합: t === null ? null : Math.round(t * 10) / 10, _t: t
+      };
+    });
+    rows.sort((a, b) => ((b._t ?? -1) - (a._t ?? -1)) || (b.점포 - a.점포));
+    let rank = 0, prev = undefined;
+    rows.forEach((r, i) => { if (r._t !== prev) { rank = i + 1; prev = r._t; } r.순위 = r._t === null ? null : rank; delete r._t; });
+    return rows;
+  }
+});
+
+dash.calc('candidates', {
+  inputs: ['ranked'], title: '지금 조건에 맞는 상권',
+  description: '검사 또는 직접 고른 조건(뚜렷한 기준만)과 L/V · E/P · S/D가 맞는 상권. 사용자가 고른 축에서 상권이 보류(?)면 제외하고, 사용자가 상관없음인 축은 거르지 않는다',
+  fn: (ranked) => {
+    const code = dash.params().pick || '???';
+    return ranked.filter((r) => {
+      const ax = ['LV', 'EP', 'SD'];
+      for (let i = 0; i < 3; i++) { const l = code[i]; if (l !== '?' && r[ax[i]] !== l) return false; }
+      return true;
+    });
+  }
+});
+
+dash.calc('pick_count', { inputs: ['candidates'], title: '지금 조건의 상권 수', description: '지금 조건에 맞는 상권 수', fn: (candidates) => candidates.length });
+
+dash.calc('applied_count', {
+  inputs: ['ranked'], title: '적용한 유형의 상권 수', description: '적용한 금융 MBTI 조건에 맞는 상권 수',
+  fn: (ranked) => {
+    const code = dash.params().mbti || '???';
+    return ranked.filter((r) => {
+      const ax = ['LV', 'EP', 'SD'];
+      for (let i = 0; i < 3; i++) { const l = code[i]; if (l !== '?' && r[ax[i]] !== l) return false; }
+      return true;
+    }).length;
+  }
+});
+
+dash.calc('gu_avg', {
+  inputs: ['ranked'], title: '자치구별 평균 종합 점수', description: '선택 업종 점수 대상 상권의 자치구별 평균 종합 점수와 상권 수',
+  fn: (ranked) => {
+    const m = d3.rollup(ranked.filter((r) => r.종합 !== null), (v) => ({ 평균: Math.round(d3.mean(v, (r) => r.종합) * 10) / 10, 상권수: v.length }), (r) => r.자치구);
+    return Array.from(m, ([자치구, o]) => ({ 자치구, ...o })).sort((a, b) => b.평균 - a.평균);
+  }
+});
+
+dash.calc('radar', {
+  inputs: ['ranked'], title: '레이더: 상위 3곳과 업종 중앙값', description: '현재 가중치 종합 점수 상위 3곳과 같은 업종 점수 대상 상권의 영역별 중앙값',
+  fn: (ranked) => {
+    const ks = ['매출', '경쟁', '안정성', '수요'];
+    const top = ranked.filter((r) => r.종합 !== null).slice(0, 3).map((r) => ({ 이름: r.상권 + ' (' + r.자치구 + ')', 매출: r.매출, 경쟁: r.경쟁, 안정성: r.안정성, 수요: r.수요 }));
+    const med = { 이름: '업종 중앙값' };
+    ks.forEach((k) => { const v = ranked.map((r) => r[k]).filter((x) => x !== null); med[k] = v.length ? Math.round(d3.median(v) * 10) / 10 : null; });
+    return [...top, med];
+  }
+});
+
+dash.calc('type_counts', {
+  inputs: ['ranked'], title: '8유형별 후보', description: '세 기준이 모두 맞는 상권 수와 종합 점수 1위 상권',
+  fn: (ranked) => ['LES', 'LED', 'LPS', 'LPD', 'VES', 'VED', 'VPS', 'VPD'].map((code) => {
+    const m = ranked.filter((r) => r.유형 === code);
+    const t = m.find((r) => r.종합 !== null);
+    return { 유형: code, 상권수: m.length, '1위': t ? t.상권 + ' (' + t.자치구 + ') ' + t.종합 + '점' : '없음' };
+  })
+});
+
+dash.calc('ind_stores', {
+  inputs: ['eda_stores'], title: '선택 업종 상권별 점포 수', description: '2025년 4개 분기 평균 점포 수(점포가 있는 상권)',
+  fn: (s) => { const ind = dash.params().industry || '커피-음료'; return s.filter((r) => r['업종'] === ind).map((r) => ({ trdar_code: r.trdar_code, 점포: Number(r['점포']) })); }
+});
+
+dash.calc('conc', {
+  inputs: ['ind_stores'], title: '점포 집중도', description: '점포 수 상위 10% 상권에 있는 점포 비중',
+  fn: (s) => {
+    const v = s.map((r) => r.점포).filter((x) => x > 0).sort((a, b) => b - a);
+    const n = v.length, k = Math.ceil(n * 0.1), tot = d3.sum(v), topSum = d3.sum(v.slice(0, k));
+    return [{ 지표: '점포 있는 상권', 값: n }, { 지표: '상위 10% 상권', 값: k }, { 지표: '상위 10% 점포 비중', 값: tot ? Math.round(topSum / tot * 1000) / 10 : null }];
+  }
+});
+
+dash.calc('area_lead', {
+  inputs: ['eda_stores'], title: '상권별 최다 업종군', description: '상권마다 점포 수가 가장 많은 업종군(외식 · 서비스 · 소매)',
+  fn: (s) => {
+    const m = d3.rollup(s, (v) => d3.rollup(v, (x) => d3.sum(x, (r) => Number(r['점포'])), (r) => r['업종군']), (r) => r.trdar_code);
+    return Array.from(m, ([trdar_code, g]) => { const best = Array.from(g).sort((a, b) => b[1] - a[1])[0]; return { trdar_code, 업종군: best[0] }; });
+  }
+});
+
+dash.calc('close_ind', {
+  inputs: ['eda_close'], title: '선택 업종 매출 수준과 폐업률', description: '매출 점수가 있는 점수 대상 상권의 점포당 월매출과 축소 추정 폐업률(%)',
+  fn: (c) => { const ind = dash.params().industry || '커피-음료'; return c.filter((r) => r['업종'] === ind).map((r) => ({ 상권: r['상권'], 자치구: r['자치구'], 점포당월매출: Number(r['점포당월매출']), 폐업률: Number(r['폐업률']) })); }
+});
+dash.calc('ind_total', {
+  inputs: ['eda_stores'], title: '업종별 점포 수 합계', description: '상권별 평균 점포 수를 업종마다 더한 값 (밀집도 차트의 상위 25개 업종 선택용)',
+  fn: (stores) => {
+    const m = d3.rollup(stores, (v) => d3.sum(v, (r) => Number(r['점포'])), (r) => r['업종']);
+    return Array.from(m, ([업종, 점포]) => ({ 업종, 점포: Math.round(점포) })).sort((a, b) => b.점포 - a.점포);
+  }
+});
+
+dash.calc('scen', {
+  inputs: ['cells'], title: '이 업종 가중치 가정별 순위 변화',
+  description: '희망 업종 점수 대상 상권을 여러 가중치로 다시 매겨, 기본 가중치 상위 10곳이 몇 곳 남는지와 기본 순위와의 Spearman 순위 상관',
+  fn: (cells) => {
+    const p = dash.params(); const ind = p.industry || '커피-음료';
+    const rows = cells.filter((r) => r['업종'] === ind);
+    const K = ['매출', '경쟁', '안정성', '수요'];
+    const tot = (r, w) => { let n = 0, d = 0; K.forEach((k, i) => { const v = r[k]; if (v !== null && v !== undefined && w[i] > 0) { n += Number(v) * w[i]; d += w[i]; } }); return d > 0 ? n / d : null; };
+    const rk = (a) => { const o = a.map((v, i) => [v, i]).sort((x, y) => x[0] - y[0]); const r = new Array(a.length); for (let i = 0; i < o.length;) { let j = i; while (j + 1 < o.length && o[j + 1][0] === o[i][0]) j++; const m = (i + j) / 2 + 1; for (let k = i; k <= j; k++) r[o[k][1]] = m; i = j + 1; } return r; };
+    const sp = (a, b) => { if (a.length < 3) return null; const ra = rk(a), rb = rk(b); const ma = d3.mean(ra), mb = d3.mean(rb); let n = 0, da = 0, db = 0; for (let i = 0; i < ra.length; i++) { const x = ra[i] - ma, y = rb[i] - mb; n += x * y; da += x * x; db += y * y; } return da && db ? n / Math.sqrt(da * db) : null; };
+    const S = [['기본', [30, 25, 15, 30]], ['모두 같게', [25, 25, 25, 25]], ['매출 중심', [50, 20, 10, 20]], ['안정성 제외', [35, 30, 0, 35]], ['경쟁 제외', [40, 0, 20, 40]], ['현재 설정', [Number(p.w_sales), Number(p.w_comp), Number(p.w_stab), Number(p.w_dem)]]];
+    const base = rows.map((r) => tot(r, S[0][1]));
+    const top = (v) => new Set(rows.map((r, i) => i).filter((i) => v[i] !== null).sort((a, b) => (v[b] - v[a]) || (rows[b]['점포'] - rows[a]['점포'])).slice(0, 10));
+    const bt = top(base);
+    return S.map(([name, w]) => {
+      const v = rows.map((r) => tot(r, w)); const tt = top(v); let keep = 0; tt.forEach((i) => { if (bt.has(i)) keep++; });
+      const idx = rows.map((r, i) => i).filter((i) => v[i] !== null && base[i] !== null);
+      const c = sp(idx.map((i) => base[i]), idx.map((i) => v[i]));
+      return { 가정: name, 가중치: w.join('·'), 상위10유지: keep, 순위상관: c === null ? null : Math.round(c * 1000) / 1000 };
+    });
+  }
+});
+
+dash.calc('corr', {
+  inputs: ['cells'], title: '영역 점수 간 순위상관', description: '점수 대상 20,522칸 전체에서 두 영역 점수가 모두 있는 칸의 Spearman 순위 상관',
+  fn: (cells) => {
+    const K = ['매출', '경쟁', '안정성', '수요'];
+    const rk = (a) => { const o = a.map((v, i) => [v, i]).sort((x, y) => x[0] - y[0]); const r = new Array(a.length); for (let i = 0; i < o.length;) { let j = i; while (j + 1 < o.length && o[j + 1][0] === o[i][0]) j++; const m = (i + j) / 2 + 1; for (let k = i; k <= j; k++) r[o[k][1]] = m; i = j + 1; } return r; };
+    const sp = (a, b) => { const ra = rk(a), rb = rk(b); const ma = d3.mean(ra), mb = d3.mean(rb); let n = 0, da = 0, db = 0; for (let i = 0; i < ra.length; i++) { const x = ra[i] - ma, y = rb[i] - mb; n += x * y; da += x * x; db += y * y; } return n / Math.sqrt(da * db); };
+    const out = [];
+    for (let i = 0; i < K.length; i++) for (let j = i + 1; j < K.length; j++) {
+      const both = cells.filter((r) => r[K[i]] !== null && r[K[i]] !== undefined && r[K[j]] !== null && r[K[j]] !== undefined);
+      out.push({ 영역쌍: K[i] + '·' + K[j], A: K[i], B: K[j], 칸수: both.length, 상관: Math.round(sp(both.map((r) => Number(r[K[i]])), both.map((r) => Number(r[K[j]]))) * 100) / 100 });
+    }
+    return out;
+  }
+});
+</script>
+
+<script>
+// 화면 이동, 검사, 가중치 등 사람이 누르는 것. 글자는 쓰지 않고 상태와 class/hidden만 바꾼다.
+(function () {
+  const root = document.getElementById('sf-root');
+  const SECS = ['flow', 'mbti', 'scores', 'summary', 'eda', 'datasets', 'columns', 'join', 'features', 'folders', 'roadmap'];
+  function go(id, scroll) {
+    if (!SECS.includes(id)) id = 'mbti';
+    document.querySelectorAll('.sf-sec').forEach((s) => { s.hidden = s.id !== id; });
+    document.querySelectorAll('.sf-nav button[data-go]').forEach((b) => { if (b.dataset.go === id) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+    dash.setLink(id);
+    if (scroll) { const t = document.getElementById('top'); if (t) t.scrollIntoView({ block: 'start' }); }
+  }
+  document.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => go(b.dataset.go, true)));
+  const start = (location.hash || '').replace('#', '');
+  go(SECS.includes(start) ? start : (start.startsWith('eda-') ? 'eda' : start.startsWith('flow-') ? 'flow' : 'mbti'), false);
+
+  function hasAny() { return SF.tab !== 'manual' ? Object.keys(SF.answers).length > 0 : SF.code() !== '???'; }
+  function refreshQuiz() {
+    const code = SF.code();
+    document.querySelectorAll('.sf-step').forEach((s) => { s.hidden = Number(s.dataset.step) !== SF.step; });
+    const prev = document.getElementById('sf-prev'); if (prev) prev.disabled = SF.step === 0;
+    const next = document.getElementById('sf-next'); if (next) next.hidden = SF.step === 2;
+    const bar = document.getElementById('sf-progress'); if (bar) bar.style.width = Math.round(Object.keys(SF.ans.quiz).length / 15 * 100) + '%';
+    const bar7 = document.getElementById('sf-progress7'); if (bar7) bar7.style.width = Math.round(Object.keys(SF.ans.quiz7).length / 7 * 100) + '%';
+    const apply = document.getElementById('sf-apply'); if (apply) apply.disabled = code === '???';
+    const any = hasAny();
+    const e = document.getElementById('sf-empty'); if (e) e.hidden = any;
+    const r = document.getElementById('sf-results'); if (r) r.hidden = !any;
+    document.querySelectorAll('.sf-opt').forEach((b) => b.setAttribute('aria-pressed', SF.ans[b.dataset.ver === '7' ? 'quiz7' : 'quiz'][b.dataset.q] === b.dataset.v ? 'true' : 'false'));
+    document.querySelectorAll('.sf-chip').forEach((b) => b.setAttribute('aria-pressed', SF.manual[b.dataset.ax] === b.dataset.v ? 'true' : 'false'));
+    if ((dash.params().pick || '???') !== code) dash.setParams({ pick: code });
+    ['tally', 'step-label', 'answered', 'pick-label', 'filter-label', 'lvep-scatter'].forEach((n) => { try { dash.draw(n); } catch (e) { /* 그리기 등록 전 */ } });
+  }
+  window.SF.refreshQuiz = refreshQuiz;
+  document.querySelectorAll('.sf-opt').forEach((b) => b.addEventListener('click', () => { SF.ans[b.dataset.ver === '7' ? 'quiz7' : 'quiz'][b.dataset.q] = b.dataset.v; refreshQuiz(); }));
+  document.querySelectorAll('.sf-chip').forEach((b) => b.addEventListener('click', () => { SF.manual[b.dataset.ax] = b.dataset.v; refreshQuiz(); }));
+  const on = (id, f) => { const el = document.getElementById(id); if (el) el.addEventListener('click', f); };
+  on('sf-prev', () => { SF.step = Math.max(0, SF.step - 1); refreshQuiz(); });
+  on('sf-next', () => { SF.step = Math.min(2, SF.step + 1); refreshQuiz(); const q = document.getElementById('sf-quiz'); if (q) q.scrollIntoView({ block: 'start' }); });
+  function clearVer(v) { SF.ans[v] = {}; if (SF.appliedFrom === v) { SF.appliedFrom = ''; dash.setParams({ mbti: '???' }); } refreshQuiz(); }
+  on('sf-reset', () => { SF.step = 0; clearVer('quiz'); });
+  on('sf-reset7', () => clearVer('quiz7'));
+  function setTab(t) {
+    SF.tab = t;
+    [['sf-quiz', 'quiz'], ['sf-quiz7', 'quiz7'], ['sf-manual', 'manual']].forEach(([id, k]) => { const e = document.getElementById(id); if (e) e.hidden = t !== k; });
+    [['sf-tab-quiz', 'quiz'], ['sf-tab-quiz7', 'quiz7'], ['sf-tab-manual', 'manual']].forEach(([id, k]) => { const e = document.getElementById(id); if (e) e.setAttribute('aria-selected', t === k ? 'true' : 'false'); });
+    refreshQuiz();
+  }
+  on('sf-tab-quiz', () => setTab('quiz'));
+  on('sf-tab-quiz7', () => setTab('quiz7'));
+  on('sf-tab-manual', () => setTab('manual'));
+  on('sf-apply', () => { const c = SF.code(); if (c === '???') return; SF.appliedFrom = SF.tab; dash.setParams({ mbti: c }); try { dash.draw('applied-label'); } catch (e) { /* 등록 전 */ } });
+  on('sf-clear', () => { SF.onlyMatch = false; SF.appliedFrom = ''; const o = document.getElementById('sf-only'); if (o) o.checked = false; dash.setParams({ mbti: '???' }); });
+  on('sf-bigtext', () => { const r = document.getElementById('sf-root'); if (!r) return; const big = !r.classList.contains('sf-big'); r.classList.toggle('sf-big', big); const b = document.getElementById('sf-bigtext'); if (b) b.setAttribute('aria-pressed', big ? 'true' : 'false'); });
+  on('sf-wreset', () => {
+    const d = { w_sales: 30, w_comp: 25, w_stab: 15, w_dem: 30 };
+    document.querySelectorAll('.sf-weights input').forEach((i) => { i.value = d[i.dataset.k]; });
+    dash.setParams(d);
+  });
+  document.querySelectorAll('.sf-weights input').forEach((i) => i.addEventListener('change', () => dash.setParams({ [i.dataset.k]: Number(i.value) })));
+  const only = document.getElementById('sf-only'); if (only) only.addEventListener('change', () => { SF.onlyMatch = only.checked; dash.draw('rank-table'); dash.draw('score-map'); });
+  const m1 = document.getElementById('sf-eda1-mode'); if (m1) m1.addEventListener('change', () => { SF.eda1 = m1.value; dash.draw('eda-map'); dash.draw('eda-map-legend'); });
+  const hm = document.getElementById('sf-heat-mode'); if (hm) hm.addEventListener('change', () => { SF.heat = hm.value; dash.draw('eda-heat'); });
+  const cd = document.getElementById('sf-col-ds'); if (cd) cd.addEventListener('change', () => dash.draw('columns-table'));
+
+  dash.onData(() => {
+    const p = dash.params();
+    const applied = p.mbti && p.mbti !== '???';
+    const off = document.getElementById('sf-pill-off'), onp = document.getElementById('sf-pill-on');
+    if (off) off.hidden = !!applied; if (onp) onp.hidden = !applied;
+    const o = document.getElementById('sf-only'); if (o) { o.disabled = !applied; if (!applied) o.checked = false; }
+    if (!applied) SF.onlyMatch = false;
+    document.querySelectorAll('.sf-weights input').forEach((i) => { if (document.activeElement !== i && p[i.dataset.k] !== undefined) i.value = p[i.dataset.k]; });
+  });
+  refreshQuiz();
+})();
+</script>
+
+<script>
+// 그리기: 데이터가 정하는 글자와 차트
+(function () {
+  const F = SF.fmt;
+  const st = (id) => dash.data(id);
+  const dashOr = (el, s) => { el.textContent = s.status === 'error' ? '불러오지 못함' : '—'; };
+  // ---- 자치구 도트 지도 (이승희/pixel_theme/pixel_map.py upgrade=True와 같은 규칙, 배경 타일 없음 → API 키 필요 없음)
+  SF.pm = {};
+  const PM = {
+    INK: '#2B2A26', CREAM: '#FBF3DC', CARD: '#FFFBEF', RIVER: '#2A7F9E', OUT: '#E6DCC0', OUTLINE: '#D6C9A6', NO: '#CFC6AE', AREA_NO: '#A89F88',
+    DIFF: ['#C08A00', '#F2D27A', '#F3EEDF', '#9EC3F2', '#1F5FC4'],
+    DIFF_L: ['5점 넘게 낮음', '2~5점 낮음', '비슷 (±2점 안)', '2~5점 높음', '5점 넘게 높음'],
+    TOP: ['#F3EEDF', '#D6E6FA', '#9EC3F2', '#5B8FE0', '#1F5FC4'],
+    TOP_B: [[0, 0, '0곳'], [1, 1, '1곳'], [2, 3, '2~3곳'], [4, 6, '4~6곳'], [7, 1e9, '7곳 이상']],
+    METRICS: [['total', '종합', '종합'], ['sales', '매출', '매출'], ['comp', '경쟁', '경쟁'], ['stab', '안정성', '안정성'], ['dem', '수요', '수요'], ['top', '상위 10% 상권 수', null]],
+    BARS: [['매출', '#1F5FC4'], ['경쟁', '#A67C00'], ['안정성', '#2E8B57'], ['수요', '#163F82']],
+    MIN_GU: 10
+  };
+  const diffClass = (d) => (d < -5 ? 0 : d < -2 ? 1 : d <= 2 ? 2 : d <= 5 ? 3 : 4);
+  const bboxOf = (path) => {
+    const n = (path.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    for (let i = 0; i + 1 < n.length; i += 2) { x0 = Math.min(x0, n[i]); x1 = Math.max(x1, n[i]); y0 = Math.min(y0, n[i + 1]); y1 = Math.max(y1, n[i + 1]); }
+    return [x0, y0, x1, y1];
+  };
+  const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+  const PIN = '<path fill="#2B2A26" d="M2 0h6v1H2zM1 1h8v1H1zM0 2h10v4H0zM1 6h8v2H1zM2 8h6v1H2zM3 9h4v1H3zM4 10h2v2H4z"></path><path fill="#E5484D" d="M3 1h4v1H3zM2 2h6v1H2zM1 3h8v3H1zM2 6h6v1H2zM3 7h4v1H3zM4 8h2v1H4z"></path><path fill="#FFFFFF" d="M4 3h2v1H4zM3 4h4v1H3zM4 5h2v1H4z"></path>';
+
+  // el: 그릴 상자 · key: 지도마다 따로 기억할 상태 · rows: 지금 조건의 상권 · all: 서울 같은 업종 전체 · onGu(gu|null): 구를 고르거나 돌아갈 때
+  SF.pixelMap = function (el, { key, rows, all, onGu, redraw }) {
+    const geo = dash.data('geo'), gm = dash.data('gumap');
+    if (geo.status !== 'ok' || gm.status !== 'ok') { el.textContent = geo.status === 'error' || gm.status === 'error' ? '지도를 불러오지 못했습니다.' : '—'; return; }
+    const S = SF.pm[key] || (SF.pm[key] = { gu: null, metric: 'total', pick: null, anim: false });
+    const sig = [rows.length, all.length, d3.sum(rows, (r) => r.종합 || 0).toFixed(2), d3.sum(all, (r) => r.종합 || 0).toFixed(2), all.length ? all[0].trdar_code : '', S.gu, S.metric, S.pick].join('|');
+    if (el.__sfSig === sig && el.querySelector('svg')) return;
+    el.__sfSig = sig;
+    const W = Number(gm.data[0]['폭']), H = Number(gm.data[0]['높이']);
+    const kind = (k) => gm.data.filter((r) => r['종류'] === k);
+    const geoBy = new Map(geo.data.map((g) => [g.trdar_code, g]));
+    const scoredAll = all.filter((r) => r.종합 !== null);
+    const N = scoredAll.length, topK = Math.ceil(N * 0.1);
+    const shown = rows.filter((r) => r.종합 !== null);
+    const hasSales = all.some((r) => r.매출 !== null);
+    const metrics = PM.METRICS.filter((m) => m[0] !== 'sales' || hasSales);
+    if (!metrics.find((m) => m[0] === S.metric)) S.metric = 'total';
+    const mdef = metrics.find((m) => m[0] === S.metric), mcol = mdef[2];
+    const seoulMed = mcol ? d3.median(all.map((r) => r[mcol]).filter((v) => v !== null)) : null;
+    const gus = new Map();
+    for (const [g, rs] of d3.group(shown, (r) => r.자치구)) {
+      const vals = mcol ? rs.map((r) => r[mcol]).filter((v) => v !== null) : [];
+      const med = mcol && vals.length ? d3.median(vals) : null;
+      const best = rs.slice().sort((a, b) => b.종합 - a.종합)[0];
+      gus.set(g, { n: rs.length, nv: mcol ? vals.length : rs.length, med, diff: med === null || seoulMed == null ? null : med - seoulMed, top: rs.filter((r) => r.순위 !== null && r.순위 <= topK).length, best, rows: rs });
+    }
+    const order = Array.from(gus.entries()).filter(([, v]) => (mcol ? v.med !== null : true)).sort((a, b) => (mcol ? b[1].med - a[1].med : b[1].top - a[1].top));
+    order.forEach(([, v], i) => { v.rank = i + 1; });
+    const clsOf = (v) => (mcol ? (v.diff === null ? -1 : diffClass(v.diff)) : PM.TOP_B.findIndex((b) => v.top >= b[0] && v.top <= b[1]));
+    const colorOf = (v) => { const c = clsOf(v); return c < 0 ? PM.NO : (mcol ? PM.DIFF : PM.TOP)[c]; };
+    const small = (v) => v.nv < PM.MIN_GU;
+    if (S.gu && !gus.has(S.gu)) { S.gu = null; S.pick = null; }
+
+    el.replaceChildren();
+    const wrap = mk('div', 'sf-pm'); const mapBox = mk('div', 'sf-pm-map'); const side = mk('div', 'sf-pm-side');
+    wrap.append(mapBox, side); el.appendChild(wrap);
+    const svg = d3.select(mapBox).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img')
+      .attr('aria-label', S.gu ? S.gu + ' 상권 점수 지도' : '서울 자치구 도트 지도');
+    const tip = SF.tip(mapBox);
+    const go = (g) => { S.gu = g; S.pick = null; S.anim = !!g; if (onGu) onGu(g); redraw(); };
+
+    if (!S.gu) {
+      // ---------- 서울 전체: 도트 자치구
+      svg.append('g').selectAll('path').data(kind('outside')).join('path').attr('d', (r) => r.path).style('fill', PM.OUT).style('stroke', PM.OUTLINE).style('stroke-width', 0.6).style('shape-rendering', 'crispEdges');
+      svg.append('g').selectAll('path').data(kind('gu')).join('path').attr('class', 'sf-pm-gu')
+        .attr('d', (r) => r.path)
+        .style('fill', (r) => (gus.has(r['이름']) ? colorOf(gus.get(r['이름'])) : PM.NO))
+        .style('fill-opacity', (r) => (gus.has(r['이름']) && small(gus.get(r['이름'])) ? 0.45 : 1))
+        .style('stroke', (r) => (gus.has(r['이름']) && small(gus.get(r['이름'])) ? PM.INK : '#FFFFFF'))
+        .style('stroke-width', 2.5).style('stroke-dasharray', (r) => (gus.has(r['이름']) && small(gus.get(r['이름'])) ? '5 4' : null))
+        .style('shape-rendering', 'crispEdges').style('cursor', (r) => (gus.has(r['이름']) ? 'pointer' : 'default'))
+        .on('mousemove', (ev, r) => {
+          const v = gus.get(r['이름']);
+          if (!v) { tip.show(ev, [r['이름'], '조건에 맞는 점수 상권 없음']); return; }
+          const lines = [r['이름'] + (small(v) ? ' (참고용: 점수 상권 ' + PM.MIN_GU + '곳 미만)' : ''), '점수 상권 ' + v.n + '곳'];
+          if (mcol) { lines.push(mdef[1] + ' 중앙값 ' + v.med.toFixed(1) + '점 · ' + order.length + '개 구 중 ' + v.rank + '위'); lines.push('서울 중앙값 ' + seoulMed.toFixed(1) + '점 대비 ' + (v.diff >= 0 ? '+' : '') + v.diff.toFixed(1) + '점 (' + PM.DIFF_L[diffClass(v.diff)] + ')'); }
+          else lines.push('서울 상위 10% 상권 ' + v.top + '곳 · ' + order.length + '개 구 중 ' + v.rank + '위');
+          lines.push('최고: ' + v.best.상권 + ' ' + Math.round(v.best.종합) + '점');
+          lines.push('누르면 ' + r['이름'] + ' 상세를 봅니다');
+          tip.show(ev, lines);
+        })
+        .on('mouseleave', () => tip.hide())
+        .on('click', (ev, r) => { if (gus.has(r['이름'])) { tip.hide(); go(r['이름']); } });
+      svg.append('g').selectAll('path').data(kind('river')).join('path').attr('d', (r) => r.path).style('fill', PM.RIVER).style('pointer-events', 'none').style('shape-rendering', 'crispEdges');
+      // 빨간 핀: 지금 조건 상위 10곳
+      const top10 = shown.slice().sort((a, b) => b.종합 - a.종합).slice(0, 10);
+      const pins = svg.append('g');
+      top10.forEach((r, i) => {
+        const g = geoBy.get(r.trdar_code); if (!g) return;
+        const p = pins.append('g').attr('transform', `translate(${g.x - 11},${g.y - 29})`).style('cursor', 'pointer');
+        p.append('g').attr('transform', 'scale(2.2)').html(PIN);
+        p.on('mousemove', (ev) => tip.show(ev, ['빨간 핀 ' + (i + 1) + '번 · ' + r.상권 + ' (' + r.자치구 + ')', '지금 조건 상위 10곳 중 ' + (i + 1) + '위', '종합 ' + r.종합 + '점 · 서울 ' + F(N) + '곳 중 ' + r.순위 + '위', '누르면 ' + r.자치구 + ' 상세와 이 상권 카드를 엽니다']))
+          .on('mouseleave', () => tip.hide()).on('click', (ev) => { ev.stopPropagation(); tip.hide(); S.gu = r.자치구; S.pick = r.trdar_code; S.anim = true; if (onGu) onGu(r.자치구); redraw(); });
+      });
+      const lab = svg.append('g').style('pointer-events', 'none');
+      const LABEL_DY = { '종로구': -45 };   // 중구 이름표와 겹치지 않게 위로
+      kind('gu').filter((r) => r.lx !== null).forEach((r) => {
+        const v = gus.get(r['이름']);
+        const t = lab.append('text').attr('x', r.lx).attr('y', r.ly - 6 + (LABEL_DY[r['이름']] || 0)).attr('text-anchor', 'middle').style('font-size', '16px').style('font-weight', '700')
+          .style('fill', PM.INK).style('paint-order', 'stroke').style('stroke', '#FFFFFF').style('stroke-width', 4);
+        t.append('tspan').attr('x', r.lx).text(r['이름']);
+        if (v) t.append('tspan').attr('x', r.lx).attr('dy', '1.15em').style('fill', mcol && v.diff < 0 ? '#8A6400' : PM.INK)
+          .text((mcol ? (v.diff >= 0 ? '+' : '') + v.diff.toFixed(1) : v.top + '곳') + (small(v) ? '*' : ''));
+      });
+
+      // 옆 상자: 기준 버튼 · 범례 · 안내
+      side.appendChild(mk('div', 'sf-pm-crumb', '서울 전체'));
+      const mb = mk('div', 'sf-pm-mbtns');
+      mb.appendChild(mk('div', 'sf-pm-small', '구 색 기준'));
+      metrics.forEach((m) => { const b = mk('button', 'sf-pm-mbtn', m[1]); b.type = 'button'; b.setAttribute('aria-pressed', m[0] === S.metric ? 'true' : 'false'); b.onclick = () => { S.metric = m[0]; redraw(); }; mb.appendChild(b); });
+      side.appendChild(mb);
+      const lg = mk('div', 'sf-pm-legend');
+      const counts = [0, 0, 0, 0, 0]; let nSmall = 0;
+      gus.forEach((v) => { const c = clsOf(v); if (c >= 0) counts[c]++; if (small(v)) nSmall++; });
+      if (mcol) {
+        const h = mk('div', 'sf-pm-small'); h.append('서울 같은 업종 중앙값 ', mk('b', null, seoulMed.toFixed(1) + '점'), '과의 차이'); lg.appendChild(h);
+        [4, 3, 2, 1, 0].forEach((c) => { const row = mk('div', 'sf-pm-lrow'); const sw = mk('i'); sw.style.background = PM.DIFF[c]; row.append(sw, PM.DIFF_L[c], mk('em', null, counts[c] + '개 구')); lg.appendChild(row); });
+        const ds = order.map(([, v]) => v.diff);
+        if (ds.length) lg.appendChild(mk('div', 'sf-pm-small', '가장 높은 구와 낮은 구의 차이 ' + (d3.max(ds) - d3.min(ds)).toFixed(1) + '점 · 이름표 숫자 = 차이'));
+      } else {
+        lg.appendChild(mk('div', 'sf-pm-small', '서울 같은 업종 종합 점수 상위 10%(' + topK + '곳) 안에 드는 상권 수'));
+        [4, 3, 2, 1, 0].forEach((c) => { const row = mk('div', 'sf-pm-lrow'); const sw = mk('i'); sw.style.background = PM.TOP[c]; row.append(sw, PM.TOP_B[c][2], mk('em', null, counts[c] + '개 구')); lg.appendChild(row); });
+        lg.appendChild(mk('div', 'sf-pm-small', '구 면적이 클수록 많아지기 쉽습니다'));
+      }
+      const sr = mk('div', 'sf-pm-lrow'); const ssw = mk('i'); ssw.style.background = PM.DIFF[3]; ssw.style.opacity = '0.45'; ssw.style.borderStyle = 'dashed';
+      sr.append(ssw, '참고용 (점수 상권 ' + PM.MIN_GU + '곳 미만, 이름표 *)', mk('em', null, nSmall + '개 구')); lg.appendChild(sr);
+      if (gus.size && nSmall > gus.size / 2) lg.appendChild(mk('div', 'sf-pm-warn', '절반 넘는 구가 참고용이라 구끼리 비교하기 어렵습니다'));
+      side.appendChild(lg);
+      const pinRow = mk('div', 'sf-pm-pinrow');
+      const pinSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); pinSvg.setAttribute('viewBox', '0 0 10 13'); pinSvg.setAttribute('width', '16'); pinSvg.setAttribute('height', '21'); pinSvg.setAttribute('aria-hidden', 'true'); pinSvg.innerHTML = PIN;
+      pinRow.append(pinSvg, mk('span', null, '빨간 핀 = 지금 조건의 상위 10곳. 핀에 마우스를 올리면 순위가 나오고, 누르면 그 구 상세와 상권 카드가 열립니다.'));
+      side.appendChild(pinRow);
+      side.appendChild(mk('div', 'sf-pm-small', '빨간 핀 상위 10곳 (지금 조건)'));
+      const ol10 = mk('ol', 'sf-pm-top sf-pm-top10');
+      top10.forEach((r, i) => { const li = mk('li'); const b = mk('button'); b.type = 'button'; b.append(mk('span', 'n', String(i + 1)), mk('span', 't', r.상권 + ' · ' + r.자치구), mk('span', 's', r.종합 + '점')); b.onclick = () => { S.gu = r.자치구; S.pick = r.trdar_code; S.anim = true; if (onGu) onGu(r.자치구); redraw(); }; li.appendChild(b); ol10.appendChild(li); });
+      side.appendChild(ol10);
+      side.appendChild(mk('div', 'sf-pm-hint', '구를 누르면 그 구의 상권을 자세히 봅니다. 구에 마우스를 올리면 순위 · 서울 대비 차이 · 최고 상권이 나옵니다.'));
+      return;
+    }
+
+    // ---------- 구 상세: 실제 구 경계 + 상권 점수 색
+    const v = gus.get(S.gu);
+    const real = kind('real').find((r) => r['이름'] === S.gu);
+    const bb = real ? bboxOf(real.path) : [0, 0, W, H];
+    const pad = Math.max(bb[2] - bb[0], bb[3] - bb[1]) * 0.12;
+    let vb = [bb[0] - pad, bb[1] - pad, bb[2] - bb[0] + pad * 2, bb[3] - bb[1] + pad * 2];
+    const ar = W / H; if (vb[2] / vb[3] < ar) { const nw = vb[3] * ar; vb[0] -= (nw - vb[2]) / 2; vb[2] = nw; } else { const nh = vb[2] / ar; vb[1] -= (nh - vb[3]) / 2; vb[3] = nh; }
+    const k = vb[2] / W;
+    svg.append('g').style('opacity', 0.35).selectAll('path').data(kind('outside').concat(kind('gu'))).join('path').attr('d', (r) => r.path).style('fill', (r) => (r['종류'] === 'gu' ? PM.CARD : PM.OUT)).style('stroke', 'none').style('shape-rendering', 'crispEdges');
+    svg.append('g').style('opacity', 0.85).selectAll('path').data(kind('river')).join('path').attr('d', (r) => r.path).style('fill', PM.RIVER);
+    const allBy = new Map(all.map((r) => [r.trdar_code, r]));
+    const shownSet = new Set(shown.map((r) => r.trdar_code));
+    const inGu = geo.data.filter((g) => g['자치구'] === S.gu);
+    svg.append('g').selectAll('path').data(inGu).join('path').attr('d', (g) => g.path).attr('vector-effect', 'non-scaling-stroke')
+      .style('fill', (g) => { const r = allBy.get(g.trdar_code); if (!r || r.종합 === null) return PM.NO; return shownSet.has(g.trdar_code) ? SF.score(r.종합) : PM.AREA_NO; })
+      .style('fill-opacity', (g) => (shownSet.has(g.trdar_code) ? 0.9 : 0.4))
+      .style('stroke', (g) => (S.pick === g.trdar_code ? PM.INK : '#FFFFFF')).style('stroke-width', (g) => (S.pick === g.trdar_code ? 3.5 : 0.8))
+      .style('cursor', 'pointer')
+      .on('mousemove', (ev, g) => { const r = allBy.get(g.trdar_code); tip.show(ev, r && r.종합 !== null ? [r.상권, '종합 ' + r.종합 + '점 · 서울 ' + F(N) + '곳 중 ' + r.순위 + '위', '매출 ' + (r.매출 === null ? '–' : Math.round(r.매출)) + ' · 경쟁 ' + (r.경쟁 === null ? '–' : Math.round(r.경쟁)) + ' · 안정성 ' + (r.안정성 === null ? '–' : Math.round(r.안정성)) + ' · 수요 ' + (r.수요 === null ? '–' : Math.round(r.수요)), shownSet.has(g.trdar_code) ? '지금 조건에 맞음 · 누르면 상세 카드' : '지금 조건 밖 · 누르면 상세 카드'] : [g['상권'], '이 업종 점수 대상 아님']); })
+      .on('mouseleave', () => tip.hide())
+      .on('click', (ev, g) => { if (allBy.get(g.trdar_code)) { S.pick = g.trdar_code; S.anim = false; redraw(); } });
+    svg.append('g').style('pointer-events', 'none').selectAll('path').data(kind('real')).join('path').attr('d', (r) => r.path).attr('vector-effect', 'non-scaling-stroke')
+      .style('fill', 'none').style('stroke', PM.INK).style('stroke-width', (r) => (r['이름'] === S.gu ? 3.5 : 1.5)).style('stroke-opacity', (r) => (r['이름'] === S.gu ? 1 : 0.45));
+    const top5 = v.rows.slice().sort((a, b) => b.종합 - a.종합).slice(0, 5);
+    const nums = svg.append('g');
+    top5.forEach((r, i) => {
+      const g = geoBy.get(r.trdar_code); if (!g) return;
+      const s = 18 * k;
+      const m = nums.append('g').attr('transform', `translate(${g.x - s / 2},${g.y - s / 2})`).style('cursor', 'pointer').on('click', () => { S.pick = r.trdar_code; S.anim = false; redraw(); });
+      m.append('rect').attr('width', s).attr('height', s).style('fill', PM.INK).style('stroke', '#FFFFFF').style('stroke-width', 1.5 * k);
+      m.append('text').attr('x', s / 2).attr('y', s / 2).attr('dy', '0.35em').attr('text-anchor', 'middle').style('fill', '#FFFFFF').style('font-size', (12 * k) + 'px').style('font-weight', '700').text(i + 1);
+    });
+    if (S.anim) { svg.attr('viewBox', `0 0 ${W} ${H}`).transition().duration(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 650).ease(d3.easeCubicOut).attr('viewBox', vb.join(' ')); S.anim = false; }
+    else svg.attr('viewBox', vb.join(' '));
+
+    // 옆 상자: 위치 · 통계 · 상위 5곳 · 상세 카드
+    const mapBack = mk('button', 'sf-pm-mapback', '← 서울 전체로'); mapBack.type = 'button'; mapBack.setAttribute('aria-label', '서울 전체 지도로 돌아가기'); mapBack.onclick = () => { tip.hide(); go(null); }; mapBox.appendChild(mapBack);
+    const crumb = mk('div', 'sf-pm-crumb'); const back = mk('button', 'sf-pm-back', '← 서울 전체'); back.type = 'button'; back.onclick = () => go(null);
+    crumb.append(back, ' › ', mk('b', null, S.gu)); side.appendChild(crumb);
+    const stats = mk('div', 'sf-pm-stats');
+    const med = d3.median(v.rows, (r) => r.종합), sm = d3.median(scoredAll, (r) => r.종합);
+    [['점수 상권', v.n + '곳'], ['종합 중앙값', med.toFixed(1) + '점'], ['서울 대비', (med - sm >= 0 ? '+' : '') + (med - sm).toFixed(1) + '점']].forEach(([a, b]) => { const d = mk('div'); d.append(mk('small', null, a), mk('b', null, b)); stats.appendChild(d); });
+    side.appendChild(stats);
+    const picked = S.pick ? allBy.get(S.pick) : null;
+    if (picked && picked.종합 !== null) {
+      const c = mk('div', 'sf-pm-card');
+      c.append(mk('div', 'sf-pm-cname', picked.상권), mk('div', 'sf-pm-small', picked.자치구 + ' · 유형 ' + picked.유형 + (shownSet.has(picked.trdar_code) ? ' · 지금 조건에 맞음' : ' · 지금 조건 밖')));
+      const sc = mk('div', 'sf-pm-cscore'); sc.append(mk('b', null, String(picked.종합)), '점 · 서울 ' + F(N) + '곳 중 ' + picked.순위 + '위'); c.appendChild(sc);
+      PM.BARS.forEach(([name, col]) => {
+        const val = picked[name]; const row = mk('div', 'sf-pm-bar'); row.appendChild(mk('span', null, name));
+        const track = mk('div'); const fill = mk('i'); fill.style.width = (val === null ? 0 : val) + '%'; fill.style.background = col; track.append(fill, mk('u')); row.append(track, mk('em', null, val === null ? '자료 없음' : String(Math.round(val))));
+        c.appendChild(row);
+      });
+      c.appendChild(mk('div', 'sf-pm-small', '막대 점선 = 50점 (업종 중간)'));
+      const x = mk('button', 'sf-pm-back', '카드 닫기'); x.type = 'button'; x.onclick = () => { S.pick = null; redraw(); }; c.appendChild(x);
+      side.appendChild(c);
+    }
+    side.appendChild(mk('div', 'sf-pm-small', S.gu + ' 상위 5곳 (지금 조건 · 지도 검은 번호)'));
+    const ol = mk('ol', 'sf-pm-top');
+    top5.forEach((r, i) => { const li = mk('li'); const b = mk('button'); b.type = 'button'; b.append(mk('span', 'n', String(i + 1)), mk('span', 't', r.상권), mk('span', 's', r.종합 + '점'), mk('small', null, '서울 ' + r.순위 + '위')); b.onclick = () => { S.pick = r.trdar_code; redraw(); }; li.appendChild(b); ol.appendChild(li); });
+    side.appendChild(ol);
+    const sl = mk('div', 'sf-pm-scale'); sl.append(mk('span', null, '0'), mk('i'), mk('span', null, '100')); side.append(mk('div', 'sf-pm-small', '상권 색 = 종합 점수 (연한 파랑 → 진한 파랑)'), sl);
+  };
+
+  dash.draw('ind-name', (el) => { el.textContent = dash.params().industry || '커피-음료'; });
+  dash.draw('n-areas', (el) => { const s = st('ranked'); if (s.status !== 'ok') return dashOr(el, s); el.textContent = F(s.data.length); });
+  dash.draw('top1-name', (el) => { const s = st('ranked'); if (s.status !== 'ok' || !s.data.length) return dashOr(el, s); el.textContent = s.data[0].상권 + '(' + s.data[0].자치구 + ')'; });
+  dash.draw('top1-score', (el) => { const s = st('ranked'); if (s.status !== 'ok' || !s.data.length) return dashOr(el, s); el.textContent = s.data[0].종합; });
+
+  dash.draw('industry', (sel) => {
+    const s = st('industries');
+    const cur = dash.params().industry || '커피-음료';
+    sel.replaceChildren(...(s.status === 'ok' ? s.data : [{ 업종: cur, 상권수: '' }]).map((r) => new Option(r.상권수 ? `${r.업종} (${F(r.상권수)}곳)` : r.업종, r.업종)));
+    sel.value = cur;
+    sel.onchange = () => { SF.guPick = ''; dash.setParams({ industry: sel.value }); };
+  });
+
+  dash.draw('applied-label', (el) => { el.textContent = SF.codeName(dash.params().mbti) + (SF.appliedFrom ? ' · ' + SF.SRC[SF.appliedFrom] : ''); });
+  dash.draw('applied-count', (el) => { const s = st('applied_count'); if (s.status !== 'ok') return dashOr(el, s); el.textContent = F(s.data); });
+
+  dash.draw('step-label', (el) => { el.textContent = (SF.step + 1) + ' / 3 단계 · ' + (SF.step * 5 + 1) + '~' + (SF.step * 5 + 5) + '번'; });
+  dash.draw('answered', (el) => { el.textContent = Object.keys(SF.answers).length + ' / ' + SF.total() + ' 답함'; });
+  dash.draw('tally', (el) => {
+    el.replaceChildren(...['LV', 'EP', 'SD'].map((ax) => {
+      const d = SF.AX[ax], s = SF.axisState(ax);
+      const box = document.createElement('div'); box.className = 'sf-ax';
+      const top = document.createElement('div'); top.className = 'sf-ax-top';
+      const t = document.createElement('span'); t.textContent = d[0] + ' ' + d[1] + '/' + d[3];
+      const b = document.createElement('span'); b.className = 'sf-st ' + s.cls; b.textContent = s.status;
+      top.append(t, b);
+      const v = document.createElement('b');
+      v.textContent = SF.tab === 'manual' ? (s.letter === '?' ? '상관없음' : s.letter + ' ' + (s.letter === d[1] ? d[2] : d[4])) : d[1] + ' ' + s.a + ' : ' + d[3] + ' ' + s.b;
+      box.append(top, v); return box;
+    }));
+  });
+  dash.draw('pick-count', (el) => { const s = st('pick_count'); if (s.status !== 'ok') return dashOr(el, s); el.textContent = F(s.data); });
+  dash.draw('pick-label', (el) => { el.textContent = SF.codeName(SF.code()); });
+  dash.draw('filter-label', (el) => { const s = st('pick_count'); el.textContent = SF.SRC[SF.tab] + ' · ' + SF.describe(SF.code()) + (s.status === 'ok' ? ' → ' + F(s.data) + '곳' : ''); });
+
+  const cell = (tr, v, cls) => { const td = document.createElement('td'); td.textContent = v === null || v === undefined ? '–' : v; if (cls) td.className = cls; tr.appendChild(td); };
+  const r0 = (v) => (v === null || v === undefined ? null : Math.round(v));
+
+  dash.draw('cand-table', (tb) => {
+    const s = st('candidates');
+    if (s.status !== 'ok') { tb.replaceChildren(); return; }
+    tb.replaceChildren(...s.data.slice(0, 10).map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.trdar_code;
+      cell(tr, r.순위 === null ? null : r.순위 + '위', 'n'); cell(tr, r.상권); cell(tr, r.자치구); cell(tr, r.종합, 'n');
+      cell(tr, r0(r.매출), 'n'); cell(tr, r0(r.경쟁), 'n'); cell(tr, r0(r.안정성), 'n'); cell(tr, r0(r.수요), 'n');
+      return tr;
+    }));
+  });
+
+  dash.draw('cand-map', (el) => {
+    const c = st('candidates'), rk = st('ranked');
+    if (c.status !== 'ok' || rk.status !== 'ok') { el.textContent = c.status === 'error' || rk.status === 'error' ? '불러오지 못함' : '—'; return; }
+    SF.pixelMap(el, { key: 'cand', rows: c.data, all: rk.data, redraw: () => dash.draw('cand-map') });
+  });
+
+  dash.draw('sd-chart', (el) => {
+    const s = st('sd'); if (s.status !== 'ok') { el.textContent = s.status === 'error' ? '불러오지 못함' : '—'; return; }
+    const cols = [SF.C[0], SF.C[1], '#B8AF98', '#B8AF98'];
+    SF.hbar(el, s.data, { label: (d) => d['공식 지표'] + ' → ' + d['판정'], value: (d) => Number(d['상권 수']), fmt: (v) => F(v) + '곳', color: (d, i) => cols[s.data.indexOf(d)], labelW: 170 });
+  });
+
+  // ---- 6장
+  dash.draw('w-val', (el) => { const v = dash.params()[el.dataset.k]; el.textContent = v === undefined ? '—' : v; });
+  dash.draw('gu', (sel) => {
+    const s = st('gu_avg');
+    const names = s.status === 'ok' ? s.data.map((r) => r.자치구).sort(d3.ascending) : [];
+    sel.replaceChildren(new Option('서울 전체', ''), ...names.map((n) => new Option(n, n)));
+    sel.value = names.includes(SF.guPick) ? SF.guPick : '';
+    sel.onchange = () => { SF.guPick = sel.value; dash.draw('rank-table'); dash.draw('score-map'); dash.draw('gu-chart'); };
+  });
+  function scoreRows() {
+    const s = st('ranked'); if (s.status !== 'ok') return null;
+    const code = dash.params().mbti || '???';
+    return s.data.filter((r) => r.종합 !== null && (!SF.guPick || r.자치구 === SF.guPick) && (!SF.onlyMatch || SF.match(r, code)));
+  }
+  dash.draw('rank-table', (tb) => {
+    const rows = scoreRows(); if (!rows) { tb.replaceChildren(); return; }
+    const code = dash.params().mbti || '???';
+    tb.replaceChildren(...rows.slice(0, 20).map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.trdar_code; tr.style.cursor = 'pointer'; tr.title = '누르면 상권 상세';
+      tr.onclick = () => { SF.selArea = r.trdar_code; dash.draw('area-detail'); const c = document.getElementById('area-detail-card'); if (c) c.scrollIntoView({ block: 'nearest' }); };
+      if (code !== '???' && SF.match(r, code)) tr.className = 'sf-hit';
+      cell(tr, r.순위 + '위', 'n'); cell(tr, r.상권); cell(tr, r.자치구); cell(tr, r.종합, 'n');
+      cell(tr, r0(r.매출), 'n'); cell(tr, r0(r.경쟁), 'n'); cell(tr, r0(r.안정성), 'n'); cell(tr, r0(r.수요), 'n'); cell(tr, r.유형);
+      return tr;
+    }));
+  });
+  dash.draw('score-map', (el) => {
+    const s = st('ranked'); if (s.status !== 'ok') { el.textContent = s.status === 'error' ? '불러오지 못함' : '—'; return; }
+    const code = dash.params().mbti || '???';
+    const rows = s.data.filter((r) => !SF.onlyMatch || SF.match(r, code));
+    const S = SF.pm.score || (SF.pm.score = { gu: null, metric: 'total', pick: null, anim: false });
+    if ((SF.guPick || null) !== S.gu) { S.gu = SF.guPick || null; S.pick = null; S.anim = !!S.gu; }
+    SF.pixelMap(el, { key: 'score', rows, all: s.data, redraw: () => dash.draw('score-map'),
+      onGu: (g) => { SF.guPick = g || ''; dash.draw('gu'); dash.draw('rank-table'); dash.draw('gu-chart'); } });
+  });
+  dash.draw('gu-chart', (el) => {
+    const s = st('gu_avg'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    SF.hbar(el, s.data, { label: (d) => d.자치구 + ' (' + d.상권수 + ')', value: (d) => d.평균, fmt: (v) => v + '점', color: (d) => (SF.guPick && d.자치구 === SF.guPick ? SF.C[1] : SF.C[0]), max: 100, labelW: 110 });
+  });
+  dash.draw('sens-chart', (el) => {
+    const s = st('sensitivity'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    SF.hbar(el, s.data, { label: (d) => d['가중치 안'] + ' ' + d['매출·경쟁·안정성·수요'], value: (d) => Number(d['상위 10곳 유지 중앙값']), fmt: (v) => v + '곳', color: (d) => (d['가중치 안'] === '경쟁 제외' ? '#C8443C' : SF.C[0]), max: 10, labelW: 190 });
+  });
+
+  // ---- 1장 · 4장 · EDA 1 숫자
+  dash.draw('num', (el) => {
+    const s = st(el.dataset.source); if (s.status !== 'ok') return dashOr(el, s);
+    const [k, v] = (el.dataset.where || '').split('=');
+    const row = s.data.find((r) => String(r[k]) === v);
+    const x = row ? Number(row[el.dataset.field]) : null;
+    el.textContent = x === null || Number.isNaN(x) ? '–' : (Number.isInteger(x) ? F(x) : String(x));
+  });
+
+  // ---- 표: 2 · 3 · 5장
+  dash.draw('catalog-table', (tb) => {
+    const s = st('catalog'); if (s.status !== 'ok') { tb.replaceChildren(); return; }
+    tb.replaceChildren(...s.data.map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.ID;
+      cell(tr, r.ID); const td = document.createElement('td'); td.className = 'w'; td.textContent = r['데이터셋']; tr.appendChild(td);
+      cell(tr, r['제공 기관']); cell(tr, r['행 수'] ? F(Number(r['행 수'])) : '–', 'n'); cell(tr, r['열 수'] || '–', 'n'); cell(tr, r['기간']);
+      const lt = document.createElement('td'); const url = String(r['링크'] || '');
+      if (url.startsWith('https://') || url.startsWith('http://')) { const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = '열기'; lt.appendChild(a); } else lt.textContent = url;
+      tr.appendChild(lt); return tr;
+    }));
+  });
+  dash.draw('columns-table', (tb) => {
+    const s = st('columns'); if (s.status !== 'ok') { tb.replaceChildren(); return; }
+    const sel = document.getElementById('sf-col-ds'); const ds = sel ? sel.value : 'S01';
+    tb.replaceChildren(...s.data.filter((r) => r.ID === ds).map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = encodeURIComponent(r.ID) + ',' + encodeURIComponent(r['순서']);
+      cell(tr, r['순서'], 'n'); cell(tr, r['컬럼']); const td = document.createElement('td'); td.className = 'w'; td.textContent = r['의미'] || ''; tr.appendChild(td);
+      cell(tr, r['단위'] || ''); cell(tr, r['결측률(%)'], 'n'); return tr;
+    }));
+  });
+  dash.draw('features-table', (tb) => {
+    const s = st('features'); if (s.status !== 'ok') { tb.replaceChildren(); return; }
+    tb.replaceChildren(...s.data.map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = encodeURIComponent(r['변수']);
+      cell(tr, r['변수'], ''); cell(tr, r['단위 수준']);
+      const f = document.createElement('td'); f.className = 'w sf-mono'; f.textContent = r['계산식'] || ''; tr.appendChild(f);
+      cell(tr, r['단위'] || ''); const p = document.createElement('td'); p.className = 'w'; p.textContent = r['목적'] || ''; tr.appendChild(p); cell(tr, r['확보']);
+      return tr;
+    }));
+  });
+
+  // ---- EDA 공통: 결과 문장과 설계 4칸
+  dash.draw('eda-result', (el) => {
+    const s = st('eda'); if (s.status !== 'ok') return dashOr(el, s);
+    const r = s.data.find((x) => String(x['번호']) === el.dataset.n);
+    el.dataset.source = 'eda'; el.dataset.field = '확인한 결과'; el.dataset.where = '번호=' + el.dataset.n;
+    el.textContent = r ? r['확인한 결과'] : '–';
+  });
+  dash.draw('eda-design', (el) => {
+    const s = st('eda'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    const r = s.data.find((x) => String(x['번호']) === el.dataset.n); if (!r) { el.textContent = '–'; return; }
+    el.replaceChildren(...['분석 목적', '필요한 데이터', '구현 방법', '기대 인사이트'].map((k) => { const d = document.createElement('div'); const b = document.createElement('b'); b.textContent = k; d.append(b, document.createTextNode(r[k] || '')); return d; }));
+  });
+
+  // EDA 1: 업종 분포 지도
+  const GROUPS = ['외식', '서비스', '소매'];
+  dash.draw('eda-map', (el) => {
+    if (SF.eda1 === 'group') {
+      const s = st('area_lead'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+      const m = new Map(s.data.map((r) => [r.trdar_code, r.업종군]));
+      SF.drawMap(el, { sig: 'group|' + s.data.length, paint: (g) => { const k = m.get(g.trdar_code); return k ? { fill: SF.C[GROUPS.indexOf(k)] || 'var(--sf-muted)', op: 0.85 } : null; }, tipLines: (g) => [g['상권'] + ' (' + g['자치구'] + ')', '최다 업종군: ' + (m.get(g.trdar_code) || '점포 없음')] });
+      return;
+    }
+    const s = st('ind_stores'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    const m = new Map(s.data.map((r) => [r.trdar_code, r.점포]));
+    const th = [2, 5, 10, 20];
+    const cls = (v) => th.filter((t) => v >= t).length;
+    SF.drawMap(el, { sig: 'ind|' + (dash.params().industry || '') + '|' + s.data.length + '|' + d3.sum(s.data, (r) => r.점포).toFixed(2), paint: (g) => { const v = m.get(g.trdar_code); return v ? { fill: SF.score([10, 35, 55, 75, 95][cls(v)]), op: 1 } : null; }, tipLines: (g) => [g['상권'] + ' (' + g['자치구'] + ')', '평균 점포 ' + (m.has(g.trdar_code) ? m.get(g.trdar_code) : 0) + '개'] });
+  });
+  dash.draw('eda-map-legend', (el) => {
+    if (SF.eda1 === 'group') { el.replaceChildren(...GROUPS.map((g, i) => { const sp = document.createElement('span'); const ic = document.createElement('i'); ic.style.background = SF.C[i]; sp.append(ic, document.createTextNode(g)); return sp; })); return; }
+    const labels = ['2개 미만', '2~5개', '5~10개', '10~20개', '20개 이상'];
+    el.replaceChildren(...labels.map((l, i) => { const sp = document.createElement('span'); const ic = document.createElement('i'); ic.style.background = SF.score([10, 35, 55, 75, 95][i]); sp.append(ic, document.createTextNode(l)); return sp; }),
+      Object.assign(document.createElement('span'), { textContent: '연회색: 점포 없음 · 2025년 4개 분기 평균 · 선: 실제 자치구 경계' }));
+  });
+
+  // EDA 2: 히트맵
+  dash.draw('eda-heat', (el) => {
+    const s = st('eda_heat'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    const rows = s.data.filter((r) => r['기준'] === SF.heat);
+    const rowNames = Array.from(new Map(rows.map((r) => [Number(r['행순서']), r])).values()).sort((a, b) => a['행순서'] - b['행순서']);
+    const cols = Array.from(new Map(rows.map((r) => [Number(r['열순서']), r['업종']]))).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
+    const lw = 190, cw = 52, rh = 22, top = 90, rw = 230;
+    const w = lw + cols.length * cw + rw, h = top + rowNames.length * rh + 6;
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${w} ${h}`).attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', '매출 상위 상권 또는 자치구의 업종별 매출 비중 히트맵');
+    svg.append('g').selectAll('text').data(cols).join('text').attr('transform', (d, i) => `translate(${lw + i * cw + cw / 2},${top - 8}) rotate(-40)`).text((d) => d);
+    const op = (v) => (v >= 40 ? 1 : v >= 20 ? 0.75 : v >= 10 ? 0.5 : v >= 5 ? 0.3 : 0.12);
+    const tip = SF.tip(el);
+    rowNames.forEach((rn, i) => {
+      const y = top + i * rh;
+      svg.append('text').attr('x', lw - 8).attr('y', y + rh / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(rn['행']);
+      const cells = rows.filter((r) => Number(r['행순서']) === Number(rn['행순서']));
+      cells.forEach((c) => {
+        const j = Number(c['열순서']) - 1, v = Number(c['비중']);
+        svg.append('rect').attr('x', lw + j * cw + 1).attr('y', y + 1).attr('width', cw - 2).attr('height', rh - 2).style('fill', v > 0 ? SF.score(op(v) * 100) : '#EFE6CC').style('fill-opacity', 1)
+          .on('mousemove', (ev) => tip.show(ev, [rn['행'], c['업종'] + ' ' + v + '%'])).on('mouseleave', () => tip.hide());
+        if (v >= 20) svg.append('text').attr('class', 'sf-strong').attr('x', lw + j * cw + cw / 2).attr('y', y + rh / 2).attr('dy', '0.32em').attr('text-anchor', 'middle').style('fill', '#FFFFFF').text(Math.round(v));
+      });
+      svg.append('text').attr('class', 'sf-strong').attr('x', lw + cols.length * cw + 10).attr('y', y + rh / 2).attr('dy', '0.32em').text(rn['1위업종'] + ' ' + Math.round(Number(rn['1위비중'])) + '%');
+      svg.append('text').attr('x', w - 6).attr('y', y + rh / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(F(Math.round(Number(rn['총매출억원']))) + '억');
+    });
+    svg.append('text').attr('x', lw + cols.length * cw + 10).attr('y', top - 8).attr('class', 'sf-strong').text('1위 업종 (비중)');
+    svg.append('text').attr('x', w - 6).attr('y', top - 8).attr('text-anchor', 'end').attr('class', 'sf-strong').text('총매출');
+  });
+
+  // EDA 4: 산점도
+  dash.draw('rho', (el) => {
+    const s = st('eda_rho'); if (s.status !== 'ok') return dashOr(el, s);
+    const ind = dash.params().industry || '커피-음료';
+    el.dataset.where = '업종=' + encodeURIComponent(ind).replace(/%20/g, ' ');
+    const r = s.data.find((x) => x['업종'] === ind);
+    el.textContent = r ? Number(r['순위상관']).toFixed(2) : '매출 점수 없음';
+  });
+  dash.draw('eda-scatter', (el) => {
+    const s = st('close_ind'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    const rows = s.data.filter((r) => r.점포당월매출 > 0);
+    if (!rows.length) { el.textContent = '이 업종은 매출 자료가 없어 그릴 수 없습니다.'; return; }
+    const w = el.clientWidth || 640, h = 340, m = { l: 50, r: 16, t: 12, b: 40 };
+    const x = d3.scaleLog().domain(d3.extent(rows, (r) => r.점포당월매출)).range([m.l, w - m.r]).nice();
+    const y = d3.scaleLinear().domain([0, d3.max(rows, (r) => r.폐업률) * 1.05]).range([h - m.b, m.t]).nice();
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${w} ${h}`).attr('height', h).attr('role', 'img').attr('aria-label', '점포당 월매출과 폐업률 산점도');
+    svg.append('g').attr('transform', `translate(0,${h - m.b})`).call(d3.axisBottom(x).ticks(5, '~s'));
+    svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5));
+    svg.selectAll('.domain,.tick line').style('stroke', '#5A5446');
+    svg.append('text').attr('x', w - m.r).attr('y', h - 6).attr('text-anchor', 'end').text('점포당 월매출 (원, 로그)');
+    svg.append('text').attr('x', m.l).attr('y', m.t + 4).attr('dx', 6).text('폐업률 (%, 축소 추정)');
+    const tip = SF.tip(el);
+    svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx', (r) => x(r.점포당월매출)).attr('cy', (r) => y(r.폐업률)).attr('r', 3.5)
+      .style('fill', SF.C[0]).style('fill-opacity', 0.55)
+      .on('mousemove', (ev, r) => tip.show(ev, [r.상권 + ' (' + r.자치구 + ')', '월매출 ' + F(Math.round(r.점포당월매출 / 10000)) + '만 원', '폐업률 ' + r.폐업률 + '%'])).on('mouseleave', () => tip.hide());
+  });
+
+  // EDA 5: 집객시설
+  const FK = ['교통', '의료', '생활·행정', '교육', '쇼핑·문화·숙박', '세부 미기재'];
+  const fcol = (i) => (['#1F5FC4', '#F4C430', '#2E8B57', '#163F82', '#C8443C'][i] || '#CFC5A8');
+  dash.draw('eda-fac', (el) => {
+    const s = st('eda_facility'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    const w = el.clientWidth || 640, lw = 190, rh = 22;
+    const types = s.data.filter((r) => r['구분'] === '상권 유형'), top = s.data.filter((r) => r['구분'] !== '상권 유형');
+    const h = 24 + types.length * rh + 34 + top.length * rh + 8;
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${w} ${h}`).attr('height', h).attr('role', 'img').attr('aria-label', '집객시설 구성 누적 막대');
+    const tip = SF.tip(el);
+    const bw = w - lw - 60;
+    svg.append('text').attr('x', 0).attr('y', 14).attr('class', 'sf-strong').text('상권 유형별 구성 (100%)');
+    types.forEach((r, i) => {
+      const y = 22 + i * rh, tot = Number(r['총수']); let acc = 0;
+      svg.append('text').attr('x', lw - 8).attr('y', y + rh / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(r['이름']);
+      FK.forEach((k, j) => { const v = Number(r[k]); const ww = tot ? v / tot * bw : 0; svg.append('rect').attr('x', lw + acc).attr('y', y + 3).attr('width', Math.max(0, ww)).attr('height', rh - 6).style('fill', fcol(j)).on('mousemove', (ev) => tip.show(ev, [r['이름'], k + ' ' + F(v) + '개 (' + (tot ? Math.round(v / tot * 1000) / 10 : 0) + '%)'])).on('mouseleave', () => tip.hide()); if (tot && v / tot >= 0.08) svg.append('text').attr('x', lw + acc + ww / 2).attr('y', y + rh / 2).attr('dy', '0.32em').attr('text-anchor', 'middle').style('font-size', '11px').style('font-weight', '700').style('pointer-events', 'none').style('fill', j === 1 || j === 5 ? '#2B2A26' : '#FFFFFF').text(Math.round(v / tot * 100) + '%'); acc += ww; });
+    });
+    const y0 = 22 + types.length * rh + 26;
+    svg.append('text').attr('x', 0).attr('y', y0 - 8).attr('class', 'sf-strong').text('집객시설이 많은 상권 15곳 (개수)');
+    const mx = d3.max(top, (r) => Number(r['총수']));
+    top.forEach((r, i) => {
+      const y = y0 + i * rh; let acc = 0;
+      svg.append('text').attr('x', lw - 8).attr('y', y + rh / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(r['이름']);
+      FK.forEach((k, j) => { const v = Number(r[k]); const ww = v / mx * bw; svg.append('rect').attr('x', lw + acc).attr('y', y + 3).attr('width', Math.max(0, ww)).attr('height', rh - 6).style('fill', fcol(j)).on('mousemove', (ev) => tip.show(ev, [r['이름'], k + ' ' + F(v) + '개'])).on('mouseleave', () => tip.hide()); acc += ww; });
+      svg.append('text').attr('class', 'sf-strong').attr('x', lw + acc + 6).attr('y', y + rh / 2).attr('dy', '0.32em').text(F(Number(r['총수'])));
+    });
+  });
+  dash.draw('fac-legend', (el) => { el.replaceChildren(...FK.map((k, i) => { const sp = document.createElement('span'); const ic = document.createElement('i'); ic.style.background = fcol(i); sp.append(ic, document.createTextNode(k)); return sp; })); });
+
+  // EDA 6: 레이더
+  const RK = ['매출', '경쟁', '안정성', '수요'];
+  dash.draw('eda-radar', (el) => {
+    const s = st('radar'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    const w = Math.min(el.clientWidth || 480, 520), h = w * 0.82, cx = w / 2, cy = h / 2 + 6, R = Math.min(w, h) / 2 - 46;
+    const ang = (i) => -Math.PI / 2 + i * Math.PI / 2;
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${w} ${h}`).attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', '상위 3곳과 업종 중앙값의 영역별 점수 레이더');
+    [25, 50, 75, 100].forEach((v) => svg.append('polygon').attr('points', RK.map((k, i) => [cx + Math.cos(ang(i)) * R * v / 100, cy + Math.sin(ang(i)) * R * v / 100].join(',')).join(' ')).style('fill', 'none').style('stroke', '#E8DDBF'));
+    RK.forEach((k, i) => { svg.append('line').attr('x1', cx).attr('y1', cy).attr('x2', cx + Math.cos(ang(i)) * R).attr('y2', cy + Math.sin(ang(i)) * R).style('stroke', '#E8DDBF'); svg.append('text').attr('class', 'sf-strong').attr('x', cx + Math.cos(ang(i)) * (R + 18)).attr('y', cy + Math.sin(ang(i)) * (R + 18)).attr('dy', '0.32em').attr('text-anchor', 'middle').text(k); });
+    s.data.forEach((r, j) => {
+      const med = r.이름 === '업종 중앙값';
+      const pts = RK.map((k, i) => { const v = r[k] ?? 0; return [cx + Math.cos(ang(i)) * R * v / 100, cy + Math.sin(ang(i)) * R * v / 100].join(','); }).join(' ');
+      svg.append('polygon').attr('points', pts).style('fill', med ? 'none' : SF.C[j]).style('fill-opacity', 0.12).style('stroke', med ? 'var(--sf-muted)' : SF.C[j]).style('stroke-width', 2).style('stroke-dasharray', med ? '5 4' : null);
+    });
+  });
+  dash.draw('radar-legend', (el) => {
+    const s = st('radar'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    el.replaceChildren(...s.data.map((r, j) => { const sp = document.createElement('span'); const ic = document.createElement('i'); const med = r.이름 === '업종 중앙값'; ic.style.background = med ? 'transparent' : SF.C[j]; if (med) ic.style.borderStyle = 'dashed'; sp.append(ic, document.createTextNode(r.이름 + ' · ' + RK.map((k) => k + ' ' + (r[k] === null ? '–' : Math.round(r[k]))).join(' '))); return sp; }));
+  });
+
+  // ---- 6장: 상권 단위 지도 · 상권 상세 · 가정별 순위 · 영역 상관
+  dash.draw('area-map', (el) => {
+    const s = st('ranked'); if (s.status !== 'ok') { el.textContent = s.status === 'error' ? '불러오지 못함' : '—'; return; }
+    const m = new Map(s.data.filter((r) => r.종합 !== null).map((r) => [r.trdar_code, r]));
+    SF.drawMap(el, {
+      sig: 'area|' + (dash.params().industry || '') + '|' + s.data.length + '|' + d3.sum(s.data, (r) => r.종합 || 0).toFixed(1),
+      paint: (g) => { const r = m.get(g.trdar_code); return r ? { fill: SF.score(r.종합), op: 1 } : null; },
+      tipLines: (g) => { const r = m.get(g.trdar_code); return r ? [r.상권 + ' (' + r.자치구 + ')', '종합 ' + r.종합 + '점 · 서울 ' + r.순위 + '위', '누르면 오른쪽 상세'] : [g['상권'] + ' (' + g['자치구'] + ')', '이 업종 점수 대상 아님']; },
+      onClick: (g) => { if (m.has(g.trdar_code)) { SF.selArea = g.trdar_code; dash.draw('area-detail'); } }
+    });
+  });
+  dash.draw('area-map-legend', (el) => {
+    el.replaceChildren(...[10, 35, 55, 75, 95].map((v, i) => { const sp = document.createElement('span'); const ic = document.createElement('i'); ic.style.background = SF.score(v); sp.append(ic, document.createTextNode(['0~20', '20~40', '40~60', '60~80', '80~100'][i] + '점')); return sp; }),
+      Object.assign(document.createElement('span'), { textContent: '연회색: 이 업종 점수 대상 아님 · 휠로 확대' }));
+  });
+  dash.draw('area-detail', (el) => {
+    const s = st('ranked'), rw = st('raw');
+    if (s.status !== 'ok' || rw.status !== 'ok') { el.textContent = s.status === 'error' || rw.status === 'error' ? '불러오지 못함' : '—'; return; }
+    const ind = dash.params().industry || '커피-음료';
+    const rows = s.data.filter((r) => r.종합 !== null);
+    const r = rows.find((x) => x.trdar_code === SF.selArea) || rows[0];
+    if (!r) { el.textContent = '이 업종은 점수 대상 상권이 없습니다.'; return; }
+    const raws = rw.data.filter((x) => x['업종'] === ind);
+    const byCode = new Map(rows.map((x) => [x.trdar_code, x]));
+    const me = raws.find((x) => x.trdar_code === r.trdar_code) || {};
+    const med = (k, f) => { const v = raws.filter(f || (() => true)).map((x) => x[k]).filter((x) => x !== null && x !== undefined); return v.length ? d3.median(v) : null; };
+    const smed = (k) => { const v = rows.map((x) => x[k]).filter((x) => x !== null); return v.length ? d3.median(v) : null; };
+    const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt !== undefined) e.textContent = txt; return e; };
+    const money = (v) => (v === null || v === undefined ? '자료 없음' : F(Math.round(v / 10000)) + '만 원');
+    const num = (v, d, u) => (v === null || v === undefined ? '자료 없음' : (d ? Number(v).toFixed(d) : F(Math.round(v))) + (u || ''));
+    el.replaceChildren();
+    const head = mk('div', 'sf-ad-head'); head.append(mk('b', null, r.상권), mk('span', 'sf-sub', r.자치구 + ' · 유형 ' + r.유형 + (r.유형.includes('?') ? ' (일부 기준 보류)' : '')));
+    const sc = mk('div'); sc.append(mk('span', 'sf-ad-score', r.종합 + '점'), mk('span', 'sf-sub', ' · 서울 같은 업종 ' + F(rows.length) + '곳 중 ' + r.순위 + '위'));
+    const bars = mk('div', 'sf-ad-bars');
+    [['매출', '#1F5FC4'], ['경쟁', '#A67C00'], ['안정성', '#2E8B57'], ['수요', '#163F82']].forEach(([k, c]) => {
+      const row = mk('div', 'sf-ad-bar'); const tr = mk('div'); const fi = mk('i'); fi.style.width = (r[k] === null ? 0 : r[k]) + '%'; fi.style.background = c;
+      const mm = smed(k); const u = mk('u'); u.style.left = (mm === null ? 50 : mm) + '%'; u.title = '업종 중앙값 ' + (mm === null ? '–' : mm.toFixed(1));
+      tr.append(fi, u); row.append(mk('span', null, k), tr, mk('em', null, r[k] === null ? '없음' : String(Math.round(r[k])))); bars.appendChild(row);
+    });
+    const note = mk('p', 'sf-sub', '막대 = 이 상권 점수, 빨간 세로선 = 서울 같은 업종 점수 대상의 중앙값 (점수는 같은 업종 안 백분위)'); note.style.margin = '0 0 8px'; note.style.fontSize = '.8em';
+    const box = mk('div', 'sf-tbl'); const tb = mk('table'); const th = mk('thead'); const hr = mk('tr');
+    ['원값', '이 상권', '업종 중앙값', '설명'].forEach((x, i) => { const c = mk('th', i === 1 || i === 2 ? 'n' : null, x); hr.appendChild(c); }); th.appendChild(hr); tb.appendChild(th);
+    const body = mk('tbody');
+    const salesMed = med('월매출', (x) => { const z = byCode.get(x.trdar_code); return z && z.매출 !== null; });
+    [['점포당 월매출', money(me['월매출']), money(salesMed), '높을수록 매출 점수 ↑ (매출 점수가 있는 상권끼리)'],
+     ['경쟁 원값 (유동인구 대비 같은 업종 점포)', num(me['경쟁원값'], 4), num(med('경쟁원값'), 4), '낮을수록 경쟁 점수 ↑'],
+     ['축소 추정 폐업률', num(me['폐업률'], 2, '%'), num(med('폐업률'), 2, '%'), '낮을수록 안정성 점수 ↑ (1년치)'],
+     ['유동인구 밀도 (명/㎢)', num(me['유동밀도']), num(med('유동밀도')), '수요 구성 1'],
+     ['직장인구 밀도 (명/㎢)', num(me['직장밀도']), num(med('직장밀도')), '수요 구성 2'],
+     ['상주인구 밀도 (명/㎢)', num(me['상주밀도']), num(med('상주밀도')), '수요 구성 3'],
+     ['평균 점포 수 · 개업 / 폐업', (me['점포'] === undefined ? '–' : me['점포'] + '개 · ' + me['개업'] + ' / ' + me['폐업']), num(med('점포'), 1, '개'), '2025년 4개 분기']
+    ].forEach((row) => { const trr = mk('tr'); row.forEach((x, i) => { const c = mk('td', i === 1 || i === 2 ? 'n' : (i === 3 ? 'sf-wrap' : 'sf-wrap'), x); trr.appendChild(c); }); body.appendChild(trr); });
+    tb.appendChild(body); box.appendChild(tb);
+    el.append(head, sc, bars, note, box);
+  });
+  dash.draw('scen-table', (tb) => {
+    const s = st('scen'); if (s.status !== 'ok') { tb.replaceChildren(); return; }
+    tb.replaceChildren(...s.data.map((r) => { const tr = document.createElement('tr'); tr.dataset.key = r.가정; if (r.가정 === '경쟁 제외') tr.className = 'sf-hit';
+      cell(tr, r.가정); cell(tr, r.가중치); cell(tr, r.상위10유지 + '곳', 'n'); cell(tr, r.순위상관 === null ? '–' : r.순위상관.toFixed(3), 'n'); return tr; }));
+  });
+  dash.draw('scen-chart', (el) => {
+    const s = st('scen'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    SF.hbar(el, s.data, { label: (d) => d.가정 + ' ' + d.가중치, value: (d) => d.상위10유지, fmt: (v) => v + '곳', color: (d) => (d.가정 === '경쟁 제외' ? '#C8443C' : d.가정 === '현재 설정' ? '#A67C00' : SF.C[0]), max: 10, labelW: 190 });
+  });
+  dash.draw('corr-matrix', (el) => {
+    const s = st('corr'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    const K = ['매출', '경쟁', '안정성', '수요']; const val = (a, b) => { if (a === b) return 1; const r = s.data.find((x) => (x.A === a && x.B === b) || (x.A === b && x.B === a)); return r ? r.상관 : null; };
+    const cs = 64, lw = 70, top = 28, w = lw + cs * 4 + 10, h = top + cs * 4 + 6;
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${w} ${h}`).attr('width', Math.min(w, el.clientWidth || w)).attr('role', 'img').attr('aria-label', '4개 영역 점수 사이의 순위 상관 행렬');
+    const col = d3.scaleLinear().domain([-1, 0, 1]).range(['#C08A00', '#FFFBEF', '#1F5FC4']);
+    K.forEach((k, j) => svg.append('text').attr('x', lw + j * cs + cs / 2).attr('y', top - 8).attr('text-anchor', 'middle').attr('class', 'sf-strong').text(k));
+    const tip = SF.tip(el);
+    K.forEach((a, i) => {
+      svg.append('text').attr('x', lw - 8).attr('y', top + i * cs + cs / 2).attr('dy', '0.32em').attr('text-anchor', 'end').attr('class', 'sf-strong').text(a);
+      K.forEach((b, j) => { const v = val(a, b);
+        svg.append('rect').attr('x', lw + j * cs + 1).attr('y', top + i * cs + 1).attr('width', cs - 2).attr('height', cs - 2).style('fill', v === null ? '#EEE' : col(v)).style('stroke', '#2B2A26').style('stroke-width', 1)
+          .on('mousemove', (ev) => tip.show(ev, [a + ' · ' + b, '순위 상관 ' + (v === null ? '–' : v.toFixed(2))])).on('mouseleave', () => tip.hide());
+        svg.append('text').attr('x', lw + j * cs + cs / 2).attr('y', top + i * cs + cs / 2).attr('dy', '0.35em').attr('text-anchor', 'middle').style('font-size', '15px').style('font-weight', '700').style('fill', v !== null && Math.abs(v) > 0.6 ? '#FFFFFF' : '#2B2A26').style('pointer-events', 'none').text(v === null ? '–' : v.toFixed(2));
+      });
+    });
+  });
+
+  // ---- 7장: 주민 비율 × 건당 금액 백분위
+  dash.draw('lvep-scatter', (el) => {
+    const s = st('ranked'), rw = st('raw'); if (s.status !== 'ok' || rw.status !== 'ok') { el.textContent = '—'; return; }
+    const ind = dash.params().industry || '커피-음료'; const pick = dash.params().pick || '???'; const on = pick !== '???';
+    const raw = new Map(rw.data.filter((x) => x['업종'] === ind).map((x) => [x.trdar_code, x]));
+    const pts = s.data.map((r) => { const x = raw.get(r.trdar_code); if (!x || x['주민비율'] === null || x['건당백분위'] === null || x['건당백분위'] === undefined) return null; return { r, x: x['주민비율'] * 100, y: x['건당백분위'], hit: on && SF.match(r, pick) }; }).filter(Boolean);
+    if (!pts.length) { el.textContent = ind + '은(는) 매출 자료가 없어 건당 금액(E/P)을 판정하지 않습니다.'; return; }
+    const w = el.clientWidth || 640, h = 380, m = { l: 52, r: 16, t: 14, b: 42 };
+    const x = d3.scaleLinear().domain([0, 100]).range([m.l, w - m.r]), y = d3.scaleLinear().domain([0, 100]).range([h - m.b, m.t]);
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${w} ${h}`).attr('height', h).attr('role', 'img').attr('aria-label', '주민 비율과 건당 금액 백분위 산점도');
+    svg.append('rect').attr('x', x(45)).attr('y', m.t).attr('width', x(55) - x(45)).attr('height', h - m.b - m.t).style('fill', '#E8DDBF').style('opacity', 0.6);
+    svg.append('rect').attr('x', m.l).attr('y', y(55)).attr('width', w - m.r - m.l).attr('height', y(45) - y(55)).style('fill', '#E8DDBF').style('opacity', 0.6);
+    svg.append('g').attr('transform', `translate(0,${h - m.b})`).call(d3.axisBottom(x).ticks(5));
+    svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5));
+    svg.selectAll('.domain,.tick line').style('stroke', '#5A5446');
+    svg.append('text').attr('x', (m.l + w - m.r) / 2).attr('y', h - 6).attr('text-anchor', 'middle').text('주민 비율 % → 55% 초과 L 생활형 · 45% 미만 V 방문형');
+    svg.append('text').attr('transform', `translate(14,${(m.t + h - m.b) / 2}) rotate(-90)`).attr('text-anchor', 'middle').text('건당 금액 백분위 → 높을수록 P 프리미엄형');
+    [['V · P', 4, 96, 'start'], ['L · P', 96, 96, 'end'], ['V · E', 4, 4, 'start'], ['L · E', 96, 4, 'end']].forEach(([tx, a, b, an]) => svg.append('text').attr('x', x(a)).attr('y', y(b)).attr('dy', b > 50 ? '0.9em' : '-0.3em').attr('text-anchor', an).attr('class', 'sf-strong').style('font-size', '14px').text(tx));
+    const tip = SF.tip(el);
+    const ordered = pts.slice().sort((a, b) => a.hit - b.hit);
+    svg.append('g').selectAll('circle').data(ordered).join('circle').attr('cx', (d) => x(d.x)).attr('cy', (d) => y(d.y)).attr('r', (d) => (d.hit ? 4.5 : 3.2))
+      .style('fill', (d) => (d.hit ? '#1F5FC4' : on ? '#B8AF98' : '#5B8FE0')).style('fill-opacity', (d) => (d.hit ? 0.95 : on ? 0.45 : 0.6)).style('stroke', (d) => (d.hit ? '#2B2A26' : 'none')).style('stroke-width', 0.6)
+      .on('mousemove', (ev, d) => tip.show(ev, [d.r.상권 + ' (' + d.r.자치구 + ')', '주민 비율 ' + d.x.toFixed(0) + '% · 건당 금액 백분위 ' + Math.round(d.y), '유형 ' + d.r.유형 + ' · 종합 ' + (d.r.종합 ?? '–') + '점'])).on('mouseleave', () => tip.hide());
+    svg.append('text').attr('x', w - m.r).attr('y', m.t + 12).attr('text-anchor', 'end').text('상권 ' + F(pts.length) + '곳' + (on ? ' · 조건에 맞음 ' + F(pts.filter((d) => d.hit).length) + '곳 (파랑)' : ''));
+  });
+
+  // ---- 8장 3: 밀집도 상위 25개 업종 + 선택 업종 (팀 통합본 방식으로 교체)
+  dash.draw('eda-density', (el) => {
+    const s = st('eda_density'), tt = st('ind_total'); if (s.status !== 'ok' || tt.status !== 'ok') { el.textContent = '—'; return; }
+    const ind = dash.params().industry || '커피-음료';
+    const names = new Set(tt.data.slice(0, 25).map((r) => r.업종)); names.add(ind);
+    const rows = s.data.filter((r) => names.has(r['업종'])).map((r) => ({ n: r['업종'], a: Number(r.p25), m: Number(r.p50), b: Number(r.p75) })).filter((r) => r.m > 0).sort((a, b) => b.m - a.m);
+    const w = el.clientWidth || 640, lw = 150, rh = 20, top = 22, h = top + rows.length * rh + 10;
+    const x = d3.scaleLog().domain([Math.max(0.5, d3.min(rows, (r) => r.a || r.m)), d3.max(rows, (r) => r.b)]).range([lw, w - 60]).nice();
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${w} ${h}`).attr('height', h).attr('role', 'img').attr('aria-label', '점포 수 상위 25개 업종과 선택 업종의 면적당 점포 수 분포');
+    svg.append('g').attr('transform', `translate(0,${top - 6})`).call(d3.axisTop(x).ticks(5, '~s')).call((g) => g.select('.domain').remove()).selectAll('line').style('stroke', '#E8DDBF');
+    const tip = SF.tip(el);
+    rows.forEach((r, i) => {
+      const y = top + i * rh + rh / 2, hit = r.n === ind;
+      svg.append('text').attr('x', lw - 8).attr('y', y).attr('dy', '0.32em').attr('text-anchor', 'end').attr('class', hit ? 'sf-strong' : null).text(r.n);
+      svg.append('line').attr('x1', x(Math.max(r.a, x.domain()[0]))).attr('x2', x(r.b)).attr('y1', y).attr('y2', y).style('stroke', hit ? '#C98A00' : '#9EC3F2').style('stroke-width', 7)
+        .on('mousemove', (ev) => tip.show(ev, [r.n, '25% ' + r.a.toFixed(1) + ' · 중앙값 ' + r.m.toFixed(1) + ' · 75% ' + r.b.toFixed(1) + ' (개/㎢)'])).on('mouseleave', () => tip.hide());
+      svg.append('circle').attr('cx', x(r.m)).attr('cy', y).attr('r', 4.5).style('fill', hit ? '#2B2A26' : '#1F5FC4');
+    });
+  });
+  dash.draw('dens-note', (el) => {
+    const s = st('eda_density'); if (s.status !== 'ok') return dashOr(el, s);
+    const ind = dash.params().industry || '커피-음료';
+    const all = s.data.filter((r) => Number(r.p50) > 0).sort((a, b) => Number(b.p50) - Number(a.p50));
+    const i = all.findIndex((r) => r['업종'] === ind);
+    el.textContent = i < 0 ? ind + '은(는) 밀집도를 계산할 상권이 없습니다.' : ind + '의 면적당 점포 수 중앙값은 ' + Number(all[i].p50).toFixed(1) + '개/㎢로 ' + all.length + '개 업종 중 ' + (i + 1) + '위입니다. 가장 높은 ' + all[0]['업종'] + '(' + Number(all[0].p50).toFixed(1) + ')와 가장 낮은 업종의 차이가 커서, 점포 수를 업종 구분 없이 감점하면 안 됩니다.';
+  });
+
+  // ---- 8장 4: 업종별 ρ 띠 (추가)
+  dash.draw('rho-strip', (el) => {
+    const s = st('eda_rho'); if (s.status !== 'ok') { el.textContent = '—'; return; }
+    const ind = dash.params().industry || '커피-음료';
+    const w = el.clientWidth || 640, h = 64, m = 30;
+    const x = d3.scaleLinear().domain([-0.5, 0.5]).range([m, w - m]);
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${w} ${h}`).attr('height', h).attr('role', 'img').attr('aria-label', '업종별 매출 수준과 폐업률의 순위상관 분포');
+    svg.append('g').attr('transform', `translate(0,${h - 22})`).call(d3.axisBottom(x).tickValues([-0.5, -0.25, 0, 0.25, 0.5]).tickFormat(d3.format('+.2~f'))).selectAll('.domain,.tick line').style('stroke', '#5A5446');
+    const medv = d3.median(s.data, (r) => Number(r['순위상관']));
+    svg.append('line').attr('x1', x(medv)).attr('x2', x(medv)).attr('y1', 6).attr('y2', h - 22).style('stroke', '#2B2A26').style('stroke-dasharray', '4 3');
+    const tip = SF.tip(el);
+    const sorted = s.data.slice().sort((a, b) => (a['업종'] === ind) - (b['업종'] === ind));
+    svg.append('g').selectAll('circle').data(sorted).join('circle').attr('cx', (r) => x(Number(r['순위상관']))).attr('cy', h - 34).attr('r', (r) => (r['업종'] === ind ? 7 : 4.5))
+      .style('fill', (r) => (r['업종'] === ind ? '#C98A00' : '#9EC3F2')).style('stroke', '#2B2A26').style('stroke-width', (r) => (r['업종'] === ind ? 1.5 : 0.4)).style('fill-opacity', 0.85)
+      .on('mousemove', (ev, r) => tip.show(ev, [r['업종'], 'ρ = ' + Number(r['순위상관']).toFixed(2)])).on('mouseleave', () => tip.hide());
+    svg.append('text').attr('x', x(medv) + 4).attr('y', 12).text('중앙값 ' + medv.toFixed(2));
+  });
+
+  // ---- 8장 7: 유형별 상위 5곳 카드 (팀 통합본 방식으로 교체)
+  dash.draw('eda-types', (el) => {
+    const s = st('type_counts'), rk = st('ranked'); if (s.status !== 'ok' || rk.status !== 'ok') { el.textContent = '—'; return; }
+    el.replaceChildren(...s.data.map((t) => {
+      const c = document.createElement('div'); c.className = 'sf-tc';
+      const h = document.createElement('h4'); h.textContent = t.유형 + ' ' + SF.NAMES[t.유형];
+      const n = document.createElement('div'); n.className = 'c'; n.textContent = '후보 ' + F(t.상권수) + '곳';
+      const ol = document.createElement('ol');
+      rk.data.filter((r) => r.유형 === t.유형 && r.종합 !== null).slice(0, 5).forEach((r) => { const li = document.createElement('li'); const sp = document.createElement('span'); sp.textContent = r.종합; li.append(document.createTextNode(r.상권 + ' '), sp); ol.appendChild(li); });
+      if (!ol.children.length) { const li = document.createElement('li'); li.textContent = '후보 없음'; ol.appendChild(li); }
+      c.append(h, n, ol); return c;
+    }));
+  });
+})();
+</script>
